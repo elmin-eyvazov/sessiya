@@ -90,6 +90,11 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
   <div class="card">
     <h1 data-i="hero_title"></h1>
     <p class="muted" style="margin:0 0 16px" data-i="hero_sub"></p>
+    <div class="row" style="gap:16px;margin-bottom:12px;align-items:flex-end">
+      <div><div class="note" style="margin-bottom:6px" data-i="f_type"></div><div class="seg" id="hmType"><button data-v="mc" data-i="type_mc"></button><button data-v="open" data-i="type_open"></button></div></div>
+      <div id="hmFmtBox" class="hide"><div class="note" style="margin-bottom:6px" data-i="f_format"></div><div class="seg" id="hmFmt"><button data-v="written" data-i="fmt_written"></button><button data-v="test" data-i="fmt_test"></button></div></div>
+    </div>
+    <div class="note" id="hmHint" style="margin-bottom:12px"></div>
     <div class="drop" id="drop">
       <div style="font-size:30px">📄</div>
       <div style="font-weight:600;margin:6px 0 2px" data-i="drop_title"></div>
@@ -311,7 +316,7 @@ function applyI18n(){
   document.documentElement.lang=LANG;
   document.querySelectorAll('[data-i]').forEach(el=>{const v=t(el.dataset.i); if(/<[a-z]/.test(v)) el.innerHTML=v; else el.textContent=v});
   document.querySelectorAll('#lang button').forEach(b=>b.classList.toggle('on',b.dataset.l===LANG));
-  $('pasteText').placeholder=t('paste_ph'); $('catSearch').placeholder=t('search_ph');
+  $('catSearch').placeholder=t('search_ph'); if(typeof HOME!=='undefined') renderHomeType();
   $('pvUniOther').placeholder=t('f_uni_other'); $('pvFac').placeholder=t('f_fac_ph'); $('pvSubj').placeholder=t('f_subj_ph');
   $('exCount').innerHTML=[25,50,100,0].map(n=>`<option value="${n}" ${n===50?'selected':''}>${n?t('n_questions',n):t('all_q')}</option>`).join('');
   $('exTime').innerHTML=`<option value="0.6">${t('t_36')}</option><option value="1" selected>${t('t_60')}</option><option value="0">${t('t_none')}</option>`;
@@ -494,8 +499,8 @@ function handleText(text,fname){
   if(mc.length<1 && list.length<3){$('status').innerHTML=t('parse_fail');return}
   const fenn=(text.match(/F[əә]nn\s*:\s*([^\n]+)/i)||[])[1] || (text.match(/[“"«]([^”"»]{3,60})[”"»]\s*f[əә]nnind[əә]n/i)||[])[1];
   const nm=(fenn||fname.replace(/\.(pdf|docx|txt)$/i,'')).replace(/^\s*\d+[a-zA-Z]?\s*/,'').trim().slice(0,80);
-  const type=(mc.length>=3 && mc.length>=list.length*0.5)?'mc':'open';
-  pending={mc,list,type,fmt:'written',name:nm};
+  let type=HOME.type; if(type==='mc'&&mc.length<1) type='open'; if(type==='open'&&list.length<1&&mc.length) type='mc';
+  pending={mc,list,type,fmt:HOME.fmt,name:nm};
   $('status').textContent='';
   $('pvFile').textContent=fname; $('pvName').value=nm; $('pvSubj').value=nm;
   $('pvLang').value=guessLang(type==='mc'?mc:list); $('pvMsg').textContent='';
@@ -649,6 +654,18 @@ $('rsAgain').onclick=()=>startQuiz(Q.mode,shuffle(Q.ids),Q.minPerQ);
 $('rsMist').onclick=()=>startQuiz('practice',shuffle((mem.stats[curBank.id]||{}).wrong||[]));
 $('rsBack').onclick=()=>curBank.shared?go('b-'+curBank.id):openBank(curBank.id);
 
+// ---------- home: file type choice ----------
+const HOME={type:store.get('sp_hmtype','mc'),fmt:store.get('sp_hmfmt','written')};
+function renderHomeType(){
+  document.querySelectorAll('#hmType button').forEach(b=>b.classList.toggle('on',b.dataset.v===HOME.type));
+  document.querySelectorAll('#hmFmt button').forEach(b=>b.classList.toggle('on',b.dataset.v===HOME.fmt));
+  $('hmFmtBox').classList.toggle('hide',HOME.type!=='open');
+  $('hmHint').textContent=HOME.type==='mc'?t('hm_hint_mc'):(HOME.fmt==='written'?t('hm_hint_written'):t('hm_hint_test'));
+  $('pasteText').placeholder=HOME.type==='mc'?t('paste_ph'):t('paste_ph_open');
+}
+document.querySelectorAll('#hmType button').forEach(b=>b.onclick=()=>{HOME.type=b.dataset.v;store.set('sp_hmtype',HOME.type);renderHomeType()});
+document.querySelectorAll('#hmFmt button').forEach(b=>b.onclick=()=>{HOME.fmt=b.dataset.v;store.set('sp_hmfmt',HOME.fmt);renderHomeType()});
+
 // ---------- written banks: own answers, cards, ticket ----------
 function myAnsKey(b){return 'sp_myans_'+b.id}
 function getMyAns(b){return store.get(myAnsKey(b),{})}
@@ -716,7 +733,7 @@ function checkTicket(){
 function scoreTicket(){ const n=TK.ids.length, ok=[...document.querySelectorAll('.tkok')].filter(c=>c.checked).length; $('tkScore').textContent=`${ok} / ${n}`; }
 $('bkTicket').onclick=startTicket; $('tkDone').onclick=checkTicket; $('tkAgain').onclick=startTicket; $('tkBack').onclick=()=>{clearInterval(tkTick);backToBank()};
 
-applyI18n(); route(); Cat.init();
+applyI18n(); renderHomeType(); route(); Cat.init();
 </script>
 </body>
 </html>

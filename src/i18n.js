@@ -1,5 +1,6 @@
 const I18N={
 az:{
+hm_hint_mc:"Test bankı: suallar, variantlar və düzgün cavab işarəsi (√, •, «))»).",hm_hint_written:"Yalnız suallar siyahısı. Yazılı imtahan: kartlar və bilet rejimi, nümunə cavablarla.",hm_hint_test:"Yalnız suallar siyahısı, imtahan isə test formasında olacaq.",paste_ph_open:"1. Birinci sual\n2. İkinci sual\nCavab: (istəyə bağlı) cavab mətni\n3. Üçüncü sual",
 f_type:"Fayl növü",type_mc:"Variantlı test",type_open:"Variantsız suallar",f_format:"İmtahan necə olacaq?",fmt_written:"Yazılı (açıq suallar)",fmt_test:"Test (variantlı)",
 fmt_written_note:"Faylda cavablar yoxdur. Kartlarda öz cavablarını yaza bilərsən; kataloq üçün nümunə cavabları biz hazırlayırıq.",fmt_written_has:"{0} sualın cavabı faylda tapıldı.",
 fmt_test_note:"Variantlar yoxdur — hələlik kartlar və bilet rejimində məşq et. Kataloq üçün variantları biz hazırlayırıq.",found_open:"{0} sual tapıldı (variantsız)",
@@ -11,7 +12,7 @@ check_answers:"Yoxla",new_ticket:"Yeni bilet",self_score:"Öz qiymətin",i_answe
 written_tag:"Yazılı",test_noopts_tag:"Test · variantsız",cards_done:"{0} / {1} bildin",ans_missing_note:"Bu bankda nümunə cavablar yoxdur. Kartlarda öz cavablarını yazıb saxlaya bilərsən (yalnız sənin cihazında).",
 nav_home:"Əsas",nav_catalog:"Kataloq",
 hero_title:"Test bankını yüklə — saniyələr içində interaktiv testə çevir",
-hero_sub:"Universitetin verdiyi PDF, Word və ya mətn faylını at. Sistem sualları və düzgün cavabları özü tapacaq: məşq et, imtahan rejimində özünü yoxla, səhvlərini təkrarla.",
+hero_sub:"Variantlı test bankı və ya sadəcə suallar siyahısı — PDF, Word və ya mətn faylını at. Testlərdə məşq və imtahan rejimi, yazılı imtahan üçün kartlar və bilet.",
 drop_title:"Faylı bura at və ya seç",drop_note:"PDF, DOCX, TXT · fayl brauzerində emal olunur",
 paste_toggle:"və ya mətni yapışdır",paste_go:"Testə çevir",paste_ph:"1. Sual mətni?\n• yanlış variant\n√ düzgün variant\n• yanlış variant",
 catalog_title:"Vuzlar üzrə kataloq",see_all:"Hamısı →",cat_empty_home:"Kataloq hələ boşdur. Bankını yüklə və kataloqa əlavə et — ilk sən ol!",
@@ -40,6 +41,7 @@ not_found:"Bank tapılmadı və ya silinib.",load_fail:"Bankı yükləmək alın
 footer:"Sessiya+ heç bir universitetlə əlaqəli deyil. Fayllar sənin brauzerində emal olunur; kataloqa yalnız sən seçdiyin banklar düşür. Müəllif hüquqlarını pozan material barədə «Şikayət et» düyməsi ilə xəbər ver.<br>Hazır testlər müəllif tərəfindən hazırlanmış nümunə suallardır."
 },
 ru:{
+hm_hint_mc:"Тестовый банк: вопросы, варианты и отметка правильного ответа (√, •, «))»).",hm_hint_written:"Только список вопросов. Письменный экзамен: карточки и билеты с образцами ответов.",hm_hint_test:"Только список вопросов, а экзамен будет в форме теста.",paste_ph_open:"1. Первый вопрос\n2. Второй вопрос\nОтвет: (необязательно) текст ответа\n3. Третий вопрос",
 f_type:"Тип файла",type_mc:"Тест с вариантами",type_open:"Вопросы без вариантов",f_format:"Какой будет экзамен?",fmt_written:"Письменный (открытые вопросы)",fmt_test:"Тест (с вариантами)",
 fmt_written_note:"В файле нет ответов. В карточках можно записать свои ответы; для каталога образцы ответов готовим мы.",fmt_written_has:"Ответы найдены для {0} вопросов.",
 fmt_test_note:"Вариантов нет — пока тренируйся в карточках и билетах. Для каталога варианты готовим мы.",found_open:"Найдено вопросов: {0} (без вариантов)",
@@ -51,7 +53,7 @@ check_answers:"Проверить",new_ticket:"Новый билет",self_score
 written_tag:"Письменный",test_noopts_tag:"Тест · без вариантов",cards_done:"Знал {0} из {1}",ans_missing_note:"В этом банке нет образцов ответов. В карточках можно записать и сохранить свои (только на твоём устройстве).",
 nav_home:"Главная",nav_catalog:"Каталог",
 hero_title:"Загрузи тестовый банк — и через секунды он станет интерактивным тестом",
-hero_sub:"Перетащи PDF, Word или текстовый файл, который дал вуз. Система сама найдёт вопросы и правильные ответы: тренируйся, проверяй себя в режиме экзамена, повторяй ошибки.",
+hero_sub:"Тестовый банк с вариантами или просто список вопросов — перетащи PDF, Word или текст. Для тестов — тренировка и экзамен, для письменного экзамена — карточки и билеты.",
 drop_title:"Перетащи файл сюда или выбери",drop_note:"PDF, DOCX, TXT · файл обрабатывается в твоём браузере",
 paste_toggle:"или вставь текст",paste_go:"Сделать тест",paste_ph:"1. Текст вопроса?\n• неверный вариант\n√ верный вариант\n• неверный вариант",
 catalog_title:"Каталог по вузам",see_all:"Все →",cat_empty_home:"Каталог пока пуст. Загрузи свой банк и добавь в каталог — будь первым!",
@@ -80,6 +82,7 @@ not_found:"Банк не найден или удалён.",load_fail:"Не уд
 footer:"Sessiya+ не связан ни с одним университетом. Файлы обрабатываются в твоём браузере; в каталог попадают только банки, которые ты сам добавил. О материалах, нарушающих авторские права, сообщай кнопкой «Пожаловаться».<br>Готовые тесты — примерные вопросы, составленные автором сайта."
 },
 en:{
+hm_hint_mc:"Test bank: questions, options and a mark on the correct answer (√, •, “))”).",hm_hint_written:"A list of questions only. Written exam: flashcards and tickets with model answers.",hm_hint_test:"A list of questions only; the exam itself will be multiple choice.",paste_ph_open:"1. First question\n2. Second question\nAnswer: (optional) answer text\n3. Third question",
 f_type:"File type",type_mc:"Test with options",type_open:"Questions without options",f_format:"What kind of exam?",fmt_written:"Written (open questions)",fmt_test:"Test (multiple choice)",
 fmt_written_note:"The file has no answers. You can write your own in flashcards; for the catalog we prepare model answers.",fmt_written_has:"Answers found for {0} questions.",
 fmt_test_note:"No options yet — practise with flashcards and tickets for now. For the catalog we prepare the options.",found_open:"{0} questions found (no options)",
@@ -91,7 +94,7 @@ check_answers:"Check",new_ticket:"New ticket",self_score:"Your self-score",i_ans
 written_tag:"Written",test_noopts_tag:"Test · no options",cards_done:"Knew {0} of {1}",ans_missing_note:"This bank has no model answers. In flashcards you can write and save your own (on your device only).",
 nav_home:"Home",nav_catalog:"Catalog",
 hero_title:"Upload your test bank — get an interactive quiz in seconds",
-hero_sub:"Drop the PDF, Word or text file your university gave you. Questions and correct answers are detected automatically: practice, take a timed mock exam, review your mistakes.",
+hero_sub:"A test bank with options or just a list of questions — drop a PDF, Word or text file. Practice and mock exams for tests; flashcards and exam tickets for written exams.",
 drop_title:"Drop a file here or choose one",drop_note:"PDF, DOCX, TXT · processed in your browser",
 paste_toggle:"or paste text",paste_go:"Make a quiz",paste_ph:"1. Question text?\n• wrong option\n√ correct option\n• wrong option",
 catalog_title:"Catalog by university",see_all:"All →",cat_empty_home:"The catalog is empty. Upload your bank and add it to the catalog — be the first!",
