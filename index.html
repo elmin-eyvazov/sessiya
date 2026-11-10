@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sessiya+ — test bankını interaktiv testə çevir</title>
+<meta name="description" content="Universitet test banklarını interaktiv testə çevir: məşq, imtahan rejimi, səhvlər üzərində iş. Vuz, fakültə və fənn üzrə kataloq.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f5f7;--card:#fff;--ink:#16181d;--mute:#6b7280;--line:#e3e6eb;--acc:#2f5bea;--acc2:#e9eefe;--ok:#16a34a;--okbg:#e9f8ef;--bad:#dc2626;--badbg:#fdecec}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+.wrap{max-width:780px;margin:0 auto;padding:18px 16px 60px}
+header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.logo{font-weight:800;font-size:22px;letter-spacing:-.02em;cursor:pointer}
+.logo b{color:var(--acc)}
+nav{display:flex;gap:4px;align-items:center}
+nav a{font-size:14px;font-weight:600;color:var(--mute);text-decoration:none;padding:8px 10px;border-radius:10px;cursor:pointer}
+nav a.on{color:var(--ink);background:#e9ebef}
+.lang{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+.lang button{border:0;background:none;font:600 12px Inter,sans-serif;padding:7px 9px;cursor:pointer;color:var(--mute)}
+.lang button.on{background:var(--ink);color:#fff}
+.muted{color:var(--mute)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:14px}
+h1{font-size:28px;line-height:1.15;letter-spacing:-.02em;margin:0 0 8px}
+h2{font-size:18px;margin:0 0 12px}
+.drop{border:2px dashed #c9cfd8;border-radius:14px;padding:24px;text-align:center;cursor:pointer;transition:.15s;background:#fafbfc}
+.drop:hover,.drop.over{border-color:var(--acc);background:var(--acc2)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:12px;padding:12px 18px;font:600 15px Inter,sans-serif;cursor:pointer;background:var(--acc);color:#fff}
+.btn.sec{background:#eceef2;color:var(--ink)}
+.btn.ghost{background:transparent;color:var(--acc);padding:8px 10px}
+.btn.small{padding:8px 12px;font-size:13px}
+.btn:disabled{opacity:.45;cursor:default}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.bank,.tile{border:1px solid var(--line);border-radius:14px;padding:14px 16px;cursor:pointer;background:#fff;transition:.15s}
+.bank:hover,.tile:hover{border-color:var(--acc)}
+.tile{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:3px 9px;border-radius:99px;background:#eceef2;color:var(--mute)}
+.pill.acc{background:var(--acc2);color:var(--acc)}
+textarea,input[type=text],select{width:100%;font:15px Inter,sans-serif;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
+textarea{min-height:150px}
+label.f{display:block;font-size:13px;color:var(--mute);margin:12px 0 6px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.bar{height:6px;background:#e6e9ee;border-radius:9px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--acc);transition:width .2s}
+.q{font-size:19px;font-weight:600;line-height:1.4;margin:16px 0}
+.opt{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;border:1px solid var(--line);background:#fff;border-radius:12px;padding:13px 14px;margin-bottom:9px;font:15px/1.4 Inter,sans-serif;color:var(--ink);cursor:pointer}
+.opt:hover{border-color:#b9c2d0}
+.opt .k{flex:none;width:24px;height:24px;border-radius:7px;background:#eceef2;display:grid;place-items:center;font-weight:700;font-size:13px}
+.opt.sel{border-color:var(--acc);background:var(--acc2)}
+.opt.ok{border-color:var(--ok);background:var(--okbg)}
+.opt.bad{border-color:var(--bad);background:var(--badbg)}
+.opt[disabled]{cursor:default}
+.big{font-size:44px;font-weight:800;letter-spacing:-.03em}
+.mistake{border-top:1px solid var(--line);padding:12px 0}
+.mistake .y{color:var(--bad)} .mistake .c{color:var(--ok)}
+.hide{display:none!important}
+.timer{font-variant-numeric:tabular-nums;font-weight:700}
+.note{font-size:13px;color:var(--mute);line-height:1.5}
+.stat{flex:1;min-width:120px;background:#f7f8fa;border-radius:12px;padding:12px}
+.stat b{display:block;font-size:22px}
+.crumbs{font-size:13px;color:var(--mute);margin-bottom:10px}
+.crumbs a{color:var(--acc);cursor:pointer;text-decoration:none}
+.search{margin-bottom:12px}
+.empty{padding:18px;text-align:center;color:var(--mute);font-size:14px;border:1px dashed var(--line);border-radius:12px}
+footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-height:1.6}
+@media (max-width:560px){h1{font-size:23px}.q{font-size:17px}.two{grid-template-columns:1fr}nav a{padding:7px 7px;font-size:13px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="logo" id="logo">Sessiya<b>+</b></div>
+  <nav><a data-go="home" data-i="nav_home"></a><a data-go="catalog" data-i="nav_catalog"></a></nav>
+  <div class="lang" id="lang"><button data-l="az">AZ</button><button data-l="ru">RU</button><button data-l="en">EN</button></div>
+</header>
+
+<!-- HOME -->
+<section id="v-home">
+  <div class="card">
+    <h1 data-i="hero_title"></h1>
+    <p class="muted" style="margin:0 0 16px" data-i="hero_sub"></p>
+    <div class="drop" id="drop">
+      <div style="font-size:30px">📄</div>
+      <div style="font-weight:600;margin:6px 0 2px" data-i="drop_title"></div>
+      <div class="note" data-i="drop_note"></div>
+      <input type="file" id="file" accept=".pdf,.docx,.txt" class="hide">
+    </div>
+    <div class="row" style="margin-top:12px"><button class="btn ghost" id="pasteToggle" data-i="paste_toggle"></button></div>
+    <div id="pasteBox" class="hide" style="margin-top:6px">
+      <textarea id="pasteText"></textarea>
+      <div class="row" style="margin-top:10px"><button class="btn" id="pasteGo" data-i="paste_go"></button></div>
+    </div>
+    <div id="status" class="note" style="margin-top:12px"></div>
+  </div>
+
+  <div class="card">
+    <div class="row" style="justify-content:space-between;margin-bottom:10px"><h2 style="margin:0" data-i="catalog_title"></h2><button class="btn ghost small" data-go="catalog" data-i="see_all"></button></div>
+    <div class="grid" id="homeUnis"></div>
+  </div>
+
+  <div class="card">
+    <h2 data-i="my_banks"></h2>
+    <div class="grid" id="myBanks"></div>
+    <div class="note" id="noBanks" data-i="no_banks"></div>
+  </div>
+
+  <div class="card">
+    <h2 data-i="ready_tests"></h2>
+    <div class="grid" id="readyBanks"></div>
+  </div>
+
+  <div class="card">
+    <h2 data-i="formats_title"></h2>
+    <div class="note" data-i="formats_body"></div>
+  </div>
+</section>
+
+<!-- CATALOG -->
+<section id="v-catalog" class="hide">
+  <div class="card">
+    <div class="crumbs" id="crumbs"></div>
+    <h1 id="catTitle" style="font-size:24px"></h1>
+    <p class="note" id="catSub" style="margin-top:0"></p>
+    <input type="text" class="search" id="catSearch">
+    <div id="catList"></div>
+    <div class="note" id="catNote" style="margin-top:12px"></div>
+  </div>
+</section>
+
+<!-- PREVIEW / PUBLISH -->
+<section id="v-preview" class="hide">
+  <div class="card">
+    <h2 data-i="pv_title"></h2>
+    <div class="row" style="margin-bottom:6px"><span class="pill acc" id="pvCount"></span><span class="pill" id="pvFile"></span></div>
+    <label class="f" data-i="f_name"></label>
+    <input type="text" id="pvName">
+    <div class="two">
+      <div><label class="f" data-i="f_uni"></label><select id="pvUni"></select><input type="text" id="pvUniOther" class="hide" style="margin-top:6px"></div>
+      <div><label class="f" data-i="f_lang"></label><select id="pvLang"><option value="az">Azərbaycan dili</option><option value="ru">Русский</option><option value="en">English</option></select></div>
+    </div>
+    <div class="two">
+      <div><label class="f" data-i="f_fac"></label><input type="text" id="pvFac" list="facList"><datalist id="facList"></datalist></div>
+      <div><label class="f" data-i="f_subj"></label><input type="text" id="pvSubj"></div>
+    </div>
+    <label class="row note" style="margin-top:14px;gap:8px;cursor:pointer"><input type="checkbox" id="pvPublic" checked> <span data-i="f_public"></span></label>
+    <div class="note" style="margin:14px 0 8px" data-i="pv_check"></div>
+    <div id="pvList"></div>
+    <div class="row" style="margin-top:14px"><button class="btn" id="pvSave" data-i="pv_save"></button><button class="btn sec" id="pvCancel" data-i="cancel"></button></div>
+    <div class="note" id="pvMsg" style="margin-top:10px"></div>
+  </div>
+</section>
+
+<!-- BANK -->
+<section id="v-bank" class="hide">
+  <div class="card">
+    <div class="crumbs" id="bkCrumbs"></div>
+    <div class="row" style="justify-content:space-between"><h2 id="bkName" style="margin:0"></h2>
+      <div class="row" style="gap:2px"><button class="btn ghost small" id="bkReport" data-i="report"></button><button class="btn ghost small" id="bkDelete" data-i="delete"></button></div></div>
+    <div class="row" id="bkTags" style="margin-top:8px"></div>
+    <div class="row" style="margin:14px 0">
+      <div class="stat"><span class="note" data-i="st_q"></span><b id="bkTotal"></b></div>
+      <div class="stat"><span class="note" data-i="st_best"></span><b id="bkBest">—</b></div>
+      <div class="stat"><span class="note" data-i="st_wrong"></span><b id="bkWrong">0</b></div>
+    </div>
+    <div id="bkLoading" class="note hide" data-i="loading"></div>
+    <div id="bkModes">
+      <div class="card" style="background:#fafbfc">
+        <h2 data-i="practice"></h2>
+        <p class="note" style="margin-top:-6px" data-i="practice_sub"></p>
+        <div class="row"><button class="btn" id="bkPractice" data-i="seq_start"></button><button class="btn sec" id="bkPracticeRnd" data-i="shuffled"></button><button class="btn sec" id="bkMistakes" data-i="repeat_mistakes"></button></div>
+      </div>
+      <div class="card" style="background:#fafbfc;margin-bottom:0">
+        <h2 data-i="exam"></h2>
+        <p class="note" style="margin-top:-6px" data-i="exam_sub"></p>
+        <div class="row">
+          <select id="exCount" style="width:auto"></select>
+          <select id="exTime" style="width:auto"></select>
+          <button class="btn" id="bkExam" data-i="exam_start"></button>
+        </div>
+      </div>
+    </div>
+    <div class="note" id="bkMsg" style="margin-top:10px"></div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section id="v-quiz" class="hide">
+  <div class="card">
+    <div class="row" style="justify-content:space-between;margin-bottom:10px">
+      <span class="note" id="qzPos"></span>
+      <span class="timer" id="qzTimer"></span>
+      <button class="btn ghost" id="qzStop" data-i="finish"></button>
+    </div>
+    <div class="bar"><i id="qzBar"></i></div>
+    <div class="q" id="qzQ"></div>
+    <div id="qzOpts"></div>
+    <div class="row" style="justify-content:flex-end;margin-top:6px"><button class="btn" id="qzNext" disabled></button></div>
+    <div class="note" style="margin-top:10px" data-i="kbd_hint"></div>
+  </div>
+</section>
+
+<!-- RESULT -->
+<section id="v-result" class="hide">
+  <div class="card" style="text-align:center">
+    <div class="note" data-i="result"></div>
+    <div class="big" id="rsScore"></div>
+    <div class="muted" id="rsDetail"></div>
+    <div class="row" style="justify-content:center;margin-top:16px"><button class="btn" id="rsAgain" data-i="again"></button><button class="btn sec" id="rsMist" data-i="repeat_mistakes"></button><button class="btn sec" id="rsBack" data-i="back_bank"></button></div>
+  </div>
+  <div class="card" id="rsListCard"><h2 data-i="wrong_answers"></h2><div id="rsList"></div></div>
+</section>
+
+<footer data-i="footer"></footer>
+</div>
+
+<script>
+// Test-bank text parser. Input: plain text (lines). Output: [{q, o:[...], a}]
+function normLine(s){
+  return s.replace(/ /g,' ').replace(/[ \t]+/g,' ').replace(/ә/g,'ə').replace(/Ә/g,'Ə').trim();
+}
+const QNUM=/^(\d{1,4})\s*[.)]\s*(?:Sual\s*:\s*)?(.*)$/i;
+const MARK_OPT=/^([•●▪◦\-–√✓✔+])\s*(.*)$/;          // "• text" / "√ text"
+const LETTER_OPT=/^([A-EА-Е])\s*(\)\)|\)|\.)\s*(.*)$/; // "A) text" / "C)) text"
+const CORRECT_MARK=/[√✓✔+]/;
+
+function parseBank(text){
+  const raw=text.split(/\r?\n/).map(normLine).filter(l=>l.length);
+  // drop page furniture
+  const pre=raw.filter(l=>!/^\d{1,2}[./]\d{1,2}[./]\d{2,4}$/.test(l) && !/^\d+\/\d+$/.test(l));
+  // drop runs (>=3) of consecutive integers (row-number columns from PDF tables)
+  const drop=new Set();
+  for(let i=0;i<pre.length;){
+    let j=i; while(j+1<pre.length && /^\d{1,4}$/.test(pre[j]) && /^\d{1,4}$/.test(pre[j+1]) && +pre[j+1]===+pre[j]+1) j++;
+    if(j-i>=2){ for(let k=i;k<=j;k++) drop.add(k); i=j+1; } else i++;
+  }
+  const lines=pre.filter((_,k)=>!drop.has(k));
+  let out=[];
+  out=parseMarked(lines); if(out.length>=3) return dedupe(out);
+  out=parseLetter(lines); if(out.length>=3) return dedupe(out);
+  out=parseTrailingBullet(lines);
+  return dedupe(out);
+}
+
+// Format 1: "12. Question" + option lines starting with • (wrong) or √ (correct)
+function parseMarked(lines){
+  const res=[]; let cur=null;
+  const flush=()=>{ if(cur && cur.o.length>=2 && cur.a>=0) res.push(cur); cur=null; };
+  for(const l of lines){
+    let m=l.match(MARK_OPT);
+    if(m && cur){
+      const isC=CORRECT_MARK.test(m[1]);
+      if(m[2]==='' ){ cur.pending=isC; continue; }
+      if(isC||cur.pending){ cur.a=cur.o.length; cur.pending=false; }
+      cur.o.push(m[2]); cur.lastOpt=true; continue;
+    }
+    if(m && !cur) continue;
+    const q=l.match(QNUM);
+    if(q && q[2]){ flush(); cur={q:q[2],o:[],a:-1}; continue; }
+    if(cur){
+      if(cur.o.length===0) cur.q+=' '+l;            // question continues
+      else if(cur.pending!==undefined && cur.o.length) cur.o[cur.o.length-1]+=' '+l; // option continues
+    }
+  }
+  flush(); return res.map(clean);
+}
+
+// Format 2: "1) Sual: text" + "A) ..." options; correct marked as "C))" or option starting with + / √
+function parseLetter(lines){
+  const res=[]; let cur=null;
+  const flush=()=>{ if(cur && cur.o.length>=2 && cur.a>=0) res.push(cur); cur=null; };
+  for(const l of lines){
+    const q=l.match(QNUM);
+    const lo=l.match(LETTER_OPT);
+    if(lo && cur && !(q && !lo)){
+      let t=lo[3]; let isC=lo[2]==='))';
+      if(/^[√✓✔+]\s*/.test(t)){ isC=true; t=t.replace(/^[√✓✔+]\s*/,''); }
+      if(/\s*[•√✓✔]$/.test(t)){ isC=true; t=t.replace(/\s*[•√✓✔]$/,''); }
+      if(isC) cur.a=cur.o.length;
+      cur.o.push(t); continue;
+    }
+    if(q && q[2]){ flush(); cur={q:q[2],o:[],a:-1}; continue; }
+    if(cur){ if(cur.o.length===0) cur.q+=' '+l; else cur.o[cur.o.length-1]+=' '+l; }
+  }
+  flush(); return res.map(clean);
+}
+
+// Format 3: question line(s) followed by option lines, exactly one ends with "•"
+function isQ(l){ return /[?:]$/.test(l) || /^Sual\s*:/i.test(l); }
+function parseTrailingBullet(lines){
+  const res=[]; let i=0; let qbuf=[];
+  const hasQ=lines.filter(isQ).length>=3;
+  if(hasQ){
+    while(i<lines.length){
+      if(isQ(lines[i])){
+        const q=lines[i].replace(QNUM,'$2'); const o=[]; let j=i+1;
+        while(j<lines.length && !isQ(lines[j]) && o.length<8){ o.push(lines[j]); j++; }
+        const marked=o.filter(x=>/•$/.test(x));
+        // drop leading continuation lines of the question (question may wrap): keep last 6 options max
+        if(marked.length===1 && o.length>=2){
+          const opts=o.slice(-Math.min(o.length,6));
+          const a=opts.findIndex(x=>/•$/.test(x));
+          if(a>=0) res.push(clean({q, o:opts.map(x=>x.replace(/\s*•$/,'')), a}));
+        }
+        i=j; continue;
+      }
+      i++;
+    }
+    return res;
+  }
+  while(i<lines.length){
+    let best=null;
+    for(const k of [5,4,3,6]){
+      const grp=lines.slice(i,i+k); if(grp.length<k) continue;
+      if(grp.filter(x=>/•$/.test(x)).length===1 && !grp.some(isQ) && grp.every(x=>x.length<=160)){ best=grp; break; }
+    }
+    if(best && qbuf.length){
+      res.push(clean({q:qbuf.join(' ').replace(QNUM,'$2'),o:best.map(x=>x.replace(/\s*•$/,'')),a:best.findIndex(x=>/•$/.test(x))}));
+      qbuf=[]; i+=best.length; continue;
+    }
+    qbuf.push(lines[i]); if(qbuf.length>3) qbuf.shift(); i++;
+  }
+  return res;
+}
+
+function clean(x){
+  return {q:x.q.replace(/\s+/g,' ').trim(), o:x.o.map(s=>s.replace(/\s+/g,' ').trim()), a:x.a};
+}
+function dedupe(arr){
+  const seen=new Set(); return arr.filter(x=>{const k=x.q+'|'+x.o.join('|'); if(seen.has(k)) return false; seen.add(k); return x.q.length>2;});
+}
+if(typeof module!=='undefined') module.exports={parseBank};
+
+const READY_SETS=[
+{id:"inf",name:"İnformatika (əsaslar)",tag:"Hazır test",qs:[
+{q:"1 bayt neçə bitdən ibarətdir?",o:["4","8","16","2","10"],a:1},
+{q:"Kompüterin əsas hesablama və idarəetmə qurğusu hansıdır?",o:["Monitor","Prosessor (CPU)","Klaviatura","Printer","Siçan"],a:1},
+{q:"Operativ yaddaş (RAM) üçün hansı fikir doğrudur?",o:["Məlumatı daimi saxlayır","Elektrik kəsiləndə məlumat silinir","Yalnız oxumaq üçündür","Xarici daşıyıcıdır","Prosessorun içindədir"],a:1},
+{q:"Hansı qurğu giriş qurğusudur?",o:["Monitor","Printer","Klaviatura","Dinamik","Proyektor"],a:2},
+{q:"İkilik sistemdə 1 KB neçə baytdır?",o:["100","1000","1024","512","2048"],a:2},
+{q:"Onluq say sistemindəki 10 ədədinin ikilik yazılışı hansıdır?",o:["1010","1100","1001","0110","1110"],a:0},
+{q:"Hansı proqram əməliyyat sistemidir?",o:["MS Word","Windows","MS Excel","Google Chrome","Photoshop"],a:1},
+{q:"Veb-səhifələrin strukturunu yaratmaq üçün istifadə olunan işarələmə dili hansıdır?",o:["HTML","SQL","C++","Python","CSV"],a:0},
+{q:"URL nədir?",o:["Fayl formatı","Veb-resursun ünvanı","Əməliyyat sistemi","Proqramlaşdırma dili","Antivirus"],a:1},
+{q:"Excel-də düstur hansı simvolla başlayır?",o:["=","+","#","@","$"],a:0},
+{q:"Verilənlər bazasına sorğular yazmaq üçün hansı dildən istifadə olunur?",o:["SQL","HTML","CSS","XML","JPEG"],a:0},
+{q:"Hansı fayl uzantısı şəkil faylına aiddir?",o:[".docx",".jpg",".xlsx",".mp3",".exe"],a:1},
+{q:"LAN hansı şəbəkə növüdür?",o:["Qlobal şəbəkə","Lokal şəbəkə","Peyk şəbəkəsi","Mobil şəbəkə","Regional şəbəkə"],a:1},
+{q:"Kompüter virusu nədir?",o:["Qurğunun nasazlığı","Özünü çoxaldan zərərli proqram","Əməliyyat sisteminin yeniləməsi","Arxivləşdirmə proqramı","Brauzer əlavəsi"],a:1},
+{q:"İkilik say sistemində hansı rəqəmlərdən istifadə olunur?",o:["0 və 1","0-dan 9-a qədər","1 və 2","0-dan 7-yə qədər","0-dan F-ə qədər"],a:0}]},
+{id:"mikro",name:"Mikroiqtisadiyyat (əsaslar)",tag:"Hazır test",qs:[
+{q:"Digər şərtlər sabit qalmaqla malın qiyməti artdıqda tələbin həcmi adətən necə dəyişir?",o:["Artır","Azalır","Dəyişmir","Əvvəl artır, sonra azalır","Sıfıra bərabər olur"],a:1},
+{q:"Tələb və təklif əyrilərinin kəsişmə nöqtəsi nəyi göstərir?",o:["Maksimal qiyməti","Tarazlıq qiymətini və miqdarını","İnhisar qiymətini","Dövlət qiymətini","Minimal xərcləri"],a:1},
+{q:"Alternativ (imkan) xərci nədir?",o:["Mühasibat xərcləri","Seçim zamanı imtina edilən ən yaxşı alternativin dəyəri","Sabit xərclər","Vergi ödənişləri","Orta xərclər"],a:1},
+{q:"Bazarda yalnız bir satıcı olduqda bu bazar necə adlanır?",o:["Tam rəqabət","Oliqopoliya","İnhisar (monopoliya)","İnhisarçı rəqabət","Monopsoniya"],a:2},
+{q:"Bir neçə iri firmanın hakim olduğu bazar strukturu hansıdır?",o:["Oliqopoliya","Tam rəqabət","Monopoliya","Monopsoniya","Natural təsərrüfat"],a:0},
+{q:"Tələbin qiymətə görə elastikliyinin mütləq qiyməti 1-dən böyükdürsə, tələb necə adlanır?",o:["Qeyri-elastik","Elastik","Vahid elastik","Mütləq qeyri-elastik","Sabit"],a:1},
+{q:"Əvəzedici malın qiyməti artarsa, verilmiş malın tələbi necə dəyişər?",o:["Artar","Azalar","Dəyişməz","Sıfır olar","Mənfi olar"],a:0},
+{q:"Qiymət tarazlıq səviyyəsindən aşağı müəyyən edilərsə, bazarda nə yaranar?",o:["Artıqlıq (izafi təklif)","Kəsir (defisit)","Tarazlıq","İnflyasiya","Deflyasiya"],a:1},
+{q:"Malın son əlavə vahidinin istehlakından əldə edilən əlavə fayda necə adlanır?",o:["Ümumi faydalılıq","Son hədd faydalılığı","Orta faydalılıq","Mənfi faydalılıq","Sabit faydalılıq"],a:1},
+{q:"Hansı xərc sabit xərclərə aiddir?",o:["Xammal xərci","İşəmuzd əmək haqqı","Binanın icarə haqqı","Enerji sərfi","Qablaşdırma xərci"],a:2},
+{q:"Firmanın mənfəəti necə hesablanır?",o:["Ümumi gəlir + ümumi xərclər","Ümumi gəlir − ümumi xərclər","Qiymət × xərclər","Orta gəlir − son hədd gəliri","Sabit xərclər − dəyişən xərclər"],a:1},
+{q:"Tam rəqabət bazarında ayrıca firma qiymətə münasibətdə necə çıxış edir?",o:["Qiyməti özü müəyyən edir","Qiyməti qəbul edir","Qiyməti dövlətlə razılaşdırır","Qiyməti istehlakçı ilə razılaşdırır","Qiyməti rəqiblərdən yüksək qoyur"],a:1},
+{q:"Gəlir artdıqda tələbi azalan mal necə adlanır?",o:["Normal mal","Lüks mal","Aşağı keyfiyyətli (inferior) mal","Əvəzedici mal","Tamamlayıcı mal"],a:2},
+{q:"Son hədd xərci (MC) nədir?",o:["Bütün xərclərin cəmi","Bir vahid məhsula düşən orta xərc","Əlavə bir vahid istehsalın yaratdığı əlavə xərc","Sabit xərclərin payı","Vergi xərcləri"],a:2},
+{q:"Firma mənfəətini maksimallaşdırmaq üçün hansı şərtə əməl edir?",o:["MR = MC","P = AFC","TR = TC","AC = AVC","MR = 0"],a:0}]}
+];
+
+const I18N={
+az:{
+nav_home:"Əsas",nav_catalog:"Kataloq",
+hero_title:"Test bankını yüklə — saniyələr içində interaktiv testə çevir",
+hero_sub:"Universitetin verdiyi PDF, Word və ya mətn faylını at. Sistem sualları və düzgün cavabları özü tapacaq: məşq et, imtahan rejimində özünü yoxla, səhvlərini təkrarla.",
+drop_title:"Faylı bura at və ya seç",drop_note:"PDF, DOCX, TXT · fayl brauzerində emal olunur",
+paste_toggle:"və ya mətni yapışdır",paste_go:"Testə çevir",paste_ph:"1. Sual mətni?\n• yanlış variant\n√ düzgün variant\n• yanlış variant",
+catalog_title:"Vuzlar üzrə kataloq",see_all:"Hamısı →",cat_empty_home:"Kataloq hələ boşdur. Bankını yüklə və kataloqa əlavə et — ilk sən ol!",
+my_banks:"Mənim banklarım",no_banks:"Hələ bank yoxdur. Yuxarıdan faylını yüklə.",ready_tests:"Hazır testlər",
+formats_title:"Hansı formatlar tanınır?",
+formats_body:"• Sual nömrəsi + variantlar, düzgün cavab <b>√</b> ilə: <code>12. Sual?</code> / <code>• variant</code> / <code>√ düzgün</code><br>• Hərfli variantlar, düzgün cavab <b>))</b> ilə: <code>A) ...</code> / <code>C)) düzgün</code><br>• Cədvəl formatı: düzgün variantın sonunda <b>•</b> işarəsi<br>Fayl tanınmadısa, mətni yapışdır — formatı düzəltmək asandır.",
+cat_title:"Test kataloqu",cat_sub:"Vuzunu seç → fakültəni → fənni. Banklar tələbələr tərəfindən əlavə olunur.",
+cat_pick_fac:"Fakültəni seç",general:"Ümumi fənlər",subj_tests:"{0}: testlər",search_ph:"Axtar…",
+cat_empty:"Kataloqda hələ bank yoxdur. Əsas səhifədən faylını yüklə və «Kataloqa əlavə et» seç.",nothing:"Heç nə tapılmadı.",
+cat_offline:"Kataloq bu baxışda əlçatan deyil — banklar yalnız sənin cihazında saxlanılır.",cat_stale:"Kataloqa qoşulmaq olmur, məlumat köhnə ola bilər.",cat_static:"Bankını kataloqa əlavə etmək istəyirsən? Tezliklə birbaşa saytdan mümkün olacaq.",
+loading:"Yüklənir…",n_banks:"{0} bank",
+pv_title:"Fayl oxundu",f_name:"Bankın adı",f_uni:"Universitet",f_uni_other:"Universitetin adı",f_lang:"Testin dili",f_fac:"Fakültə",f_fac_ph:"məs. İqtisadiyyat",f_subj:"Fənn",f_subj_ph:"məs. Mikroiqtisadiyyat",
+f_public:"Kataloqa əlavə et (digər tələbələr də görəcək)",pv_check:"İlk suallar — düzgün oxunduğunu yoxla:",pv_save:"Saxla və başla",cancel:"Ləğv et",choose:"— seç —",other:"Digər…",
+need_uni_subj:"Kataloq üçün universiteti və fənni göstər.",publishing:"Kataloqa əlavə olunur…",pub_fail:"Kataloqa əlavə etmək alınmadı. Bank sənin cihazında saxlanıldı.",pub_quota:"Kataloq dolub. Bank sənin cihazında saxlanıldı.",
+report:"Şikayət et",reported:"Şikayət göndərildi. Təşəkkür edirik!",delete:"Sil",confirm_delete:"Təsdiqlə: sil",
+st_q:"Sual",st_best:"Ən yaxşı nəticə",st_wrong:"Səhvlər",
+practice:"Məşq rejimi",practice_sub:"Hər cavabdan sonra düzgün variant göstərilir.",seq_start:"Ardıcıl başla",shuffled:"Qarışıq",repeat_mistakes:"Səhvlərimi təkrarla",
+exam:"İmtahan rejimi",exam_sub:"Təsadüfi suallar, taymer, nəticə sonda.",exam_start:"İmtahana başla",
+n_questions:"{0} sual",all_q:"Hamısı",t_36:"36 san / sual",t_60:"1 dəq / sual",t_none:"Taymersiz",
+finish:"Bitir",next:"Növbəti →",kbd_hint:"Klaviatura: 1–5 cavab, Enter — növbəti",exam_l:"imtahan",practice_l:"məşq",
+result:"Nəticə",again:"Yenidən",back_bank:"Banka qayıt",wrong_answers:"Səhv cavablar",your_ans:"Sənin cavabın",correct:"Düzgün",
+rs_detail:"{0} düzgün / {1} sual · {2} dəq {3} san",n_q:"{0} sual",best_pct:"ən yaxşı {0}%",ready_tag:"Hazır test",in_catalog:"Kataloqda",
+pasted:"Yapışdırılmış mətn",reading:"Fayl oxunur…",reading_pdf:"PDF oxunur: {0}/{1} səhifə…",read_fail:"Faylı oxumaq alınmadı. Mətni kopyalayıb «mətni yapışdır» ilə cəhd et.",
+parse_fail:"Bu faylda düzgün cavabı işarələnmiş sual tapılmadı. Aşağıdakı formatlara bax və ya mətni yapışdır.",found_q:"{0} sual tapıldı",
+not_found:"Bank tapılmadı və ya silinib.",load_fail:"Bankı yükləmək alınmadı.",
+footer:"Sessiya+ heç bir universitetlə əlaqəli deyil. Fayllar sənin brauzerində emal olunur; kataloqa yalnız sən seçdiyin banklar düşür. Müəllif hüquqlarını pozan material barədə «Şikayət et» düyməsi ilə xəbər ver.<br>Hazır testlər müəllif tərəfindən hazırlanmış nümunə suallardır."
+},
+ru:{
+nav_home:"Главная",nav_catalog:"Каталог",
+hero_title:"Загрузи тестовый банк — и через секунды он станет интерактивным тестом",
+hero_sub:"Перетащи PDF, Word или текстовый файл, который дал вуз. Система сама найдёт вопросы и правильные ответы: тренируйся, проверяй себя в режиме экзамена, повторяй ошибки.",
+drop_title:"Перетащи файл сюда или выбери",drop_note:"PDF, DOCX, TXT · файл обрабатывается в твоём браузере",
+paste_toggle:"или вставь текст",paste_go:"Сделать тест",paste_ph:"1. Текст вопроса?\n• неверный вариант\n√ верный вариант\n• неверный вариант",
+catalog_title:"Каталог по вузам",see_all:"Все →",cat_empty_home:"Каталог пока пуст. Загрузи свой банк и добавь в каталог — будь первым!",
+my_banks:"Мои банки",no_banks:"Пока нет банков. Загрузи файл выше.",ready_tests:"Готовые тесты",
+formats_title:"Какие форматы распознаются?",
+formats_body:"• Номер вопроса + варианты, верный отмечен <b>√</b>: <code>12. Вопрос?</code> / <code>• вариант</code> / <code>√ верный</code><br>• Буквенные варианты, верный отмечен <b>))</b>: <code>A) ...</code> / <code>C)) верный</code><br>• Табличный формат: у верного варианта в конце знак <b>•</b><br>Если файл не распознался, вставь текст — формат легко поправить.",
+cat_title:"Каталог тестов",cat_sub:"Выбери вуз → факультет → предмет. Банки добавляют сами студенты.",
+cat_pick_fac:"Выбери факультет",general:"Общие предметы",subj_tests:"{0}: тесты",search_ph:"Поиск…",
+cat_empty:"В каталоге пока нет банков. Загрузи файл на главной и отметь «Добавить в каталог».",nothing:"Ничего не найдено.",
+cat_offline:"Каталог недоступен в этом просмотре — банки сохраняются только на твоём устройстве.",cat_stale:"Не удаётся подключиться к каталогу, данные могут быть устаревшими.",cat_static:"Хочешь добавить свой банк в каталог? Скоро это можно будет сделать прямо на сайте.",
+loading:"Загрузка…",n_banks:"{0} банк(а)",
+pv_title:"Файл прочитан",f_name:"Название банка",f_uni:"Университет",f_uni_other:"Название университета",f_lang:"Язык теста",f_fac:"Факультет",f_fac_ph:"напр. Экономика",f_subj:"Предмет",f_subj_ph:"напр. Микроэкономика",
+f_public:"Добавить в каталог (увидят другие студенты)",pv_check:"Первые вопросы — проверь, что всё прочиталось правильно:",pv_save:"Сохранить и начать",cancel:"Отмена",choose:"— выбрать —",other:"Другой…",
+need_uni_subj:"Для каталога укажи университет и предмет.",publishing:"Добавляем в каталог…",pub_fail:"Не удалось добавить в каталог. Банк сохранён на твоём устройстве.",pub_quota:"Каталог заполнен. Банк сохранён на твоём устройстве.",
+report:"Пожаловаться",reported:"Жалоба отправлена. Спасибо!",delete:"Удалить",confirm_delete:"Точно удалить?",
+st_q:"Вопросов",st_best:"Лучший результат",st_wrong:"Ошибки",
+practice:"Тренировка",practice_sub:"После каждого ответа показывается правильный вариант.",seq_start:"По порядку",shuffled:"Вперемешку",repeat_mistakes:"Повторить ошибки",
+exam:"Режим экзамена",exam_sub:"Случайные вопросы, таймер, результат в конце.",exam_start:"Начать экзамен",
+n_questions:"{0} вопросов",all_q:"Все",t_36:"36 сек / вопрос",t_60:"1 мин / вопрос",t_none:"Без таймера",
+finish:"Завершить",next:"Далее →",kbd_hint:"Клавиатура: 1–5 — ответ, Enter — далее",exam_l:"экзамен",practice_l:"тренировка",
+result:"Результат",again:"Ещё раз",back_bank:"К банку",wrong_answers:"Неверные ответы",your_ans:"Твой ответ",correct:"Верно",
+rs_detail:"{0} верно / {1} вопросов · {2} мин {3} сек",n_q:"{0} вопр.",best_pct:"лучший {0}%",ready_tag:"Готовый тест",in_catalog:"В каталоге",
+pasted:"Вставленный текст",reading:"Читаем файл…",reading_pdf:"Читаем PDF: {0}/{1} стр…",read_fail:"Не удалось прочитать файл. Скопируй текст и вставь через «вставь текст».",
+parse_fail:"В этом файле не найдено вопросов с отмеченным правильным ответом. Посмотри форматы ниже или вставь текст.",found_q:"Найдено вопросов: {0}",
+not_found:"Банк не найден или удалён.",load_fail:"Не удалось загрузить банк.",
+footer:"Sessiya+ не связан ни с одним университетом. Файлы обрабатываются в твоём браузере; в каталог попадают только банки, которые ты сам добавил. О материалах, нарушающих авторские права, сообщай кнопкой «Пожаловаться».<br>Готовые тесты — примерные вопросы, составленные автором сайта."
+},
+en:{
+nav_home:"Home",nav_catalog:"Catalog",
+hero_title:"Upload your test bank — get an interactive quiz in seconds",
+hero_sub:"Drop the PDF, Word or text file your university gave you. Questions and correct answers are detected automatically: practice, take a timed mock exam, review your mistakes.",
+drop_title:"Drop a file here or choose one",drop_note:"PDF, DOCX, TXT · processed in your browser",
+paste_toggle:"or paste text",paste_go:"Make a quiz",paste_ph:"1. Question text?\n• wrong option\n√ correct option\n• wrong option",
+catalog_title:"Catalog by university",see_all:"All →",cat_empty_home:"The catalog is empty. Upload your bank and add it to the catalog — be the first!",
+my_banks:"My banks",no_banks:"No banks yet. Upload a file above.",ready_tests:"Ready-made quizzes",
+formats_title:"Which formats are recognised?",
+formats_body:"• Numbered question + options, correct one marked <b>√</b>: <code>12. Question?</code> / <code>• option</code> / <code>√ correct</code><br>• Lettered options, correct one marked <b>))</b>: <code>A) ...</code> / <code>C)) correct</code><br>• Table layout: the correct option ends with <b>•</b><br>If your file isn't recognised, paste the text — the format is easy to fix.",
+cat_title:"Quiz catalog",cat_sub:"Pick a university → faculty → subject. Banks are added by students.",
+cat_pick_fac:"Pick a faculty",general:"General subjects",subj_tests:"{0}: quizzes",search_ph:"Search…",
+cat_empty:"No banks in the catalog yet. Upload a file on the home page and tick “Add to catalog”.",nothing:"Nothing found.",
+cat_offline:"The catalog isn't available in this view — banks are saved on your device only.",cat_stale:"Can't reach the catalog; data may be out of date.",cat_static:"Want to add your bank to the catalog? Soon you'll be able to do it right on the site.",
+loading:"Loading…",n_banks:"{0} bank(s)",
+pv_title:"File read",f_name:"Bank name",f_uni:"University",f_uni_other:"University name",f_lang:"Quiz language",f_fac:"Faculty",f_fac_ph:"e.g. Economics",f_subj:"Subject",f_subj_ph:"e.g. Microeconomics",
+f_public:"Add to catalog (other students will see it)",pv_check:"First questions — check they were read correctly:",pv_save:"Save and start",cancel:"Cancel",choose:"— choose —",other:"Other…",
+need_uni_subj:"To add to the catalog, set the university and subject.",publishing:"Adding to catalog…",pub_fail:"Couldn't add to the catalog. The bank is saved on your device.",pub_quota:"The catalog is full. The bank is saved on your device.",
+report:"Report",reported:"Report sent. Thank you!",delete:"Delete",confirm_delete:"Confirm delete",
+st_q:"Questions",st_best:"Best score",st_wrong:"Mistakes",
+practice:"Practice",practice_sub:"The correct answer is shown after each question.",seq_start:"In order",shuffled:"Shuffled",repeat_mistakes:"Review mistakes",
+exam:"Exam mode",exam_sub:"Random questions, a timer, the score at the end.",exam_start:"Start exam",
+n_questions:"{0} questions",all_q:"All",t_36:"36 s / question",t_60:"1 min / question",t_none:"No timer",
+finish:"Finish",next:"Next →",kbd_hint:"Keyboard: 1–5 to answer, Enter for next",exam_l:"exam",practice_l:"practice",
+result:"Result",again:"Again",back_bank:"Back to bank",wrong_answers:"Wrong answers",your_ans:"Your answer",correct:"Correct",
+rs_detail:"{0} correct / {1} questions · {2} min {3} s",n_q:"{0} questions",best_pct:"best {0}%",ready_tag:"Ready-made",in_catalog:"In catalog",
+pasted:"Pasted text",reading:"Reading file…",reading_pdf:"Reading PDF: page {0}/{1}…",read_fail:"Couldn't read the file. Copy the text and use “paste text”.",
+parse_fail:"No questions with a marked correct answer were found. See the formats below or paste the text.",found_q:"{0} questions found",
+not_found:"Bank not found or deleted.",load_fail:"Couldn't load the bank.",
+footer:"Sessiya+ is not affiliated with any university. Files are processed in your browser; only banks you choose are added to the catalog. Report copyright-infringing material with the “Report” button.<br>Ready-made quizzes are sample questions written by the site author."
+}};
+
+
+const UNIS=[
+ ["unec","Azərbaycan Dövlət İqtisad Universiteti (UNEC)"],["bdu","Bakı Dövlət Universiteti (BDU)"],["aztu","Azərbaycan Texniki Universiteti (AzTU)"],
+ ["adnsu","Azərbaycan Dövlət Neft və Sənaye Universiteti (ADNSU)"],["adpu","Azərbaycan Dövlət Pedaqoji Universiteti (ADPU)"],["atu","Azərbaycan Tibb Universiteti (ATU)"],
+ ["adu","Azərbaycan Dillər Universiteti (ADU)"],["azmiu","Azərbaycan Memarlıq və İnşaat Universiteti (AzMİU)"],["wcu","Qərbi Kaspi Universiteti (WCU)"],
+ ["xezer","Xəzər Universiteti"],["ada","ADA Universiteti"],["bmu","Bakı Mühəndislik Universiteti (BMU)"],["bhos","Bakı Ali Neft Məktəbi (BANM)"],
+ ["bsu","Bakı Slavyan Universiteti (BSU)"],["au","Azərbaycan Universiteti"],["oyu","Odlar Yurdu Universiteti"],["maa","Milli Aviasiya Akademiyası (MAA)"],
+ ["sdu","Sumqayıt Dövlət Universiteti (SDU)"],["gdu","Gəncə Dövlət Universiteti (GDU)"],["adau","Azərbaycan Dövlət Aqrar Universiteti (ADAU)"],["ndu","Naxçıvan Dövlət Universiteti (NDU)"]
+];
+const $=id=>document.getElementById(id);
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+let mem={banks:store.get('sp_banks',[]),stats:store.get('sp_stats',{})};
+function saveBanks(){store.set('sp_banks',mem.banks)} function saveStats(){store.set('sp_stats',mem.stats)}
+function esc(s){return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function slug(s){const m={ə:'e',Ə:'e',ı:'i',İ:'i',ö:'o',Ö:'o',ü:'u',Ü:'u',ş:'s',Ş:'s',ç:'c',Ç:'c',ğ:'g',Ğ:'g'};
+  const ru='абвгдеёжзийклмнопрстуфхцчшщъыьэюя',la=['a','b','v','g','d','e','e','zh','z','i','y','k','l','m','n','o','p','r','s','t','u','f','h','ts','ch','sh','sch','','y','','e','yu','ya'];
+  return String(s||'').split('').map(c=>m[c]??c).join('').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').split('').map(c=>m[c]??(ru.indexOf(c)>=0?la[ru.indexOf(c)]:c)).join('').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,40)||'x'}
+function uniName(id){const u=UNIS.find(x=>x[0]===id);return u?u[1]:id}
+
+// ---------- i18n ----------
+let LANG=store.get('sp_lang',null)||((navigator.language||'').startsWith('ru')?'ru':'az');
+function t(k,...a){let s=(I18N[LANG]&&I18N[LANG][k])??I18N.az[k]??k; a.forEach((v,i)=>s=s.replace('{'+i+'}',v)); return s}
+function applyI18n(){
+  document.documentElement.lang=LANG;
+  document.querySelectorAll('[data-i]').forEach(el=>{const v=t(el.dataset.i); if(/<[a-z]/.test(v)) el.innerHTML=v; else el.textContent=v});
+  document.querySelectorAll('#lang button').forEach(b=>b.classList.toggle('on',b.dataset.l===LANG));
+  $('pasteText').placeholder=t('paste_ph'); $('catSearch').placeholder=t('search_ph');
+  $('pvUniOther').placeholder=t('f_uni_other'); $('pvFac').placeholder=t('f_fac_ph'); $('pvSubj').placeholder=t('f_subj_ph');
+  $('exCount').innerHTML=[25,50,100,0].map(n=>`<option value="${n}" ${n===50?'selected':''}>${n?t('n_questions',n):t('all_q')}</option>`).join('');
+  $('exTime').innerHTML=`<option value="0.6">${t('t_36')}</option><option value="1" selected>${t('t_60')}</option><option value="0">${t('t_none')}</option>`;
+  $('pvUni').innerHTML=`<option value="">${t('choose')}</option>`+UNIS.map(u=>`<option value="${u[0]}">${esc(u[1])}</option>`).join('')+`<option value="other">${t('other')}</option>`;
+}
+document.querySelectorAll('#lang button').forEach(b=>b.onclick=()=>{LANG=b.dataset.l;store.set('sp_lang',LANG);applyI18n();
+  if(!$('v-quiz').classList.contains('hide')){ $('qzPos').textContent=`${Q.i+1} / ${Q.ids.length} · `+(Q.mode==='exam'?t('exam_l'):t('practice_l')); $('qzNext').textContent=Q.i===Q.ids.length-1?t('finish'):t('next'); }
+  else if(!$('v-result').classList.contains('hide')||!$('v-preview').classList.contains('hide')){}
+  else if(!$('v-bank').classList.contains('hide')&&curBank){ fillBankHeader(curBank,!!curBank.shared); if(curBank.qs) $('bkTotal').textContent=curBank.qs.length; }
+  else route(); });
+
+// ---------- shared catalog (db capability; local fallback) ----------
+const Cat={db:null,user:null,canWrite:null,metas:[],ready:false,unsub:null,listeners:[],
+  async init(){
+    try{ if(!window.claude||!claude.use) throw 0;
+      this.db=await claude.use('db'); this.user=await claude.use('user');
+      if(this.user){ try{this.canWrite=await this.user.can('data.write')}catch(e){} try{this.isOwner=!!(await this.user.isOwner())}catch(e){} }
+      if(this.db) this.subscribe();
+    }catch(e){}
+    if(!this.db){ await this.loadStatic(); this.ready=true; this.emit() }
+  },
+  async loadStatic(){
+    try{ const r=await fetch('data/catalog.json',{cache:'no-cache'}); if(r.ok){ const j=await r.json(); this.metas=(j.banks||[]).filter(m=>!m.hidden); this.static=true } }catch(e){}
+  },
+  subscribe(){
+    let timer=setTimeout(()=>{this.ready=true;this.stale=true;this.emit()},10000);
+    this.unsub=this.db.collection('banks').orderBy('createdAt','desc').limit(1000).onSnapshot(s=>{
+      if(!s.metadata.fromCache){clearTimeout(timer);this.stale=false}
+      this.metas=s.docs.map(d=>({id:d.id,...d.data()})).filter(m=>!m.hidden); this.ready=true; this.emit();
+    },e=>{clearTimeout(timer);this.ready=true;this.err=e.code;this.emit()});
+  },
+  on(f){this.listeners.push(f)}, emit(){this.listeners.forEach(f=>{try{f()}catch(e){}})},
+  async publish(b){
+    if(!this.db) throw {code:'no_db'};
+    const id='k'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+    const chunks=[]; const per=150; for(let i=0;i<b.qs.length;i+=per) chunks.push(b.qs.slice(i,i+per));
+    for(let k=0;k<chunks.length;k++){ await this.db.doc(`bankdata/${id}/parts/p${k}`).set({qs:chunks[k]}); }
+    await this.db.doc('banks/'+id).set({name:b.name,uni:b.uni,uniLabel:b.uniLabel,fac:b.fac,subj:b.subj,lang:b.lang,count:b.qs.length,parts:chunks.length,createdAt:Date.now()});
+    return id;
+  },
+  async loadQs(meta){
+    if(this.static){ const r=await fetch('data/banks/'+meta.id+'.json'); return r.ok?((await r.json()).qs||[]):[] }
+    const out=[]; for(let k=0;k<(meta.parts||0);k++){const s=await this.db.doc(`bankdata/${meta.id}/parts/p${k}`).get(); if(s.exists) out.push(...(s.data().qs||[]))} return out;
+  },
+  async report(id,reason){ if(!this.db) return; await this.db.collection('reports').add({bank:id,reason:reason||'',at:Date.now()}) },
+  async remove(id){ await this.db.doc('banks/'+id).update({hidden:true}) }
+};
+
+// ---------- router (#home, #catalog, #u-<uni>, #f-<uni>--<fac>, #s-<uni>--<fac>--<subj>, #b-<id>) ----------
+const VIEWS=['home','catalog','preview','bank','quiz','result'];
+function show(v){for(const s of VIEWS) $('v-'+s).classList.toggle('hide',s!==v);
+  document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',(a.dataset.go==='home'&&v==='home')||(a.dataset.go==='catalog'&&v==='catalog')));
+  window.scrollTo(0,0)}
+function go(h){ if(location.hash==='#'+h) route(); else location.hash=h }
+document.querySelectorAll('[data-go]').forEach(a=>a.onclick=()=>go(a.dataset.go)); $('logo').onclick=()=>go('home');
+window.addEventListener('hashchange',route);
+document.addEventListener('click',e=>{const a=e.target.closest('a[data-h]');if(a){e.preventDefault();go(a.dataset.h)}});
+function route(){
+  const h=location.hash.replace(/^#/,'')||'home';
+  if(h==='home') return renderHome();
+  if(h==='catalog') return renderCatalog({});
+  let m;
+  if(m=h.match(/^u-([a-z0-9-]+)$/)) return renderCatalog({uni:m[1]});
+  if(m=h.match(/^f-([a-z0-9-]+?)--([a-z0-9-]+)$/)) return renderCatalog({uni:m[1],fac:m[2]});
+  if(m=h.match(/^s-([a-z0-9-]+?)--([a-z0-9-]+?)--([a-z0-9-]+)$/)) return renderCatalog({uni:m[1],fac:m[2],subj:m[3]});
+  if(m=h.match(/^b-([a-z0-9]+)$/)) return openShared(m[1]);
+  renderHome();
+}
+
+// ---------- home ----------
+function bankCard(b,shared){const st=mem.stats[b.id]||{};const n=b.qs?b.qs.length:b.count;
+  return `<div class="bank" data-id="${b.id}" data-shared="${shared?1:''}"><div style="font-weight:700;margin-bottom:6px">${esc(b.name)}</div>${shared?`<div class="note" style="margin-bottom:6px">${esc(b.uniLabel||uniName(b.uni))}</div>`:''}<div class="row"><span class="pill ${b.tag?'acc':''}">${t('n_q',n)}</span>${st.best!=null?`<span class="pill">${t('best_pct',st.best)}</span>`:''}</div></div>`}
+function bindBankCards(root){root.querySelectorAll('.bank').forEach(el=>el.onclick=()=>el.dataset.shared?go('b-'+el.dataset.id):openBank(el.dataset.id))}
+function uniCounts(){const c={};for(const m of Cat.metas){c[m.uni]=(c[m.uni]||0)+1}return c}
+function renderHome(){
+  $('myBanks').innerHTML=mem.banks.map(b=>bankCard(b)).join(''); $('noBanks').classList.toggle('hide',mem.banks.length>0);
+  $('readyBanks').innerHTML=READY_SETS.map(b=>bankCard(b)).join('');
+  bindBankCards($('myBanks')); bindBankCards($('readyBanks'));
+  renderHomeUnis(); show('home');
+}
+function renderHomeUnis(){
+  const c=uniCounts(); const ids=Object.keys(c).sort((a,b)=>c[b]-c[a]).slice(0,6);
+  $('homeUnis').innerHTML=ids.length?ids.map(id=>`<div class="tile" data-u="${id}"><span style="font-weight:600">${esc(labelForUni(id))}</span><span class="pill">${c[id]}</span></div>`).join(''):`<div class="empty" style="grid-column:1/-1">${Cat.ready?t('cat_empty_home'):t('loading')}</div>`;
+  $('homeUnis').querySelectorAll('.tile').forEach(el=>el.onclick=()=>go('u-'+el.dataset.u));
+}
+function labelForUni(id){const m=Cat.metas.find(x=>x.uni===id);return (m&&m.uniLabel)||uniName(id)}
+Cat.on(()=>{const h=location.hash.replace(/^#/,'')||'home'; if(h==='home') renderHomeUnis(); else if(/^(catalog|[ufs]-)/.test(h)) route(); else if(/^b-/.test(h)&&!curBank) route();});
+
+// ---------- catalog ----------
+let catState={};
+function renderCatalog(st){
+  catState=st; show('catalog');
+  const M=Cat.metas; const q=$('catSearch').value.trim().toLowerCase();
+  const facs=m=>slug(m.fac||'umumi'), subs=m=>slug(m.subj||m.name);
+  let crumbs=[`<a data-h="catalog">${t('nav_catalog')}</a>`]; let title,sub,items=[];
+  if(!st.uni){
+    title=t('cat_title'); sub=t('cat_sub');
+    const c={}; M.forEach(m=>{c[m.uni]=c[m.uni]||{n:0,label:m.uniLabel||uniName(m.uni)};c[m.uni].n++});
+    items=Object.entries(c).sort((a,b)=>b[1].n-a[1].n).map(([id,v])=>({h:'u-'+id,label:v.label,n:v.n}));
+  } else if(!st.fac){
+    const ms=M.filter(m=>m.uni===st.uni); title=labelForUni(st.uni); sub=t('cat_pick_fac');
+    crumbs.push(esc(title));
+    const c={}; ms.forEach(m=>{const f=facs(m);c[f]=c[f]||{n:0,label:m.fac||t('general')};c[f].n++});
+    items=Object.entries(c).sort((a,b)=>b[1].n-a[1].n).map(([f,v])=>({h:`f-${st.uni}--${f}`,label:v.label,n:v.n}));
+  } else if(!st.subj){
+    const ms=M.filter(m=>m.uni===st.uni&&facs(m)===st.fac); const fl=(ms[0]&&ms[0].fac)||t('general');
+    title=fl; sub=labelForUni(st.uni); crumbs.push(`<a data-h="u-${st.uni}">${esc(labelForUni(st.uni))}</a>`,esc(fl));
+    const c={}; ms.forEach(m=>{const s=subs(m);c[s]=c[s]||{n:0,label:m.subj||m.name};c[s].n++});
+    items=Object.entries(c).sort((a,b)=>a[1].label.localeCompare(b[1].label)).map(([s,v])=>({h:`s-${st.uni}--${st.fac}--${s}`,label:v.label,n:v.n,unit:'banks'}));
+  } else {
+    const ms=M.filter(m=>m.uni===st.uni&&facs(m)===st.fac&&subs(m)===st.subj); const sl=(ms[0]&&(ms[0].subj||ms[0].name))||st.subj; const fl=(ms[0]&&ms[0].fac)||t('general');
+    title=t('subj_tests',sl); sub=labelForUni(st.uni)+' · '+fl;
+    crumbs.push(`<a data-h="u-${st.uni}">${esc(labelForUni(st.uni))}</a>`,`<a data-h="f-${st.uni}--${st.fac}">${esc(fl)}</a>`,esc(sl));
+    document.title=`${sl} — ${labelForUni(st.uni)} test | Sessiya+`;
+    $('crumbs').innerHTML=crumbs.join(' › '); $('catTitle').textContent=title; $('catSub').textContent=sub;
+    const list=ms.filter(m=>!q||(m.name||'').toLowerCase().includes(q));
+    $('catList').innerHTML=list.length?`<div class="grid">${list.map(m=>bankCard(m,true)).join('')}</div>`:`<div class="empty">${t('nothing')}</div>`;
+    bindBankCards($('catList')); $('catNote').textContent=catNote(); return;
+  }
+  document.title='Sessiya+ — '+title;
+  $('crumbs').innerHTML=crumbs.join(' › '); $('catTitle').textContent=title; $('catSub').textContent=sub;
+  const list=items.filter(i=>!q||i.label.toLowerCase().includes(q));
+  $('catList').innerHTML=list.length?`<div class="grid">${list.map(i=>`<div class="tile" data-h="${i.h}"><span style="font-weight:600">${esc(i.label)}</span><span class="pill">${i.unit==='banks'?t('n_banks',i.n):i.n}</span></div>`).join('')}</div>`:`<div class="empty">${Cat.ready?(M.length?t('nothing'):t('cat_empty')):t('loading')}</div>`;
+  $('catList').querySelectorAll('.tile').forEach(el=>el.onclick=()=>go(el.dataset.h));
+  $('catNote').textContent=catNote();
+}
+function catNote(){ if(Cat.static) return t('cat_static'); if(!Cat.db) return t('cat_offline'); if(Cat.stale) return t('cat_stale'); return '' }
+$('catSearch').oninput=()=>renderCatalog(catState);
+
+// ---------- upload ----------
+$('pasteToggle').onclick=()=>$('pasteBox').classList.toggle('hide');
+$('pasteGo').onclick=()=>handleText($('pasteText').value,t('pasted'));
+const drop=$('drop');
+drop.onclick=()=>$('file').click();
+drop.ondragover=e=>{e.preventDefault();drop.classList.add('over')};
+drop.ondragleave=()=>drop.classList.remove('over');
+drop.ondrop=e=>{e.preventDefault();drop.classList.remove('over');if(e.dataTransfer.files[0])handleFile(e.dataTransfer.files[0])};
+$('file').onchange=e=>{if(e.target.files[0])handleFile(e.target.files[0]);e.target.value=''};
+function loadScript(src){return new Promise((res,rej)=>{const s=document.createElement('script');s.src=src;s.onload=res;s.onerror=()=>rej(new Error('load '+src));document.head.appendChild(s)})}
+async function pdfText(buf){
+  if(!window.pdfjsLib){await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js');}
+  pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  const doc=await pdfjsLib.getDocument({data:buf}).promise; let out=[];
+  for(let p=1;p<=doc.numPages;p++){
+    $('status').textContent=t('reading_pdf',p,doc.numPages);
+    const tc=await (await doc.getPage(p)).getTextContent();
+    let lines=[],cur='',lastY=null;
+    for(const it of tc.items){
+      const y=Math.round(it.transform[5]);
+      if(lastY!==null && Math.abs(y-lastY)>2){lines.push(cur);cur=''}
+      cur+=(cur&&!cur.endsWith(' ')&&!it.str.startsWith(' ')?' ':'')+it.str; lastY=y;
+      if(it.hasEOL){lines.push(cur);cur='';lastY=null}
+    }
+    if(cur)lines.push(cur); out.push(...lines);
+  }
+  return out.join('\n');
+}
+async function docxText(buf){
+  if(!window.mammoth){await loadScript('https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js');}
+  return (await mammoth.extractRawText({arrayBuffer:buf})).value;
+}
+let pending=null;
+async function handleFile(f){
+  $('status').textContent=t('reading');
+  try{
+    const buf=await f.arrayBuffer(); let text='';
+    if(/\.pdf$/i.test(f.name)) text=await pdfText(buf);
+    else if(/\.docx$/i.test(f.name)) text=await docxText(buf);
+    else text=new TextDecoder().decode(buf);
+    handleText(text,f.name);
+  }catch(e){$('status').textContent=t('read_fail')}
+}
+function guessLang(qs){const s=qs.slice(0,20).map(x=>x.q).join(' ');const cyr=(s.match(/[а-яё]/gi)||[]).length,az=(s.match(/[əğışçöü]/gi)||[]).length,lat=(s.match(/[a-z]/gi)||[]).length;return cyr>lat?'ru':(az>0?'az':'en')}
+function handleText(text,fname){
+  const qs=parseBank(text||'');
+  if(qs.length<1){$('status').innerHTML=t('parse_fail');return}
+  const fenn=(text.match(/F[əә]nn\s*:\s*([^\n]+)/i)||[])[1];
+  const nm=(fenn||fname.replace(/\.(pdf|docx|txt)$/i,'')).replace(/^\s*\d+[a-zA-Z]?\s*/,'').trim().slice(0,80);
+  pending={qs,name:nm};
+  $('status').textContent='';
+  $('pvCount').textContent=t('found_q',qs.length); $('pvFile').textContent=fname; $('pvName').value=nm; $('pvSubj').value=nm;
+  $('pvLang').value=guessLang(qs); $('pvMsg').textContent='';
+  const facs=[...new Set(Cat.metas.map(m=>m.fac).filter(Boolean))]; $('facList').innerHTML=facs.map(f=>`<option value="${esc(f)}">`).join('');
+  $('pvPublic').disabled=!Cat.db; if(!Cat.db) $('pvPublic').checked=false;
+  $('pvList').innerHTML=qs.slice(0,3).map((x,i)=>`<div class="mistake"><b>${i+1}. ${esc(x.q)}</b><div class="note">${x.o.map((o,j)=>j===x.a?`<span class="c">✓ ${esc(o)}</span>`:esc(o)).join(' · ')}</div></div>`).join('');
+  show('preview');
+}
+$('pvUni').onchange=()=>$('pvUniOther').classList.toggle('hide',$('pvUni').value!=='other');
+$('pvCancel').onclick=()=>go('home');
+$('pvSave').onclick=async()=>{
+  const uniSel=$('pvUni').value, uniOther=$('pvUniOther').value.trim();
+  const b={id:'b'+Date.now(),name:$('pvName').value.trim()||pending.name,qs:pending.qs,
+    uni:uniSel==='other'?slug(uniOther):uniSel, uniLabel:uniSel==='other'?uniOther:uniName(uniSel),
+    fac:$('pvFac').value.trim(), subj:$('pvSubj').value.trim()||$('pvName').value.trim(), lang:$('pvLang').value};
+  mem.banks.unshift(b); saveBanks();
+  if($('pvPublic').checked){
+    if(!b.uni||!b.subj){$('pvMsg').textContent=t('need_uni_subj');mem.banks.shift();saveBanks();return}
+    $('pvSave').disabled=true; $('pvMsg').textContent=t('publishing');
+    try{ const id=await Cat.publish(b); b.sharedId=id; saveBanks(); }
+    catch(e){ $('pvSave').disabled=false; openBank(b.id); $('bkMsg').textContent=e&&e.code==='quota_exceeded'?t('pub_quota'):t('pub_fail'); return }
+    $('pvSave').disabled=false;
+  }
+  openBank(b.id);
+};
+
+// ---------- bank ----------
+let curBank=null;
+function getLocal(id){return [...mem.banks,...READY_SETS].find(b=>b.id===id)}
+function crumbsFor(m){ if(!m||!m.uni) return ''; const f=slug(m.fac||'umumi');
+  return `<a data-h="catalog">${t('nav_catalog')}</a> › <a data-h="u-${m.uni}">${esc(m.uniLabel||uniName(m.uni))}</a> › <a data-h="f-${m.uni}--${f}">${esc(m.fac||t('general'))}</a> › <a data-h="s-${m.uni}--${f}--${slug(m.subj||m.name)}">${esc(m.subj||m.name)}</a>`}
+function fillBankHeader(b,shared){
+  const st=mem.stats[b.id]||{};
+  $('bkName').textContent=b.name; $('bkTotal').textContent=b.qs?b.qs.length:b.count;
+  $('bkBest').textContent=st.best!=null?st.best+'%':'—'; $('bkWrong').textContent=(st.wrong||[]).length;
+  $('bkMistakes').disabled=!(st.wrong||[]).length;
+  $('bkCrumbs').innerHTML=crumbsFor(b);
+  const langName={az:'Azərbaycan dili',ru:'Русский',en:'English'};
+  $('bkTags').innerHTML=[b.lang?`<span class="pill">${langName[b.lang]||b.lang}</span>`:'',b.tag?`<span class="pill acc">${t('ready_tag')}</span>`:'',shared||b.sharedId?`<span class="pill acc">${t('in_catalog')}</span>`:''].join('');
+  $('bkReport').classList.toggle('hide',!shared); $('bkDelete').classList.toggle('hide',!!b.tag||(shared&&!Cat.isOwner));
+  $('bkMsg').textContent='';
+}
+function openBank(id){
+  const b=getLocal(id); if(!b) return go('home');
+  curBank=b; curBank.shared=false; fillBankHeader(b,false); $('bkLoading').classList.add('hide'); $('bkModes').classList.remove('hide');
+  if(location.hash!=='#bank') history.replaceState(null,'','#bank'); show('bank');
+}
+async function openShared(id){
+  const m=Cat.metas.find(x=>x.id===id);
+  if(!m){ curBank=null; show('bank'); $('bkName').textContent=''; $('bkCrumbs').innerHTML=''; $('bkTags').innerHTML='';
+    $('bkModes').classList.add('hide'); $('bkLoading').classList.remove('hide'); $('bkLoading').textContent=Cat.ready?t('not_found'):t('loading'); return }
+  curBank={...m,shared:true,qs:null}; fillBankHeader(curBank,true); show('bank');
+  $('bkModes').classList.add('hide'); $('bkLoading').classList.remove('hide'); $('bkLoading').textContent=t('loading');
+  try{ curBank.qs=await Cat.loadQs(m); }catch(e){ curBank.qs=[] }
+  if(!curBank.qs.length){$('bkLoading').textContent=t('load_fail');return}
+  $('bkTotal').textContent=curBank.qs.length; $('bkLoading').classList.add('hide'); $('bkModes').classList.remove('hide');
+}
+$('bkDelete').onclick=async()=>{
+  const btn=$('bkDelete'); if(btn.dataset.c!=='1'){btn.textContent=t('confirm_delete');btn.dataset.c='1';setTimeout(()=>{btn.textContent=t('delete');btn.dataset.c=''},3000);return}
+  btn.dataset.c=''; btn.textContent=t('delete');
+  if(curBank.shared){ try{await Cat.remove(curBank.id)}catch(e){$('bkMsg').textContent=t('pub_fail');return} return go('catalog') }
+  mem.banks=mem.banks.filter(b=>b.id!==curBank.id); delete mem.stats[curBank.id]; saveBanks(); saveStats(); go('home');
+};
+$('bkReport').onclick=async()=>{ try{await Cat.report(curBank.id,'')}catch(e){} $('bkMsg').textContent=t('reported'); $('bkReport').disabled=true };
+$('bkPractice').onclick=()=>startQuiz('practice',curBank.qs.map((_,i)=>i));
+$('bkPracticeRnd').onclick=()=>startQuiz('practice',shuffle(curBank.qs.map((_,i)=>i)));
+$('bkMistakes').onclick=()=>startQuiz('practice',shuffle((mem.stats[curBank.id]||{}).wrong||[]));
+$('bkExam').onclick=()=>{const n=+$('exCount').value;let ids=shuffle(curBank.qs.map((_,i)=>i));if(n)ids=ids.slice(0,n);startQuiz('exam',ids,+$('exTime').value)};
+
+// ---------- quiz ----------
+let Q=null,tick=null;
+function startQuiz(mode,ids,minPerQ=0){
+  ids=ids.filter(i=>i<curBank.qs.length); if(!ids.length)return;
+  Q={mode,ids,i:0,answers:[],start:Date.now(),minPerQ,limit:minPerQ?Math.round(ids.length*minPerQ*60):0};
+  clearInterval(tick); if(Q.limit){tick=setInterval(updTimer,500)} updTimer();
+  show('quiz'); renderQ();
+}
+function updTimer(){
+  if(!Q||!Q.limit){$('qzTimer').textContent='';return}
+  const left=Math.max(0,Q.limit-Math.floor((Date.now()-Q.start)/1000));
+  $('qzTimer').textContent=String(Math.floor(left/60)).padStart(2,'0')+':'+String(left%60).padStart(2,'0');
+  $('qzTimer').style.color=left<60?'var(--bad)':'';
+  if(left===0)finish();
+}
+function renderQ(){
+  const x=curBank.qs[Q.ids[Q.i]];
+  Q.order=shuffle(x.o.map((_,j)=>j)); Q.picked=null;
+  $('qzPos').textContent=`${Q.i+1} / ${Q.ids.length} · `+(Q.mode==='exam'?t('exam_l'):t('practice_l'));
+  $('qzBar').style.width=(Q.i/Q.ids.length*100)+'%';
+  $('qzQ').textContent=x.q;
+  $('qzOpts').innerHTML=Q.order.map((j,k)=>`<button class="opt" data-j="${j}"><span class="k">${k+1}</span><span>${esc(x.o[j])}</span></button>`).join('');
+  $('qzOpts').querySelectorAll('.opt').forEach(b=>b.onclick=()=>pick(+b.dataset.j));
+  $('qzNext').disabled=true; $('qzNext').textContent=Q.i===Q.ids.length-1?t('finish'):t('next');
+}
+function pick(j){
+  const x=curBank.qs[Q.ids[Q.i]];
+  if(Q.mode==='practice'&&Q.picked!==null)return;
+  Q.picked=j;
+  $('qzOpts').querySelectorAll('.opt').forEach(b=>{const bj=+b.dataset.j;b.classList.remove('sel');
+    if(Q.mode==='practice'){b.disabled=true;if(bj===x.a)b.classList.add('ok');else if(bj===j)b.classList.add('bad')}
+    else if(bj===j)b.classList.add('sel')});
+  $('qzNext').disabled=false;
+}
+function next(){ if(Q.picked===null)return; Q.answers[Q.i]=Q.picked; if(Q.i<Q.ids.length-1){Q.i++;renderQ()}else finish(); }
+$('qzNext').onclick=next;
+$('qzStop').onclick=()=>{if(Q.picked!==null)Q.answers[Q.i]=Q.picked;finish(true)};
+document.addEventListener('keydown',e=>{
+  if($('v-quiz').classList.contains('hide'))return;
+  if(e.key==='Enter'){next();return}
+  const n=+e.key; if(n>=1&&n<=Q.order.length)pick(Q.order[n-1]);
+});
+function finish(early){
+  clearInterval(tick);
+  const done=Q.answers.length; let ok=0; const wrongIdx=[];
+  Q.ids.forEach((qi,k)=>{ if(k>=done)return; const x=curBank.qs[qi]; if(Q.answers[k]===x.a)ok++; else wrongIdx.push(k)});
+  const total=early?Math.max(done,1):Q.ids.length;
+  const pct=Math.round(ok/total*100);
+  const st=mem.stats[curBank.id]||{wrong:[]};
+  const wrongSet=new Set(st.wrong||[]);
+  Q.ids.forEach((qi,k)=>{if(k>=done)return; if(Q.answers[k]===curBank.qs[qi].a)wrongSet.delete(qi);else wrongSet.add(qi)});
+  st.wrong=[...wrongSet]; if(Q.mode==='exam'&&!early) st.best=Math.max(st.best||0,pct);
+  mem.stats[curBank.id]=st; saveStats();
+  const secs=Math.round((Date.now()-Q.start)/1000);
+  $('rsScore').textContent=pct+'%';
+  $('rsDetail').textContent=t('rs_detail',ok,total,Math.floor(secs/60),secs%60);
+  $('rsList').innerHTML=wrongIdx.map(k=>{const x=curBank.qs[Q.ids[k]];return `<div class="mistake"><b>${esc(x.q)}</b><div class="note"><span class="y">${t('your_ans')}: ${esc(x.o[Q.answers[k]]??'—')}</span><br><span class="c">${t('correct')}: ${esc(x.o[x.a])}</span></div></div>`}).join('');
+  $('rsListCard').classList.toggle('hide',!wrongIdx.length);
+  $('rsMist').disabled=!st.wrong.length;
+  show('result');
+}
+$('rsAgain').onclick=()=>startQuiz(Q.mode,shuffle(Q.ids),Q.minPerQ);
+$('rsMist').onclick=()=>startQuiz('practice',shuffle((mem.stats[curBank.id]||{}).wrong||[]));
+$('rsBack').onclick=()=>curBank.shared?go('b-'+curBank.id):openBank(curBank.id);
+
+applyI18n(); route(); Cat.init();
+</script>
+</body>
+</html>
