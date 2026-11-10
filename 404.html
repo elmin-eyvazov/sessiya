@@ -64,6 +64,14 @@ label.f{display:block;font-size:13px;color:var(--mute);margin:12px 0 6px}
 .crumbs{font-size:13px;color:var(--mute);margin-bottom:10px}
 .crumbs a{color:var(--acc);cursor:pointer;text-decoration:none}
 .search{margin-bottom:12px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;flex-wrap:wrap}
+.seg button{border:0;background:none;font:600 14px Inter,sans-serif;padding:10px 14px;cursor:pointer;color:var(--mute)}
+.seg button.on{background:var(--acc);color:#fff}
+.seg button:disabled{opacity:.4;cursor:default}
+.ans{background:#f7f8fa;border-radius:12px;padding:14px;white-space:pre-wrap;line-height:1.5;font-size:15px}
+.ans .lbl{display:block;font-size:12px;font-weight:700;color:var(--mute);margin-bottom:6px;text-transform:uppercase;letter-spacing:.03em}
+.tkq{border-top:1px solid var(--line);padding:14px 0}
+.tkq textarea{min-height:110px;margin-top:8px}
 .empty{padding:18px;text-align:center;color:var(--mute);font-size:14px;border:1px dashed var(--line);border-radius:12px}
 footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-height:1.6}
 @media (max-width:560px){h1{font-size:23px}.q{font-size:17px}.two{grid-template-columns:1fr}nav a{padding:7px 7px;font-size:13px}}
@@ -135,6 +143,13 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
   <div class="card">
     <h2 data-i="pv_title"></h2>
     <div class="row" style="margin-bottom:6px"><span class="pill acc" id="pvCount"></span><span class="pill" id="pvFile"></span></div>
+    <div id="pvTypeBox">
+      <label class="f" data-i="f_type"></label>
+      <div class="seg" id="pvType"><button data-v="mc" data-i="type_mc"></button><button data-v="open" data-i="type_open"></button></div>
+      <div id="pvFmtBox" class="hide"><label class="f" data-i="f_format"></label>
+        <div class="seg" id="pvFmt"><button data-v="written" data-i="fmt_written"></button><button data-v="test" data-i="fmt_test"></button></div>
+        <div class="note" id="pvFmtNote" style="margin-top:8px"></div></div>
+    </div>
     <label class="f" data-i="f_name"></label>
     <input type="text" id="pvName">
     <div class="two">
@@ -162,8 +177,8 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
     <div class="row" id="bkTags" style="margin-top:8px"></div>
     <div class="row" style="margin:14px 0">
       <div class="stat"><span class="note" data-i="st_q"></span><b id="bkTotal"></b></div>
-      <div class="stat"><span class="note" data-i="st_best"></span><b id="bkBest">—</b></div>
-      <div class="stat"><span class="note" data-i="st_wrong"></span><b id="bkWrong">0</b></div>
+      <div class="stat"><span class="note" id="bkS2L"></span><b id="bkBest">—</b></div>
+      <div class="stat"><span class="note" id="bkS3L"></span><b id="bkWrong">0</b></div>
     </div>
     <div id="bkLoading" class="note hide" data-i="loading"></div>
     <div id="bkModes">
@@ -182,7 +197,56 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
         </div>
       </div>
     </div>
+    <div id="bkWModes" class="hide">
+      <div class="card" style="background:#fafbfc">
+        <h2 data-i="cards"></h2>
+        <p class="note" style="margin-top:-6px" data-i="cards_sub"></p>
+        <div class="row"><button class="btn" id="bkCards" data-i="seq_start"></button><button class="btn sec" id="bkCardsRnd" data-i="shuffled"></button><button class="btn sec" id="bkCardsUnk" data-i="repeat_unknown"></button></div>
+      </div>
+      <div class="card" style="background:#fafbfc;margin-bottom:0">
+        <h2 data-i="ticket"></h2>
+        <p class="note" style="margin-top:-6px" data-i="ticket_sub"></p>
+        <div class="row"><select id="tkCount" style="width:auto"></select><select id="tkTime" style="width:auto"></select><button class="btn" id="bkTicket" data-i="ticket_start"></button></div>
+      </div>
+      <div class="note" id="bkAnsNote" style="margin-top:10px"></div>
+    </div>
     <div class="note" id="bkMsg" style="margin-top:10px"></div>
+  </div>
+</section>
+
+<!-- CARDS (written) -->
+<section id="v-cards" class="hide">
+  <div class="card">
+    <div class="row" style="justify-content:space-between;margin-bottom:10px"><span class="note" id="cdPos"></span><button class="btn ghost" id="cdStop" data-i="finish"></button></div>
+    <div class="bar"><i id="cdBar"></i></div>
+    <div id="cdBody">
+      <div class="q" id="cdQ"></div>
+      <div id="cdAnsBox" class="hide">
+        <div class="ans" id="cdAns"></div>
+        <div class="row" style="margin-top:8px"><button class="btn ghost small" id="cdEditBtn" data-i="write_own"></button></div>
+        <div id="cdEdit" class="hide"><textarea id="cdMyAns"></textarea><div class="row" style="margin-top:8px"><button class="btn sec small" id="cdSaveAns" data-i="save_answer"></button></div></div>
+      </div>
+      <div class="row" style="margin-top:12px" id="cdShowRow"><button class="btn" id="cdShow" data-i="show_answer"></button></div>
+      <div class="row hide" style="margin-top:12px" id="cdRateRow"><button class="btn" id="cdKnew" style="background:var(--ok)" data-i="knew"></button><button class="btn" id="cdDidnt" style="background:var(--bad)" data-i="didnt"></button></div>
+    </div>
+    <div id="cdDone" class="hide" style="text-align:center">
+      <div class="note" data-i="result"></div><div class="big" id="cdScore"></div>
+      <div class="row" style="justify-content:center;margin-top:14px"><button class="btn" id="cdAgainUnk" data-i="repeat_unknown"></button><button class="btn sec" id="cdBack" data-i="back_bank"></button></div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKET (written exam) -->
+<section id="v-ticket" class="hide">
+  <div class="card">
+    <div class="row" style="justify-content:space-between;margin-bottom:6px"><b id="tkTitle"></b><span class="timer" id="tkTimer"></span></div>
+    <div class="note" data-i="ticket_hint"></div>
+    <div id="tkList" style="margin-top:8px"></div>
+    <div class="row" style="justify-content:flex-end" id="tkDoneRow"><button class="btn" id="tkDone" data-i="check_answers"></button></div>
+    <div id="tkResult" class="hide" style="text-align:center;margin-top:14px">
+      <div class="note" data-i="self_score"></div><div class="big" id="tkScore"></div>
+      <div class="row" style="justify-content:center;margin-top:10px"><button class="btn" id="tkAgain" data-i="new_ticket"></button><button class="btn sec" id="tkBack" data-i="back_bank"></button></div>
+    </div>
   </div>
 </section>
 
@@ -333,6 +397,27 @@ function dedupe(arr){
 }
 if(typeof module!=='undefined') module.exports={parseBank};
 
+// Question list without options: "1. Question" lines (+ optional "Cavab:/Ответ:/Answer:" answer)
+function parseQuestionList(text){
+  const lines=text.split(/\r?\n/).map(normLine).filter(l=>l.length);
+  const START=/^(\d{1,3})\s*[.)]\s*(\S.*)$/; const ANS=/^(Cavab|Ответ|Answer|Javob)\s*[:\-–]\s*(.*)$/i;
+  const res=[]; let cur=null, inAns=false;
+  for(const l of lines){
+    if(/^\d+\/\d+$/.test(l)) continue;
+    const m=l.match(START);
+    if(m && !(cur && inAns && +m[1]!==cur.n+1)){
+      if(cur) res.push(cur); cur={n:+m[1],q:m[2],ans:''}; inAns=false; continue;
+    }
+    if(!cur) continue;
+    const a=l.match(ANS);
+    if(a){ inAns=true; cur.ans=(cur.ans?cur.ans+'\n':'')+a[2]; continue; }
+    if(inAns) cur.ans+=(cur.ans?'\n':'')+l; else cur.q+=' '+l;
+  }
+  if(cur) res.push(cur);
+  return res.map(x=>({q:x.q.replace(/\s+/g,' ').trim(),ans:x.ans.trim()})).filter(x=>x.q.length>2);
+}
+if(typeof module!=='undefined') module.exports.parseQuestionList=parseQuestionList;
+
 const READY_SETS=[
 {id:"inf",name:"İnformatika (əsaslar)",tag:"Hazır test",qs:[
 {q:"1 bayt neçə bitdən ibarətdir?",o:["4","8","16","2","10"],a:1},
@@ -370,6 +455,15 @@ const READY_SETS=[
 
 const I18N={
 az:{
+f_type:"Fayl növü",type_mc:"Variantlı test",type_open:"Variantsız suallar",f_format:"İmtahan necə olacaq?",fmt_written:"Yazılı (açıq suallar)",fmt_test:"Test (variantlı)",
+fmt_written_note:"Faylda cavablar yoxdur. Kartlarda öz cavablarını yaza bilərsən; kataloq üçün nümunə cavabları biz hazırlayırıq.",fmt_written_has:"{0} sualın cavabı faylda tapıldı.",
+fmt_test_note:"Variantlar yoxdur — hələlik kartlar və bilet rejimində məşq et. Kataloq üçün variantları biz hazırlayırıq.",found_open:"{0} sual tapıldı (variantsız)",
+cards:"Kartlar",cards_sub:"Sualı oxu, yadına sal, sonra cavaba bax və özünü qiymətləndir.",repeat_unknown:"Bilmədiklərimi təkrarla",
+ticket:"İmtahan bileti",ticket_sub:"Təsadüfi suallar, cavabları yaz, sonda nümunə ilə müqayisə et.",ticket_start:"Bilet çək",ticket_hint:"Cavablarını yaz. «Yoxla» basandan sonra nümunə cavablar açılacaq.",ticket_title:"Bilet · {0} sual",
+t_20m:"20 dəqiqə",t_40m:"40 dəqiqə",show_answer:"Cavabı göstər",knew:"Bildim ✓",didnt:"Bilmədim ✗",write_own:"Öz cavabını yaz / redaktə et",save_answer:"Cavabı saxla",
+your_answer_ph:"Cavabını bura yaz…",model_answer:"Nümunə cavab",own_answer:"Sənin cavabın",no_answer:"Nümunə cavab hələ yoxdur — öz cavabını yaz və saxla.",
+check_answers:"Yoxla",new_ticket:"Yeni bilet",self_score:"Öz qiymətin",i_answered_right:"Düzgün cavab verdim",st_answered:"Cavablı",st_unknown:"Bilmədiklərim",
+written_tag:"Yazılı",test_noopts_tag:"Test · variantsız",cards_done:"{0} / {1} bildin",ans_missing_note:"Bu bankda nümunə cavablar yoxdur. Kartlarda öz cavablarını yazıb saxlaya bilərsən (yalnız sənin cihazında).",
 nav_home:"Əsas",nav_catalog:"Kataloq",
 hero_title:"Test bankını yüklə — saniyələr içində interaktiv testə çevir",
 hero_sub:"Universitetin verdiyi PDF, Word və ya mətn faylını at. Sistem sualları və düzgün cavabları özü tapacaq: məşq et, imtahan rejimində özünü yoxla, səhvlərini təkrarla.",
@@ -401,6 +495,15 @@ not_found:"Bank tapılmadı və ya silinib.",load_fail:"Bankı yükləmək alın
 footer:"Sessiya+ heç bir universitetlə əlaqəli deyil. Fayllar sənin brauzerində emal olunur; kataloqa yalnız sən seçdiyin banklar düşür. Müəllif hüquqlarını pozan material barədə «Şikayət et» düyməsi ilə xəbər ver.<br>Hazır testlər müəllif tərəfindən hazırlanmış nümunə suallardır."
 },
 ru:{
+f_type:"Тип файла",type_mc:"Тест с вариантами",type_open:"Вопросы без вариантов",f_format:"Какой будет экзамен?",fmt_written:"Письменный (открытые вопросы)",fmt_test:"Тест (с вариантами)",
+fmt_written_note:"В файле нет ответов. В карточках можно записать свои ответы; для каталога образцы ответов готовим мы.",fmt_written_has:"Ответы найдены для {0} вопросов.",
+fmt_test_note:"Вариантов нет — пока тренируйся в карточках и билетах. Для каталога варианты готовим мы.",found_open:"Найдено вопросов: {0} (без вариантов)",
+cards:"Карточки",cards_sub:"Прочитай вопрос, вспомни ответ, затем открой его и оцени себя.",repeat_unknown:"Повторить, что не знал",
+ticket:"Экзаменационный билет",ticket_sub:"Случайные вопросы, пишешь ответы, в конце сравниваешь с образцом.",ticket_start:"Вытянуть билет",ticket_hint:"Напиши ответы. После «Проверить» откроются образцы ответов.",ticket_title:"Билет · {0} вопр.",
+t_20m:"20 минут",t_40m:"40 минут",show_answer:"Показать ответ",knew:"Знал ✓",didnt:"Не знал ✗",write_own:"Написать / изменить свой ответ",save_answer:"Сохранить ответ",
+your_answer_ph:"Напиши ответ здесь…",model_answer:"Образец ответа",own_answer:"Твой ответ",no_answer:"Образца ответа пока нет — напиши свой и сохрани.",
+check_answers:"Проверить",new_ticket:"Новый билет",self_score:"Твоя оценка",i_answered_right:"Я ответил правильно",st_answered:"С ответами",st_unknown:"Не знаю",
+written_tag:"Письменный",test_noopts_tag:"Тест · без вариантов",cards_done:"Знал {0} из {1}",ans_missing_note:"В этом банке нет образцов ответов. В карточках можно записать и сохранить свои (только на твоём устройстве).",
 nav_home:"Главная",nav_catalog:"Каталог",
 hero_title:"Загрузи тестовый банк — и через секунды он станет интерактивным тестом",
 hero_sub:"Перетащи PDF, Word или текстовый файл, который дал вуз. Система сама найдёт вопросы и правильные ответы: тренируйся, проверяй себя в режиме экзамена, повторяй ошибки.",
@@ -432,6 +535,15 @@ not_found:"Банк не найден или удалён.",load_fail:"Не уд
 footer:"Sessiya+ не связан ни с одним университетом. Файлы обрабатываются в твоём браузере; в каталог попадают только банки, которые ты сам добавил. О материалах, нарушающих авторские права, сообщай кнопкой «Пожаловаться».<br>Готовые тесты — примерные вопросы, составленные автором сайта."
 },
 en:{
+f_type:"File type",type_mc:"Test with options",type_open:"Questions without options",f_format:"What kind of exam?",fmt_written:"Written (open questions)",fmt_test:"Test (multiple choice)",
+fmt_written_note:"The file has no answers. You can write your own in flashcards; for the catalog we prepare model answers.",fmt_written_has:"Answers found for {0} questions.",
+fmt_test_note:"No options yet — practise with flashcards and tickets for now. For the catalog we prepare the options.",found_open:"{0} questions found (no options)",
+cards:"Flashcards",cards_sub:"Read the question, recall the answer, then reveal it and rate yourself.",repeat_unknown:"Review what I didn't know",
+ticket:"Exam ticket",ticket_sub:"Random questions — write your answers, then compare with the model answers.",ticket_start:"Draw a ticket",ticket_hint:"Write your answers. Model answers appear after “Check”.",ticket_title:"Ticket · {0} questions",
+t_20m:"20 minutes",t_40m:"40 minutes",show_answer:"Show answer",knew:"Knew it ✓",didnt:"Didn't ✗",write_own:"Write / edit your answer",save_answer:"Save answer",
+your_answer_ph:"Write your answer here…",model_answer:"Model answer",own_answer:"Your answer",no_answer:"No model answer yet — write your own and save it.",
+check_answers:"Check",new_ticket:"New ticket",self_score:"Your self-score",i_answered_right:"I answered correctly",st_answered:"Answered",st_unknown:"Didn't know",
+written_tag:"Written",test_noopts_tag:"Test · no options",cards_done:"Knew {0} of {1}",ans_missing_note:"This bank has no model answers. In flashcards you can write and save your own (on your device only).",
 nav_home:"Home",nav_catalog:"Catalog",
 hero_title:"Upload your test bank — get an interactive quiz in seconds",
 hero_sub:"Drop the PDF, Word or text file your university gave you. Questions and correct answers are detected automatically: practice, take a timed mock exam, review your mistakes.",
@@ -494,11 +606,15 @@ function applyI18n(){
   $('pvUniOther').placeholder=t('f_uni_other'); $('pvFac').placeholder=t('f_fac_ph'); $('pvSubj').placeholder=t('f_subj_ph');
   $('exCount').innerHTML=[25,50,100,0].map(n=>`<option value="${n}" ${n===50?'selected':''}>${n?t('n_questions',n):t('all_q')}</option>`).join('');
   $('exTime').innerHTML=`<option value="0.6">${t('t_36')}</option><option value="1" selected>${t('t_60')}</option><option value="0">${t('t_none')}</option>`;
+  $('tkCount').innerHTML=[3,5,10].map(n=>`<option value="${n}">${t('n_questions',n)}</option>`).join('');
+  $('tkTime').innerHTML=[[20,'t_20m'],[40,'t_40m'],[0,'t_none']].map(([v,k])=>`<option value="${v}">${t(k)}</option>`).join('');
   $('pvUni').innerHTML=`<option value="">${t('choose')}</option>`+UNIS.map(u=>`<option value="${u[0]}">${esc(u[1])}</option>`).join('')+`<option value="other">${t('other')}</option>`;
 }
 document.querySelectorAll('#lang button').forEach(b=>b.onclick=()=>{LANG=b.dataset.l;store.set('sp_lang',LANG);applyI18n();
   if(!$('v-quiz').classList.contains('hide')){ $('qzPos').textContent=`${Q.i+1} / ${Q.ids.length} · `+(Q.mode==='exam'?t('exam_l'):t('practice_l')); $('qzNext').textContent=Q.i===Q.ids.length-1?t('finish'):t('next'); }
-  else if(!$('v-result').classList.contains('hide')||!$('v-preview').classList.contains('hide')){}
+  else if(!$('v-result').classList.contains('hide')||!$('v-preview').classList.contains('hide')){ if(!$('v-preview').classList.contains('hide')) renderPreview(); }
+  else if(!$('v-cards').classList.contains('hide')){ if(C&&!C.done) renderCard(); }
+  else if(!$('v-ticket').classList.contains('hide')){}
   else if(!$('v-bank').classList.contains('hide')&&curBank){ fillBankHeader(curBank,!!curBank.shared); if(curBank.qs) $('bkTotal').textContent=curBank.qs.length; }
   else route(); });
 
@@ -528,7 +644,7 @@ const Cat={db:null,user:null,canWrite:null,metas:[],ready:false,unsub:null,liste
     const id='k'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
     const chunks=[]; const per=150; for(let i=0;i<b.qs.length;i+=per) chunks.push(b.qs.slice(i,i+per));
     for(let k=0;k<chunks.length;k++){ await this.db.doc(`bankdata/${id}/parts/p${k}`).set({qs:chunks[k]}); }
-    await this.db.doc('banks/'+id).set({name:b.name,uni:b.uni,uniLabel:b.uniLabel,fac:b.fac,subj:b.subj,lang:b.lang,count:b.qs.length,parts:chunks.length,createdAt:Date.now()});
+    await this.db.doc('banks/'+id).set({name:b.name,type:b.type||'mc',format:b.format||'test',uni:b.uni,uniLabel:b.uniLabel,fac:b.fac,subj:b.subj,lang:b.lang,count:b.qs.length,parts:chunks.length,createdAt:Date.now()});
     return id;
   },
   async loadQs(meta){
@@ -540,7 +656,7 @@ const Cat={db:null,user:null,canWrite:null,metas:[],ready:false,unsub:null,liste
 };
 
 // ---------- router (#home, #catalog, #u-<uni>, #f-<uni>--<fac>, #s-<uni>--<fac>--<subj>, #b-<id>) ----------
-const VIEWS=['home','catalog','preview','bank','quiz','result'];
+const VIEWS=['home','catalog','preview','bank','quiz','result','cards','ticket'];
 function show(v){for(const s of VIEWS) $('v-'+s).classList.toggle('hide',s!==v);
   document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',(a.dataset.go==='home'&&v==='home')||(a.dataset.go==='catalog'&&v==='catalog')));
   window.scrollTo(0,0)}
@@ -562,7 +678,7 @@ function route(){
 
 // ---------- home ----------
 function bankCard(b,shared){const st=mem.stats[b.id]||{};const n=b.qs?b.qs.length:b.count;
-  return `<div class="bank" data-id="${b.id}" data-shared="${shared?1:''}"><div style="font-weight:700;margin-bottom:6px">${esc(b.name)}</div>${shared?`<div class="note" style="margin-bottom:6px">${esc(b.uniLabel||uniName(b.uni))}</div>`:''}<div class="row"><span class="pill ${b.tag?'acc':''}">${t('n_q',n)}</span>${st.best!=null?`<span class="pill">${t('best_pct',st.best)}</span>`:''}</div></div>`}
+  return `<div class="bank" data-id="${b.id}" data-shared="${shared?1:''}"><div style="font-weight:700;margin-bottom:6px">${esc(b.name)}</div>${shared?`<div class="note" style="margin-bottom:6px">${esc(b.uniLabel||uniName(b.uni))}</div>`:''}<div class="row"><span class="pill ${b.tag?'acc':''}">${t('n_q',n)}</span>${b.type==='written'?`<span class="pill">${b.format==='test'?t('test_noopts_tag'):t('written_tag')}</span>`:''}${st.best!=null?`<span class="pill">${t('best_pct',st.best)}</span>`:''}</div></div>`}
 function bindBankCards(root){root.querySelectorAll('.bank').forEach(el=>el.onclick=()=>el.dataset.shared?go('b-'+el.dataset.id):openBank(el.dataset.id))}
 function uniCounts(){const c={};for(const m of Cat.metas){c[m.uni]=(c[m.uni]||0)+1}return c}
 function renderHome(){
@@ -665,24 +781,40 @@ async function handleFile(f){
 }
 function guessLang(qs){const s=qs.slice(0,20).map(x=>x.q).join(' ');const cyr=(s.match(/[а-яё]/gi)||[]).length,az=(s.match(/[əğışçöü]/gi)||[]).length,lat=(s.match(/[a-z]/gi)||[]).length;return cyr>lat?'ru':(az>0?'az':'en')}
 function handleText(text,fname){
-  const qs=parseBank(text||'');
-  if(qs.length<1){$('status').innerHTML=t('parse_fail');return}
-  const fenn=(text.match(/F[əә]nn\s*:\s*([^\n]+)/i)||[])[1];
+  const mc=parseBank(text||''), list=parseQuestionList(text||'');
+  if(mc.length<1 && list.length<3){$('status').innerHTML=t('parse_fail');return}
+  const fenn=(text.match(/F[əә]nn\s*:\s*([^\n]+)/i)||[])[1] || (text.match(/[“"«]([^”"»]{3,60})[”"»]\s*f[əә]nnind[əә]n/i)||[])[1];
   const nm=(fenn||fname.replace(/\.(pdf|docx|txt)$/i,'')).replace(/^\s*\d+[a-zA-Z]?\s*/,'').trim().slice(0,80);
-  pending={qs,name:nm};
+  const type=(mc.length>=3 && mc.length>=list.length*0.5)?'mc':'open';
+  pending={mc,list,type,fmt:'written',name:nm};
   $('status').textContent='';
-  $('pvCount').textContent=t('found_q',qs.length); $('pvFile').textContent=fname; $('pvName').value=nm; $('pvSubj').value=nm;
-  $('pvLang').value=guessLang(qs); $('pvMsg').textContent='';
+  $('pvFile').textContent=fname; $('pvName').value=nm; $('pvSubj').value=nm;
+  $('pvLang').value=guessLang(type==='mc'?mc:list); $('pvMsg').textContent='';
   const facs=[...new Set(Cat.metas.map(m=>m.fac).filter(Boolean))]; $('facList').innerHTML=facs.map(f=>`<option value="${esc(f)}">`).join('');
   $('pvPublic').disabled=!Cat.db; if(!Cat.db) $('pvPublic').checked=false;
-  $('pvList').innerHTML=qs.slice(0,3).map((x,i)=>`<div class="mistake"><b>${i+1}. ${esc(x.q)}</b><div class="note">${x.o.map((o,j)=>j===x.a?`<span class="c">✓ ${esc(o)}</span>`:esc(o)).join(' · ')}</div></div>`).join('');
-  show('preview');
+  renderPreview(); show('preview');
 }
+function renderPreview(){
+  const P=pending; const isMc=P.type==='mc';
+  document.querySelectorAll('#pvType button').forEach(b=>{b.classList.toggle('on',b.dataset.v===P.type); b.disabled=(b.dataset.v==='mc'&&!P.mc.length)||(b.dataset.v==='open'&&P.list.length<1)});
+  document.querySelectorAll('#pvFmt button').forEach(b=>b.classList.toggle('on',b.dataset.v===P.fmt));
+  $('pvFmtBox').classList.toggle('hide',isMc);
+  const withAns=P.list.filter(x=>x.ans).length;
+  $('pvFmtNote').textContent=isMc?'':(P.fmt==='written'?(withAns?t('fmt_written_has',withAns):t('fmt_written_note')):t('fmt_test_note'));
+  $('pvCount').textContent=isMc?t('found_q',P.mc.length):t('found_open',P.list.length);
+  $('pvList').innerHTML=isMc
+    ? P.mc.slice(0,3).map((x,i)=>`<div class="mistake"><b>${i+1}. ${esc(x.q)}</b><div class="note">${x.o.map((o,j)=>j===x.a?`<span class="c">✓ ${esc(o)}</span>`:esc(o)).join(' · ')}</div></div>`).join('')
+    : P.list.slice(0,4).map((x,i)=>`<div class="mistake"><b>${i+1}. ${esc(x.q)}</b>${x.ans?`<div class="note c">${esc(x.ans.slice(0,140))}${x.ans.length>140?'…':''}</div>`:''}</div>`).join('');
+}
+document.querySelectorAll('#pvType button').forEach(b=>b.onclick=()=>{pending.type=b.dataset.v;renderPreview()});
+document.querySelectorAll('#pvFmt button').forEach(b=>b.onclick=()=>{pending.fmt=b.dataset.v;renderPreview()});
 $('pvUni').onchange=()=>$('pvUniOther').classList.toggle('hide',$('pvUni').value!=='other');
 $('pvCancel').onclick=()=>go('home');
 $('pvSave').onclick=async()=>{
   const uniSel=$('pvUni').value, uniOther=$('pvUniOther').value.trim();
-  const b={id:'b'+Date.now(),name:$('pvName').value.trim()||pending.name,qs:pending.qs,
+  const isMc=pending.type==='mc';
+  const b={id:'b'+Date.now(),name:$('pvName').value.trim()||pending.name,type:isMc?'mc':'written',format:isMc?'test':pending.fmt,
+    qs:isMc?pending.mc:pending.list.map(x=>({q:x.q,ans:x.ans||''})),
     uni:uniSel==='other'?slug(uniOther):uniSel, uniLabel:uniSel==='other'?uniOther:uniName(uniSel),
     fac:$('pvFac').value.trim(), subj:$('pvSubj').value.trim()||$('pvName').value.trim(), lang:$('pvLang').value};
   mem.banks.unshift(b); saveBanks();
@@ -702,31 +834,35 @@ function getLocal(id){return [...mem.banks,...READY_SETS].find(b=>b.id===id)}
 function crumbsFor(m){ if(!m||!m.uni) return ''; const f=slug(m.fac||'umumi');
   return `<a data-h="catalog">${t('nav_catalog')}</a> › <a data-h="u-${m.uni}">${esc(m.uniLabel||uniName(m.uni))}</a> › <a data-h="f-${m.uni}--${f}">${esc(m.fac||t('general'))}</a> › <a data-h="s-${m.uni}--${f}--${slug(m.subj||m.name)}">${esc(m.subj||m.name)}</a>`}
 function fillBankHeader(b,shared){
-  const st=mem.stats[b.id]||{};
+  const st=mem.stats[b.id]||{}; const W=b.type==='written';
   $('bkName').textContent=b.name; $('bkTotal').textContent=b.qs?b.qs.length:b.count;
-  $('bkBest').textContent=st.best!=null?st.best+'%':'—'; $('bkWrong').textContent=(st.wrong||[]).length;
+  $('bkS2L').textContent=W?t('st_answered'):t('st_best'); $('bkS3L').textContent=W?t('st_unknown'):t('st_wrong');
+  if(W){ $('bkBest').textContent=b.qs?b.qs.filter((x,i)=>getAns(b,i)).length:'—'; $('bkWrong').textContent=(st.unknown||[]).length; $('bkCardsUnk').disabled=!(st.unknown||[]).length;
+    const noAns=b.qs&&b.qs.every((x,i)=>!x.ans); $('bkAnsNote').textContent=noAns?t('ans_missing_note'):''; }
+  else { $('bkBest').textContent=st.best!=null?st.best+'%':'—'; $('bkWrong').textContent=(st.wrong||[]).length; }
   $('bkMistakes').disabled=!(st.wrong||[]).length;
   $('bkCrumbs').innerHTML=crumbsFor(b);
   const langName={az:'Azərbaycan dili',ru:'Русский',en:'English'};
-  $('bkTags').innerHTML=[b.lang?`<span class="pill">${langName[b.lang]||b.lang}</span>`:'',b.tag?`<span class="pill acc">${t('ready_tag')}</span>`:'',shared||b.sharedId?`<span class="pill acc">${t('in_catalog')}</span>`:''].join('');
+  $('bkTags').innerHTML=[b.lang?`<span class="pill">${langName[b.lang]||b.lang}</span>`:'',b.tag?`<span class="pill acc">${t('ready_tag')}</span>`:'',W?`<span class="pill">${b.format==='test'?t('test_noopts_tag'):t('written_tag')}</span>`:'',shared||b.sharedId?`<span class="pill acc">${t('in_catalog')}</span>`:''].join('');
   $('bkReport').classList.toggle('hide',!shared); $('bkDelete').classList.toggle('hide',!!b.tag||(shared&&!Cat.isOwner));
   $('bkMsg').textContent='';
 }
 function openBank(id){
   const b=getLocal(id); if(!b) return go('home');
-  curBank=b; curBank.shared=false; fillBankHeader(b,false); $('bkLoading').classList.add('hide'); $('bkModes').classList.remove('hide');
+  curBank=b; curBank.shared=false; fillBankHeader(b,false); $('bkLoading').classList.add('hide'); showModes();
   if(location.hash!=='#bank') history.replaceState(null,'','#bank'); show('bank');
 }
 async function openShared(id){
   const m=Cat.metas.find(x=>x.id===id);
   if(!m){ curBank=null; show('bank'); $('bkName').textContent=''; $('bkCrumbs').innerHTML=''; $('bkTags').innerHTML='';
-    $('bkModes').classList.add('hide'); $('bkLoading').classList.remove('hide'); $('bkLoading').textContent=Cat.ready?t('not_found'):t('loading'); return }
+    $('bkModes').classList.add('hide'); $('bkWModes').classList.add('hide'); $('bkLoading').classList.remove('hide'); $('bkLoading').textContent=Cat.ready?t('not_found'):t('loading'); return }
   curBank={...m,shared:true,qs:null}; fillBankHeader(curBank,true); show('bank');
-  $('bkModes').classList.add('hide'); $('bkLoading').classList.remove('hide'); $('bkLoading').textContent=t('loading');
+  $('bkModes').classList.add('hide'); $('bkWModes').classList.add('hide'); $('bkLoading').classList.remove('hide'); $('bkLoading').textContent=t('loading');
   try{ curBank.qs=await Cat.loadQs(m); }catch(e){ curBank.qs=[] }
   if(!curBank.qs.length){$('bkLoading').textContent=t('load_fail');return}
-  $('bkTotal').textContent=curBank.qs.length; $('bkLoading').classList.add('hide'); $('bkModes').classList.remove('hide');
+  $('bkTotal').textContent=curBank.qs.length; $('bkLoading').classList.add('hide'); fillBankHeader(curBank,true); showModes();
 }
+function showModes(){ const W=curBank&&curBank.type==='written'; $('bkModes').classList.toggle('hide',W); $('bkWModes').classList.toggle('hide',!W); }
 $('bkDelete').onclick=async()=>{
   const btn=$('bkDelete'); if(btn.dataset.c!=='1'){btn.textContent=t('confirm_delete');btn.dataset.c='1';setTimeout(()=>{btn.textContent=t('delete');btn.dataset.c=''},3000);return}
   btn.dataset.c=''; btn.textContent=t('delete');
@@ -803,6 +939,73 @@ function finish(early){
 $('rsAgain').onclick=()=>startQuiz(Q.mode,shuffle(Q.ids),Q.minPerQ);
 $('rsMist').onclick=()=>startQuiz('practice',shuffle((mem.stats[curBank.id]||{}).wrong||[]));
 $('rsBack').onclick=()=>curBank.shared?go('b-'+curBank.id):openBank(curBank.id);
+
+// ---------- written banks: own answers, cards, ticket ----------
+function myAnsKey(b){return 'sp_myans_'+b.id}
+function getMyAns(b){return store.get(myAnsKey(b),{})}
+function getAns(b,i){const x=b.qs&&b.qs[i];return (x&&x.ans)||getMyAns(b)[i]||''}
+function setMyAns(b,i,v){const m=getMyAns(b); if(v) m[i]=v; else delete m[i]; store.set(myAnsKey(b),m)}
+let C=null;
+function startCards(ids){ if(!ids.length)return; C={ids,i:0,known:0,unknown:[],done:false}; $('cdDone').classList.add('hide'); $('cdBody').classList.remove('hide'); show('cards'); renderCard(); }
+function renderCard(){
+  const qi=C.ids[C.i], x=curBank.qs[qi];
+  $('cdPos').textContent=`${C.i+1} / ${C.ids.length}`; $('cdBar').style.width=(C.i/C.ids.length*100)+'%';
+  $('cdQ').textContent=x.q;
+  $('cdAnsBox').classList.add('hide'); $('cdEdit').classList.add('hide'); $('cdShowRow').classList.remove('hide'); $('cdRateRow').classList.add('hide');
+}
+function revealCard(){
+  const qi=C.ids[C.i], x=curBank.qs[qi], mine=getMyAns(curBank)[qi]||'';
+  let html='';
+  if(x.ans) html+=`<span class="lbl">${t('model_answer')}</span>${esc(x.ans)}`;
+  if(mine) html+=`${x.ans?'<br><br>':''}<span class="lbl">${t('own_answer')}</span>${esc(mine)}`;
+  if(!html) html=`<span class="lbl">${t('model_answer')}</span>${t('no_answer')}`;
+  $('cdAns').innerHTML=html; $('cdMyAns').value=mine; $('cdMyAns').placeholder=t('your_answer_ph');
+  $('cdEdit').classList.toggle('hide',!!(x.ans||mine));
+  $('cdAnsBox').classList.remove('hide'); $('cdShowRow').classList.add('hide'); $('cdRateRow').classList.remove('hide');
+}
+function rateCard(knew){
+  const qi=C.ids[C.i]; const st=mem.stats[curBank.id]||{}; const u=new Set(st.unknown||[]);
+  if(knew){C.known++;u.delete(qi)}else{C.unknown.push(qi);u.add(qi)} st.unknown=[...u]; mem.stats[curBank.id]=st; saveStats();
+  if(C.i<C.ids.length-1){C.i++;renderCard()} else endCards();
+}
+function endCards(){ C.done=true; $('cdBody').classList.add('hide'); $('cdDone').classList.remove('hide'); $('cdBar').style.width='100%';
+  $('cdScore').textContent=t('cards_done',C.known,C.ids.length); $('cdAgainUnk').disabled=!C.unknown.length; }
+$('cdShow').onclick=revealCard; $('cdKnew').onclick=()=>rateCard(true); $('cdDidnt').onclick=()=>rateCard(false);
+$('cdEditBtn').onclick=()=>$('cdEdit').classList.toggle('hide');
+$('cdSaveAns').onclick=()=>{ setMyAns(curBank,C.ids[C.i],$('cdMyAns').value.trim()); revealCard(); };
+$('cdStop').onclick=()=>{ if(C&&!C.done) endCards(); else backToBank(); };
+$('cdAgainUnk').onclick=()=>startCards(shuffle(C.unknown));
+$('cdBack').onclick=()=>backToBank();
+function backToBank(){ curBank.shared?openShared(curBank.id):openBank(curBank.id) }
+$('bkCards').onclick=()=>startCards(curBank.qs.map((_,i)=>i));
+$('bkCardsRnd').onclick=()=>startCards(shuffle(curBank.qs.map((_,i)=>i)));
+$('bkCardsUnk').onclick=()=>startCards(shuffle((mem.stats[curBank.id]||{}).unknown||[]));
+document.addEventListener('keydown',e=>{ if($('v-cards').classList.contains('hide')||!C||C.done||e.target.tagName==='TEXTAREA')return;
+  if(e.key===' '||e.key==='Enter'){ e.preventDefault(); if(!$('cdShowRow').classList.contains('hide')) revealCard(); }
+  else if(!$('cdRateRow').classList.contains('hide')){ if(e.key==='1')rateCard(true); if(e.key==='2')rateCard(false); } });
+let TK=null,tkTick=null;
+function startTicket(){
+  const n=Math.min(+$('tkCount').value,curBank.qs.length); const mins=+$('tkTime').value;
+  TK={ids:shuffle(curBank.qs.map((_,i)=>i)).slice(0,n),start:Date.now(),limit:mins*60,checked:false};
+  $('tkTitle').textContent=t('ticket_title',n);
+  $('tkList').innerHTML=TK.ids.map((qi,k)=>`<div class="tkq"><b>${k+1}. ${esc(curBank.qs[qi].q)}</b><textarea data-k="${k}" placeholder="${esc(t('your_answer_ph'))}"></textarea><div class="tkans hide"></div></div>`).join('');
+  $('tkResult').classList.add('hide'); $('tkDoneRow').classList.remove('hide');
+  clearInterval(tkTick); if(TK.limit) tkTick=setInterval(updTk,500); updTk(); show('ticket');
+}
+function updTk(){ if(!TK||!TK.limit||TK.checked){$('tkTimer').textContent='';return}
+  const left=Math.max(0,TK.limit-Math.floor((Date.now()-TK.start)/1000));
+  $('tkTimer').textContent=String(Math.floor(left/60)).padStart(2,'0')+':'+String(left%60).padStart(2,'0'); $('tkTimer').style.color=left<60?'var(--bad)':'';
+  if(left===0) checkTicket(); }
+function checkTicket(){
+  if(TK.checked) return; TK.checked=true; clearInterval(tkTick); $('tkTimer').textContent='';
+  document.querySelectorAll('#tkList .tkq').forEach((el,k)=>{ const qi=TK.ids[k]; const model=curBank.qs[qi].ans||'', mine=getMyAns(curBank)[qi]||''; el.querySelector('textarea').readOnly=true;
+    const box=el.querySelector('.tkans'); box.classList.remove('hide');
+    box.innerHTML=`<div class="ans" style="margin-top:8px"><span class="lbl">${model||!mine?t('model_answer'):t('own_answer')}</span>${model?esc(model):(mine?esc(mine):t('no_answer'))}</div><label class="row note" style="margin-top:8px;gap:8px;cursor:pointer"><input type="checkbox" class="tkok"> ${t('i_answered_right')}</label>`; });
+  document.querySelectorAll('.tkok').forEach(c=>c.onchange=scoreTicket); scoreTicket();
+  $('tkDoneRow').classList.add('hide'); $('tkResult').classList.remove('hide');
+}
+function scoreTicket(){ const n=TK.ids.length, ok=[...document.querySelectorAll('.tkok')].filter(c=>c.checked).length; $('tkScore').textContent=`${ok} / ${n}`; }
+$('bkTicket').onclick=startTicket; $('tkDone').onclick=checkTicket; $('tkAgain').onclick=startTicket; $('tkBack').onclick=()=>{clearInterval(tkTick);backToBank()};
 
 applyI18n(); route(); Cat.init();
 </script>

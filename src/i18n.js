@@ -1,5 +1,14 @@
 const I18N={
 az:{
+f_type:"Fayl növü",type_mc:"Variantlı test",type_open:"Variantsız suallar",f_format:"İmtahan necə olacaq?",fmt_written:"Yazılı (açıq suallar)",fmt_test:"Test (variantlı)",
+fmt_written_note:"Faylda cavablar yoxdur. Kartlarda öz cavablarını yaza bilərsən; kataloq üçün nümunə cavabları biz hazırlayırıq.",fmt_written_has:"{0} sualın cavabı faylda tapıldı.",
+fmt_test_note:"Variantlar yoxdur — hələlik kartlar və bilet rejimində məşq et. Kataloq üçün variantları biz hazırlayırıq.",found_open:"{0} sual tapıldı (variantsız)",
+cards:"Kartlar",cards_sub:"Sualı oxu, yadına sal, sonra cavaba bax və özünü qiymətləndir.",repeat_unknown:"Bilmədiklərimi təkrarla",
+ticket:"İmtahan bileti",ticket_sub:"Təsadüfi suallar, cavabları yaz, sonda nümunə ilə müqayisə et.",ticket_start:"Bilet çək",ticket_hint:"Cavablarını yaz. «Yoxla» basandan sonra nümunə cavablar açılacaq.",ticket_title:"Bilet · {0} sual",
+t_20m:"20 dəqiqə",t_40m:"40 dəqiqə",show_answer:"Cavabı göstər",knew:"Bildim ✓",didnt:"Bilmədim ✗",write_own:"Öz cavabını yaz / redaktə et",save_answer:"Cavabı saxla",
+your_answer_ph:"Cavabını bura yaz…",model_answer:"Nümunə cavab",own_answer:"Sənin cavabın",no_answer:"Nümunə cavab hələ yoxdur — öz cavabını yaz və saxla.",
+check_answers:"Yoxla",new_ticket:"Yeni bilet",self_score:"Öz qiymətin",i_answered_right:"Düzgün cavab verdim",st_answered:"Cavablı",st_unknown:"Bilmədiklərim",
+written_tag:"Yazılı",test_noopts_tag:"Test · variantsız",cards_done:"{0} / {1} bildin",ans_missing_note:"Bu bankda nümunə cavablar yoxdur. Kartlarda öz cavablarını yazıb saxlaya bilərsən (yalnız sənin cihazında).",
 nav_home:"Əsas",nav_catalog:"Kataloq",
 hero_title:"Test bankını yüklə — saniyələr içində interaktiv testə çevir",
 hero_sub:"Universitetin verdiyi PDF, Word və ya mətn faylını at. Sistem sualları və düzgün cavabları özü tapacaq: məşq et, imtahan rejimində özünü yoxla, səhvlərini təkrarla.",
@@ -31,6 +40,15 @@ not_found:"Bank tapılmadı və ya silinib.",load_fail:"Bankı yükləmək alın
 footer:"Sessiya+ heç bir universitetlə əlaqəli deyil. Fayllar sənin brauzerində emal olunur; kataloqa yalnız sən seçdiyin banklar düşür. Müəllif hüquqlarını pozan material barədə «Şikayət et» düyməsi ilə xəbər ver.<br>Hazır testlər müəllif tərəfindən hazırlanmış nümunə suallardır."
 },
 ru:{
+f_type:"Тип файла",type_mc:"Тест с вариантами",type_open:"Вопросы без вариантов",f_format:"Какой будет экзамен?",fmt_written:"Письменный (открытые вопросы)",fmt_test:"Тест (с вариантами)",
+fmt_written_note:"В файле нет ответов. В карточках можно записать свои ответы; для каталога образцы ответов готовим мы.",fmt_written_has:"Ответы найдены для {0} вопросов.",
+fmt_test_note:"Вариантов нет — пока тренируйся в карточках и билетах. Для каталога варианты готовим мы.",found_open:"Найдено вопросов: {0} (без вариантов)",
+cards:"Карточки",cards_sub:"Прочитай вопрос, вспомни ответ, затем открой его и оцени себя.",repeat_unknown:"Повторить, что не знал",
+ticket:"Экзаменационный билет",ticket_sub:"Случайные вопросы, пишешь ответы, в конце сравниваешь с образцом.",ticket_start:"Вытянуть билет",ticket_hint:"Напиши ответы. После «Проверить» откроются образцы ответов.",ticket_title:"Билет · {0} вопр.",
+t_20m:"20 минут",t_40m:"40 минут",show_answer:"Показать ответ",knew:"Знал ✓",didnt:"Не знал ✗",write_own:"Написать / изменить свой ответ",save_answer:"Сохранить ответ",
+your_answer_ph:"Напиши ответ здесь…",model_answer:"Образец ответа",own_answer:"Твой ответ",no_answer:"Образца ответа пока нет — напиши свой и сохрани.",
+check_answers:"Проверить",new_ticket:"Новый билет",self_score:"Твоя оценка",i_answered_right:"Я ответил правильно",st_answered:"С ответами",st_unknown:"Не знаю",
+written_tag:"Письменный",test_noopts_tag:"Тест · без вариантов",cards_done:"Знал {0} из {1}",ans_missing_note:"В этом банке нет образцов ответов. В карточках можно записать и сохранить свои (только на твоём устройстве).",
 nav_home:"Главная",nav_catalog:"Каталог",
 hero_title:"Загрузи тестовый банк — и через секунды он станет интерактивным тестом",
 hero_sub:"Перетащи PDF, Word или текстовый файл, который дал вуз. Система сама найдёт вопросы и правильные ответы: тренируйся, проверяй себя в режиме экзамена, повторяй ошибки.",
@@ -62,6 +80,15 @@ not_found:"Банк не найден или удалён.",load_fail:"Не уд
 footer:"Sessiya+ не связан ни с одним университетом. Файлы обрабатываются в твоём браузере; в каталог попадают только банки, которые ты сам добавил. О материалах, нарушающих авторские права, сообщай кнопкой «Пожаловаться».<br>Готовые тесты — примерные вопросы, составленные автором сайта."
 },
 en:{
+f_type:"File type",type_mc:"Test with options",type_open:"Questions without options",f_format:"What kind of exam?",fmt_written:"Written (open questions)",fmt_test:"Test (multiple choice)",
+fmt_written_note:"The file has no answers. You can write your own in flashcards; for the catalog we prepare model answers.",fmt_written_has:"Answers found for {0} questions.",
+fmt_test_note:"No options yet — practise with flashcards and tickets for now. For the catalog we prepare the options.",found_open:"{0} questions found (no options)",
+cards:"Flashcards",cards_sub:"Read the question, recall the answer, then reveal it and rate yourself.",repeat_unknown:"Review what I didn't know",
+ticket:"Exam ticket",ticket_sub:"Random questions — write your answers, then compare with the model answers.",ticket_start:"Draw a ticket",ticket_hint:"Write your answers. Model answers appear after “Check”.",ticket_title:"Ticket · {0} questions",
+t_20m:"20 minutes",t_40m:"40 minutes",show_answer:"Show answer",knew:"Knew it ✓",didnt:"Didn't ✗",write_own:"Write / edit your answer",save_answer:"Save answer",
+your_answer_ph:"Write your answer here…",model_answer:"Model answer",own_answer:"Your answer",no_answer:"No model answer yet — write your own and save it.",
+check_answers:"Check",new_ticket:"New ticket",self_score:"Your self-score",i_answered_right:"I answered correctly",st_answered:"Answered",st_unknown:"Didn't know",
+written_tag:"Written",test_noopts_tag:"Test · no options",cards_done:"Knew {0} of {1}",ans_missing_note:"This bank has no model answers. In flashcards you can write and save your own (on your device only).",
 nav_home:"Home",nav_catalog:"Catalog",
 hero_title:"Upload your test bank — get an interactive quiz in seconds",
 hero_sub:"Drop the PDF, Word or text file your university gave you. Questions and correct answers are detected automatically: practice, take a timed mock exam, review your mistakes.",

@@ -113,3 +113,24 @@ function dedupe(arr){
   const seen=new Set(); return arr.filter(x=>{const k=x.q+'|'+x.o.join('|'); if(seen.has(k)) return false; seen.add(k); return x.q.length>2;});
 }
 if(typeof module!=='undefined') module.exports={parseBank};
+
+// Question list without options: "1. Question" lines (+ optional "Cavab:/Ответ:/Answer:" answer)
+function parseQuestionList(text){
+  const lines=text.split(/\r?\n/).map(normLine).filter(l=>l.length);
+  const START=/^(\d{1,3})\s*[.)]\s*(\S.*)$/; const ANS=/^(Cavab|Ответ|Answer|Javob)\s*[:\-–]\s*(.*)$/i;
+  const res=[]; let cur=null, inAns=false;
+  for(const l of lines){
+    if(/^\d+\/\d+$/.test(l)) continue;
+    const m=l.match(START);
+    if(m && !(cur && inAns && +m[1]!==cur.n+1)){
+      if(cur) res.push(cur); cur={n:+m[1],q:m[2],ans:''}; inAns=false; continue;
+    }
+    if(!cur) continue;
+    const a=l.match(ANS);
+    if(a){ inAns=true; cur.ans=(cur.ans?cur.ans+'\n':'')+a[2]; continue; }
+    if(inAns) cur.ans+=(cur.ans?'\n':'')+l; else cur.q+=' '+l;
+  }
+  if(cur) res.push(cur);
+  return res.map(x=>({q:x.q.replace(/\s+/g,' ').trim(),ans:x.ans.trim()})).filter(x=>x.q.length>2);
+}
+if(typeof module!=='undefined') module.exports.parseQuestionList=parseQuestionList;
