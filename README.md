@@ -8,3 +8,4 @@ Interaktiv test platforması: universitet test banklarını (PDF/DOCX/TXT) brauz
 - Elanlar lövhəsi (`#board`): otaq yoldaşı / mənzil, kitab və əşyalar, repetitorlar, iş, itirilmiş. Baza: Firebase Firestore (`src/board.js` → `FB_CONFIG`, qaydalar: `firestore.rules`). Konfiqsiz test: `?demo#board`
 - `src/` — mənbə kodu (`app.html`, `tools.js`, `board.js`, `parser.js`, `sets.js`, `i18n.js`); `python3 build.py` → `index.html`
 - `data/catalog.json` — kataloq (vuz → fakültə → fənn), `data/banks/<id>.json` — suallar
+- SEO: `build.py` hər bank üçün statik səhifə `t/<id>.html`, siyahı `t/index.html` və `sitemap.xml` yaradır (`BASE` — saytın ünvanı, domen alınanda dəyişdirilməli)

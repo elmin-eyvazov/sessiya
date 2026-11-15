@@ -1,2 +1,3 @@
 User-agent: *
 Allow: /
+Sitemap: https://elmin-eyvazov.github.io/sessiya/sitemap.xml

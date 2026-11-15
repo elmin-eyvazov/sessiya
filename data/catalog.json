@@ -1,1 +1,121 @@
-{"banks":[]}
+{
+ "banks": [
+  {
+   "name": "Информатика (основы) — тест",
+   "uni": "umumi",
+   "uniLabel": "Bütün universitetlər (ümumi fənlər)",
+   "fac": "İnformasiya texnologiyaları",
+   "subj": "İnformatika",
+   "lang": "ru",
+   "id": "ruinformatika",
+   "type": "mc",
+   "format": "test",
+   "count": 20,
+   "createdAt": 1794766160855
+  },
+  {
+   "name": "Verilənlər bazası və SQL — test",
+   "uni": "umumi",
+   "uniLabel": "Bütün universitetlər (ümumi fənlər)",
+   "fac": "İnformasiya texnologiyaları",
+   "subj": "Verilənlər bazası (SQL)",
+   "lang": "az",
+   "id": "sqldb",
+   "type": "mc",
+   "format": "test",
+   "count": 25,
+   "createdAt": 1794766160824
+  },
+  {
+   "name": "Proqramlaşdırmanın əsasları (C++) — test",
+   "uni": "umumi",
+   "uniLabel": "Bütün universitetlər (ümumi fənlər)",
+   "fac": "İnformasiya texnologiyaları",
+   "subj": "Proqramlaşdırmanın əsasları (C++)",
+   "lang": "az",
+   "id": "cpp",
+   "type": "mc",
+   "format": "test",
+   "count": 30,
+   "createdAt": 1794766160795
+  },
+  {
+   "name": "Makroiqtisadiyyat — əsas test sualları",
+   "uni": "umumi",
+   "uniLabel": "Bütün universitetlər (ümumi fənlər)",
+   "fac": "İqtisadiyyat",
+   "subj": "Makroiqtisadiyyat",
+   "lang": "az",
+   "id": "makro",
+   "type": "mc",
+   "format": "test",
+   "count": 25,
+   "createdAt": 1794766160770
+  },
+  {
+   "name": "Fəlsəfə — əsas test sualları",
+   "uni": "umumi",
+   "uniLabel": "Bütün universitetlər (ümumi fənlər)",
+   "fac": "Ümumi fənlər",
+   "subj": "Fəlsəfə",
+   "lang": "az",
+   "id": "felsefe",
+   "type": "mc",
+   "format": "test",
+   "count": 25,
+   "createdAt": 1794766160745
+  },
+  {
+   "name": "Ali riyaziyyat — limit, törəmə, inteqral, matrislər",
+   "uni": "umumi",
+   "uniLabel": "Bütün universitetlər (ümumi fənlər)",
+   "fac": "Ümumi fənlər",
+   "subj": "Ali riyaziyyat",
+   "lang": "az",
+   "id": "aliriyaziyyat",
+   "type": "mc",
+   "format": "test",
+   "count": 30,
+   "createdAt": 1794766160721
+  },
+  {
+   "name": "История Азербайджана — основные тесты",
+   "uni": "umumi",
+   "uniLabel": "Bütün universitetlər (ümumi fənlər)",
+   "fac": "Ümumi fənlər",
+   "subj": "Azərbaycan tarixi",
+   "lang": "ru",
+   "id": "ruistoriya",
+   "type": "mc",
+   "format": "test",
+   "count": 20,
+   "createdAt": 1794766160697
+  },
+  {
+   "name": "Azərbaycan tarixi — imtahan sualları (yazılı)",
+   "uni": "umumi",
+   "uniLabel": "Bütün universitetlər (ümumi fənlər)",
+   "fac": "Ümumi fənlər",
+   "subj": "Azərbaycan tarixi",
+   "lang": "az",
+   "id": "aztarixw",
+   "type": "written",
+   "format": "written",
+   "count": 15,
+   "createdAt": 1794766160672
+  },
+  {
+   "name": "Azərbaycan tarixi — əsas test sualları",
+   "uni": "umumi",
+   "uniLabel": "Bütün universitetlər (ümumi fənlər)",
+   "fac": "Ümumi fənlər",
+   "subj": "Azərbaycan tarixi",
+   "lang": "az",
+   "id": "aztarix",
+   "type": "mc",
+   "format": "test",
+   "count": 30,
+   "createdAt": 1794766160642
+  }
+ ]
+}
