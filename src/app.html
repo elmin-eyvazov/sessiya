@@ -4,8 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="google-site-verification" content="lP3hxovqAq7WJnPxLm0JtIpXFez7lgq6jF0V_5w3Gco" />
-<title>Sessiya+ — test bankını interaktiv testə çevir</title>
-<meta name="description" content="Universitet test banklarını interaktiv testə çevir: məşq, imtahan rejimi, səhvlər üzərində iş. Vuz, fakültə və fənn üzrə kataloq.">
+<title>Sessiya+ — tələbə üçün testlər, elanlar və alətlər</title>
+<meta name="description" content="Sessiya+ — Azərbaycan tələbələri üçün hər şey bir yerdə: imtahana hazırlıq testləri, otaq yoldaşı və mənzil elanları, kitablar, repetitorlar, bal kalkulyatoru.">
+<meta name="theme-color" content="#2f5bea">
+<link rel="icon" href="icons/favicon.svg" type="image/svg+xml"><link rel="icon" href="icons/icon-192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png"><link rel="manifest" href="manifest.webmanifest">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Sessiya+">
+<meta property="og:title" content="Sessiya+ — tələbə üçün hər şey bir yerdə">
+<meta property="og:description" content="İmtahana hazırlıq testləri, otaq yoldaşı və mənzil, kitablar, repetitorlar və faydalı alətlər. Pulsuz.">
+<meta property="og:image" content="%%BASE%%og.png"><meta property="og:url" content="%%BASE%%"><meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -81,6 +88,13 @@ a.btn{text-decoration:none}
 .gprow .btn{padding:8px 0}
 mark{background:#fff1a8;color:inherit;border-radius:3px;padding:0 1px}
 .tico{font-size:20px;margin-right:6px}
+.hub{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}
+.hub a{display:block;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:14px;background:#fff;cursor:pointer;transition:.15s}
+.hub a:hover{border-color:var(--acc);background:var(--acc2)}
+.hub .hi{font-size:26px;display:block;margin-bottom:6px}.hub b{display:block;font-size:15px;line-height:1.25}.hub span.note{display:block;margin-top:4px;font-size:12.5px}
+.hub a.main{grid-column:1/-1;background:var(--acc);border-color:var(--acc);color:#fff}.hub a.main .note{color:#dbe4ff}.hub a.main:hover{background:#2850d6}
+.about h3{margin:18px 0 6px;font-size:16px}.about p{margin:0 0 8px;line-height:1.55}
+footer a{color:var(--mute)}
 .gb{display:inline-block;min-width:26px;text-align:center;font-size:13px;font-weight:800;padding:3px 7px;border-radius:8px;color:#fff;vertical-align:middle}
 .chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin:0 -2px;scrollbar-width:none}
 .chips::-webkit-scrollbar{display:none}
@@ -107,7 +121,26 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
 <!-- HOME -->
 <section id="v-home">
   <div class="card">
-    <h1 data-i="hero_title"></h1>
+    <h1 style="margin:0 0 6px" data-i="hub_title"></h1>
+    <p class="muted" style="margin:0" data-i="hub_sub"></p>
+    <div class="hub">
+      <a class="main" data-h="catalog"><span class="hi">📝</span><b data-i="hub_tests"></b><span class="note" data-i="hub_tests_d"></span></a>
+      <a data-h="board-room"><span class="hi">🏠</span><b data-i="hub_room"></b><span class="note" data-i="hub_room_d"></span></a>
+      <a data-h="board"><span class="hi">📌</span><b data-i="hub_ads"></b><span class="note" data-i="hub_ads_d"></span></a>
+      <a data-h="tools"><span class="hi">🧮</span><b data-i="hub_tools"></b><span class="note" data-i="hub_tools_d"></span></a>
+      <a data-h="about"><span class="hi">ℹ️</span><b data-i="about_link"></b><span class="note" data-i="hub_about_d"></span></a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="row" style="justify-content:space-between;margin-bottom:4px"><h2 style="margin:0" data-i="find_title"></h2><button class="btn ghost small" data-go="catalog" data-i="find_more"></button></div>
+    <p class="note" style="margin:0 0 10px" data-i="find_sub"></p>
+    <input type="text" class="search" id="hmSearch" autocomplete="off">
+    <div class="grid" id="hmFound" style="margin-top:12px"></div>
+  </div>
+
+  <div class="card" id="hmUpload">
+    <h2 style="margin:0 0 6px" data-i="hero_title"></h2>
     <p class="muted" style="margin:0 0 16px" data-i="hero_sub"></p>
     <div class="row" style="gap:16px;margin-bottom:12px;align-items:flex-end">
       <div><div class="note" style="margin-bottom:6px" data-i="f_type"></div><div class="seg" id="hmType"><button data-v="mc" data-i="type_mc"></button><button data-v="open" data-i="type_open"></button></div></div>
@@ -400,6 +433,10 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
 </section>
 
 <!-- RESULT -->
+<section id="v-about" class="hide">
+  <div class="card about"><h1 style="margin:0 0 10px" data-i="about_link"></h1><div id="abBody"></div></div>
+</section>
+
 <section id="v-result" class="hide">
   <div class="card" style="text-align:center">
     <div class="note" data-i="result"></div>
@@ -410,7 +447,7 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
   <div class="card" id="rsListCard"><h2 data-i="wrong_answers"></h2><div id="rsList"></div></div>
 </section>
 
-<footer><div data-i="footer"></div><p style="margin-top:8px"><a href="t/" data-i="all_banks_link">📚 Bütün test bankları və suallar</a></p></footer>
+<footer><div data-i="footer"></div><p style="margin-top:8px"><a data-h="about" href="#about" data-i="about_link">Sayt haqqında</a> · <a href="t/" data-i="all_banks_link">📚 Bütün test bankları və suallar</a></p></footer>
 </div>
 
 <script>
@@ -445,7 +482,7 @@ function applyI18n(){
   document.querySelectorAll('[data-i]').forEach(el=>{const v=t(el.dataset.i); if(/<[a-z]/.test(v)) el.innerHTML=v; else el.textContent=v});
   document.querySelectorAll('[data-ph]').forEach(el=>el.placeholder=t(el.dataset.ph));
   document.querySelectorAll('#lang button').forEach(b=>b.classList.toggle('on',b.dataset.l===LANG));
-  $('catSearch').placeholder=t('search_ph'); $('bkSearch').placeholder=t('search_q_ph'); $('caSubj').placeholder=t('cal_subj_ph'); if(typeof HOME!=='undefined') renderHomeType();
+  $('catSearch').placeholder=t('search_ph'); $('hmSearch').placeholder=t('find_ph'); $('bkSearch').placeholder=t('search_q_ph'); $('caSubj').placeholder=t('cal_subj_ph'); if(typeof HOME!=='undefined') renderHomeType();
   $('pvUniOther').placeholder=t('f_uni_other'); $('pvFac').placeholder=t('f_fac_ph'); $('pvSubj').placeholder=t('f_subj_ph');
   $('exCount').innerHTML=[25,50,100,0].map(n=>`<option value="${n}" ${n===50?'selected':''}>${n?t('n_questions',n):t('all_q')}</option>`).join('');
   $('exTime').innerHTML=`<option value="0.6">${t('t_36')}</option><option value="1" selected>${t('t_60')}</option><option value="0">${t('t_none')}</option>`;
@@ -499,7 +536,7 @@ const Cat={db:null,user:null,canWrite:null,metas:[],ready:false,unsub:null,liste
 };
 
 // ---------- router (#home, #catalog, #u-<uni>, #f-<uni>--<fac>, #s-<uni>--<fac>--<subj>, #b-<id>) ----------
-const VIEWS=['home','catalog','board','post','tools','preview','bank','quiz','result','cards','ticket'];
+const VIEWS=['home','catalog','board','post','tools','about','preview','bank','quiz','result','cards','ticket'];
 function show(v){for(const s of VIEWS) $('v-'+s).classList.toggle('hide',s!==v);
   document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',a.dataset.go===v));
   window.scrollTo(0,0)}
@@ -511,6 +548,7 @@ function route(){
   const h=location.hash.replace(/^#/,'')||'home'; let m;
   if(h==='home') return renderHome();
   if(h==='catalog') return renderCatalog({});
+  if(h==='about') return renderAbout();
   if(m=h.match(/^board(?:-([a-z]+))?$/)) return renderBoard(m[1]);
   if(m=h.match(/^post(?:-([a-z]+))?$/)) return renderPost(m[1]);
   if(m=h.match(/^tools(?:-(calc|gpa|cal|pomo))?$/)) return renderTools(m&&m[1]);
@@ -530,15 +568,30 @@ function renderHome(){
   $('myBanks').innerHTML=mem.banks.map(b=>bankCard(b)).join(''); $('noBanks').classList.toggle('hide',mem.banks.length>0);
   $('readyBanks').innerHTML=READY_SETS.map(b=>bankCard(b)).join('');
   bindBankCards($('myBanks')); bindBankCards($('readyBanks'));
-  renderHomeUnis(); renderProgress(); renderHomeBoard(); show('home'); Board.start(); document.title=t('doc_title');
+  renderHomeUnis(); renderFind(); renderProgress(); renderHomeBoard(); show('home'); Board.start(); document.title=t('doc_title');
 }
 function renderHomeUnis(){
   const c=uniCounts(); const ids=Object.keys(c).sort((a,b)=>c[b]-c[a]).slice(0,6);
   $('homeUnis').innerHTML=ids.length?ids.map(id=>`<div class="tile" data-u="${id}"><span style="font-weight:600">${esc(labelForUni(id))}</span><span class="pill">${c[id]}</span></div>`).join(''):`<div class="empty" style="grid-column:1/-1">${Cat.ready?t('cat_empty_home'):t('loading')}</div>`;
   $('homeUnis').querySelectorAll('.tile').forEach(el=>el.onclick=()=>go('u-'+el.dataset.u));
 }
+// ---------- home: search across ready quizzes ----------
+const SYN=[['istor','tarix'],['history','tarix'],['matem','riyaz'],['math','riyaz'],['vyssh','riyaz'],['filos','felsef'],['philos','felsef'],['ekonom','iqtisad'],['econom','iqtisad'],['makro','makro'],['macro','makro'],['baz','sql'],['database','sql'],['program','proqram'],['c++','c'],['inform','informat']];
+const nrm=s=>String(s||'').replace(/\+/g,' plus ').split(/\s+/).map(w=>slug(w)).join(' ');
+function renderFind(){
+  const q=nrm($('hmSearch').value.trim()); const words=q.split(' ').filter(Boolean);
+  const all=Cat.metas.map(m=>({m,sh:true})).concat(READY_SETS.map(b=>({m:b,sh:false})));
+  const hay=x=>nrm([x.m.name,x.m.subj,x.m.fac,x.m.uniLabel,x.m.lang==='ru'?'russkiy rus':''].join(' '));
+  const ok=x=>{const h=hay(x); return words.every(w=>h.includes(w)||SYN.some(([a,b])=>w.startsWith(a)&&h.includes(b)))};
+  const res=(words.length?all.filter(ok):all.filter(x=>x.sh)).slice(0,words.length?12:6);
+  $('hmFound').innerHTML=res.length?res.map(x=>bankCard(x.m,x.sh)).join(''):`<div class="empty" style="grid-column:1/-1">${Cat.ready?t('find_none'):t('loading')}</div>`;
+  bindBankCards($('hmFound'));
+}
+$('hmSearch').addEventListener('input',renderFind);
+$('hmSearch').addEventListener('keydown',e=>{if(e.key==='Enter'){const f=$('hmFound').querySelector('.bank'); if(f) f.click()}});
+function renderAbout(){ show('about'); $('abBody').innerHTML=t('about_html'); document.title=t('about_link')+' | Sessiya+' }
 function labelForUni(id){const m=Cat.metas.find(x=>x.uni===id);return (m&&m.uniLabel)||uniName(id)}
-Cat.on(()=>{const h=location.hash.replace(/^#/,'')||'home'; if(h==='home') renderHomeUnis(); else if(/^(catalog|[ufs]-)/.test(h)) route(); else if(/^b-/.test(h)&&!curBank) route();});
+Cat.on(()=>{const h=location.hash.replace(/^#/,'')||'home'; if(h==='home'){renderHomeUnis();renderFind()} else if(/^(catalog|[ufs]-)/.test(h)) route(); else if(/^b-/.test(h)&&!curBank) route();});
 
 // ---------- catalog ----------
 let catState={};
@@ -867,6 +920,7 @@ $('bkTicket').onclick=startTicket; $('tkDone').onclick=checkTicket; $('tkAgain')
 /*TOOLSJS*/
 /*BOARDJS*/
 applyI18n(); renderHomeType(); initTools(); initBoard(); route(); Cat.init();
+if('serviceWorker' in navigator && location.protocol==='https:') addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
 </script>
 </body>
 </html>

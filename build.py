@@ -7,6 +7,7 @@ BASE = 'https://elmin-eyvazov.github.io/sessiya/'   # при переезде н
 a = open('src/app.html', encoding='utf-8').read()
 for k, f in (('/*TOOLSJS*/', 'tools.js'), ('/*BOARDJS*/', 'board.js'), ('/*PARSER*/', 'parser.js'), ('/*SETS*/', 'sets.js'), ('/*I18N*/', 'i18n.js')):
     a = a.replace(k, open('src/' + f, encoding='utf-8').read())
+a = a.replace('%%BASE%%', BASE)
 for out in ('index.html', '404.html'):
     open(out, 'w', encoding='utf-8').write(a)
 print('built', len(a))
@@ -38,7 +39,7 @@ details summary{cursor:pointer;color:#2f5bea;font-size:14px;margin-top:6px}detai
 def page(lang, title, desc, url, body):
     return f"""<!DOCTYPE html><html lang="{lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{E(title)}</title><meta name="description" content="{E(desc)}"><link rel="canonical" href="{url}">
-<meta property="og:title" content="{E(title)}"><meta property="og:description" content="{E(desc)}"><meta property="og:url" content="{url}"><meta property="og:type" content="website">
+<meta property="og:title" content="{E(title)}"><meta property="og:description" content="{E(desc)}"><meta property="og:url" content="{url}"><meta property="og:type" content="website"><meta property="og:image" content="{BASE}og.png"><link rel="icon" href="../icons/favicon.svg" type="image/svg+xml">
 <style>{CSS}</style></head><body><div class="w"><a class="logo" href="../">Sessiya<b>+</b></a>
 {body}</div></body></html>"""
 
