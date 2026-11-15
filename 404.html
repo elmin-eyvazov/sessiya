@@ -888,7 +888,7 @@ function renderFind(){
   const words=nrm($('hmSearch').value.trim()).split(' ').filter(w=>w&&w!=='x');
   const all=Cat.metas.map(m=>({m,sh:true})).concat(READY_SETS.map(b=>({m:b,sh:false})));
   const hay=x=>nrm([x.m.name,x.m.subj,x.m.fac,x.m.uniLabel,x.m.lang==='ru'?'russkiy rus':''].join(' '));
-  const ok=x=>{const h=hay(x); return words.every(w=>h.includes(w)||SYN.some(([a,b])=>w.startsWith(a)&&h.includes(b)))};
+  const ok=x=>{const h=hay(x); return words.every(w=>h.includes(w)||SYN.some(([a,b])=>(w.startsWith(a)||(w.length>=3&&a.startsWith(w)))&&h.includes(b)))};
   const res=(words.length?all.filter(ok):all.filter(x=>x.sh)).slice(0,words.length?12:6);
   $('hmFound').innerHTML=res.length?res.map(x=>bankCard(x.m,x.sh)).join(''):`<div class="empty" style="grid-column:1/-1">${Cat.ready?t('find_none'):t('loading')}</div>`;
   bindBankCards($('hmFound'));
