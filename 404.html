@@ -39,7 +39,7 @@ h2{font-size:18px;margin:0 0 12px}
 .tile{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .pill{display:inline-block;font-size:12px;font-weight:600;padding:3px 9px;border-radius:99px;background:#eceef2;color:var(--mute)}
 .pill.acc{background:var(--acc2);color:var(--acc)}
-textarea,input[type=text],select{width:100%;font:15px Inter,sans-serif;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
+textarea,input[type=text],input[type=number],input[type=date],select{width:100%;font:15px Inter,sans-serif;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
 textarea{min-height:150px}
 label.f{display:block;font-size:13px;color:var(--mute);margin:12px 0 6px}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -73,6 +73,13 @@ label.f{display:block;font-size:13px;color:var(--mute);margin:12px 0 6px}
 .tkq{border-top:1px solid var(--line);padding:14px 0}
 .tkq textarea{min-height:110px;margin-top:8px}
 .empty{padding:18px;text-align:center;color:var(--mute);font-size:14px;border:1px dashed var(--line);border-radius:12px}
+a.tile{text-decoration:none;color:var(--ink)}
+.gprow{display:grid;grid-template-columns:1fr 64px 64px 34px;gap:6px;margin-bottom:6px;align-items:center}
+.gprow.hd span{font-size:12px;color:var(--mute)}
+.gprow .btn{padding:8px 0}
+mark{background:#fff1a8;color:inherit;border-radius:3px;padding:0 1px}
+.tico{font-size:20px;margin-right:6px}
+.gb{display:inline-block;min-width:26px;text-align:center;font-size:13px;font-weight:800;padding:3px 7px;border-radius:8px;color:#fff;vertical-align:middle}
 footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-height:1.6}
 @media (max-width:560px){h1{font-size:23px}.q{font-size:17px}.two{grid-template-columns:1fr}nav a{padding:7px 7px;font-size:13px}}
 </style>
@@ -81,7 +88,7 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
 <div class="wrap">
 <header>
   <div class="logo" id="logo">Sessiya<b>+</b></div>
-  <nav><a data-go="home" data-i="nav_home"></a><a data-go="catalog" data-i="nav_catalog"></a></nav>
+  <nav><a data-go="home" data-i="nav_home"></a><a data-go="catalog" data-i="nav_catalog"></a><a data-go="tools" data-i="nav_tools"></a></nav>
   <div class="lang" id="lang"><button data-l="az">AZ</button><button data-l="ru">RU</button><button data-l="en">EN</button></div>
 </header>
 
@@ -107,6 +114,23 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
       <div class="row" style="margin-top:10px"><button class="btn" id="pasteGo" data-i="paste_go"></button></div>
     </div>
     <div id="status" class="note" style="margin-top:12px"></div>
+  </div>
+
+  <div class="card">
+    <div class="row" style="justify-content:space-between;margin-bottom:10px"><h2 style="margin:0" data-i="prog_title"></h2><button class="btn ghost small" data-go="tools" data-i="all_tools"></button></div>
+    <div class="row">
+      <div class="stat"><span class="note" data-i="prog_streak"></span><b id="prStreak"></b></div>
+      <div class="stat"><span class="note" data-i="prog_today"></span><b id="prToday"></b></div>
+      <div class="stat"><span class="note" data-i="prog_total"></span><b id="prTotal"></b></div>
+      <div class="stat"><span class="note" data-i="prog_next"></span><b id="prNext" style="font-size:16px"></b></div>
+    </div>
+    <div class="note" id="prTip" style="margin-top:10px"></div>
+    <div class="grid" style="margin-top:12px;grid-template-columns:repeat(auto-fill,minmax(160px,1fr))">
+      <a class="tile" data-h="tools-calc"><span><span class="tico">🧮</span><b data-i="tl_calc"></b></span></a>
+      <a class="tile" data-h="tools-gpa"><span><span class="tico">🎓</span><b data-i="tl_gpa"></b></span></a>
+      <a class="tile" data-h="tools-cal"><span><span class="tico">📅</span><b data-i="tl_cal"></b></span></a>
+      <a class="tile" data-h="tools-pomo"><span><span class="tico">🍅</span><b data-i="tl_pomo"></b></span></a>
+    </div>
   </div>
 
   <div class="card">
@@ -140,6 +164,47 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
     <input type="text" class="search" id="catSearch">
     <div id="catList"></div>
     <div class="note" id="catNote" style="margin-top:12px"></div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section id="v-tools" class="hide">
+  <div class="card">
+    <h1 style="font-size:24px" data-i="tools_title"></h1>
+    <p class="note" style="margin-top:0" data-i="tools_sub"></p>
+    <div class="seg" id="tlTabs"><button data-v="calc" data-i="tl_calc"></button><button data-v="gpa" data-i="tl_gpa"></button><button data-v="cal" data-i="tl_cal"></button><button data-v="pomo" data-i="tl_pomo"></button></div>
+  </div>
+  <div class="card hide" id="tl-calc">
+    <h2 data-i="calc_title"></h2>
+    <p class="note" style="margin-top:-6px" data-i="calc_sub"></p>
+    <label class="f" data-i="calc_sem"></label>
+    <input type="number" id="clSem" min="0" max="50" step="0.5" inputmode="decimal" placeholder="35">
+    <div id="clTable" style="margin-top:12px"></div>
+    <label class="f" data-i="calc_exam"></label>
+    <input type="number" id="clExam" min="0" max="50" step="0.5" inputmode="decimal" placeholder="40">
+    <div id="clFinal" style="margin-top:12px"></div>
+  </div>
+  <div class="card hide" id="tl-gpa">
+    <h2 data-i="gpa_title"></h2>
+    <p class="note" style="margin-top:-6px" data-i="gpa_sub"></p>
+    <div id="gpRows"></div>
+    <div class="row" style="margin-top:8px"><button class="btn sec small" id="gpAdd" data-i="gpa_add"></button></div>
+    <div id="gpOut" style="margin-top:14px"></div>
+  </div>
+  <div class="card hide" id="tl-cal">
+    <h2 data-i="cal_title"></h2>
+    <p class="note" style="margin-top:-6px" data-i="cal_sub"></p>
+    <div class="two"><div><label class="f" data-i="cal_subj"></label><input type="text" id="caSubj"></div><div><label class="f" data-i="cal_date"></label><input type="date" id="caDate"></div></div>
+    <div class="row" style="margin-top:12px"><button class="btn" id="caAdd" data-i="cal_add"></button></div>
+    <div id="caList" style="margin-top:14px"></div>
+  </div>
+  <div class="card hide" id="tl-pomo" style="text-align:center">
+    <h2 data-i="pomo_title"></h2>
+    <p class="note" style="margin-top:-6px" data-i="pomo_sub"></p>
+    <div class="seg" id="pmMode"><button data-v="25" data-i="pomo_work"></button><button data-v="5" data-i="pomo_break"></button><button data-v="15" data-i="pomo_long"></button></div>
+    <div class="big timer" id="pmTime" style="font-size:68px;margin:18px 0">25:00</div>
+    <div class="row" style="justify-content:center"><button class="btn" id="pmStart"></button><button class="btn sec" id="pmReset" data-i="pomo_reset"></button></div>
+    <div class="note" id="pmCount" style="margin-top:14px"></div>
   </div>
 </section>
 
@@ -178,7 +243,7 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
   <div class="card">
     <div class="crumbs" id="bkCrumbs"></div>
     <div class="row" style="justify-content:space-between"><h2 id="bkName" style="margin:0"></h2>
-      <div class="row" style="gap:2px"><button class="btn ghost small" id="bkReport" data-i="report"></button><button class="btn ghost small" id="bkDelete" data-i="delete"></button></div></div>
+      <div class="row" style="gap:2px"><button class="btn ghost small" id="bkShare" data-i="share"></button><button class="btn ghost small" id="bkReport" data-i="report"></button><button class="btn ghost small" id="bkDelete" data-i="delete"></button></div></div>
     <div class="row" id="bkTags" style="margin-top:8px"></div>
     <div class="row" style="margin:14px 0">
       <div class="stat"><span class="note" data-i="st_q"></span><b id="bkTotal"></b></div>
@@ -214,6 +279,11 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
         <div class="row"><select id="tkCount" style="width:auto"></select><select id="tkTime" style="width:auto"></select><button class="btn" id="bkTicket" data-i="ticket_start"></button></div>
       </div>
       <div class="note" id="bkAnsNote" style="margin-top:10px"></div>
+    </div>
+    <div id="bkSearchBox" class="hide" style="margin-top:14px">
+      <h2 data-i="search_title"></h2>
+      <input type="text" id="bkSearch">
+      <div id="bkSearchRes" style="margin-top:6px"></div>
     </div>
     <div class="note" id="bkMsg" style="margin-top:10px"></div>
   </div>
@@ -277,7 +347,7 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
     <div class="note" data-i="result"></div>
     <div class="big" id="rsScore"></div>
     <div class="muted" id="rsDetail"></div>
-    <div class="row" style="justify-content:center;margin-top:16px"><button class="btn" id="rsAgain" data-i="again"></button><button class="btn sec" id="rsMist" data-i="repeat_mistakes"></button><button class="btn sec" id="rsBack" data-i="back_bank"></button></div>
+    <div class="row" style="justify-content:center;margin-top:16px"><button class="btn" id="rsAgain" data-i="again"></button><button class="btn sec" id="rsShare" data-i="share"></button><button class="btn sec" id="rsMist" data-i="repeat_mistakes"></button><button class="btn sec" id="rsBack" data-i="back_bank"></button></div>
   </div>
   <div class="card" id="rsListCard"><h2 data-i="wrong_answers"></h2><div id="rsList"></div></div>
 </section>
@@ -460,6 +530,7 @@ const READY_SETS=[
 
 const I18N={
 az:{
+nav_tools:"Alətlər",all_tools:"Alətlər →",doc_title:"Sessiya+ — test bankını interaktiv testə çevir",prog_title:"Sənin irəliləyişin",prog_streak:"Ardıcıl günlər",prog_today:"Bu gün suallar",prog_total:"Cəmi həll edilib",prog_next:"Növbəti imtahan",prog_tip_new:"Testlər həll et — burada ardıcıl günlərin, gündəlik irəliləyişin və imtahanlara geri sayım görünəcək.",prog_tip:"Bu gün hələ sual həll etməmisən — seriyanı qırma! 🔥",prog_tip_done:"Əla, bu gün məşq etmisən! Sabah da davam et 💪",tools_title:"Tələbə alətləri",tools_sub:"Balını hesabla, ÜOMG-ni öyrən, imtahanlara geri sayım qur və fokuslanaraq oxu. Hamısı pulsuz, məlumatlar yalnız sənin cihazında saxlanılır.",tl_calc:"Bal kalkulyatoru",tl_gpa:"ÜOMG",tl_cal:"İmtahan təqvimi",tl_pomo:"Pomodoro",calc_title:"İmtahandan neçə bal lazımdır?",calc_sub:"Semestr balını (0–50) yaz — hər qiymət üçün imtahandan neçə bal toplamalı olduğunu göstərəcəyik. Qayda: 50 semestr + 50 imtahan = 100, imtahandan ən azı 17 bal lazımdır. Vuzunda qaydalar fərqli ola bilər.",calc_sem:"Semestr balı (0–50)",calc_exam:"İmtahan balı (0–50) — yekun qiyməti görmək üçün",calc_empty:"Semestr balını yaz.",calc_need:"imtahandan {0} bal",calc_imp:"mümkün deyil",calc_total:"Yekun bal",calc_fail_min:"İmtahandan 17-dən az bal — fənn keçilmir.",g_A:"Əla",g_B:"Çox yaxşı",g_C:"Yaxşı",g_D:"Kafi",g_E:"Qənaətbəxş",g_F:"Qeyri-kafi",gpa_title:"ÜOMG kalkulyatoru",gpa_sub:"Fənləri, kreditləri və yekun balları (0–100) yaz. ÜOMG = Σ(bal × kredit) ÷ Σ kredit.",gpa_subj:"Fənn",gpa_cr:"Kredit",gpa_score:"Bal",gpa_add:"+ Fənn əlavə et",gpa_out:"Sənin ÜOMG",gpa_meta:"{0} fənn · {1} kredit",cal_title:"İmtahan təqvimi",cal_sub:"İmtahanlarını əlavə et — neçə gün qaldığını görəcəksən. Ən yaxın imtahan əsas səhifədə də görünür.",cal_subj:"Fənn",cal_subj_ph:"məs. Riyaziyyat",cal_date:"Tarix",cal_add:"İmtahan əlavə et",cal_empty:"Hələ imtahan yoxdur. Yuxarıdan əlavə et.",days_left:"{0} gün qaldı",today_exam:"Bu gün! Uğurlar 🍀",tomorrow:"Sabah!",passed:"Keçdi",pomo_title:"Pomodoro taymer",pomo_sub:"25 dəqiqə diqqətlə oxu, 5 dəqiqə dincəl. Hər 4 dövrdən sonra 15 dəqiqəlik fasilə ver.",pomo_work:"Fokus 25",pomo_break:"Fasilə 5",pomo_long:"Uzun 15",pomo_start:"Başla",pomo_pause:"Pauza",pomo_reset:"Sıfırla",pomo_done_n:"Bu gün: {0} pomodoro 🍅",pomo_end:"Vaxt bitdi!",share:"Paylaş",share_text:"Sessiya+-da «{1}» testindən {0} topladım! Sən də özünü yoxla 👇",share_bank_text:"«{0}» — Sessiya+-da pulsuz test, birlikdə hazırlaşaq 👇",search_title:"Sual axtarışı",search_q_ph:"Sualın bir hissəsini yaz — cavabı dərhal gör…",search_none:"Heç nə tapılmadı",search_more:"və daha {0} nəticə — sorğunu dəqiqləşdir",
 hm_hint_mc:"Test bankı: suallar, variantlar və düzgün cavab işarəsi (√, •, «))»).",hm_hint_written:"Yalnız suallar siyahısı. Yazılı imtahan: kartlar və bilet rejimi, nümunə cavablarla.",hm_hint_test:"Yalnız suallar siyahısı, imtahan isə test formasında olacaq.",paste_ph_open:"1. Birinci sual\n2. İkinci sual\nCavab: (istəyə bağlı) cavab mətni\n3. Üçüncü sual",
 f_type:"Fayl növü",type_mc:"Variantlı test",type_open:"Variantsız suallar",f_format:"İmtahan necə olacaq?",fmt_written:"Yazılı (açıq suallar)",fmt_test:"Test (variantlı)",
 fmt_written_note:"Faylda cavablar yoxdur. Kartlarda öz cavablarını yaza bilərsən; kataloq üçün nümunə cavabları biz hazırlayırıq.",fmt_written_has:"{0} sualın cavabı faylda tapıldı.",
@@ -501,6 +572,7 @@ not_found:"Bank tapılmadı və ya silinib.",load_fail:"Bankı yükləmək alın
 footer:"Sessiya+ heç bir universitetlə əlaqəli deyil. Fayllar sənin brauzerində emal olunur; kataloqa yalnız sən seçdiyin banklar düşür. Müəllif hüquqlarını pozan material barədə «Şikayət et» düyməsi ilə xəbər ver.<br>Hazır testlər müəllif tərəfindən hazırlanmış nümunə suallardır."
 },
 ru:{
+nav_tools:"Инструменты",all_tools:"Инструменты →",doc_title:"Sessiya+ — превращай банк тестов в интерактивный тест",prog_title:"Твой прогресс",prog_streak:"Дней подряд",prog_today:"Вопросов сегодня",prog_total:"Всего решено",prog_next:"Ближайший экзамен",prog_tip_new:"Решай тесты — здесь появятся дни подряд, прогресс за день и обратный отсчёт до экзаменов.",prog_tip:"Сегодня ты ещё не решал — не прерывай серию! 🔥",prog_tip_done:"Отлично, сегодня ты уже занимался! Продолжай завтра 💪",tools_title:"Инструменты студента",tools_sub:"Посчитай баллы, узнай свой средний балл (ÜOMG), поставь отсчёт до экзаменов и занимайся без отвлечений. Всё бесплатно, данные хранятся только на твоём устройстве.",tl_calc:"Калькулятор баллов",tl_gpa:"Средний балл",tl_cal:"Календарь сессии",tl_pomo:"Помодоро",calc_title:"Сколько баллов нужно на экзамене?",calc_sub:"Введи баллы за семестр (0–50) — покажем, сколько нужно набрать на экзамене для каждой оценки. Правило: 50 за семестр + 50 за экзамен = 100, на экзамене нужно минимум 17 баллов. В твоём вузе правила могут отличаться.",calc_sem:"Баллы за семестр (0–50)",calc_exam:"Баллы за экзамен (0–50) — чтобы увидеть итог",calc_empty:"Введи баллы за семестр.",calc_need:"{0} на экзамене",calc_imp:"невозможно",calc_total:"Итоговый балл",calc_fail_min:"На экзамене меньше 17 баллов — предмет не сдан.",g_A:"Отлично",g_B:"Очень хорошо",g_C:"Хорошо",g_D:"Достаточно",g_E:"Удовлетворительно",g_F:"Неудовлетворительно",gpa_title:"Калькулятор среднего балла (ÜOMG)",gpa_sub:"Впиши предметы, кредиты и итоговые баллы (0–100). ÜOMG = Σ(балл × кредит) ÷ Σ кредитов.",gpa_subj:"Предмет",gpa_cr:"Кредит",gpa_score:"Балл",gpa_add:"+ Добавить предмет",gpa_out:"Твой средний балл",gpa_meta:"{0} предм. · {1} кредитов",cal_title:"Календарь сессии",cal_sub:"Добавь свои экзамены — увидишь, сколько дней осталось. Ближайший экзамен появится и на главной.",cal_subj:"Предмет",cal_subj_ph:"напр. Математика",cal_date:"Дата",cal_add:"Добавить экзамен",cal_empty:"Экзаменов пока нет. Добавь выше.",days_left:"осталось {0} дн.",today_exam:"Сегодня! Удачи 🍀",tomorrow:"Завтра!",passed:"Прошёл",pomo_title:"Таймер Помодоро",pomo_sub:"25 минут занимайся сосредоточенно, 5 минут отдыхай. После 4 циклов — перерыв 15 минут.",pomo_work:"Фокус 25",pomo_break:"Перерыв 5",pomo_long:"Длинный 15",pomo_start:"Старт",pomo_pause:"Пауза",pomo_reset:"Сброс",pomo_done_n:"Сегодня: {0} помодоро 🍅",pomo_end:"Время вышло!",share:"Поделиться",share_text:"Набрал {0} в тесте «{1}» на Sessiya+! Проверь себя тоже 👇",share_bank_text:"«{0}» — бесплатный тест на Sessiya+, готовимся вместе 👇",search_title:"Поиск вопроса",search_q_ph:"Напиши часть вопроса — сразу увидишь ответ…",search_none:"Ничего не найдено",search_more:"и ещё {0} — уточни запрос",
 hm_hint_mc:"Тестовый банк: вопросы, варианты и отметка правильного ответа (√, •, «))»).",hm_hint_written:"Только список вопросов. Письменный экзамен: карточки и билеты с образцами ответов.",hm_hint_test:"Только список вопросов, а экзамен будет в форме теста.",paste_ph_open:"1. Первый вопрос\n2. Второй вопрос\nОтвет: (необязательно) текст ответа\n3. Третий вопрос",
 f_type:"Тип файла",type_mc:"Тест с вариантами",type_open:"Вопросы без вариантов",f_format:"Какой будет экзамен?",fmt_written:"Письменный (открытые вопросы)",fmt_test:"Тест (с вариантами)",
 fmt_written_note:"В файле нет ответов. В карточках можно записать свои ответы; для каталога образцы ответов готовим мы.",fmt_written_has:"Ответы найдены для {0} вопросов.",
@@ -542,6 +614,7 @@ not_found:"Банк не найден или удалён.",load_fail:"Не уд
 footer:"Sessiya+ не связан ни с одним университетом. Файлы обрабатываются в твоём браузере; в каталог попадают только банки, которые ты сам добавил. О материалах, нарушающих авторские права, сообщай кнопкой «Пожаловаться».<br>Готовые тесты — примерные вопросы, составленные автором сайта."
 },
 en:{
+nav_tools:"Tools",all_tools:"Tools →",doc_title:"Sessiya+ — turn a test bank into an interactive quiz",prog_title:"Your progress",prog_streak:"Day streak",prog_today:"Questions today",prog_total:"Total solved",prog_next:"Next exam",prog_tip_new:"Solve quizzes — your streak, daily progress and exam countdown will show up here.",prog_tip:"You haven't practised today yet — keep your streak alive! 🔥",prog_tip_done:"Nice, you've practised today! Keep it up tomorrow 💪",tools_title:"Student tools",tools_sub:"Calculate your scores, find your GPA, count down to exams and study with focus. All free; data stays on your device.",tl_calc:"Score calculator",tl_gpa:"GPA",tl_cal:"Exam calendar",tl_pomo:"Pomodoro",calc_title:"How many points do I need on the exam?",calc_sub:"Enter your semester score (0–50) and see what you need on the exam for each grade. Rule: 50 semester + 50 exam = 100, and you need at least 17 on the exam. Your university's rules may differ.",calc_sem:"Semester score (0–50)",calc_exam:"Exam score (0–50) — to see your final grade",calc_empty:"Enter your semester score.",calc_need:"{0} on the exam",calc_imp:"not possible",calc_total:"Final score",calc_fail_min:"Less than 17 on the exam — the course is failed.",g_A:"Excellent",g_B:"Very good",g_C:"Good",g_D:"Sufficient",g_E:"Satisfactory",g_F:"Fail",gpa_title:"GPA (ÜOMG) calculator",gpa_sub:"Enter subjects, credits and final scores (0–100). GPA = Σ(score × credits) ÷ Σ credits.",gpa_subj:"Subject",gpa_cr:"Credits",gpa_score:"Score",gpa_add:"+ Add subject",gpa_out:"Your GPA",gpa_meta:"{0} subjects · {1} credits",cal_title:"Exam calendar",cal_sub:"Add your exams and see how many days are left. The nearest exam also shows on the home page.",cal_subj:"Subject",cal_subj_ph:"e.g. Mathematics",cal_date:"Date",cal_add:"Add exam",cal_empty:"No exams yet. Add one above.",days_left:"{0} days left",today_exam:"Today! Good luck 🍀",tomorrow:"Tomorrow!",passed:"Done",pomo_title:"Pomodoro timer",pomo_sub:"Study with focus for 25 minutes, rest for 5. After 4 rounds take a 15-minute break.",pomo_work:"Focus 25",pomo_break:"Break 5",pomo_long:"Long 15",pomo_start:"Start",pomo_pause:"Pause",pomo_reset:"Reset",pomo_done_n:"Today: {0} pomodoros 🍅",pomo_end:"Time's up!",share:"Share",share_text:"I scored {0} on “{1}” at Sessiya+! Test yourself too 👇",share_bank_text:"“{0}” — free quiz on Sessiya+, let's prepare together 👇",search_title:"Find a question",search_q_ph:"Type part of a question — see the answer instantly…",search_none:"Nothing found",search_more:"and {0} more — refine your search",
 hm_hint_mc:"Test bank: questions, options and a mark on the correct answer (√, •, “))”).",hm_hint_written:"A list of questions only. Written exam: flashcards and tickets with model answers.",hm_hint_test:"A list of questions only; the exam itself will be multiple choice.",paste_ph_open:"1. First question\n2. Second question\nAnswer: (optional) answer text\n3. Third question",
 f_type:"File type",type_mc:"Test with options",type_open:"Questions without options",f_format:"What kind of exam?",fmt_written:"Written (open questions)",fmt_test:"Test (multiple choice)",
 fmt_written_note:"The file has no answers. You can write your own in flashcards; for the catalog we prepare model answers.",fmt_written_has:"Answers found for {0} questions.",
@@ -610,7 +683,7 @@ function applyI18n(){
   document.documentElement.lang=LANG;
   document.querySelectorAll('[data-i]').forEach(el=>{const v=t(el.dataset.i); if(/<[a-z]/.test(v)) el.innerHTML=v; else el.textContent=v});
   document.querySelectorAll('#lang button').forEach(b=>b.classList.toggle('on',b.dataset.l===LANG));
-  $('catSearch').placeholder=t('search_ph'); if(typeof HOME!=='undefined') renderHomeType();
+  $('catSearch').placeholder=t('search_ph'); $('bkSearch').placeholder=t('search_q_ph'); $('caSubj').placeholder=t('cal_subj_ph'); if(typeof HOME!=='undefined') renderHomeType();
   $('pvUniOther').placeholder=t('f_uni_other'); $('pvFac').placeholder=t('f_fac_ph'); $('pvSubj').placeholder=t('f_subj_ph');
   $('exCount').innerHTML=[25,50,100,0].map(n=>`<option value="${n}" ${n===50?'selected':''}>${n?t('n_questions',n):t('all_q')}</option>`).join('');
   $('exTime').innerHTML=`<option value="0.6">${t('t_36')}</option><option value="1" selected>${t('t_60')}</option><option value="0">${t('t_none')}</option>`;
@@ -664,19 +737,19 @@ const Cat={db:null,user:null,canWrite:null,metas:[],ready:false,unsub:null,liste
 };
 
 // ---------- router (#home, #catalog, #u-<uni>, #f-<uni>--<fac>, #s-<uni>--<fac>--<subj>, #b-<id>) ----------
-const VIEWS=['home','catalog','preview','bank','quiz','result','cards','ticket'];
+const VIEWS=['home','catalog','tools','preview','bank','quiz','result','cards','ticket'];
 function show(v){for(const s of VIEWS) $('v-'+s).classList.toggle('hide',s!==v);
-  document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',(a.dataset.go==='home'&&v==='home')||(a.dataset.go==='catalog'&&v==='catalog')));
+  document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',a.dataset.go===v));
   window.scrollTo(0,0)}
 function go(h){ if(location.hash==='#'+h) route(); else location.hash=h }
 document.querySelectorAll('[data-go]').forEach(a=>a.onclick=()=>go(a.dataset.go)); $('logo').onclick=()=>go('home');
 window.addEventListener('hashchange',route);
 document.addEventListener('click',e=>{const a=e.target.closest('a[data-h]');if(a){e.preventDefault();go(a.dataset.h)}});
 function route(){
-  const h=location.hash.replace(/^#/,'')||'home';
+  const h=location.hash.replace(/^#/,'')||'home'; let m;
   if(h==='home') return renderHome();
   if(h==='catalog') return renderCatalog({});
-  let m;
+  if(m=h.match(/^tools(?:-(calc|gpa|cal|pomo))?$/)) return renderTools(m&&m[1]);
   if(m=h.match(/^u-([a-z0-9-]+)$/)) return renderCatalog({uni:m[1]});
   if(m=h.match(/^f-([a-z0-9-]+?)--([a-z0-9-]+)$/)) return renderCatalog({uni:m[1],fac:m[2]});
   if(m=h.match(/^s-([a-z0-9-]+?)--([a-z0-9-]+?)--([a-z0-9-]+)$/)) return renderCatalog({uni:m[1],fac:m[2],subj:m[3]});
@@ -693,7 +766,7 @@ function renderHome(){
   $('myBanks').innerHTML=mem.banks.map(b=>bankCard(b)).join(''); $('noBanks').classList.toggle('hide',mem.banks.length>0);
   $('readyBanks').innerHTML=READY_SETS.map(b=>bankCard(b)).join('');
   bindBankCards($('myBanks')); bindBankCards($('readyBanks'));
-  renderHomeUnis(); show('home');
+  renderHomeUnis(); renderProgress(); show('home'); document.title=t('doc_title');
 }
 function renderHomeUnis(){
   const c=uniCounts(); const ids=Object.keys(c).sort((a,b)=>c[b]-c[a]).slice(0,6);
@@ -852,7 +925,7 @@ function fillBankHeader(b,shared){
   $('bkCrumbs').innerHTML=crumbsFor(b);
   const langName={az:'Azərbaycan dili',ru:'Русский',en:'English'};
   $('bkTags').innerHTML=[b.lang?`<span class="pill">${langName[b.lang]||b.lang}</span>`:'',b.tag?`<span class="pill acc">${t('ready_tag')}</span>`:'',W?`<span class="pill">${b.format==='test'?t('test_noopts_tag'):t('written_tag')}</span>`:'',shared||b.sharedId?`<span class="pill acc">${t('in_catalog')}</span>`:''].join('');
-  $('bkReport').classList.toggle('hide',!shared); $('bkDelete').classList.toggle('hide',!!b.tag||(shared&&!Cat.isOwner));
+  $('bkShare').classList.toggle('hide',!(shared?b.id:b.sharedId)); $('bkReport').classList.toggle('hide',!shared); $('bkDelete').classList.toggle('hide',!!b.tag||(shared&&!Cat.isOwner));
   $('bkMsg').textContent='';
 }
 function openBank(id){
@@ -863,14 +936,14 @@ function openBank(id){
 async function openShared(id){
   const m=Cat.metas.find(x=>x.id===id);
   if(!m){ curBank=null; show('bank'); $('bkName').textContent=''; $('bkCrumbs').innerHTML=''; $('bkTags').innerHTML='';
-    $('bkModes').classList.add('hide'); $('bkWModes').classList.add('hide'); $('bkLoading').classList.remove('hide'); $('bkLoading').textContent=Cat.ready?t('not_found'):t('loading'); return }
-  curBank={...m,shared:true,qs:null}; fillBankHeader(curBank,true); show('bank');
+    $('bkModes').classList.add('hide'); $('bkWModes').classList.add('hide'); $('bkSearchBox').classList.add('hide'); $('bkShare').classList.add('hide'); $('bkLoading').classList.remove('hide'); $('bkLoading').textContent=Cat.ready?t('not_found'):t('loading'); return }
+  curBank={...m,shared:true,qs:null}; fillBankHeader(curBank,true); show('bank'); $('bkSearchBox').classList.add('hide');
   $('bkModes').classList.add('hide'); $('bkWModes').classList.add('hide'); $('bkLoading').classList.remove('hide'); $('bkLoading').textContent=t('loading');
   try{ curBank.qs=await Cat.loadQs(m); }catch(e){ curBank.qs=[] }
   if(!curBank.qs.length){$('bkLoading').textContent=t('load_fail');return}
   $('bkTotal').textContent=curBank.qs.length; $('bkLoading').classList.add('hide'); fillBankHeader(curBank,true); showModes();
 }
-function showModes(){ const W=curBank&&curBank.type==='written'; $('bkModes').classList.toggle('hide',W); $('bkWModes').classList.toggle('hide',!W); }
+function showModes(){ const W=curBank&&curBank.type==='written'; $('bkModes').classList.toggle('hide',W); $('bkWModes').classList.toggle('hide',!W); $('bkSearch').value=''; $('bkSearchRes').innerHTML=''; $('bkSearchBox').classList.remove('hide'); }
 $('bkDelete').onclick=async()=>{
   const btn=$('bkDelete'); if(btn.dataset.c!=='1'){btn.textContent=t('confirm_delete');btn.dataset.c='1';setTimeout(()=>{btn.textContent=t('delete');btn.dataset.c=''},3000);return}
   btn.dataset.c=''; btn.textContent=t('delete');
@@ -917,9 +990,9 @@ function pick(j){
     else if(bj===j)b.classList.add('sel')});
   $('qzNext').disabled=false;
 }
-function next(){ if(Q.picked===null)return; Q.answers[Q.i]=Q.picked; if(Q.i<Q.ids.length-1){Q.i++;renderQ()}else finish(); }
+function next(){ if(Q.picked===null)return; Q.answers[Q.i]=Q.picked; bump(1); if(Q.i<Q.ids.length-1){Q.i++;renderQ()}else finish(); }
 $('qzNext').onclick=next;
-$('qzStop').onclick=()=>{if(Q.picked!==null)Q.answers[Q.i]=Q.picked;finish(true)};
+$('qzStop').onclick=()=>{if(Q.picked!==null){Q.answers[Q.i]=Q.picked;bump(1)}finish(true)};
 document.addEventListener('keydown',e=>{
   if($('v-quiz').classList.contains('hide'))return;
   if(e.key==='Enter'){next();return}
@@ -985,7 +1058,7 @@ function revealCard(){
 }
 function rateCard(knew){
   const qi=C.ids[C.i]; const st=mem.stats[curBank.id]||{}; const u=new Set(st.unknown||[]);
-  if(knew){C.known++;u.delete(qi)}else{C.unknown.push(qi);u.add(qi)} st.unknown=[...u]; mem.stats[curBank.id]=st; saveStats();
+  bump(1); if(knew){C.known++;u.delete(qi)}else{C.unknown.push(qi);u.add(qi)} st.unknown=[...u]; mem.stats[curBank.id]=st; saveStats();
   if(C.i<C.ids.length-1){C.i++;renderCard()} else endCards();
 }
 function endCards(){ C.done=true; $('cdBody').classList.add('hide'); $('cdDone').classList.remove('hide'); $('cdBar').style.width='100%';
@@ -1017,7 +1090,7 @@ function updTk(){ if(!TK||!TK.limit||TK.checked){$('tkTimer').textContent='';ret
   $('tkTimer').textContent=String(Math.floor(left/60)).padStart(2,'0')+':'+String(left%60).padStart(2,'0'); $('tkTimer').style.color=left<60?'var(--bad)':'';
   if(left===0) checkTicket(); }
 function checkTicket(){
-  if(TK.checked) return; TK.checked=true; clearInterval(tkTick); $('tkTimer').textContent='';
+  if(TK.checked) return; TK.checked=true; bump([...document.querySelectorAll('#tkList textarea')].filter(x=>x.value.trim()).length); clearInterval(tkTick); $('tkTimer').textContent='';
   document.querySelectorAll('#tkList .tkq').forEach((el,k)=>{ const qi=TK.ids[k]; const model=curBank.qs[qi].ans||'', mine=getMyAns(curBank)[qi]||''; el.querySelector('textarea').readOnly=true;
     const box=el.querySelector('.tkans'); box.classList.remove('hide');
     box.innerHTML=`<div class="ans" style="margin-top:8px"><span class="lbl">${model||!mine?t('model_answer'):t('own_answer')}</span>${model?esc(model):(mine?esc(mine):t('no_answer'))}</div><label class="row note" style="margin-top:8px;gap:8px;cursor:pointer"><input type="checkbox" class="tkok"> ${t('i_answered_right')}</label>`; });
@@ -1027,7 +1100,145 @@ function checkTicket(){
 function scoreTicket(){ const n=TK.ids.length, ok=[...document.querySelectorAll('.tkok')].filter(c=>c.checked).length; $('tkScore').textContent=`${ok} / ${n}`; }
 $('bkTicket').onclick=startTicket; $('tkDone').onclick=checkTicket; $('tkAgain').onclick=startTicket; $('tkBack').onclick=()=>{clearInterval(tkTick);backToBank()};
 
-applyI18n(); renderHomeType(); route(); Cat.init();
+// ---------- activity / streak ----------
+function dayKey(d){d=d||new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function getAct(){const a=store.get('sp_act',null);return a&&a.days?a:{days:{},total:0}}
+function bump(n){ if(!(n>0)) return; const a=getAct(), k=dayKey(); a.days[k]=(a.days[k]||0)+n; a.total=(a.total||0)+n;
+  const ks=Object.keys(a.days).sort(); if(ks.length>400) ks.slice(0,ks.length-400).forEach(x=>delete a.days[x]); store.set('sp_act',a) }
+function streak(){ const a=getAct(); const d=new Date(); let n=0; if(!a.days[dayKey(d)]) d.setDate(d.getDate()-1);
+  while(a.days[dayKey(d)]){ n++; d.setDate(d.getDate()-1) } return n }
+
+// ---------- exams calendar helpers ----------
+function exams(){ return store.get('sp_exams',[]) }
+function daysTo(ds){ const [y,m,d]=ds.split('-').map(Number); const a=new Date(y,m-1,d), b=new Date(); b.setHours(0,0,0,0); return Math.round((a-b)/86400000) }
+function leftLabel(n){ return n<0?t('passed'):n===0?t('today_exam'):n===1?t('tomorrow'):t('days_left',n) }
+function nextExam(){ return exams().map(e=>({...e,n:daysTo(e.d)})).filter(e=>e.n>=0).sort((a,b)=>a.n-b.n)[0] }
+const MON={az:['yanvar','fevral','mart','aprel','may','iyun','iyul','avqust','sentyabr','oktyabr','noyabr','dekabr'],ru:['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'],en:['January','February','March','April','May','June','July','August','September','October','November','December']};
+const WD={az:['B.','B.e.','Ç.a.','Ç.','C.a.','C.','Ş.'],ru:['вс','пн','вт','ср','чт','пт','сб'],en:['Sun','Mon','Tue','Wed','Thu','Fri','Sat']};
+function fmtDate(ds){ const [y,m,d]=ds.split('-').map(Number); const dt=new Date(y,m-1,d); const L=MON[LANG]?LANG:'az';
+  return `${d} ${MON[L][m-1]}${y!==new Date().getFullYear()?' '+y:''}, ${WD[L][dt.getDay()]}` }
+
+function renderProgress(){
+  const a=getAct(), s=streak(), today=a.days[dayKey()]||0, ne=nextExam();
+  $('prStreak').textContent=s+(s?' 🔥':''); $('prToday').textContent=today; $('prTotal').textContent=a.total||0;
+  $('prNext').innerHTML=ne?`${esc(ne.s)}<span class="note" style="display:block;font-weight:500;font-size:13px">${esc(leftLabel(ne.n))}</span>`:`<a data-h="tools-cal" style="color:var(--acc);font-size:14px;cursor:pointer">${t('cal_add')} →</a>`;
+  $('prTip').textContent=!a.total?t('prog_tip_new'):today?t('prog_tip_done'):t('prog_tip');
+}
+
+// ---------- tools view ----------
+let TL='calc';
+function renderTools(tab){ if(tab) TL=tab; show('tools');
+  document.querySelectorAll('#tlTabs button').forEach(b=>b.classList.toggle('on',b.dataset.v===TL));
+  ['calc','gpa','cal','pomo'].forEach(k=>$('tl-'+k).classList.toggle('hide',k!==TL));
+  ({calc:renderCalc,gpa:renderGpa,cal:renderCal,pomo:renderPomo})[TL]();
+  if(!PM.run) document.title=t('tools_title')+' | Sessiya+';
+}
+
+// score calculator (50 semester + 50 exam, exam >= 17)
+const GRADES=[['A',91],['B',81],['C',71],['D',61],['E',51]];
+const GCOL={A:'#16a34a',B:'#65a30d',C:'#ca8a04',D:'#ea580c',E:'#f97316',F:'#dc2626'};
+function letter(total){ for(const [g,m] of GRADES) if(total>=m) return g; return 'F' }
+function gb(g){ return `<span class="gb" style="background:${GCOL[g]}">${g}</span>` }
+function numVal(v,max){ const x=parseFloat(String(v).replace(',','.')); return isNaN(x)?null:Math.min(max,Math.max(0,x)) }
+function renderCalc(){
+  const s=numVal($('clSem').value,50), e=numVal($('clExam').value,50);
+  store.set('sp_calc',{s:$('clSem').value,e:$('clExam').value});
+  $('clTable').innerHTML=s==null?`<div class="empty">${t('calc_empty')}</div>`:GRADES.map(([g,m])=>{
+    const need=Math.max(17,Math.ceil(m-s)), imp=need>50;
+    return `<div class="tile" style="cursor:default;margin-bottom:8px;${imp?'opacity:.55':''}"><span>${gb(g)} <span style="margin-left:6px">${t('g_'+g)}</span> <span class="note">${m}+</span></span><b style="${imp?'color:var(--bad)':''}">${imp?t('calc_imp'):t('calc_need',need)}</b></div>`}).join('');
+  if(s==null||e==null){ $('clFinal').innerHTML=''; return }
+  const tot=Math.round((s+e)*10)/10, g=e<17?'F':letter(tot);
+  $('clFinal').innerHTML=`<div class="stat" style="text-align:center"><span class="note">${t('calc_total')}</span><b style="font-size:34px;margin:4px 0">${tot} ${gb(g)}</b><span class="note">${e<17?t('calc_fail_min'):t('g_'+g)}</span></div>`;
+}
+
+// GPA (ÜOMG) calculator
+let GP=null;
+function blankRow(){ return {n:'',c:'',s:''} }
+function renderGpa(){
+  if(!GP) GP=store.get('sp_gpa',null)||[blankRow(),blankRow(),blankRow()];
+  $('gpRows').innerHTML=`<div class="gprow hd"><span>${t('gpa_subj')}</span><span>${t('gpa_cr')}</span><span>${t('gpa_score')}</span><span></span></div>`+
+    GP.map((r,i)=>`<div class="gprow"><input type="text" data-r="${i}" data-k="n" value="${esc(r.n)}" placeholder="${esc(t('gpa_subj'))} ${i+1}"><input type="number" inputmode="decimal" data-r="${i}" data-k="c" value="${esc(r.c)}" placeholder="5"><input type="number" inputmode="decimal" data-r="${i}" data-k="s" value="${esc(r.s)}" placeholder="85"><button class="btn ghost small" data-del="${i}" aria-label="x">✕</button></div>`).join('');
+  $('gpRows').querySelectorAll('input').forEach(inp=>inp.oninput=()=>{ GP[+inp.dataset.r][inp.dataset.k]=inp.value; store.set('sp_gpa',GP); gpaOut() });
+  $('gpRows').querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{ GP.splice(+b.dataset.del,1); if(!GP.length) GP.push(blankRow()); store.set('sp_gpa',GP); renderGpa() });
+  gpaOut();
+}
+function gpaOut(){
+  let sum=0,cr=0,n=0; GP.forEach(r=>{ const c=numVal(r.c,100), s=numVal(r.s,100); if(c>0&&s!=null&&String(r.s).trim()!==''){ sum+=s*c; cr+=c; n++ } });
+  if(!cr){ $('gpOut').innerHTML=''; return }
+  const g=sum/cr;
+  $('gpOut').innerHTML=`<div class="stat" style="text-align:center"><span class="note">${t('gpa_out')}</span><b style="font-size:34px;margin:4px 0">${g.toFixed(2)} ${gb(letter(g))}</b><span class="note">${t('gpa_meta',n,Math.round(cr*10)/10)}</span></div>`;
+}
+
+// exam calendar
+function renderCal(){
+  const L=exams().map((e,i)=>({...e,i,n:daysTo(e.d)})).sort((a,b)=>((a.n<0)-(b.n<0))||(a.n<0?b.n-a.n:a.n-b.n));
+  $('caList').innerHTML=L.length?L.map(e=>{ const hot=e.n>=0&&e.n<=3;
+    return `<div class="tile" style="cursor:default;margin-bottom:8px;${e.n<0?'opacity:.5':''}"><span><b>${esc(e.s)}</b><span class="note" style="display:block">${esc(fmtDate(e.d))}</span></span><span class="row" style="gap:4px;flex-wrap:nowrap"><span class="pill" style="${hot?'background:var(--badbg);color:var(--bad)':e.n>=0?'background:var(--acc2);color:var(--acc)':''}">${esc(leftLabel(e.n))}</span><button class="btn ghost small" data-del="${e.i}" aria-label="x">✕</button></span></div>` }).join('')
+    :`<div class="empty">${t('cal_empty')}</div>`;
+  $('caList').querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{ const L=exams(); L.splice(+b.dataset.del,1); store.set('sp_exams',L); renderCal() });
+}
+
+// pomodoro
+const PM={mins:25,left:1500,run:false,end:0,iv:null};
+function pmFmt(s){ return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0') }
+function pomoToday(){ const p=store.get('sp_pomo',{}); return p.day===dayKey()?p.n:0 }
+function renderPomo(){
+  document.querySelectorAll('#pmMode button').forEach(b=>b.classList.toggle('on',+b.dataset.v===PM.mins));
+  $('pmTime').textContent=pmFmt(PM.left); $('pmStart').textContent=PM.run?t('pomo_pause'):t('pomo_start');
+  $('pmCount').textContent=t('pomo_done_n',pomoToday());
+}
+function pmTick(){ PM.left=Math.max(0,Math.round((PM.end-Date.now())/1000)); $('pmTime').textContent=pmFmt(PM.left); document.title=pmFmt(PM.left)+' · Sessiya+';
+  if(!PM.left){ pmStop(); pmDone() } }
+function pmStop(){ PM.run=false; clearInterval(PM.iv); renderPomo() }
+function pmDone(){
+  if(PM.mins===25) store.set('sp_pomo',{day:dayKey(),n:pomoToday()+1});
+  beep(); try{ navigator.vibrate&&navigator.vibrate([300,150,300]) }catch(e){}
+  document.title='⏰ '+t('pomo_end'); PM.left=PM.mins*60; renderPomo();
+}
+function beep(){ try{ const A=new (window.AudioContext||window.webkitAudioContext)();
+  [0,.35,.7].forEach(d=>{ const o=A.createOscillator(), g=A.createGain(); o.frequency.value=880; o.connect(g); g.connect(A.destination);
+    g.gain.setValueAtTime(.25,A.currentTime+d); g.gain.exponentialRampToValueAtTime(.001,A.currentTime+d+.3); o.start(A.currentTime+d); o.stop(A.currentTime+d+.32) }) }catch(e){} }
+
+// ---------- share ----------
+function siteUrl(h){ return location.origin+location.pathname+(h?'#'+h:'') }
+async function shareText(text,url){
+  if(navigator.share){ try{ await navigator.share({text,url}); return }catch(e){ if(e&&e.name==='AbortError') return } }
+  window.open('https://wa.me/?text='+encodeURIComponent(text+'\n'+url),'_blank');
+}
+function bankLinkId(b){ return b.shared?b.id:b.sharedId }
+
+// ---------- search inside a bank ----------
+const FOLD={ı:'i',ə:'e',ş:'s',ç:'c',ğ:'g',ö:'o',ü:'u',ё:'е'};
+function lowq(s){ return String(s||'').replace(/[İI]/g,'i').toLowerCase().replace(/[ıəşçğöüё]/g,c=>FOLD[c]) }
+function hl(s,q){ const i=lowq(s).indexOf(q); if(i<0||lowq(s).length!==s.length) return esc(s); return esc(s.slice(0,i))+'<mark>'+esc(s.slice(i,i+q.length))+'</mark>'+esc(s.slice(i+q.length)) }
+function renderSearch(){
+  const q=lowq($('bkSearch').value.trim()), box=$('bkSearchRes');
+  if(q.length<2||!curBank||!curBank.qs){ box.innerHTML=''; return }
+  const W=curBank.type==='written', hits=[];
+  curBank.qs.forEach((x,i)=>{ const a=W?getAns(curBank,i):x.o[x.a]; if(lowq(x.q).includes(q)||lowq(a).includes(q)) hits.push([x,a]) });
+  box.innerHTML=hits.length?hits.slice(0,15).map(([x,a])=>`<div class="mistake"><b>${hl(x.q,q)}</b><div class="note c" style="margin-top:4px;white-space:pre-wrap">✓ ${a?hl(a,q):'—'}</div></div>`).join('')
+    +(hits.length>15?`<div class="note" style="padding-top:8px">${t('search_more',hits.length-15)}</div>`:'')
+    :`<div class="empty">${t('search_none')}</div>`;
+}
+
+function initTools(){
+  document.querySelectorAll('#tlTabs button').forEach(b=>b.onclick=()=>go('tools-'+b.dataset.v));
+  const cs=store.get('sp_calc',{}); $('clSem').value=cs.s||''; $('clExam').value=cs.e||'';
+  $('clSem').oninput=renderCalc; $('clExam').oninput=renderCalc;
+  $('gpAdd').onclick=()=>{ GP.push(blankRow()); store.set('sp_gpa',GP); renderGpa(); const ins=$('gpRows').querySelectorAll('input[data-k="n"]'); ins[ins.length-1].focus() };
+  $('caAdd').onclick=()=>{ const s=$('caSubj').value.trim(), d=$('caDate').value; if(!s){ $('caSubj').focus(); return } if(!d){ $('caDate').focus(); return }
+    const L=exams(); L.push({s,d}); store.set('sp_exams',L); $('caSubj').value=''; renderCal() };
+  $('caSubj').onkeydown=e=>{ if(e.key==='Enter') $('caAdd').click() };
+  $('pmStart').onclick=()=>{ if(PM.run){ PM.left=Math.max(0,Math.round((PM.end-Date.now())/1000)); pmStop(); return }
+    PM.run=true; PM.end=Date.now()+PM.left*1000; clearInterval(PM.iv); PM.iv=setInterval(pmTick,500); renderPomo() };
+  $('pmReset').onclick=()=>{ pmStop(); PM.left=PM.mins*60; renderPomo() };
+  document.querySelectorAll('#pmMode button').forEach(b=>b.onclick=()=>{ pmStop(); PM.mins=+b.dataset.v; PM.left=PM.mins*60; renderPomo() });
+  $('rsShare').onclick=()=>shareText(t('share_text',$('rsScore').textContent,curBank.name),siteUrl(bankLinkId(curBank)?'b-'+bankLinkId(curBank):''));
+  $('bkShare').onclick=()=>shareText(t('share_bank_text',curBank.name),siteUrl('b-'+bankLinkId(curBank)));
+  $('bkSearch').oninput=renderSearch;
+}
+
+applyI18n(); renderHomeType(); initTools(); route(); Cat.init();
 </script>
 </body>
 </html>
