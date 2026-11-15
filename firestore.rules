@@ -1,0 +1,30 @@
+rules_version = '2';
+// Firestore rules for the Sessiya+ notice board (ads) — paste into Firebase console → Firestore → Rules.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /ads/{id} {
+      allow read: if true;
+      allow create: if request.auth != null
+        && request.resource.data.keys().hasOnly(['uid','cat','kind','title','text','price','place','uni','gender','contact','lang','createdAt'])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.cat in ['room','sell','service','job','lost','other']
+        && request.resource.data.kind is string && request.resource.data.kind.size() <= 20
+        && request.resource.data.title is string && request.resource.data.title.size() >= 3 && request.resource.data.title.size() <= 80
+        && request.resource.data.text is string && request.resource.data.text.size() <= 1000
+        && (request.resource.data.price == null || (request.resource.data.price is number && request.resource.data.price >= 0 && request.resource.data.price <= 100000))
+        && request.resource.data.place is string && request.resource.data.place.size() <= 60
+        && request.resource.data.uni is string && request.resource.data.uni.size() <= 60
+        && request.resource.data.gender in ['any','f','m']
+        && request.resource.data.contact is string && request.resource.data.contact.size() >= 5 && request.resource.data.contact.size() <= 60
+        && request.resource.data.lang in ['az','ru','en'];
+      allow delete: if request.auth != null && resource.data.uid == request.auth.uid;
+      allow update: if false;
+    }
+    match /reports/{id} {
+      allow create: if request.auth != null
+        && request.resource.data.keys().hasOnly(['ad','uid','at'])
+        && request.resource.data.uid == request.auth.uid;
+    }
+  }
+}
