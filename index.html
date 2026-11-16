@@ -108,6 +108,9 @@ body{padding-bottom:72px}}
 .gate-in{max-width:460px;margin:0 auto;padding:22px 16px 40px}
 html.gated body{overflow:hidden}
 .gate-feat{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0 6px}.gate-feat span{background:#f7f8fa;border-radius:12px;padding:10px;font-size:13px;line-height:1.3}
+.lbrow{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;margin-bottom:6px;background:#fff}
+.lbrow.me{border-color:var(--acc);background:var(--acc2)}.lbn{width:28px;text-align:center;font-weight:700;color:var(--mute)}.lbname{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#qzFav.on{color:#f59e0b}
 .about h3{margin:18px 0 6px;font-size:16px}.about p{margin:0 0 8px;line-height:1.55}
 footer a{color:var(--mute)}
 .gb{display:inline-block;min-width:26px;text-align:center;font-size:13px;font-weight:800;padding:3px 7px;border-radius:8px;color:#fff;vertical-align:middle}
@@ -142,12 +145,14 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
     <div id="instBox" class="hide" style="margin-top:12px"><a class="btn hide" id="apkBtn" href="app/sessiya.apk" download="Sessiya.apk" style="width:100%;display:block;text-align:center;text-decoration:none" data-i="apk_btn"></a><div class="note hide" id="instHelp" style="margin-top:8px;background:var(--acc2);border-radius:10px;padding:10px 12px;color:var(--ink)"></div></div>
     <div class="hub">
       <a class="main" data-h="catalog"><span class="hi">📝</span><b data-i="hub_tests"></b><span class="note" data-i="hub_tests_d"></span></a>
-      <a data-h="board-room"><span class="hi">🏠</span><b data-i="hub_room"></b><span class="note" data-i="hub_room_d"></span></a>
-      <a data-h="board"><span class="hi">📌</span><b data-i="hub_ads"></b><span class="note" data-i="hub_ads_d"></span></a>
+      <a data-h="board"><span class="hi">🏠</span><b data-i="hub_ads"></b><span class="note" data-i="hub_ads_d"></span></a>
       <a data-h="tools"><span class="hi">🧮</span><b data-i="hub_tools"></b><span class="note" data-i="hub_tools_d"></span></a>
+      <a data-h="rating"><span class="hi">🏆</span><b data-i="rating_title"></b><span class="note" data-i="hub_rating_d"></span></a>
       <a data-h="about"><span class="hi">ℹ️</span><b data-i="about_link"></b><span class="note" data-i="hub_about_d"></span></a>
     </div>
   </div>
+
+  <div class="card" id="hmToday"></div>
 
   <div class="card">
     <div class="row" style="justify-content:space-between;margin-bottom:4px"><h2 style="margin:0" data-i="find_title"></h2><button class="btn ghost small" data-go="catalog" data-i="find_more"></button></div>
@@ -339,7 +344,7 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
       <div class="card" style="background:#fafbfc">
         <h2 data-i="practice"></h2>
         <p class="note" style="margin-top:-6px" data-i="practice_sub"></p>
-        <div class="row"><button class="btn" id="bkPractice" data-i="seq_start"></button><button class="btn sec" id="bkPracticeRnd" data-i="shuffled"></button><button class="btn sec" id="bkMistakes" data-i="repeat_mistakes"></button></div>
+        <div class="row"><button class="btn" id="bkPractice" data-i="seq_start"></button><button class="btn sec" id="bkPracticeRnd" data-i="shuffled"></button><button class="btn sec hide" id="bkFav"></button><button class="btn sec" id="bkMistakes" data-i="repeat_mistakes"></button></div>
       </div>
       <div class="card" style="background:#fafbfc;margin-bottom:0">
         <h2 data-i="exam"></h2>
@@ -415,7 +420,7 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
     <div class="row" style="justify-content:space-between;margin-bottom:10px">
       <span class="note" id="qzPos"></span>
       <span class="timer" id="qzTimer"></span>
-      <button class="btn ghost" id="qzStop" data-i="finish"></button>
+      <span><button class="btn ghost" id="qzFav" style="font-size:20px;padding:4px 10px">☆</button><button class="btn ghost" id="qzStop" data-i="finish"></button></span>
     </div>
     <div class="bar"><i id="qzBar"></i></div>
     <div class="q" id="qzQ"></div>
@@ -448,7 +453,20 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
     <h2 data-i="settings_title"></h2>
     <div class="note" style="margin-bottom:6px" data-i="lang_title"></div>
     <div class="seg" id="pfLang"><button data-l="az">Azərbaycanca</button><button data-l="ru">Русский</button><button data-l="en">English</button></div>
-    <div class="row" style="margin-top:16px;gap:8px"><a class="btn sec small" data-h="about" data-i="about_link"></a><a class="btn sec small" href="app/sessiya.apk" download="Sessiya.apk" data-i="apk_link"></a></div>
+    <div class="note" style="margin:16px 0 6px" data-i="goal_set"></div>
+    <div class="seg" id="pfGoal"><button data-v="10">10</button><button data-v="20">20</button><button data-v="50">50</button><button data-v="100">100</button></div>
+    <div class="row" style="margin-top:16px;gap:8px"><a class="btn sec small" data-h="rating" data-i="rating_btn"></a><a class="btn sec small" data-h="about" data-i="about_link"></a><a class="btn sec small" href="app/sessiya.apk" download="Sessiya.apk" data-i="apk_link"></a></div>
+  </div>
+</section>
+
+<section id="v-rating" class="hide">
+  <div class="card">
+    <h1 style="margin:0 0 6px;font-size:24px">🏆 <span data-i="rating_title"></span></h1>
+    <p class="note" style="margin:0 0 12px" data-i="rating_sub"></p>
+    <div class="pill acc" id="rtMe" style="font-size:13px"></div>
+    <div style="font-weight:700;margin:12px 0 8px" id="rtPos"></div>
+    <div id="rtList"></div>
+    <div class="row" style="margin-top:14px"><a class="btn" data-h="catalog" data-i="rating_go"></a></div>
   </div>
 </section>
 
@@ -472,7 +490,7 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
   <div class="card" style="margin:0">
     <h1 style="margin:0 0 8px;font-size:26px" data-i="gate_title"></h1>
     <p class="muted" style="margin:0 0 6px" data-i="gate_sub"></p>
-    <div class="gate-feat"><span>📝 <b data-i="hub_tests"></b></span><span>🏠 <b data-i="hub_room"></b></span><span>📌 <b data-i="hub_ads"></b></span><span>🧮 <b data-i="hub_tools"></b></span></div>
+    <div class="gate-feat"><span>📝 <b data-i="hub_tests"></b></span><span>🏠 <b data-i="hub_ads"></b></span><span>🏆 <b data-i="rating_title"></b></span><span>🧮 <b data-i="hub_tools"></b></span></div>
     <div id="gateBox"></div><div id="acRecaptcha2"></div>
   </div>
   <a id="gateApk" class="btn sec hide" href="app/sessiya.apk" download="Sessiya.apk" style="display:block;text-align:center;text-decoration:none;margin-top:12px" data-i="apk_btn"></a>
@@ -700,12 +718,13 @@ parse_fail:"Bu faylda düzgün cavabı işarələnmiş sual tapılmadı. Aşağ�
 not_found:"Bank tapılmadı və ya silinib.",load_fail:"Bankı yükləmək alınmadı.",
 footer:"Sessiya+ heç bir universitetlə əlaqəli deyil. Fayllar sənin brauzerində emal olunur; kataloqa yalnız sən seçdiyin banklar düşür. Müəllif hüquqlarını pozan material barədə «Şikayət et» düyməsi ilə xəbər ver.<br>Hazır testlər müəllif tərəfindən hazırlanmış nümunə suallardır.",
 all_banks_link:"📚 Bütün test bankları və suallar",
+today_title:"Bu gün",goal_lbl:"Gündəlik hədəf: {0} / {1} sual",lvl:"Səviyyə {0}",xp_lbl:"{0} XP · növbəti səviyyə {1} XP-də",daily_btn:"🎯 Günün 10 sualı",daily_done:"✅ Günün testi: {0}",daily_title:"Günün 10 sualı",rating_btn:"🏆 Reytinq",rating_title:"Həftəlik reytinq",rating_sub:"Hər düzgün cavab +10 XP, kartda «Bilirəm» +5 XP, günün testi +30 XP. Reytinq hər bazar ertəsi sıfırlanır.",rating_you:"Sənin yerin: #{0} · {1} XP",rating_empty:"Bu həftə hələ heç kim xal toplamayıb. İlk sən ol!",rating_go:"Testləri həll et →",xp_week:"bu həftə {0} XP",xp_total:"cəmi {0} XP",student:"Tələbə",fav_add:"Seçilmişlərə əlavə et",fav_btn:"★ Seçilmişlər ({0})",goal_set:"Gündəlik hədəf (sual)",hub_rating_d:"Həftənin ən fəal tələbələri, XP və səviyyələr",
 acc_edit_name:"Adı dəyiş",acc_name_ph2:"Adın",acc_save:"Saxla",acc_my_ads:"Mənim elanlarım",acc_no_ads:"Hələ elanın yoxdur.",acc_danger:"Hesabı silmək",acc_delete_note:"Hesab, elanların, kataloqa əlavə etdiyin banklar və saxlanmış irəliləyişin silinəcək. Bunu geri qaytarmaq olmaz.",acc_delete:"Hesabı birdəfəlik sil",acc_delete_confirm:"Əminsən? Yenidən bas",acc_err_recent:"Təhlükəsizlik üçün çıxış et, yenidən daxil ol və 5 dəqiqə ərzində təkrar yoxla.",
 gate_title:"Xoş gəldin! 👋",gate_sub:"Sessiya+ — tələbə üçün hər şey bir yerdə. Davam etmək üçün daxil ol və ya qeydiyyatdan keç — pulsuz, 10 saniyə.",gate_rules:"Qaydalar və məxfilik",gate_offline:"Bağlantı yoxdur. İnterneti yoxla və yenidən cəhd et.",gate_retry:"Yenidən cəhd et",acc_name_ph:"Adın (qeydiyyat üçün)",
 nav_profile:"Profil",ts_cat:"Kataloq",ts_my:"Mənim banklarım",ts_up:"Yüklə",settings_title:"Parametrlər",lang_title:"Dil",acc_title:"Hesab",acc_why:"Daxil ol — irəliləyişin, bankların və imtahan təqvimin bütün cihazlarında saxlanılsın, elan yerləşdirə biləsən.",acc_google:"Google ilə daxil ol",acc_email:"E-poçt ilə daxil ol",acc_phone:"Telefon nömrəsi ilə daxil ol",acc_mail_ph:"E-poçt",acc_pass:"Şifrə (ən azı 6 simvol)",acc_login:"Daxil ol",acc_signup:"Qeydiyyat",acc_forgot:"Şifrəni unutmusan?",acc_reset_sent:"Şifrəni yeniləmək üçün məktub göndərildi.",acc_logout:"Çıxış",acc_hello:"Salam, {0}!",acc_synced:"İrəliləyişin, bankların və imtahan təqvimin bu hesabda saxlanılır və digər cihazlarda da görünəcək.",acc_soon:"Google, e-poçt və telefonla giriş tezliklə işə düşəcək. Hələlik hər şey bu cihazda saxlanılır.",acc_phone_ph:"50 123 45 67",acc_send_code:"Kod göndər",acc_code_ph:"SMS-dəki 6 rəqəmli kod",acc_confirm:"Təsdiqlə",acc_wait:"Gözlə…",acc_err_cred:"E-poçt və ya şifrə yanlışdır.",acc_err_exists:"Bu e-poçtla hesab artıq var — «Daxil ol» düyməsinə bas.",acc_err_weak:"Şifrə ən azı 6 simvol olmalıdır.",acc_err_email:"E-poçtu düzgün yaz.",acc_err_phone:"Nömrəni düzgün yaz: 50 123 45 67.",acc_err_code:"Kod yanlışdır və ya vaxtı keçib.",acc_err_many:"Çox cəhd oldu. Bir az sonra yenidən yoxla.",acc_err_net:"İnternet bağlantısını yoxla.",acc_err_gen:"Xəta baş verdi. Yenidən yoxla.",post_need_login:"Elan yerləşdirmək üçün hesaba daxil ol.",
 apk_btn:"📥 Tətbiqi yüklə (Android)",apk_link:"🤖 Android tətbiqi (APK)",apk_help:"Fayl yükləndikdən sonra onu aç → telefon soruşsa, «Bu mənbədən quraşdırmaya icazə ver» → «Quraşdır». Sessiya+ ikonu ana ekranda görünəcək.",
 install_btn:"📲 Telefona yüklə",install_sub:"Sessiya+ telefonunda tətbiq kimi açılacaq, açdığın testlər internetsiz də işləyəcək.",install_ios:"iPhone-da: Safari-də «Paylaş» düyməsinə bas (ox olan kvadrat) → «Ana ekrana» (Add to Home Screen) seç.",install_other:"Brauzerin menyusunu aç (⋮) → «Tətbiqi quraşdır» və ya «Ana ekrana əlavə et» seç.",
-hub_title:"Tələbə üçün hər şey — bir yerdə",hub_sub:"Sessiyaya hazırlıq, otaq yoldaşı və mənzil, kitablar, repetitorlar və faydalı alətlər. Hamısı pulsuz.",hub_tests:"Testlər və imtahana hazırlıq",hub_tests_d:"Hazır testlər, öz bankını yüklə, kartlar və imtahan biletləri",hub_room:"Otaq yoldaşı və mənzil",hub_room_d:"Kirayə, yataqxana, birlikdə yaşamaq üçün yoldaş",hub_ads:"Elanlar",hub_ads_d:"Kitab və əşyalar, repetitorlar, iş və təcrübə",hub_tools:"Alətlər",hub_tools_d:"Bal və ÜOMG kalkulyatoru, imtahan təqvimi, Pomodoro",hub_about_d:"Qaydalar, məxfilik, əlaqə",find_title:"Testlərdə axtar",find_sub:"Fənnin adını yaz — məsələn, «tarix», «riyaziyyat», «C++».",find_ph:"Fənn və ya test axtar…",find_none:"Heç nə tapılmadı. Öz bankını aşağıda yüklə.",find_more:"Bütün testlər →",about_link:"Sayt haqqında",about_html:"<p><b>Sessiya+</b> — Azərbaycan tələbələri üçün pulsuz platformadır. Burada imtahana hazırlaşmaq (testlər, kartlar, imtahan biletləri), otaq yoldaşı və mənzil tapmaq, kitab və əşya satmaq, repetitor və iş tapmaq, balını və ÜOMG-ni hesablamaq olar.</p><h3>Necə işləyir</h3><p>Google və ya e-poçtla daxil ol. Hazır testləri «Testlər» bölməsində tap və ya öz test bankını (PDF, Word, mətn) yüklə — sayt onu interaktiv testə çevirəcək və istəsən ümumi kataloqa əlavə edəcək. Suallar variantsızdırsa, kartlar və imtahan biletləri rejimindən istifadə et.</p><h3>Məxfilik</h3><p>Biz yalnız hesabının adını, e-poçtunu (və ya telefonunu) saxlayırıq. Yüklədiyin fayllar brauzerində emal olunur — faylın özü serverə göndərilmir; kataloqa yalnız sən özün əlavə etdiyin suallar düşür. İrəliləyişin, bankların və imtahan təqvimin hesabında saxlanılır ki, istənilən cihazdan davam edə biləsən. Elanlarda yazdığın mətn və əlaqə məlumatı hamıya görünür — şəxsi məlumatları ehtiyatla paylaş. Hesabını istənilən vaxt «Profil» bölməsində silə bilərsən.</p><h3>Qaydalar</h3><p>Qadağandır: spam və saxta elanlar, qanunsuz mal və xidmətlər, təhqir, başqasının şəxsi məlumatları, müəllif hüquqlarını pozan materiallar. Belə elan və testləri «Şikayət et» düyməsi ilə bildir — onlar silinəcək. Görüşə gedəndə və pul köçürəndə ehtiyatlı ol: əvvəlcədən ödəniş tələb edən elanlara inanma.</p><h3>Testlər haqqında</h3><p>Hazır testlər Sessiya+ tərəfindən nümunə kimi tərtib olunub və rəsmi universitet banklarını əvəz etmir. Tələbələrin əlavə etdiyi banklara görə onların müəllifləri məsuliyyət daşıyır. Səhv görsən, testdə «Şikayət et» düyməsi ilə bildir.</p><p class=\"note\">Sessiya+ heç bir universitetlə əlaqəli deyil.</p>",
+hub_title:"Tələbə üçün hər şey — bir yerdə",hub_sub:"Sessiyaya hazırlıq, otaq yoldaşı və mənzil, kitablar, repetitorlar və faydalı alətlər. Hamısı pulsuz.",hub_tests:"Testlər və imtahana hazırlıq",hub_tests_d:"Hazır testlər, öz bankını yüklə, kartlar və imtahan biletləri",hub_room:"Otaq yoldaşı və mənzil",hub_room_d:"Kirayə, yataqxana, birlikdə yaşamaq üçün yoldaş",hub_ads:"Elanlar",hub_ads_d:"Otaq yoldaşı və mənzil, kitab və əşyalar, repetitorlar, iş",hub_tools:"Alətlər",hub_tools_d:"Bal və ÜOMG kalkulyatoru, imtahan təqvimi, Pomodoro",hub_about_d:"Qaydalar, məxfilik, əlaqə",find_title:"Testlərdə axtar",find_sub:"Fənnin adını yaz — məsələn, «tarix», «riyaziyyat», «C++».",find_ph:"Fənn və ya test axtar…",find_none:"Heç nə tapılmadı. Öz bankını aşağıda yüklə.",find_more:"Bütün testlər →",about_link:"Sayt haqqında",about_html:"<p><b>Sessiya+</b> — Azərbaycan tələbələri üçün pulsuz platformadır. Burada imtahana hazırlaşmaq (testlər, kartlar, imtahan biletləri), otaq yoldaşı və mənzil tapmaq, kitab və əşya satmaq, repetitor və iş tapmaq, balını və ÜOMG-ni hesablamaq olar.</p><h3>Necə işləyir</h3><p>Google və ya e-poçtla daxil ol. Hazır testləri «Testlər» bölməsində tap və ya öz test bankını (PDF, Word, mətn) yüklə — sayt onu interaktiv testə çevirəcək və istəsən ümumi kataloqa əlavə edəcək. Suallar variantsızdırsa, kartlar və imtahan biletləri rejimindən istifadə et.</p><h3>Məxfilik</h3><p>Biz yalnız hesabının adını, e-poçtunu (və ya telefonunu) saxlayırıq. Yüklədiyin fayllar brauzerində emal olunur — faylın özü serverə göndərilmir; kataloqa yalnız sən özün əlavə etdiyin suallar düşür. İrəliləyişin, bankların və imtahan təqvimin hesabında saxlanılır ki, istənilən cihazdan davam edə biləsən. Elanlarda yazdığın mətn və əlaqə məlumatı hamıya görünür — şəxsi məlumatları ehtiyatla paylaş. Hesabını istənilən vaxt «Profil» bölməsində silə bilərsən.</p><h3>Qaydalar</h3><p>Qadağandır: spam və saxta elanlar, qanunsuz mal və xidmətlər, təhqir, başqasının şəxsi məlumatları, müəllif hüquqlarını pozan materiallar. Belə elan və testləri «Şikayət et» düyməsi ilə bildir — onlar silinəcək. Görüşə gedəndə və pul köçürəndə ehtiyatlı ol: əvvəlcədən ödəniş tələb edən elanlara inanma.</p><h3>Testlər haqqında</h3><p>Hazır testlər Sessiya+ tərəfindən nümunə kimi tərtib olunub və rəsmi universitet banklarını əvəz etmir. Tələbələrin əlavə etdiyi banklara görə onların müəllifləri məsuliyyət daşıyır. Səhv görsən, testdə «Şikayət et» düyməsi ilə bildir.</p><p class=\"note\">Sessiya+ heç bir universitetlə əlaqəli deyil.</p>",
 },
 ru:{
 nav_board:"Объявления",board_title:"Доска объявлений",board_sub:"Соседи и аренда, продажа книг и вещей, репетиторы, работа — от студентов для студентов.",home_board_sub:"Ищешь соседа, продаёшь учебники или нужен репетитор? Размести объявление — бесплатно.",post_btn:"+ Разместить объявление",cat_all:"Все",cat_room:"Сосед / квартира",cat_sell:"Книги и вещи",cat_service:"Репетиторы и услуги",cat_job:"Работа и стажировки",cat_lost:"Потеряно / найдено",cat_other:"Другое",kinds_all:"Все",kind_need_mate:"Ищет соседа",kind_offer_room:"Сдаёт комнату / место",kind_need_room:"Ищет жильё",kind_sell:"Продаю",kind_buy:"Куплю",kind_offer:"Предлагаю",kind_need:"Ищу",sex_any:"Неважно",sex_f:"Для девушек",sex_m:"Для парней",max_price_ph:"Макс. ₼ / мес",board_search_ph:"Поиск: метро, вуз, книга…",per_month:" / мес",ago_now:"только что",ago_min:"{0} мин назад",ago_h:"{0} ч назад",ago_d:"{0} дн назад",board_soon:"Доска объявлений скоро откроется — готовим.",board_err:"Не удалось загрузить объявления. Обнови страницу.",board_empty:"В этом разделе пока нет объявлений. Размести первое!",board_note:"Объявления скрываются автоматически через 45 дней. Не переводи деньги, не встретившись с человеком, — будь осторожен.",ad_reported:"Отправлено ✓",post_title:"Новое объявление",f_cat:"Раздел",f_kind:"Тип",f_title:"Заголовок",f_text:"Подробнее",f_price_room:"Цена, ₼ / мес (с человека)",f_price:"Цена, ₼",f_place:"Место: район, метро, общежитие",place_ph:"напр. 28 Мая",f_sex:"Для кого",f_contact:"Контакт: телефон / WhatsApp или Telegram @ник",contact_note:"Этот контакт будет виден всем в объявлении.",post_agree:"Информация в объявлении правдива; нет обмана и запрещённого контента.",post_publish:"Разместить",ph_title_need_mate:"напр. Ищу соседа возле Гянджлик",ph_title_offer_room:"напр. Свободно 1 место в 2-комн. квартире, 28 Мая",ph_title_need_room:"напр. Ищу комнату рядом с университетом",ph_title_sell:"напр. Учебник по высшей математике, в хорошем состоянии",ph_title_gen:"Короткий и понятный заголовок",ph_text_room:"Сколько человек, что входит в цену (коммуналка, интернет), с какого числа, о себе: курс, вуз, привычки…",ph_text_gen:"Подробнее: состояние, условия, время…",post_need_title:"Напиши заголовок (минимум 3 символа).",post_need_contact:"Укажи контакт.",post_need_agree:"Поставь галочку подтверждения.",post_limit:"Можно разместить не больше 5 объявлений в день.",post_fail:"Не удалось разместить объявление. Попробуй ещё раз.",post_wait:"Размещаем…",
@@ -750,12 +769,13 @@ parse_fail:"В этом файле не найдено вопросов с от�
 not_found:"Банк не найден или удалён.",load_fail:"Не удалось загрузить банк.",
 footer:"Sessiya+ не связан ни с одним университетом. Файлы обрабатываются в твоём браузере; в каталог попадают только банки, которые ты сам добавил. О материалах, нарушающих авторские права, сообщай кнопкой «Пожаловаться».<br>Готовые тесты — примерные вопросы, составленные автором сайта.",
 all_banks_link:"📚 Все тестовые банки и вопросы",
+today_title:"Сегодня",goal_lbl:"Цель на день: {0} / {1} вопросов",lvl:"Уровень {0}",xp_lbl:"{0} XP · следующий уровень на {1} XP",daily_btn:"🎯 10 вопросов дня",daily_done:"✅ Тест дня: {0}",daily_title:"10 вопросов дня",rating_btn:"🏆 Рейтинг",rating_title:"Рейтинг недели",rating_sub:"Каждый верный ответ +10 XP, «Знаю» в карточках +5 XP, тест дня +30 XP. Рейтинг обнуляется каждый понедельник.",rating_you:"Твоё место: #{0} · {1} XP",rating_empty:"На этой неделе ещё никто не набрал очков. Будь первым!",rating_go:"Решать тесты →",xp_week:"за неделю {0} XP",xp_total:"всего {0} XP",student:"Студент",fav_add:"Добавить в избранное",fav_btn:"★ Избранное ({0})",goal_set:"Цель на день (вопросов)",hub_rating_d:"Самые активные студенты недели, XP и уровни",
 acc_edit_name:"Изменить имя",acc_name_ph2:"Твоё имя",acc_save:"Сохранить",acc_my_ads:"Мои объявления",acc_no_ads:"У тебя пока нет объявлений.",acc_danger:"Удаление аккаунта",acc_delete_note:"Будут удалены аккаунт, твои объявления, добавленные тобой в каталог банки и сохранённый прогресс. Это нельзя отменить.",acc_delete:"Удалить аккаунт навсегда",acc_delete_confirm:"Точно? Нажми ещё раз",acc_err_recent:"Для безопасности выйди, войди снова и повтори в течение 5 минут.",
 gate_title:"Добро пожаловать! 👋",gate_sub:"Sessiya+ — всё для студента в одном месте. Чтобы продолжить, войди или зарегистрируйся — бесплатно, 10 секунд.",gate_rules:"Правила и конфиденциальность",gate_offline:"Нет подключения. Проверь интернет и попробуй ещё раз.",gate_retry:"Попробовать ещё раз",acc_name_ph:"Твоё имя (для регистрации)",
 nav_profile:"Профиль",ts_cat:"Каталог",ts_my:"Мои банки",ts_up:"Загрузить",settings_title:"Настройки",lang_title:"Язык",acc_title:"Аккаунт",acc_why:"Войди — прогресс, банки и календарь экзаменов сохранятся на всех твоих устройствах, и ты сможешь размещать объявления.",acc_google:"Войти через Google",acc_email:"Войти по почте",acc_phone:"Войти по номеру телефона",acc_mail_ph:"Почта",acc_pass:"Пароль (минимум 6 символов)",acc_login:"Войти",acc_signup:"Регистрация",acc_forgot:"Забыл пароль?",acc_reset_sent:"Письмо для смены пароля отправлено.",acc_logout:"Выйти",acc_hello:"Привет, {0}!",acc_synced:"Прогресс, банки и календарь экзаменов сохраняются в этом аккаунте и будут видны на других устройствах.",acc_soon:"Вход через Google, почту и телефон скоро заработает. Пока всё хранится на этом устройстве.",acc_phone_ph:"50 123 45 67",acc_send_code:"Отправить код",acc_code_ph:"6-значный код из SMS",acc_confirm:"Подтвердить",acc_wait:"Подожди…",acc_err_cred:"Неверная почта или пароль.",acc_err_exists:"Аккаунт с этой почтой уже есть — нажми «Войти».",acc_err_weak:"Пароль должен быть не короче 6 символов.",acc_err_email:"Проверь адрес почты.",acc_err_phone:"Введи номер правильно: 50 123 45 67.",acc_err_code:"Неверный или устаревший код.",acc_err_many:"Слишком много попыток. Попробуй чуть позже.",acc_err_net:"Проверь подключение к интернету.",acc_err_gen:"Произошла ошибка. Попробуй ещё раз.",post_need_login:"Чтобы разместить объявление, войди в аккаунт.",
 apk_btn:"📥 Скачать приложение (Android)",apk_link:"🤖 Android-приложение (APK)",apk_help:"Когда файл скачается, открой его → если телефон спросит, разреши установку из этого источника → «Установить». Иконка Sessiya+ появится на главном экране.",
 install_btn:"📲 Установить на телефон",install_sub:"Sessiya+ будет открываться как приложение, а открытые тесты — работать без интернета.",install_ios:"На iPhone: в Safari нажми «Поделиться» (квадрат со стрелкой) → «На экран „Домой“».",install_other:"Открой меню браузера (⋮) → «Установить приложение» или «Добавить на главный экран».",
-hub_title:"Всё для студента — в одном месте",hub_sub:"Подготовка к сессии, соседи и квартиры, учебники, репетиторы и полезные инструменты. Всё бесплатно.",hub_tests:"Тесты и подготовка к экзаменам",hub_tests_d:"Готовые тесты, загрузка своего банка, карточки и билеты",hub_room:"Сосед и квартира",hub_room_d:"Аренда, общежитие, сосед для совместного проживания",hub_ads:"Объявления",hub_ads_d:"Книги и вещи, репетиторы, работа и стажировки",hub_tools:"Инструменты",hub_tools_d:"Калькулятор баллов и среднего балла, календарь сессии, Помодоро",hub_about_d:"Правила, конфиденциальность, контакты",find_title:"Поиск по тестам",find_sub:"Напиши предмет — например, «история», «математика», «C++».",find_ph:"Найти предмет или тест…",find_none:"Ничего не найдено. Загрузи свой банк ниже.",find_more:"Все тесты →",about_link:"О сайте",about_html:"<p><b>Sessiya+</b> — бесплатная платформа для студентов Азербайджана. Здесь можно готовиться к экзаменам (тесты, карточки, билеты), найти соседа и квартиру, продать книги и вещи, найти репетитора или работу, посчитать баллы и средний балл.</p><h3>Как это работает</h3><p>Войди через Google или почту. Найди готовые тесты в разделе «Тесты» или загрузи свой банк (PDF, Word, текст) — сайт превратит его в интерактивный тест и, если хочешь, добавит в общий каталог. Если вопросы без вариантов, используй карточки и экзаменационные билеты.</p><h3>Конфиденциальность</h3><p>Мы храним только имя, почту (или телефон) твоего аккаунта. Загруженные файлы обрабатываются в браузере — сам файл на сервер не отправляется; в каталог попадают только вопросы, которые ты сам добавил. Прогресс, банки и календарь экзаменов сохраняются в аккаунте, чтобы продолжать с любого устройства. Текст и контакты в объявлениях видны всем — делись личными данными осторожно. Аккаунт можно удалить в любой момент в разделе «Профиль».</p><h3>Правила</h3><p>Запрещено: спам и фейковые объявления, незаконные товары и услуги, оскорбления, чужие личные данные, материалы с нарушением авторских прав. Сообщай о таком кнопкой «Пожаловаться» — это будет удалено. Будь осторожен при встречах и переводах денег: не верь объявлениям с требованием предоплаты.</p><h3>О тестах</h3><p>Готовые тесты составлены Sessiya+ как примеры и не заменяют официальные банки вузов. За банки, добавленные студентами, отвечают их авторы. Нашёл ошибку — сообщи кнопкой «Пожаловаться» в тесте.</p><p class=\"note\">Sessiya+ не связан ни с одним университетом.</p>",
+hub_title:"Всё для студента — в одном месте",hub_sub:"Подготовка к сессии, соседи и квартиры, учебники, репетиторы и полезные инструменты. Всё бесплатно.",hub_tests:"Тесты и подготовка к экзаменам",hub_tests_d:"Готовые тесты, загрузка своего банка, карточки и билеты",hub_room:"Сосед и квартира",hub_room_d:"Аренда, общежитие, сосед для совместного проживания",hub_ads:"Объявления",hub_ads_d:"Соседи и жильё, книги и вещи, репетиторы, работа",hub_tools:"Инструменты",hub_tools_d:"Калькулятор баллов и среднего балла, календарь сессии, Помодоро",hub_about_d:"Правила, конфиденциальность, контакты",find_title:"Поиск по тестам",find_sub:"Напиши предмет — например, «история», «математика», «C++».",find_ph:"Найти предмет или тест…",find_none:"Ничего не найдено. Загрузи свой банк ниже.",find_more:"Все тесты →",about_link:"О сайте",about_html:"<p><b>Sessiya+</b> — бесплатная платформа для студентов Азербайджана. Здесь можно готовиться к экзаменам (тесты, карточки, билеты), найти соседа и квартиру, продать книги и вещи, найти репетитора или работу, посчитать баллы и средний балл.</p><h3>Как это работает</h3><p>Войди через Google или почту. Найди готовые тесты в разделе «Тесты» или загрузи свой банк (PDF, Word, текст) — сайт превратит его в интерактивный тест и, если хочешь, добавит в общий каталог. Если вопросы без вариантов, используй карточки и экзаменационные билеты.</p><h3>Конфиденциальность</h3><p>Мы храним только имя, почту (или телефон) твоего аккаунта. Загруженные файлы обрабатываются в браузере — сам файл на сервер не отправляется; в каталог попадают только вопросы, которые ты сам добавил. Прогресс, банки и календарь экзаменов сохраняются в аккаунте, чтобы продолжать с любого устройства. Текст и контакты в объявлениях видны всем — делись личными данными осторожно. Аккаунт можно удалить в любой момент в разделе «Профиль».</p><h3>Правила</h3><p>Запрещено: спам и фейковые объявления, незаконные товары и услуги, оскорбления, чужие личные данные, материалы с нарушением авторских прав. Сообщай о таком кнопкой «Пожаловаться» — это будет удалено. Будь осторожен при встречах и переводах денег: не верь объявлениям с требованием предоплаты.</p><h3>О тестах</h3><p>Готовые тесты составлены Sessiya+ как примеры и не заменяют официальные банки вузов. За банки, добавленные студентами, отвечают их авторы. Нашёл ошибку — сообщи кнопкой «Пожаловаться» в тесте.</p><p class=\"note\">Sessiya+ не связан ни с одним университетом.</p>",
 },
 en:{
 nav_board:"Board",board_title:"Notice board",board_sub:"Roommates and rentals, books and stuff for sale, tutors, jobs — from students to students.",home_board_sub:"Looking for a roommate, selling textbooks or need a tutor? Post an ad — it's free.",post_btn:"+ Post an ad",cat_all:"All",cat_room:"Roommate / housing",cat_sell:"Books & stuff",cat_service:"Tutors & services",cat_job:"Jobs & internships",cat_lost:"Lost & found",cat_other:"Other",kinds_all:"All",kind_need_mate:"Looking for a roommate",kind_offer_room:"Room / spot available",kind_need_room:"Looking for a place",kind_sell:"For sale",kind_buy:"Want to buy",kind_offer:"Offering",kind_need:"Looking for",sex_any:"Any",sex_f:"Girls only",sex_m:"Guys only",max_price_ph:"Max ₼ / month",board_search_ph:"Search: metro, university, book…",per_month:" / mo",ago_now:"just now",ago_min:"{0} min ago",ago_h:"{0} h ago",ago_d:"{0} d ago",board_soon:"The notice board is opening soon — getting it ready.",board_err:"Couldn't load ads. Refresh the page.",board_empty:"No ads in this section yet. Be the first to post!",board_note:"Ads are hidden automatically after 45 days. Don't send money before meeting the person — stay safe.",ad_reported:"Sent ✓",post_title:"New ad",f_cat:"Section",f_kind:"Type",f_title:"Title",f_text:"Details",f_price_room:"Price, ₼ / month (per person)",f_price:"Price, ₼",f_place:"Place: district, metro, dorm",place_ph:"e.g. 28 May",f_sex:"Who for",f_contact:"Contact: phone / WhatsApp or Telegram @username",contact_note:"This contact will be visible to everyone in the ad.",post_agree:"The information is true; no scams or prohibited content.",post_publish:"Post ad",ph_title_need_mate:"e.g. Looking for a roommate near Ganjlik",ph_title_offer_room:"e.g. 1 spot free in a 2-room flat, 28 May",ph_title_need_room:"e.g. Looking for a room near the university",ph_title_sell:"e.g. Higher maths textbook, good condition",ph_title_gen:"Short, clear title",ph_text_room:"How many people, what's included (utilities, internet), from when, about you: year, university, habits…",ph_text_gen:"Details: condition, terms, timing…",post_need_title:"Write a title (at least 3 characters).",post_need_contact:"Add a contact.",post_need_agree:"Tick the confirmation box.",post_limit:"You can post at most 5 ads per day.",post_fail:"Couldn't post the ad. Try again.",post_wait:"Posting…",
@@ -800,12 +820,13 @@ parse_fail:"No questions with a marked correct answer were found. See the format
 not_found:"Bank not found or deleted.",load_fail:"Couldn't load the bank.",
 footer:"Sessiya+ is not affiliated with any university. Files are processed in your browser; only banks you choose are added to the catalog. Report copyright-infringing material with the “Report” button.<br>Ready-made quizzes are sample questions written by the site author.",
 all_banks_link:"📚 All question banks",
+today_title:"Today",goal_lbl:"Daily goal: {0} / {1} questions",lvl:"Level {0}",xp_lbl:"{0} XP · next level at {1} XP",daily_btn:"🎯 10 questions of the day",daily_done:"✅ Daily quiz: {0}",daily_title:"10 questions of the day",rating_btn:"🏆 Leaderboard",rating_title:"Weekly leaderboard",rating_sub:"Each correct answer +10 XP, “I know” in flashcards +5 XP, daily quiz +30 XP. Resets every Monday.",rating_you:"Your place: #{0} · {1} XP",rating_empty:"No one has scored this week yet. Be the first!",rating_go:"Solve quizzes →",xp_week:"{0} XP this week",xp_total:"{0} XP total",student:"Student",fav_add:"Add to favourites",fav_btn:"★ Favourites ({0})",goal_set:"Daily goal (questions)",hub_rating_d:"Most active students of the week, XP and levels",
 acc_edit_name:"Change name",acc_name_ph2:"Your name",acc_save:"Save",acc_my_ads:"My listings",acc_no_ads:"You have no listings yet.",acc_danger:"Delete account",acc_delete_note:"Your account, listings, banks you added to the catalog and saved progress will be deleted. This can't be undone.",acc_delete:"Delete account permanently",acc_delete_confirm:"Sure? Tap again",acc_err_recent:"For security, sign out, sign in again and retry within 5 minutes.",
 gate_title:"Welcome! 👋",gate_sub:"Sessiya+ — everything a student needs in one place. Sign in or sign up to continue — free, takes 10 seconds.",gate_rules:"Rules and privacy",gate_offline:"No connection. Check your internet and try again.",gate_retry:"Try again",acc_name_ph:"Your name (for sign-up)",
 nav_profile:"Profile",ts_cat:"Catalog",ts_my:"My banks",ts_up:"Upload",settings_title:"Settings",lang_title:"Language",acc_title:"Account",acc_why:"Sign in to keep your progress, banks and exam calendar on all your devices and to post listings.",acc_google:"Continue with Google",acc_email:"Continue with email",acc_phone:"Continue with phone number",acc_mail_ph:"Email",acc_pass:"Password (at least 6 characters)",acc_login:"Sign in",acc_signup:"Sign up",acc_forgot:"Forgot password?",acc_reset_sent:"Password reset email sent.",acc_logout:"Sign out",acc_hello:"Hi, {0}!",acc_synced:"Your progress, banks and exam calendar are saved to this account and appear on your other devices.",acc_soon:"Sign-in with Google, email and phone is coming soon. For now everything is stored on this device.",acc_phone_ph:"50 123 45 67",acc_send_code:"Send code",acc_code_ph:"6-digit code from SMS",acc_confirm:"Confirm",acc_wait:"Please wait…",acc_err_cred:"Wrong email or password.",acc_err_exists:"An account with this email exists — tap “Sign in”.",acc_err_weak:"Password must be at least 6 characters.",acc_err_email:"Check the email address.",acc_err_phone:"Enter the number as 50 123 45 67.",acc_err_code:"Wrong or expired code.",acc_err_many:"Too many attempts. Try again a bit later.",acc_err_net:"Check your internet connection.",acc_err_gen:"Something went wrong. Try again.",post_need_login:"Sign in to post a listing.",
 apk_btn:"📥 Download the app (Android)",apk_link:"🤖 Android app (APK)",apk_help:"Once downloaded, open the file → if asked, allow installs from this source → “Install”. The Sessiya+ icon will appear on your home screen.",
 install_btn:"📲 Install on phone",install_sub:"Sessiya+ opens like an app, and quizzes you opened work offline.",install_ios:"On iPhone: in Safari tap Share (square with an arrow) → “Add to Home Screen”.",install_other:"Open the browser menu (⋮) → “Install app” or “Add to Home screen”.",
-hub_title:"Everything a student needs — in one place",hub_sub:"Exam prep, roommates and housing, books, tutors and handy tools. All free.",hub_tests:"Quizzes and exam prep",hub_tests_d:"Ready quizzes, upload your own bank, flashcards and exam tickets",hub_room:"Roommates and housing",hub_room_d:"Rentals, dorms, find someone to live with",hub_ads:"Listings",hub_ads_d:"Books and stuff, tutors, jobs and internships",hub_tools:"Tools",hub_tools_d:"Score and GPA calculators, exam calendar, Pomodoro",hub_about_d:"Rules, privacy, contact",find_title:"Search quizzes",find_sub:"Type a subject — e.g. “history”, “math”, “C++”.",find_ph:"Search subjects or quizzes…",find_none:"Nothing found. Upload your own bank below.",find_more:"All quizzes →",about_link:"About",about_html:"<p><b>Sessiya+</b> is a free platform for students in Azerbaijan: prepare for exams (quizzes, flashcards, exam tickets), find a roommate or a flat, sell books and stuff, find a tutor or a job, calculate your scores and GPA.</p><h3>How it works</h3><p>Sign in with Google or email. Find ready quizzes in “Quizzes” or upload your own test bank (PDF, Word, text) — the site turns it into an interactive quiz and, if you like, adds it to the shared catalog. If questions have no options, use flashcards and exam tickets.</p><h3>Privacy</h3><p>We only store your account name and email (or phone). Uploaded files are processed in your browser — the file itself is never sent to a server; only questions you choose to add go to the catalog. Your progress, banks and exam calendar are saved to your account so you can continue on any device. Text and contacts in listings are public — share personal data carefully. You can delete your account at any time in “Profile”.</p><h3>Rules</h3><p>Not allowed: spam and fake listings, illegal goods and services, insults, other people’s personal data, copyright-infringing material. Report such content with the “Report” button and it will be removed. Be careful with meetings and money transfers: don’t trust listings that ask for prepayment.</p><h3>About the quizzes</h3><p>Ready-made quizzes are sample questions written by Sessiya+ and do not replace official university banks. Banks added by students are their authors’ responsibility. Found a mistake? Report it from the quiz.</p><p class=\"note\">Sessiya+ is not affiliated with any university.</p>",
+hub_title:"Everything a student needs — in one place",hub_sub:"Exam prep, roommates and housing, books, tutors and handy tools. All free.",hub_tests:"Quizzes and exam prep",hub_tests_d:"Ready quizzes, upload your own bank, flashcards and exam tickets",hub_room:"Roommates and housing",hub_room_d:"Rentals, dorms, find someone to live with",hub_ads:"Listings",hub_ads_d:"Roommates and housing, books and stuff, tutors, jobs",hub_tools:"Tools",hub_tools_d:"Score and GPA calculators, exam calendar, Pomodoro",hub_about_d:"Rules, privacy, contact",find_title:"Search quizzes",find_sub:"Type a subject — e.g. “history”, “math”, “C++”.",find_ph:"Search subjects or quizzes…",find_none:"Nothing found. Upload your own bank below.",find_more:"All quizzes →",about_link:"About",about_html:"<p><b>Sessiya+</b> is a free platform for students in Azerbaijan: prepare for exams (quizzes, flashcards, exam tickets), find a roommate or a flat, sell books and stuff, find a tutor or a job, calculate your scores and GPA.</p><h3>How it works</h3><p>Sign in with Google or email. Find ready quizzes in “Quizzes” or upload your own test bank (PDF, Word, text) — the site turns it into an interactive quiz and, if you like, adds it to the shared catalog. If questions have no options, use flashcards and exam tickets.</p><h3>Privacy</h3><p>We only store your account name and email (or phone). Uploaded files are processed in your browser — the file itself is never sent to a server; only questions you choose to add go to the catalog. Your progress, banks and exam calendar are saved to your account so you can continue on any device. Text and contacts in listings are public — share personal data carefully. You can delete your account at any time in “Profile”.</p><h3>Rules</h3><p>Not allowed: spam and fake listings, illegal goods and services, insults, other people’s personal data, copyright-infringing material. Report such content with the “Report” button and it will be removed. Be careful with meetings and money transfers: don’t trust listings that ask for prepayment.</p><h3>About the quizzes</h3><p>Ready-made quizzes are sample questions written by Sessiya+ and do not replace official university banks. Banks added by students are their authors’ responsibility. Found a mistake? Report it from the quiz.</p><p class=\"note\">Sessiya+ is not affiliated with any university.</p>",
 }};
 
 
@@ -896,9 +917,9 @@ const Cat={db:null,staticMetas:[],userMetas:[],metas:[],ready:false,unsub:null,l
 };
 
 // ---------- router (#home, #catalog, #u-<uni>, #f-<uni>--<fac>, #s-<uni>--<fac>--<subj>, #b-<id>) ----------
-const VIEWS=['home','catalog','board','post','tools','about','profile','preview','bank','quiz','result','cards','ticket'];
+const VIEWS=['home','catalog','board','post','tools','about','profile','rating','preview','bank','quiz','result','cards','ticket'];
 function show(v){for(const s of VIEWS) $('v-'+s).classList.toggle('hide',s!==v);
-  const nv={preview:'catalog',bank:'catalog',quiz:'catalog',result:'catalog',cards:'catalog',ticket:'catalog',post:'board',about:'profile'}[v]||v;
+  const nv={preview:'catalog',bank:'catalog',quiz:'catalog',result:'catalog',cards:'catalog',ticket:'catalog',post:'board',about:'profile',rating:'home'}[v]||v;
   document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',a.dataset.go===nv));
   window.scrollTo(0,0)}
 function go(h){ if(location.hash==='#'+h) route(); else location.hash=h }
@@ -910,6 +931,7 @@ function route(){
   if(h==='home') return renderHome();
   if(h==='catalog') return renderCatalog({});
   if(h==='about') return renderAbout();
+  if(h==='rating') return renderRating();
   if(h==='mybanks') return renderTests('my');
   if(h==='upload') return renderTests('up');
   if(h==='profile') return renderProfile();
@@ -937,7 +959,7 @@ function setTsTab(tab){ $('tsCat').classList.toggle('hide',tab!=='cat'); $('tsMy
 function renderTests(tab){ show('catalog'); setTsTab(tab);
   if(tab==='my'){ renderMyBanks(); document.title=t('ts_my')+' | Sessiya+' } else { document.title=t('ts_up')+' | Sessiya+' } }
 function renderHome(){
-  renderFind(); show('home'); document.title=t('doc_title');
+  renderFind(); renderToday(); show('home'); document.title=t('doc_title');
 }
 function renderHomeUnis(){ if(!$('homeUnis')) return;
   const c=uniCounts(); const ids=Object.keys(c).sort((a,b)=>c[b]-c[a]).slice(0,6);
@@ -958,6 +980,7 @@ function renderFind(){
 }
 $('hmSearch').addEventListener('input',renderFind);
 $('hmSearch').addEventListener('keydown',e=>{if(e.key==='Enter'){const f=$('hmFound').querySelector('.bank'); if(f) f.click()}});
+function drawGoalSeg(){ document.querySelectorAll('#pfGoal button').forEach(b=>{ b.classList.toggle('on',+b.dataset.v===getGoal()); b.onclick=()=>{ store.set('sp_goal',+b.dataset.v); drawGoalSeg() } }) }
 function renderAbout(){ show('about'); $('abBody').innerHTML=t('about_html'); document.title=t('about_link')+' | Sessiya+' }
 function labelForUni(id){const m=Cat.metas.find(x=>x.uni===id);return (m&&m.uniLabel)||uniName(id)}
 Cat.on(()=>{const h=location.hash.replace(/^#/,'')||'home'; if(h==='home'){renderHomeUnis();renderFind()} else if(/^(catalog|[ufs]-)/.test(h)) route(); else if(/^b-/.test(h)&&!curBank) route();});
@@ -1130,7 +1153,7 @@ async function openShared(id){
   if(!curBank.qs.length){$('bkLoading').textContent=t('load_fail');return}
   $('bkTotal').textContent=curBank.qs.length; $('bkLoading').classList.add('hide'); fillBankHeader(curBank,true); showModes();
 }
-function showModes(){ const W=curBank&&curBank.type==='written'; $('bkModes').classList.toggle('hide',W); $('bkWModes').classList.toggle('hide',!W); $('bkSearch').value=''; $('bkSearchRes').innerHTML=''; $('bkSearchBox').classList.remove('hide'); }
+function showModes(){ const W=curBank&&curBank.type==='written'; const fv=curBank?favs(curBank.id).length:0; $('bkFav').classList.toggle('hide',!fv); $('bkFav').textContent=t('fav_btn',fv); $('bkModes').classList.toggle('hide',W); $('bkWModes').classList.toggle('hide',!W); $('bkSearch').value=''; $('bkSearchRes').innerHTML=''; $('bkSearchBox').classList.remove('hide'); }
 $('bkDelete').onclick=async()=>{
   const btn=$('bkDelete'); if(btn.dataset.c!=='1'){btn.textContent=t('confirm_delete');btn.dataset.c='1';setTimeout(()=>{btn.textContent=t('delete');btn.dataset.c=''},3000);return}
   btn.dataset.c=''; btn.textContent=t('delete');
@@ -1139,6 +1162,7 @@ $('bkDelete').onclick=async()=>{
 };
 $('bkReport').onclick=async()=>{ try{await Cat.report(curBank.id,'')}catch(e){} $('bkMsg').textContent=t('reported'); $('bkReport').disabled=true };
 $('bkPractice').onclick=()=>startQuiz('practice',curBank.qs.map((_,i)=>i));
+$('bkFav').onclick=()=>startQuiz('practice',favs(curBank.id).slice());
 $('bkPracticeRnd').onclick=()=>startQuiz('practice',shuffle(curBank.qs.map((_,i)=>i)));
 $('bkMistakes').onclick=()=>startQuiz('practice',shuffle((mem.stats[curBank.id]||{}).wrong||[]));
 $('bkExam').onclick=()=>{const n=+$('exCount').value;let ids=shuffle(curBank.qs.map((_,i)=>i));if(n)ids=ids.slice(0,n);startQuiz('exam',ids,+$('exTime').value)};
@@ -1166,7 +1190,7 @@ function renderQ(){
   $('qzQ').textContent=x.q;
   $('qzOpts').innerHTML=Q.order.map((j,k)=>`<button class="opt" data-j="${j}"><span class="k">${k+1}</span><span>${esc(x.o[j])}</span></button>`).join('');
   $('qzOpts').querySelectorAll('.opt').forEach(b=>b.onclick=()=>pick(+b.dataset.j));
-  $('qzNext').disabled=true; $('qzNext').textContent=Q.i===Q.ids.length-1?t('finish'):t('next');
+  $('qzNext').disabled=true; $('qzNext').textContent=Q.i===Q.ids.length-1?t('finish'):t('next'); drawFavBtn();
 }
 function pick(j){
   const x=curBank.qs[Q.ids[Q.i]];
@@ -1177,9 +1201,10 @@ function pick(j){
     else if(bj===j)b.classList.add('sel')});
   $('qzNext').disabled=false;
 }
-function next(){ if(Q.picked===null)return; Q.answers[Q.i]=Q.picked; bump(1); if(Q.i<Q.ids.length-1){Q.i++;renderQ()}else finish(); }
+function next(){ if(Q.picked===null)return; Q.answers[Q.i]=Q.picked; bump(1); if(Q.picked===curBank.qs[Q.ids[Q.i]].a) award(10); if(Q.i<Q.ids.length-1){Q.i++;renderQ()}else finish(); }
 $('qzNext').onclick=next;
-$('qzStop').onclick=()=>{if(Q.picked!==null){Q.answers[Q.i]=Q.picked;bump(1)}finish(true)};
+$('qzStop').onclick=()=>{if(Q.picked!==null){Q.answers[Q.i]=Q.picked;bump(1);if(Q.picked===curBank.qs[Q.ids[Q.i]].a)award(10)}finish(true)};
+$('qzFav').onclick=()=>{ if(!Q||curBank.daily) return; toggleFav(curBank.id,Q.ids[Q.i]); drawFavBtn(); syncBkFav() };
 document.addEventListener('keydown',e=>{
   if($('v-quiz').classList.contains('hide'))return;
   if(e.key==='Enter'){next();return}
@@ -1195,7 +1220,7 @@ function finish(early){
   const wrongSet=new Set(st.wrong||[]);
   Q.ids.forEach((qi,k)=>{if(k>=done)return; if(Q.answers[k]===curBank.qs[qi].a)wrongSet.delete(qi);else wrongSet.add(qi)});
   st.wrong=[...wrongSet]; if(Q.mode==='exam'&&!early) st.best=Math.max(st.best||0,pct);
-  mem.stats[curBank.id]=st; saveStats();
+  if(curBank.daily) dailyFinished(ok,total); else { mem.stats[curBank.id]=st; saveStats(); }
   const secs=Math.round((Date.now()-Q.start)/1000);
   $('rsScore').textContent=pct+'%';
   $('rsDetail').textContent=t('rs_detail',ok,total,Math.floor(secs/60),secs%60);
@@ -1245,7 +1270,7 @@ function revealCard(){
 }
 function rateCard(knew){
   const qi=C.ids[C.i]; const st=mem.stats[curBank.id]||{}; const u=new Set(st.unknown||[]);
-  bump(1); if(knew){C.known++;u.delete(qi)}else{C.unknown.push(qi);u.add(qi)} st.unknown=[...u]; mem.stats[curBank.id]=st; saveStats();
+  bump(1); if(knew){C.known++;u.delete(qi);award(5)}else{C.unknown.push(qi);u.add(qi)} st.unknown=[...u]; mem.stats[curBank.id]=st; saveStats();
   if(C.i<C.ids.length-1){C.i++;renderCard()} else endCards();
 }
 function endCards(){ C.done=true; $('cdBody').classList.add('hide'); $('cdDone').classList.remove('hide'); $('cdBar').style.width='100%';
@@ -1425,6 +1450,72 @@ function initTools(){
   $('bkSearch').oninput=renderSearch;
 }
 
+// ---------- игровые механики: XP, уровни, недельный рейтинг, дневная цель, «10 вопросов дня», избранное ----------
+function weekKey(d){ d=d||new Date(); const t=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())); const day=t.getUTCDay()||7;
+  t.setUTCDate(t.getUTCDate()+4-day); const y=t.getUTCFullYear(); const w=Math.ceil(((t-Date.UTC(y,0,1))/864e5+1)/7); return y+'-W'+String(w).padStart(2,'0') }
+function getXP(){ const x=store.get('sp_xp',null)||{total:0,week:weekKey(),wk:0}; if(x.week!==weekKey()){ x.week=weekKey(); x.wk=0 } return x }
+function levelOf(total){ const L=Math.floor(Math.sqrt((total||0)/50))+1; return {L,from:(L-1)*(L-1)*50,to:L*L*50} }
+let lbTimer=null;
+function award(n){ if(!(n>0)) return; const x=getXP(); x.total+=n; x.wk+=n; store.set('sp_xp',x); clearTimeout(lbTimer); lbTimer=setTimeout(lbPush,3000) }
+function lbName(u){ return String((u&&u.displayName)||t('student')+' '+String(u&&u.uid||'').slice(0,4)).slice(0,40) }
+async function lbPush(){
+  const u=FB.user; if(!isReal(u)||!Cat.db) return; const x=getXP(); if(!x.wk) return;
+  try{ await Cat.db.collection('lb').doc(x.week).collection('users').doc(u.uid).set({name:lbName(u),wk:x.wk,at:Date.now()}) }catch(e){ console.warn('lb',e) }
+}
+function getGoal(){ return store.get('sp_goal',20) }
+function todayCount(){ return getAct().days[dayKey()]||0 }
+
+// ---------- главная: карточка «Сегодня» ----------
+function renderToday(){
+  const box=$('hmToday'); if(!box) return;
+  const x=getXP(), lv=levelOf(x.total), g=getGoal(), n=todayCount(), s=streak(), d=store.get('sp_daily',{});
+  const pct=Math.min(100,Math.round(n/g*100)), lpct=Math.round((x.total-lv.from)/(lv.to-lv.from)*100);
+  box.innerHTML=`<div class="row" style="justify-content:space-between;align-items:center;margin-bottom:10px"><h2 style="margin:0">${t('today_title')}</h2><span class="pill acc">🔥 ${s} · ⭐ ${t('lvl',lv.L)}</span></div>
+    <div class="note" style="margin-bottom:6px">${t('goal_lbl',n,g)}${n>=g?' ✅':''}</div><div class="bar"><i style="width:${pct}%"></i></div>
+    <div class="note" style="margin:10px 0 6px">${t('xp_lbl',x.total,lv.to)}</div><div class="bar"><i style="width:${lpct}%;background:#f59e0b"></i></div>
+    <div class="row" style="margin-top:14px;gap:8px"><button class="btn" id="hmDaily">${d.day===dayKey()?t('daily_done',d.score):t('daily_btn')}</button><a class="btn sec" data-h="rating">${t('rating_btn')}</a></div>`;
+  $('hmDaily').onclick=startDaily;
+}
+
+// ---------- «10 вопросов дня»: одинаковые для всех в этот день ----------
+function seeded(seed){ let h=2166136261; for(const c of seed){ h^=c.charCodeAt(0); h=Math.imul(h,16777619) } return ()=>{ h^=h<<13; h^=h>>>17; h^=h<<5; return ((h>>>0)%1e6)/1e6 } }
+const bankCache={};
+async function startDaily(){
+  const btn=$('hmDaily'); if(btn){ btn.disabled=true; btn.textContent=t('loading') }
+  try{
+    let src=Cat.staticMetas.filter(m=>m.type==='mc'&&m.lang===(LANG==='ru'?'ru':'az')); if(src.length<3) src=Cat.staticMetas.filter(m=>m.type==='mc');
+    const rnd=seeded(dayKey()+'|'+LANG); const pool=[];
+    for(const m of src){ if(!bankCache[m.id]) bankCache[m.id]=await Cat.loadQs(m); bankCache[m.id].forEach(q=>pool.push(q)) }
+    const qs=[]; const used=new Set(); while(qs.length<10&&used.size<pool.length){ const i=Math.floor(rnd()*pool.length); if(!used.has(i)){ used.add(i); qs.push(pool[i]) } }
+    curBank={id:'daily',name:t('daily_title'),type:'mc',qs,daily:true}; startQuiz('practice',qs.map((_,i)=>i));
+  }catch(e){ if(btn){ btn.disabled=false; btn.textContent=t('load_fail') } }
+}
+function dailyFinished(ok,total){ const d=store.get('sp_daily',{}); if(d.day!==dayKey()){ award(30) } store.set('sp_daily',{day:dayKey(),score:ok+'/'+total}) }
+
+// ---------- недельный рейтинг ----------
+async function renderRating(){
+  show('rating'); document.title=t('rating_title')+' | Sessiya+';
+  const x=getXP(), lv=levelOf(x.total);
+  $('rtMe').innerHTML=`⭐ ${t('lvl',lv.L)} · ${t('xp_week',x.wk)} · ${t('xp_total',x.total)}`;
+  $('rtList').innerHTML=`<div class="empty">${t('loading')}</div>`;
+  await fbStart(); if(!Cat.db){ $('rtList').innerHTML=`<div class="empty">${t('acc_err_net')}</div>`; return }
+  await lbPush();
+  try{
+    const s=await Cat.db.collection('lb').doc(weekKey()).collection('users').orderBy('wk','desc').limit(100).get();
+    const L=s.docs.map(d=>({id:d.id,...d.data()})); const me=FB.user&&FB.user.uid; const pos=L.findIndex(r=>r.id===me);
+    $('rtPos').textContent=pos>=0?t('rating_you',pos+1,L[pos].wk):(x.wk?t('rating_you',(L.length>=100?'100+':L.length+1),x.wk):'');
+    $('rtList').innerHTML=L.length?L.slice(0,50).map((r,i)=>`<div class="lbrow${r.id===me?' me':''}"><span class="lbn">${i<3?['🥇','🥈','🥉'][i]:i+1}</span><span class="lbname">${esc(r.name)}</span><b>${r.wk} XP</b></div>`).join('')
+      :`<div class="empty">${t('rating_empty')}</div>`;
+  }catch(e){ $('rtList').innerHTML=`<div class="empty">${t('load_fail')}</div>` }
+}
+
+// ---------- избранные вопросы ----------
+function favs(id){ return (store.get('sp_fav',{})[id])||[] }
+function toggleFav(id,qi){ const f=store.get('sp_fav',{}); const s=new Set(f[id]||[]); s.has(qi)?s.delete(qi):s.add(qi); f[id]=[...s]; if(!f[id].length) delete f[id]; store.set('sp_fav',f); return s.has(qi) }
+function syncBkFav(){ const b=$('bkFav'); if(!b||!curBank||curBank.daily) return; const n=favs(curBank.id).length; b.classList.toggle('hide',!n); b.textContent=t('fav_btn',n) }
+function drawFavBtn(){ const b=$('qzFav'); if(!b||!Q) return; if(curBank.daily){ b.classList.add('hide'); return } b.classList.remove('hide');
+  const on=favs(curBank.id).includes(Q.ids[Q.i]); b.textContent=on?'★':'☆'; b.title=t('fav_add'); b.classList.toggle('on',on) }
+
 // ---------- Firebase: общая инициализация, вход (Google / e-poçt / telefon) и синхронизация прогресса ----------
 // Firebase web config (Firebase console → Project settings → Your apps → Web app → Config).
 // null → вход и доска объявлений показывают «tezliklə»; ?demo в URL включает доску с локальными тестовыми данными.
@@ -1460,7 +1551,7 @@ function fbStart(){
 }
 
 // ---------- синхронизация (users/{uid}) ----------
-const SYNC_KEYS=['sp_stats','sp_act','sp_exams','sp_gpa','sp_calc','sp_banks'];
+const SYNC_KEYS=['sp_stats','sp_act','sp_exams','sp_gpa','sp_calc','sp_banks','sp_xp','sp_fav','sp_goal','sp_daily'];
 let syncTimer=null;
 const _storeSet=store.set.bind(store);
 store.set=function(k,v){ _storeSet(k,v); if(SYNC_KEYS.includes(k)&&isReal(FB.user)){ clearTimeout(syncTimer); syncTimer=setTimeout(syncPush,2500) } };
@@ -1518,7 +1609,7 @@ async function deleteAccount(){
   for(const k of [...SYNC_KEYS,'sp_sync_at','sp_authed']) try{ localStorage.removeItem(k) }catch(e){}
   location.reload();
 }
-function renderProfile(){ show('profile'); document.title=t('nav_profile')+' | Sessiya+'; renderProgress(); drawAccount();
+function renderProfile(){ drawGoalSeg(); show('profile'); document.title=t('nav_profile')+' | Sessiya+'; renderProgress(); drawAccount();
   fbStart().then(()=>drawAccount()) }
 FB.ls.push(()=>{ if(!$('v-profile').classList.contains('hide')) drawAccount() });
 

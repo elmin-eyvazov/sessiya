@@ -108,6 +108,9 @@ body{padding-bottom:72px}}
 .gate-in{max-width:460px;margin:0 auto;padding:22px 16px 40px}
 html.gated body{overflow:hidden}
 .gate-feat{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0 6px}.gate-feat span{background:#f7f8fa;border-radius:12px;padding:10px;font-size:13px;line-height:1.3}
+.lbrow{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;margin-bottom:6px;background:#fff}
+.lbrow.me{border-color:var(--acc);background:var(--acc2)}.lbn{width:28px;text-align:center;font-weight:700;color:var(--mute)}.lbname{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#qzFav.on{color:#f59e0b}
 .about h3{margin:18px 0 6px;font-size:16px}.about p{margin:0 0 8px;line-height:1.55}
 footer a{color:var(--mute)}
 .gb{display:inline-block;min-width:26px;text-align:center;font-size:13px;font-weight:800;padding:3px 7px;border-radius:8px;color:#fff;vertical-align:middle}
@@ -142,12 +145,14 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
     <div id="instBox" class="hide" style="margin-top:12px"><a class="btn hide" id="apkBtn" href="app/sessiya.apk" download="Sessiya.apk" style="width:100%;display:block;text-align:center;text-decoration:none" data-i="apk_btn"></a><div class="note hide" id="instHelp" style="margin-top:8px;background:var(--acc2);border-radius:10px;padding:10px 12px;color:var(--ink)"></div></div>
     <div class="hub">
       <a class="main" data-h="catalog"><span class="hi">📝</span><b data-i="hub_tests"></b><span class="note" data-i="hub_tests_d"></span></a>
-      <a data-h="board-room"><span class="hi">🏠</span><b data-i="hub_room"></b><span class="note" data-i="hub_room_d"></span></a>
-      <a data-h="board"><span class="hi">📌</span><b data-i="hub_ads"></b><span class="note" data-i="hub_ads_d"></span></a>
+      <a data-h="board"><span class="hi">🏠</span><b data-i="hub_ads"></b><span class="note" data-i="hub_ads_d"></span></a>
       <a data-h="tools"><span class="hi">🧮</span><b data-i="hub_tools"></b><span class="note" data-i="hub_tools_d"></span></a>
+      <a data-h="rating"><span class="hi">🏆</span><b data-i="rating_title"></b><span class="note" data-i="hub_rating_d"></span></a>
       <a data-h="about"><span class="hi">ℹ️</span><b data-i="about_link"></b><span class="note" data-i="hub_about_d"></span></a>
     </div>
   </div>
+
+  <div class="card" id="hmToday"></div>
 
   <div class="card">
     <div class="row" style="justify-content:space-between;margin-bottom:4px"><h2 style="margin:0" data-i="find_title"></h2><button class="btn ghost small" data-go="catalog" data-i="find_more"></button></div>
@@ -339,7 +344,7 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
       <div class="card" style="background:#fafbfc">
         <h2 data-i="practice"></h2>
         <p class="note" style="margin-top:-6px" data-i="practice_sub"></p>
-        <div class="row"><button class="btn" id="bkPractice" data-i="seq_start"></button><button class="btn sec" id="bkPracticeRnd" data-i="shuffled"></button><button class="btn sec" id="bkMistakes" data-i="repeat_mistakes"></button></div>
+        <div class="row"><button class="btn" id="bkPractice" data-i="seq_start"></button><button class="btn sec" id="bkPracticeRnd" data-i="shuffled"></button><button class="btn sec hide" id="bkFav"></button><button class="btn sec" id="bkMistakes" data-i="repeat_mistakes"></button></div>
       </div>
       <div class="card" style="background:#fafbfc;margin-bottom:0">
         <h2 data-i="exam"></h2>
@@ -415,7 +420,7 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
     <div class="row" style="justify-content:space-between;margin-bottom:10px">
       <span class="note" id="qzPos"></span>
       <span class="timer" id="qzTimer"></span>
-      <button class="btn ghost" id="qzStop" data-i="finish"></button>
+      <span><button class="btn ghost" id="qzFav" style="font-size:20px;padding:4px 10px">☆</button><button class="btn ghost" id="qzStop" data-i="finish"></button></span>
     </div>
     <div class="bar"><i id="qzBar"></i></div>
     <div class="q" id="qzQ"></div>
@@ -448,7 +453,20 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
     <h2 data-i="settings_title"></h2>
     <div class="note" style="margin-bottom:6px" data-i="lang_title"></div>
     <div class="seg" id="pfLang"><button data-l="az">Azərbaycanca</button><button data-l="ru">Русский</button><button data-l="en">English</button></div>
-    <div class="row" style="margin-top:16px;gap:8px"><a class="btn sec small" data-h="about" data-i="about_link"></a><a class="btn sec small" href="app/sessiya.apk" download="Sessiya.apk" data-i="apk_link"></a></div>
+    <div class="note" style="margin:16px 0 6px" data-i="goal_set"></div>
+    <div class="seg" id="pfGoal"><button data-v="10">10</button><button data-v="20">20</button><button data-v="50">50</button><button data-v="100">100</button></div>
+    <div class="row" style="margin-top:16px;gap:8px"><a class="btn sec small" data-h="rating" data-i="rating_btn"></a><a class="btn sec small" data-h="about" data-i="about_link"></a><a class="btn sec small" href="app/sessiya.apk" download="Sessiya.apk" data-i="apk_link"></a></div>
+  </div>
+</section>
+
+<section id="v-rating" class="hide">
+  <div class="card">
+    <h1 style="margin:0 0 6px;font-size:24px">🏆 <span data-i="rating_title"></span></h1>
+    <p class="note" style="margin:0 0 12px" data-i="rating_sub"></p>
+    <div class="pill acc" id="rtMe" style="font-size:13px"></div>
+    <div style="font-weight:700;margin:12px 0 8px" id="rtPos"></div>
+    <div id="rtList"></div>
+    <div class="row" style="margin-top:14px"><a class="btn" data-h="catalog" data-i="rating_go"></a></div>
   </div>
 </section>
 
@@ -472,7 +490,7 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
   <div class="card" style="margin:0">
     <h1 style="margin:0 0 8px;font-size:26px" data-i="gate_title"></h1>
     <p class="muted" style="margin:0 0 6px" data-i="gate_sub"></p>
-    <div class="gate-feat"><span>📝 <b data-i="hub_tests"></b></span><span>🏠 <b data-i="hub_room"></b></span><span>📌 <b data-i="hub_ads"></b></span><span>🧮 <b data-i="hub_tools"></b></span></div>
+    <div class="gate-feat"><span>📝 <b data-i="hub_tests"></b></span><span>🏠 <b data-i="hub_ads"></b></span><span>🏆 <b data-i="rating_title"></b></span><span>🧮 <b data-i="hub_tools"></b></span></div>
     <div id="gateBox"></div><div id="acRecaptcha2"></div>
   </div>
   <a id="gateApk" class="btn sec hide" href="app/sessiya.apk" download="Sessiya.apk" style="display:block;text-align:center;text-decoration:none;margin-top:12px" data-i="apk_btn"></a>
@@ -575,9 +593,9 @@ const Cat={db:null,staticMetas:[],userMetas:[],metas:[],ready:false,unsub:null,l
 };
 
 // ---------- router (#home, #catalog, #u-<uni>, #f-<uni>--<fac>, #s-<uni>--<fac>--<subj>, #b-<id>) ----------
-const VIEWS=['home','catalog','board','post','tools','about','profile','preview','bank','quiz','result','cards','ticket'];
+const VIEWS=['home','catalog','board','post','tools','about','profile','rating','preview','bank','quiz','result','cards','ticket'];
 function show(v){for(const s of VIEWS) $('v-'+s).classList.toggle('hide',s!==v);
-  const nv={preview:'catalog',bank:'catalog',quiz:'catalog',result:'catalog',cards:'catalog',ticket:'catalog',post:'board',about:'profile'}[v]||v;
+  const nv={preview:'catalog',bank:'catalog',quiz:'catalog',result:'catalog',cards:'catalog',ticket:'catalog',post:'board',about:'profile',rating:'home'}[v]||v;
   document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',a.dataset.go===nv));
   window.scrollTo(0,0)}
 function go(h){ if(location.hash==='#'+h) route(); else location.hash=h }
@@ -589,6 +607,7 @@ function route(){
   if(h==='home') return renderHome();
   if(h==='catalog') return renderCatalog({});
   if(h==='about') return renderAbout();
+  if(h==='rating') return renderRating();
   if(h==='mybanks') return renderTests('my');
   if(h==='upload') return renderTests('up');
   if(h==='profile') return renderProfile();
@@ -616,7 +635,7 @@ function setTsTab(tab){ $('tsCat').classList.toggle('hide',tab!=='cat'); $('tsMy
 function renderTests(tab){ show('catalog'); setTsTab(tab);
   if(tab==='my'){ renderMyBanks(); document.title=t('ts_my')+' | Sessiya+' } else { document.title=t('ts_up')+' | Sessiya+' } }
 function renderHome(){
-  renderFind(); show('home'); document.title=t('doc_title');
+  renderFind(); renderToday(); show('home'); document.title=t('doc_title');
 }
 function renderHomeUnis(){ if(!$('homeUnis')) return;
   const c=uniCounts(); const ids=Object.keys(c).sort((a,b)=>c[b]-c[a]).slice(0,6);
@@ -637,6 +656,7 @@ function renderFind(){
 }
 $('hmSearch').addEventListener('input',renderFind);
 $('hmSearch').addEventListener('keydown',e=>{if(e.key==='Enter'){const f=$('hmFound').querySelector('.bank'); if(f) f.click()}});
+function drawGoalSeg(){ document.querySelectorAll('#pfGoal button').forEach(b=>{ b.classList.toggle('on',+b.dataset.v===getGoal()); b.onclick=()=>{ store.set('sp_goal',+b.dataset.v); drawGoalSeg() } }) }
 function renderAbout(){ show('about'); $('abBody').innerHTML=t('about_html'); document.title=t('about_link')+' | Sessiya+' }
 function labelForUni(id){const m=Cat.metas.find(x=>x.uni===id);return (m&&m.uniLabel)||uniName(id)}
 Cat.on(()=>{const h=location.hash.replace(/^#/,'')||'home'; if(h==='home'){renderHomeUnis();renderFind()} else if(/^(catalog|[ufs]-)/.test(h)) route(); else if(/^b-/.test(h)&&!curBank) route();});
@@ -809,7 +829,7 @@ async function openShared(id){
   if(!curBank.qs.length){$('bkLoading').textContent=t('load_fail');return}
   $('bkTotal').textContent=curBank.qs.length; $('bkLoading').classList.add('hide'); fillBankHeader(curBank,true); showModes();
 }
-function showModes(){ const W=curBank&&curBank.type==='written'; $('bkModes').classList.toggle('hide',W); $('bkWModes').classList.toggle('hide',!W); $('bkSearch').value=''; $('bkSearchRes').innerHTML=''; $('bkSearchBox').classList.remove('hide'); }
+function showModes(){ const W=curBank&&curBank.type==='written'; const fv=curBank?favs(curBank.id).length:0; $('bkFav').classList.toggle('hide',!fv); $('bkFav').textContent=t('fav_btn',fv); $('bkModes').classList.toggle('hide',W); $('bkWModes').classList.toggle('hide',!W); $('bkSearch').value=''; $('bkSearchRes').innerHTML=''; $('bkSearchBox').classList.remove('hide'); }
 $('bkDelete').onclick=async()=>{
   const btn=$('bkDelete'); if(btn.dataset.c!=='1'){btn.textContent=t('confirm_delete');btn.dataset.c='1';setTimeout(()=>{btn.textContent=t('delete');btn.dataset.c=''},3000);return}
   btn.dataset.c=''; btn.textContent=t('delete');
@@ -818,6 +838,7 @@ $('bkDelete').onclick=async()=>{
 };
 $('bkReport').onclick=async()=>{ try{await Cat.report(curBank.id,'')}catch(e){} $('bkMsg').textContent=t('reported'); $('bkReport').disabled=true };
 $('bkPractice').onclick=()=>startQuiz('practice',curBank.qs.map((_,i)=>i));
+$('bkFav').onclick=()=>startQuiz('practice',favs(curBank.id).slice());
 $('bkPracticeRnd').onclick=()=>startQuiz('practice',shuffle(curBank.qs.map((_,i)=>i)));
 $('bkMistakes').onclick=()=>startQuiz('practice',shuffle((mem.stats[curBank.id]||{}).wrong||[]));
 $('bkExam').onclick=()=>{const n=+$('exCount').value;let ids=shuffle(curBank.qs.map((_,i)=>i));if(n)ids=ids.slice(0,n);startQuiz('exam',ids,+$('exTime').value)};
@@ -845,7 +866,7 @@ function renderQ(){
   $('qzQ').textContent=x.q;
   $('qzOpts').innerHTML=Q.order.map((j,k)=>`<button class="opt" data-j="${j}"><span class="k">${k+1}</span><span>${esc(x.o[j])}</span></button>`).join('');
   $('qzOpts').querySelectorAll('.opt').forEach(b=>b.onclick=()=>pick(+b.dataset.j));
-  $('qzNext').disabled=true; $('qzNext').textContent=Q.i===Q.ids.length-1?t('finish'):t('next');
+  $('qzNext').disabled=true; $('qzNext').textContent=Q.i===Q.ids.length-1?t('finish'):t('next'); drawFavBtn();
 }
 function pick(j){
   const x=curBank.qs[Q.ids[Q.i]];
@@ -856,9 +877,10 @@ function pick(j){
     else if(bj===j)b.classList.add('sel')});
   $('qzNext').disabled=false;
 }
-function next(){ if(Q.picked===null)return; Q.answers[Q.i]=Q.picked; bump(1); if(Q.i<Q.ids.length-1){Q.i++;renderQ()}else finish(); }
+function next(){ if(Q.picked===null)return; Q.answers[Q.i]=Q.picked; bump(1); if(Q.picked===curBank.qs[Q.ids[Q.i]].a) award(10); if(Q.i<Q.ids.length-1){Q.i++;renderQ()}else finish(); }
 $('qzNext').onclick=next;
-$('qzStop').onclick=()=>{if(Q.picked!==null){Q.answers[Q.i]=Q.picked;bump(1)}finish(true)};
+$('qzStop').onclick=()=>{if(Q.picked!==null){Q.answers[Q.i]=Q.picked;bump(1);if(Q.picked===curBank.qs[Q.ids[Q.i]].a)award(10)}finish(true)};
+$('qzFav').onclick=()=>{ if(!Q||curBank.daily) return; toggleFav(curBank.id,Q.ids[Q.i]); drawFavBtn(); syncBkFav() };
 document.addEventListener('keydown',e=>{
   if($('v-quiz').classList.contains('hide'))return;
   if(e.key==='Enter'){next();return}
@@ -874,7 +896,7 @@ function finish(early){
   const wrongSet=new Set(st.wrong||[]);
   Q.ids.forEach((qi,k)=>{if(k>=done)return; if(Q.answers[k]===curBank.qs[qi].a)wrongSet.delete(qi);else wrongSet.add(qi)});
   st.wrong=[...wrongSet]; if(Q.mode==='exam'&&!early) st.best=Math.max(st.best||0,pct);
-  mem.stats[curBank.id]=st; saveStats();
+  if(curBank.daily) dailyFinished(ok,total); else { mem.stats[curBank.id]=st; saveStats(); }
   const secs=Math.round((Date.now()-Q.start)/1000);
   $('rsScore').textContent=pct+'%';
   $('rsDetail').textContent=t('rs_detail',ok,total,Math.floor(secs/60),secs%60);
@@ -924,7 +946,7 @@ function revealCard(){
 }
 function rateCard(knew){
   const qi=C.ids[C.i]; const st=mem.stats[curBank.id]||{}; const u=new Set(st.unknown||[]);
-  bump(1); if(knew){C.known++;u.delete(qi)}else{C.unknown.push(qi);u.add(qi)} st.unknown=[...u]; mem.stats[curBank.id]=st; saveStats();
+  bump(1); if(knew){C.known++;u.delete(qi);award(5)}else{C.unknown.push(qi);u.add(qi)} st.unknown=[...u]; mem.stats[curBank.id]=st; saveStats();
   if(C.i<C.ids.length-1){C.i++;renderCard()} else endCards();
 }
 function endCards(){ C.done=true; $('cdBody').classList.add('hide'); $('cdDone').classList.remove('hide'); $('cdBar').style.width='100%';
@@ -967,6 +989,7 @@ function scoreTicket(){ const n=TK.ids.length, ok=[...document.querySelectorAll(
 $('bkTicket').onclick=startTicket; $('tkDone').onclick=checkTicket; $('tkAgain').onclick=startTicket; $('tkBack').onclick=()=>{clearInterval(tkTick);backToBank()};
 
 /*TOOLSJS*/
+/*GAMEJS*/
 /*AUTHJS*/
 /*BOARDJS*/
 applyI18n(); renderHomeType(); initTools(); initBoard(); route(); Cat.init(); Gate.init();

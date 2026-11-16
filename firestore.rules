@@ -53,6 +53,14 @@ service cloud.firestore {
       allow create: if real() && request.resource.data.keys().hasOnly(['qs','uid'])
         && request.resource.data.uid == request.auth.uid && request.resource.data.qs is list && request.resource.data.qs.size() <= 150;
     }
+    match /lb/{week}/users/{uid} {
+      allow read: if true;
+      allow write: if real() && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['name','wk','at'])
+        && request.resource.data.name is string && request.resource.data.name.size() <= 40
+        && request.resource.data.wk is int && request.resource.data.wk >= 0 && request.resource.data.wk <= 50000
+        && request.resource.data.at is int;
+    }
     match /reports/{id} {
       allow create: if request.auth != null
         && request.resource.data.keys().hasOnly(['ad','bank','reason','uid','at'])
