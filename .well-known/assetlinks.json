@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "io.github.elmin_eyvazov.twa",
+        "sha256_cert_fingerprints": ["84:54:FE:9A:0F:E5:D7:C8:1D:00:A7:99:B6:34:7C:CE:7A:F8:AE:BB:08:34:B0:42:68:30:A0:A6:E7:9D:89:C2"]
+      }
+    }]
