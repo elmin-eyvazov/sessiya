@@ -1,6 +1,84 @@
 {
  "banks": [
   {
+   "name": "Высшая математика — пределы, производные, интегралы",
+   "uni": "umumi",
+   "uniLabel": "Bütün universitetlər (ümumi fənlər)",
+   "fac": "Ümumi fənlər",
+   "subj": "Ali riyaziyyat",
+   "lang": "ru",
+   "id": "ruvysshaya",
+   "type": "mc",
+   "format": "test",
+   "count": 20,
+   "createdAt": 1794821364102
+  },
+  {
+   "name": "Mühasibat uçotunun əsasları — test",
+   "uni": "umumi",
+   "uniLabel": "Bütün universitetlər (ümumi fənlər)",
+   "fac": "İqtisadiyyat",
+   "subj": "Mühasibat uçotu",
+   "lang": "az",
+   "id": "muhasibat",
+   "type": "mc",
+   "format": "test",
+   "count": 20,
+   "createdAt": 1794821364077
+  },
+  {
+   "name": "Kompüter şəbəkələri — test",
+   "uni": "umumi",
+   "uniLabel": "Bütün universitetlər (ümumi fənlər)",
+   "fac": "İnformasiya texnologiyaları",
+   "subj": "Kompüter şəbəkələri",
+   "lang": "az",
+   "id": "sebekeler",
+   "type": "mc",
+   "format": "test",
+   "count": 25,
+   "createdAt": 1794821364050
+  },
+  {
+   "name": "Ehtimal nəzəriyyəsi və riyazi statistika — test",
+   "uni": "umumi",
+   "uniLabel": "Bütün universitetlər (ümumi fənlər)",
+   "fac": "Ümumi fənlər",
+   "subj": "Ehtimal nəzəriyyəsi və riyazi statistika",
+   "lang": "az",
+   "id": "ehtimal",
+   "type": "mc",
+   "format": "test",
+   "count": 20,
+   "createdAt": 1794821364010
+  },
+  {
+   "name": "Fizika — əsas qanunlar və vahidlər",
+   "uni": "umumi",
+   "uniLabel": "Bütün universitetlər (ümumi fənlər)",
+   "fac": "Ümumi fənlər",
+   "subj": "Fizika",
+   "lang": "az",
+   "id": "fizika",
+   "type": "mc",
+   "format": "test",
+   "count": 25,
+   "createdAt": 1794821363975
+  },
+  {
+   "name": "İngilis dili — qrammatika testi (English grammar)",
+   "uni": "umumi",
+   "uniLabel": "Bütün universitetlər (ümumi fənlər)",
+   "fac": "Ümumi fənlər",
+   "subj": "İngilis dili",
+   "lang": "en",
+   "id": "ingilis",
+   "type": "mc",
+   "format": "test",
+   "count": 30,
+   "createdAt": 1794821363940
+  },
+  {
    "name": "Информатика (основы) — тест",
    "uni": "umumi",
    "uniLabel": "Bütün universitetlər (ümumi fənlər)",
@@ -11,7 +89,7 @@
    "type": "mc",
    "format": "test",
    "count": 20,
-   "createdAt": 1794766160855
+   "createdAt": 1794821363900
   },
   {
    "name": "Verilənlər bazası və SQL — test",
@@ -24,7 +102,7 @@
    "type": "mc",
    "format": "test",
    "count": 25,
-   "createdAt": 1794766160824
+   "createdAt": 1794821363867
   },
   {
    "name": "Proqramlaşdırmanın əsasları (C++) — test",
@@ -37,7 +115,7 @@
    "type": "mc",
    "format": "test",
    "count": 30,
-   "createdAt": 1794766160795
+   "createdAt": 1794821363834
   },
   {
    "name": "Makroiqtisadiyyat — əsas test sualları",
@@ -50,7 +128,7 @@
    "type": "mc",
    "format": "test",
    "count": 25,
-   "createdAt": 1794766160770
+   "createdAt": 1794821363800
   },
   {
    "name": "Fəlsəfə — əsas test sualları",
@@ -63,7 +141,7 @@
    "type": "mc",
    "format": "test",
    "count": 25,
-   "createdAt": 1794766160745
+   "createdAt": 1794821363767
   },
   {
    "name": "Ali riyaziyyat — limit, törəmə, inteqral, matrislər",
@@ -76,7 +154,7 @@
    "type": "mc",
    "format": "test",
    "count": 30,
-   "createdAt": 1794766160721
+   "createdAt": 1794821363732
   },
   {
    "name": "История Азербайджана — основные тесты",
@@ -89,7 +167,7 @@
    "type": "mc",
    "format": "test",
    "count": 20,
-   "createdAt": 1794766160697
+   "createdAt": 1794821363698
   },
   {
    "name": "Azərbaycan tarixi — imtahan sualları (yazılı)",
@@ -102,7 +180,7 @@
    "type": "written",
    "format": "written",
    "count": 15,
-   "createdAt": 1794766160672
+   "createdAt": 1794821363664
   },
   {
    "name": "Azərbaycan tarixi — əsas test sualları",
@@ -115,7 +193,7 @@
    "type": "mc",
    "format": "test",
    "count": 30,
-   "createdAt": 1794766160642
+   "createdAt": 1794821363630
   }
  ]
 }
