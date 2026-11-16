@@ -63,7 +63,7 @@ function acErr(e){ const c=(e&&e.code)||''; console.warn(c,e);
   if(/network/.test(c)) return t('acc_err_net');
   return t('acc_err_gen') }
 async function acRun(fn){ if(AC.busy) return; AC.busy=true;
-  const mail=$('acMail'), tel=$('acTel'); if(mail) AC.email=mail.value; if(tel) AC.tel=tel.value;
+  const mail=$('acMail'), tel=$('acTel'), nm=$('acName'); if(mail) AC.email=mail.value; if(tel) AC.tel=tel.value; if(nm) AC.name=nm.value;
   const m=$('acMsg'); if(m){ m.style.color='var(--mute)'; m.textContent=t('acc_wait') } document.querySelectorAll('#acBox button').forEach(b=>b.disabled=true);
   try{ await fn(); AC.msg='' }catch(e){ AC.msg=acErr(e) } AC.busy=false; drawAccount() }
 
@@ -72,7 +72,7 @@ function renderProfile(){ show('profile'); document.title=t('nav_profile')+' | S
 FB.ls.push(()=>{ if(!$('v-profile').classList.contains('hide')) drawAccount() });
 
 function drawAccount(){
-  const box=$('acBox'); if(!box) return; const u=FB.user;
+  const gate=Gate.open, box=gate?$('gateBox'):$('acBox'), other=gate?$('acBox'):$('gateBox'); if(!box) return; if(other) other.innerHTML=''; const u=FB.user;
   if(!FB_CONFIG){ box.innerHTML=`<h2 style="margin:0 0 6px">👤 ${t('acc_title')}</h2><p class="note" style="margin:0">${t('acc_soon')}</p>`; return }
   if(!FB.loaded){ box.innerHTML=`<div class="empty">${t('loading')}</div>`; return }
   if(!window.firebase||!firebase.apps.length){ box.innerHTML=`<h2 style="margin:0 0 6px">👤 ${t('acc_title')}</h2><p class="note" style="margin:0">${t('acc_err_net')}</p>`; return }
@@ -85,10 +85,10 @@ function drawAccount(){
     $('acOut').onclick=()=>acRun(async()=>{ await firebase.auth().signOut(); try{ await firebase.auth().signInAnonymously() }catch(e){} });
     return }
   const m=AC.mode;
-  box.innerHTML=`<h2 style="margin:0 0 6px">👤 ${t('acc_title')}</h2><p class="note" style="margin:0 0 4px">${t('acc_why')}</p>
+  box.innerHTML=`${gate?'':`<h2 style="margin:0 0 6px">👤 ${t('acc_title')}</h2><p class="note" style="margin:0 0 4px">${t('acc_why')}</p>`}
     <button class="btn acbtn g" id="acG">${GLOGO}<span>${t('acc_google')}</span></button>
     <button class="btn sec acbtn" id="acE">✉️ <span>${t('acc_email')}</span></button>
-    ${m==='email'?`<div style="margin-top:10px"><input type="text" id="acMail" inputmode="email" autocomplete="email" placeholder="${t('acc_mail_ph')}" value="${esc(AC.email||'')}"><input type="password" id="acPass" autocomplete="current-password" placeholder="${t('acc_pass')}" style="margin-top:8px">
+    ${m==='email'?`<div style="margin-top:10px"><input type="text" id="acMail" inputmode="email" autocomplete="email" placeholder="${t('acc_mail_ph')}" value="${esc(AC.email||'')}"><input type="password" id="acPass" autocomplete="current-password" placeholder="${t('acc_pass')}" style="margin-top:8px"><input type="text" id="acName" autocomplete="name" placeholder="${t('acc_name_ph')}" style="margin-top:8px" value="${esc(AC.name||'')}">
       <div class="row" style="margin-top:10px;gap:8px"><button class="btn" id="acIn">${t('acc_login')}</button><button class="btn sec" id="acUp">${t('acc_signup')}</button><button class="btn ghost small" id="acFg">${t('acc_forgot')}</button></div></div>`:''}
     ${FB_PHONE?`<button class="btn sec acbtn" id="acP">📱 <span>${t('acc_phone')}</span></button>`:''}
     ${FB_PHONE&&m==='phone'?`<div style="margin-top:10px">${AC.conf?`<input type="text" id="acCode" inputmode="numeric" autocomplete="one-time-code" placeholder="${t('acc_code_ph')}"><div class="row" style="margin-top:10px"><button class="btn" id="acCf">${t('acc_confirm')}</button></div>`
@@ -100,7 +100,8 @@ function drawAccount(){
   if(m==='email'){
     const vals=()=>[$('acMail').value.trim(),$('acPass').value];
     $('acIn').onclick=()=>acRun(()=>firebase.auth().signInWithEmailAndPassword(...vals()));
-    $('acUp').onclick=()=>acRun(()=>firebase.auth().createUserWithEmailAndPassword(...vals()));
+    $('acUp').onclick=()=>acRun(async()=>{ const nm=$('acName').value.trim(); const c=await firebase.auth().createUserWithEmailAndPassword(...vals());
+      if(nm){ try{ await c.user.updateProfile({displayName:nm.slice(0,40)}); FB.ls.forEach(f=>{try{f(firebase.auth().currentUser)}catch(e){}}) }catch(e){} } });
     $('acFg').onclick=()=>acRun(async()=>{ const [em]=vals(); if(!em) throw {code:'auth/missing-email'}; await firebase.auth().sendPasswordResetEmail(em); setTimeout(()=>{AC.msg='✓ '+t('acc_reset_sent');drawAccount()},0) });
     $('acPass').onkeydown=e=>{ if(e.key==='Enter') $('acIn').click() };
   }
@@ -114,3 +115,27 @@ function drawAccount(){
     if(m==='phone'&&AC.conf) $('acCf').onclick=()=>acRun(async()=>{ await AC.conf.confirm($('acCode').value.trim()); AC.conf=null; AC.mode=null });
   }
 }
+
+// ---------- обязательный вход: экран регистрации поверх сайта ----------
+const Gate={open:false,started:false,
+  init(){
+    if(!FB_CONFIG) return;
+    const authed=localStorage.getItem('sp_authed')==='1';
+    this.set(!authed);
+    $('gateLang').querySelectorAll('button').forEach(b=>b.onclick=()=>document.querySelector('#lang button[data-l="'+b.dataset.l+'"]').click());
+    $('gateRules').onclick=()=>{ const r=$('gateAbout'); if(r.classList.toggle('hide')) return; r.innerHTML=t('about_html') };
+    FB.ls.push(()=>this.update());
+    fbStart().then(fb=>{ if(!fb){ if(this.open) this.offline(); return } this.update() });
+  },
+  set(open){
+    const was=this.open; this.open=open;
+    document.getElementById('gate').classList.toggle('hide',!open);
+    document.documentElement.classList.toggle('gated',open);
+    if(open) this.draw(); else { $('gateBox').innerHTML=''; if(was){ route(); if(!$('v-profile').classList.contains('hide')) drawAccount() } }
+  },
+  update(){ if(!FB.loaded) return; const real=isReal(FB.user);
+    try{ real?localStorage.setItem('sp_authed','1'):localStorage.removeItem('sp_authed') }catch(e){}
+    this.set(!real) },
+  draw(){ document.querySelectorAll('#gateLang button').forEach(b=>b.classList.toggle('on',b.dataset.l===LANG)); drawAccount() },
+  offline(){ $('gateBox').innerHTML=`<div class="note" style="color:var(--bad);margin-bottom:10px">${t('gate_offline')}</div><button class="btn acbtn" onclick="location.reload()">${t('gate_retry')}</button>` }
+};
