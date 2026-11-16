@@ -475,6 +475,7 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
     <div class="gate-feat"><span>📝 <b data-i="hub_tests"></b></span><span>🏠 <b data-i="hub_room"></b></span><span>📌 <b data-i="hub_ads"></b></span><span>🧮 <b data-i="hub_tools"></b></span></div>
     <div id="gateBox"></div><div id="acRecaptcha2"></div>
   </div>
+  <a id="gateApk" class="btn sec hide" href="app/sessiya.apk" download="Sessiya.apk" style="display:block;text-align:center;text-decoration:none;margin-top:12px" data-i="apk_btn"></a>
   <p class="note" style="text-align:center;margin-top:14px"><a id="gateRules" style="color:var(--mute);cursor:pointer;text-decoration:underline" data-i="gate_rules"></a></p>
   <div id="gateAbout" class="card about hide" style="font-size:14px"></div>
 </div></div>
@@ -973,7 +974,7 @@ applyI18n(); renderHomeType(); initTools(); initBoard(); route(); Cat.init(); Ga
 (function(){
   const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
   const android=/android/i.test(navigator.userAgent), help=$('instHelp');
-  $('instBox').classList.toggle('hide',standalone||!android);
+  $('instBox').classList.toggle('hide',standalone||!android); $('gateApk').classList.toggle('hide',standalone||!android);
   $('apkBtn').classList.remove('hide');
   $('apkBtn').addEventListener('click',()=>{ help.textContent=t('apk_help'); help.classList.remove('hide') });
 })();

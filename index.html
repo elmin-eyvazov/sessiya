@@ -475,6 +475,7 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
     <div class="gate-feat"><span>📝 <b data-i="hub_tests"></b></span><span>🏠 <b data-i="hub_room"></b></span><span>📌 <b data-i="hub_ads"></b></span><span>🧮 <b data-i="hub_tools"></b></span></div>
     <div id="gateBox"></div><div id="acRecaptcha2"></div>
   </div>
+  <a id="gateApk" class="btn sec hide" href="app/sessiya.apk" download="Sessiya.apk" style="display:block;text-align:center;text-decoration:none;margin-top:12px" data-i="apk_btn"></a>
   <p class="note" style="text-align:center;margin-top:14px"><a id="gateRules" style="color:var(--mute);cursor:pointer;text-decoration:underline" data-i="gate_rules"></a></p>
   <div id="gateAbout" class="card about hide" style="font-size:14px"></div>
 </div></div>
@@ -699,6 +700,7 @@ parse_fail:"Bu faylda düzgün cavabı işarələnmiş sual tapılmadı. Aşağ�
 not_found:"Bank tapılmadı və ya silinib.",load_fail:"Bankı yükləmək alınmadı.",
 footer:"Sessiya+ heç bir universitetlə əlaqəli deyil. Fayllar sənin brauzerində emal olunur; kataloqa yalnız sən seçdiyin banklar düşür. Müəllif hüquqlarını pozan material barədə «Şikayət et» düyməsi ilə xəbər ver.<br>Hazır testlər müəllif tərəfindən hazırlanmış nümunə suallardır.",
 all_banks_link:"📚 Bütün test bankları və suallar",
+acc_edit_name:"Adı dəyiş",acc_name_ph2:"Adın",acc_save:"Saxla",acc_my_ads:"Mənim elanlarım",acc_no_ads:"Hələ elanın yoxdur.",acc_danger:"Hesabı silmək",acc_delete_note:"Hesab, elanların, kataloqa əlavə etdiyin banklar və saxlanmış irəliləyişin silinəcək. Bunu geri qaytarmaq olmaz.",acc_delete:"Hesabı birdəfəlik sil",acc_delete_confirm:"Əminsən? Yenidən bas",acc_err_recent:"Təhlükəsizlik üçün çıxış et, yenidən daxil ol və 5 dəqiqə ərzində təkrar yoxla.",
 gate_title:"Xoş gəldin! 👋",gate_sub:"Sessiya+ — tələbə üçün hər şey bir yerdə. Davam etmək üçün daxil ol və ya qeydiyyatdan keç — pulsuz, 10 saniyə.",gate_rules:"Qaydalar və məxfilik",gate_offline:"Bağlantı yoxdur. İnterneti yoxla və yenidən cəhd et.",gate_retry:"Yenidən cəhd et",acc_name_ph:"Adın (qeydiyyat üçün)",
 nav_profile:"Profil",ts_cat:"Kataloq",ts_my:"Mənim banklarım",ts_up:"Yüklə",settings_title:"Parametrlər",lang_title:"Dil",acc_title:"Hesab",acc_why:"Daxil ol — irəliləyişin, bankların və imtahan təqvimin bütün cihazlarında saxlanılsın, elan yerləşdirə biləsən.",acc_google:"Google ilə daxil ol",acc_email:"E-poçt ilə daxil ol",acc_phone:"Telefon nömrəsi ilə daxil ol",acc_mail_ph:"E-poçt",acc_pass:"Şifrə (ən azı 6 simvol)",acc_login:"Daxil ol",acc_signup:"Qeydiyyat",acc_forgot:"Şifrəni unutmusan?",acc_reset_sent:"Şifrəni yeniləmək üçün məktub göndərildi.",acc_logout:"Çıxış",acc_hello:"Salam, {0}!",acc_synced:"İrəliləyişin, bankların və imtahan təqvimin bu hesabda saxlanılır və digər cihazlarda da görünəcək.",acc_soon:"Google, e-poçt və telefonla giriş tezliklə işə düşəcək. Hələlik hər şey bu cihazda saxlanılır.",acc_phone_ph:"50 123 45 67",acc_send_code:"Kod göndər",acc_code_ph:"SMS-dəki 6 rəqəmli kod",acc_confirm:"Təsdiqlə",acc_wait:"Gözlə…",acc_err_cred:"E-poçt və ya şifrə yanlışdır.",acc_err_exists:"Bu e-poçtla hesab artıq var — «Daxil ol» düyməsinə bas.",acc_err_weak:"Şifrə ən azı 6 simvol olmalıdır.",acc_err_email:"E-poçtu düzgün yaz.",acc_err_phone:"Nömrəni düzgün yaz: 50 123 45 67.",acc_err_code:"Kod yanlışdır və ya vaxtı keçib.",acc_err_many:"Çox cəhd oldu. Bir az sonra yenidən yoxla.",acc_err_net:"İnternet bağlantısını yoxla.",acc_err_gen:"Xəta baş verdi. Yenidən yoxla.",post_need_login:"Elan yerləşdirmək üçün hesaba daxil ol.",
 apk_btn:"📥 Tətbiqi yüklə (Android)",apk_link:"🤖 Android tətbiqi (APK)",apk_help:"Fayl yükləndikdən sonra onu aç → telefon soruşsa, «Bu mənbədən quraşdırmaya icazə ver» → «Quraşdır». Sessiya+ ikonu ana ekranda görünəcək.",
@@ -748,6 +750,7 @@ parse_fail:"В этом файле не найдено вопросов с от�
 not_found:"Банк не найден или удалён.",load_fail:"Не удалось загрузить банк.",
 footer:"Sessiya+ не связан ни с одним университетом. Файлы обрабатываются в твоём браузере; в каталог попадают только банки, которые ты сам добавил. О материалах, нарушающих авторские права, сообщай кнопкой «Пожаловаться».<br>Готовые тесты — примерные вопросы, составленные автором сайта.",
 all_banks_link:"📚 Все тестовые банки и вопросы",
+acc_edit_name:"Изменить имя",acc_name_ph2:"Твоё имя",acc_save:"Сохранить",acc_my_ads:"Мои объявления",acc_no_ads:"У тебя пока нет объявлений.",acc_danger:"Удаление аккаунта",acc_delete_note:"Будут удалены аккаунт, твои объявления, добавленные тобой в каталог банки и сохранённый прогресс. Это нельзя отменить.",acc_delete:"Удалить аккаунт навсегда",acc_delete_confirm:"Точно? Нажми ещё раз",acc_err_recent:"Для безопасности выйди, войди снова и повтори в течение 5 минут.",
 gate_title:"Добро пожаловать! 👋",gate_sub:"Sessiya+ — всё для студента в одном месте. Чтобы продолжить, войди или зарегистрируйся — бесплатно, 10 секунд.",gate_rules:"Правила и конфиденциальность",gate_offline:"Нет подключения. Проверь интернет и попробуй ещё раз.",gate_retry:"Попробовать ещё раз",acc_name_ph:"Твоё имя (для регистрации)",
 nav_profile:"Профиль",ts_cat:"Каталог",ts_my:"Мои банки",ts_up:"Загрузить",settings_title:"Настройки",lang_title:"Язык",acc_title:"Аккаунт",acc_why:"Войди — прогресс, банки и календарь экзаменов сохранятся на всех твоих устройствах, и ты сможешь размещать объявления.",acc_google:"Войти через Google",acc_email:"Войти по почте",acc_phone:"Войти по номеру телефона",acc_mail_ph:"Почта",acc_pass:"Пароль (минимум 6 символов)",acc_login:"Войти",acc_signup:"Регистрация",acc_forgot:"Забыл пароль?",acc_reset_sent:"Письмо для смены пароля отправлено.",acc_logout:"Выйти",acc_hello:"Привет, {0}!",acc_synced:"Прогресс, банки и календарь экзаменов сохраняются в этом аккаунте и будут видны на других устройствах.",acc_soon:"Вход через Google, почту и телефон скоро заработает. Пока всё хранится на этом устройстве.",acc_phone_ph:"50 123 45 67",acc_send_code:"Отправить код",acc_code_ph:"6-значный код из SMS",acc_confirm:"Подтвердить",acc_wait:"Подожди…",acc_err_cred:"Неверная почта или пароль.",acc_err_exists:"Аккаунт с этой почтой уже есть — нажми «Войти».",acc_err_weak:"Пароль должен быть не короче 6 символов.",acc_err_email:"Проверь адрес почты.",acc_err_phone:"Введи номер правильно: 50 123 45 67.",acc_err_code:"Неверный или устаревший код.",acc_err_many:"Слишком много попыток. Попробуй чуть позже.",acc_err_net:"Проверь подключение к интернету.",acc_err_gen:"Произошла ошибка. Попробуй ещё раз.",post_need_login:"Чтобы разместить объявление, войди в аккаунт.",
 apk_btn:"📥 Скачать приложение (Android)",apk_link:"🤖 Android-приложение (APK)",apk_help:"Когда файл скачается, открой его → если телефон спросит, разреши установку из этого источника → «Установить». Иконка Sessiya+ появится на главном экране.",
@@ -797,6 +800,7 @@ parse_fail:"No questions with a marked correct answer were found. See the format
 not_found:"Bank not found or deleted.",load_fail:"Couldn't load the bank.",
 footer:"Sessiya+ is not affiliated with any university. Files are processed in your browser; only banks you choose are added to the catalog. Report copyright-infringing material with the “Report” button.<br>Ready-made quizzes are sample questions written by the site author.",
 all_banks_link:"📚 All question banks",
+acc_edit_name:"Change name",acc_name_ph2:"Your name",acc_save:"Save",acc_my_ads:"My listings",acc_no_ads:"You have no listings yet.",acc_danger:"Delete account",acc_delete_note:"Your account, listings, banks you added to the catalog and saved progress will be deleted. This can't be undone.",acc_delete:"Delete account permanently",acc_delete_confirm:"Sure? Tap again",acc_err_recent:"For security, sign out, sign in again and retry within 5 minutes.",
 gate_title:"Welcome! 👋",gate_sub:"Sessiya+ — everything a student needs in one place. Sign in or sign up to continue — free, takes 10 seconds.",gate_rules:"Rules and privacy",gate_offline:"No connection. Check your internet and try again.",gate_retry:"Try again",acc_name_ph:"Your name (for sign-up)",
 nav_profile:"Profile",ts_cat:"Catalog",ts_my:"My banks",ts_up:"Upload",settings_title:"Settings",lang_title:"Language",acc_title:"Account",acc_why:"Sign in to keep your progress, banks and exam calendar on all your devices and to post listings.",acc_google:"Continue with Google",acc_email:"Continue with email",acc_phone:"Continue with phone number",acc_mail_ph:"Email",acc_pass:"Password (at least 6 characters)",acc_login:"Sign in",acc_signup:"Sign up",acc_forgot:"Forgot password?",acc_reset_sent:"Password reset email sent.",acc_logout:"Sign out",acc_hello:"Hi, {0}!",acc_synced:"Your progress, banks and exam calendar are saved to this account and appear on your other devices.",acc_soon:"Sign-in with Google, email and phone is coming soon. For now everything is stored on this device.",acc_phone_ph:"50 123 45 67",acc_send_code:"Send code",acc_code_ph:"6-digit code from SMS",acc_confirm:"Confirm",acc_wait:"Please wait…",acc_err_cred:"Wrong email or password.",acc_err_exists:"An account with this email exists — tap “Sign in”.",acc_err_weak:"Password must be at least 6 characters.",acc_err_email:"Check the email address.",acc_err_phone:"Enter the number as 50 123 45 67.",acc_err_code:"Wrong or expired code.",acc_err_many:"Too many attempts. Try again a bit later.",acc_err_net:"Check your internet connection.",acc_err_gen:"Something went wrong. Try again.",post_need_login:"Sign in to post a listing.",
 apk_btn:"📥 Download the app (Android)",apk_link:"🤖 Android app (APK)",apk_help:"Once downloaded, open the file → if asked, allow installs from this source → “Install”. The Sessiya+ icon will appear on your home screen.",
@@ -1487,6 +1491,7 @@ function acErr(e){ const c=(e&&e.code)||''; console.warn(c,e);
   if(/invalid-email|missing-email/.test(c)) return t('acc_err_email');
   if(/invalid-phone|missing-phone/.test(c)) return t('acc_err_phone');
   if(/invalid-verification-code|code-expired/.test(c)) return t('acc_err_code');
+  if(/requires-recent-login/.test(c)) return t('acc_err_recent');
   if(/too-many-requests|quota/.test(c)) return t('acc_err_many');
   if(/network/.test(c)) return t('acc_err_net');
   return t('acc_err_gen') }
@@ -1495,6 +1500,24 @@ async function acRun(fn){ if(AC.busy) return; AC.busy=true;
   const m=$('acMsg'); if(m){ m.style.color='var(--mute)'; m.textContent=t('acc_wait') } document.querySelectorAll('#acBox button').forEach(b=>b.disabled=true);
   try{ await fn(); AC.msg='' }catch(e){ AC.msg=acErr(e) } AC.busy=false; drawAccount() }
 
+function myAdsHtml(u){
+  if(typeof Board==='undefined'||!Board.ready) return `<div class="note">${t('loading')}</div>`;
+  const L=Board.ads.filter(a=>a.uid===u.uid);
+  if(!L.length) return `<div class="note">${t('acc_no_ads')} <a data-h="post" style="color:var(--acc);cursor:pointer;font-weight:600">${t('post_btn')}</a></div>`;
+  return L.map(a=>`<div class="row" style="justify-content:space-between;gap:8px;flex-wrap:nowrap;border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px"><div style="min-width:0"><b style="display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(a.title)}</b><span class="note">${catIcon(a.cat)} ${t('cat_'+a.cat)} · ${ago(a.createdAt)}</span></div><button class="btn ghost small" data-del="${esc(a.id)}">${t('delete')}</button></div>`).join('');
+}
+async function deleteAccount(){
+  const u=firebase.auth().currentUser; if(!u) return;
+  const last=Date.parse(u.metadata&&u.metadata.lastSignInTime||0)||0;
+  if(Date.now()-last>4.5*60e3) throw {code:'auth/requires-recent-login'};
+  const db=firebase.firestore();
+  for(const a of (Board.ads||[]).filter(a=>a.uid===u.uid)){ try{ await db.collection('ads').doc(a.id).delete() }catch(e){} }
+  for(const m of (Cat.userMetas||[]).filter(m=>m.uid===u.uid)){ try{ await db.doc('banks/'+m.id).update({hidden:true}) }catch(e){} }
+  try{ await db.doc('users/'+u.uid).delete() }catch(e){}
+  await u.delete();
+  for(const k of [...SYNC_KEYS,'sp_sync_at','sp_authed']) try{ localStorage.removeItem(k) }catch(e){}
+  location.reload();
+}
 function renderProfile(){ show('profile'); document.title=t('nav_profile')+' | Sessiya+'; renderProgress(); drawAccount();
   fbStart().then(()=>drawAccount()) }
 FB.ls.push(()=>{ if(!$('v-profile').classList.contains('hide')) drawAccount() });
@@ -1509,7 +1532,17 @@ function drawAccount(){
     const av=u.photoURL?`<img class="avatar" src="${esc(u.photoURL)}" referrerpolicy="no-referrer" alt="">`:`<div class="avatar">${/^[\p{L}]/u.test(name.trim())?esc(name.trim()[0].toUpperCase()):'👤'}</div>`;
     box.innerHTML=`<div class="row" style="gap:14px;align-items:center;flex-wrap:nowrap">${av}<div style="min-width:0"><div style="font-weight:700;font-size:18px">${t('acc_hello',esc(u.displayName||name.split('@')[0]))}</div><div class="note" style="overflow:hidden;text-overflow:ellipsis">${esc(u.email||u.phoneNumber||'')}</div></div></div>
       <p class="note" style="margin:12px 0 0">☁️ ${t('acc_synced')}</p>
-      <div class="row" style="margin-top:12px"><button class="btn sec small" id="acOut">${t('acc_logout')}</button></div>`;
+      <div class="row" style="margin-top:12px;gap:8px"><button class="btn sec small" id="acName2">✏️ ${t('acc_edit_name')}</button><button class="btn sec small" id="acOut">${t('acc_logout')}</button></div>
+      ${AC.editName?`<div class="row" style="margin-top:10px;gap:8px;flex-wrap:nowrap"><input type="text" id="acNameIn" maxlength="40" value="${esc(u.displayName||'')}" placeholder="${t('acc_name_ph2')}"><button class="btn small" id="acNameSave">${t('acc_save')}</button></div>`:''}
+      <div class="note" id="acMsg" style="margin-top:8px;color:var(--bad)">${esc(AC.msg)}</div>
+      <h3 style="margin:18px 0 8px;font-size:16px">📌 ${t('acc_my_ads')}</h3><div id="acAds">${myAdsHtml(u)}</div>
+      <details style="margin-top:18px"><summary class="note" style="cursor:pointer">${t('acc_danger')}</summary>
+        <p class="note">${t('acc_delete_note')}</p><button class="btn small" style="background:var(--bad)" id="acDel">${t('acc_delete')}</button></details>`;
+    $('acName2').onclick=()=>{ AC.editName=!AC.editName; AC.msg=''; drawAccount() };
+    if(AC.editName){ $('acNameSave').onclick=()=>acRun(async()=>{ const v=$('acNameIn').value.trim().slice(0,40); await firebase.auth().currentUser.updateProfile({displayName:v}); AC.editName=false; FB.user=firebase.auth().currentUser; syncPush() }); }
+    $('acAds').querySelectorAll('[data-del]').forEach(b=>b.onclick=async()=>{ if(b.dataset.c!=='1'){ b.textContent=t('confirm_delete'); b.dataset.c='1'; return } b.disabled=true; try{ await Board.api.remove(b.dataset.del) }catch(e){ b.disabled=false } });
+    $('acDel').onclick=()=>{ const b=$('acDel'); if(b.dataset.c!=='1'){ b.textContent=t('acc_delete_confirm'); b.dataset.c='1'; return } acRun(deleteAccount) };
+    if(typeof Board!=='undefined') Board.start();
     $('acOut').onclick=()=>acRun(async()=>{ try{ window.google&&google.accounts&&google.accounts.id.disableAutoSelect() }catch(e){} Gate.tapStarted=false; await firebase.auth().signOut(); try{ await firebase.auth().signInAnonymously() }catch(e){} });
     return }
   const m=AC.mode;
@@ -1609,7 +1642,7 @@ const Board={api:null,ads:[],ready:false,err:null,uid:null,started:false,
     api.subscribe(list=>{ this.ads=list.filter(a=>a.createdAt>Date.now()-AD_DAYS*864e5); this.ready=true; this.err=null; boardRefresh() },
       e=>{ this.err=(e&&e.code)||'err'; this.ready=true; boardRefresh() }) }
 };
-function boardRefresh(){ if(!$('v-board').classList.contains('hide')) renderAds(); if(!$('v-home').classList.contains('hide')) renderHomeBoard() }
+function boardRefresh(){ if(!$('v-board').classList.contains('hide')) renderAds(); if(!$('v-profile').classList.contains('hide')&&$('acAds')&&FB.user) $('acAds').innerHTML=myAdsHtml(FB.user); if(!$('v-home').classList.contains('hide')) renderHomeBoard() }
 
 // ---------- board view ----------
 const BS={cat:'all',kind:'all',sex:'any',max:'',q:''};
@@ -1716,7 +1749,7 @@ applyI18n(); renderHomeType(); initTools(); initBoard(); route(); Cat.init(); Ga
 (function(){
   const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
   const android=/android/i.test(navigator.userAgent), help=$('instHelp');
-  $('instBox').classList.toggle('hide',standalone||!android);
+  $('instBox').classList.toggle('hide',standalone||!android); $('gateApk').classList.toggle('hide',standalone||!android);
   $('apkBtn').classList.remove('hide');
   $('apkBtn').addEventListener('click',()=>{ help.textContent=t('apk_help'); help.classList.remove('hide') });
 })();

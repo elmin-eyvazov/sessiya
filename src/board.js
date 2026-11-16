@@ -31,7 +31,7 @@ const Board={api:null,ads:[],ready:false,err:null,uid:null,started:false,
     api.subscribe(list=>{ this.ads=list.filter(a=>a.createdAt>Date.now()-AD_DAYS*864e5); this.ready=true; this.err=null; boardRefresh() },
       e=>{ this.err=(e&&e.code)||'err'; this.ready=true; boardRefresh() }) }
 };
-function boardRefresh(){ if(!$('v-board').classList.contains('hide')) renderAds(); if(!$('v-home').classList.contains('hide')) renderHomeBoard() }
+function boardRefresh(){ if(!$('v-board').classList.contains('hide')) renderAds(); if(!$('v-profile').classList.contains('hide')&&$('acAds')&&FB.user) $('acAds').innerHTML=myAdsHtml(FB.user); if(!$('v-home').classList.contains('hide')) renderHomeBoard() }
 
 // ---------- board view ----------
 const BS={cat:'all',kind:'all',sex:'any',max:'',q:''};
