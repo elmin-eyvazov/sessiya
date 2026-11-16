@@ -79,7 +79,7 @@ function contactBtns(c){
   if(tg) return `<a class="btn small" style="background:#229ed9" href="https://t.me/${tg[1]}" target="_blank" rel="noopener">Telegram ${esc(c)}</a>`;
   return `<span class="pill" style="font-size:14px;padding:7px 12px">${esc(c)}</span>` }
 function adCard(a){
-  const own=Board.uid&&a.uid===Board.uid, room=a.cat==='room';
+  const own=(Board.uid&&a.uid===Board.uid)||isAdmin(), room=a.cat==='room';
   const meta=[a.place?`📍 ${esc(a.place)}`:'',a.uni?`🎓 ${esc(a.uni)}`:'',room&&a.gender&&a.gender!=='any'?(a.gender==='f'?'👩 ':'👨 ')+t('sex_'+a.gender):'',`🕒 ${ago(a.createdAt)}`].filter(Boolean).map(s=>`<span>${s}</span>`).join('');
   return `<div class="ad"><div class="row" style="justify-content:space-between;align-items:flex-start;gap:8px;flex-wrap:nowrap"><span class="pill acc">${catIcon(a.cat)} ${a.kind?t('kind_'+a.kind):t('cat_'+a.cat)}</span>${a.price!=null&&a.price!==''?`<b class="price">${a.price} ₼${room?t('per_month'):''}</b>`:''}</div>
   <div class="adt">${esc(a.title)}</div><div class="row note adm">${meta}</div>${a.text?`<div class="adx">${esc(a.text)}</div>`:''}

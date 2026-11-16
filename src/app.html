@@ -532,46 +532,52 @@ document.querySelectorAll('#lang button').forEach(b=>b.onclick=()=>{LANG=b.datas
   else route(); });
 
 // ---------- shared catalog (db capability; local fallback) ----------
-const Cat={db:null,user:null,canWrite:null,metas:[],ready:false,unsub:null,listeners:[],
+// Каталог = встроенные банки (data/catalog.json) + банки студентов (Firestore: banks + bankdata/{id}/parts)
+const PUB_PER_DAY=5;
+const Cat={db:null,staticMetas:[],userMetas:[],metas:[],ready:false,unsub:null,listeners:[],
   async init(){
-    try{ if(!window.claude||!claude.use) throw 0;
-      this.db=await claude.use('db'); this.user=await claude.use('user');
-      if(this.user){ try{this.canWrite=await this.user.can('data.write')}catch(e){} try{this.isOwner=!!(await this.user.isOwner())}catch(e){} }
-      if(this.db) this.subscribe();
-    }catch(e){}
-    if(!this.db){ await this.loadStatic(); this.ready=true; this.emit() }
+    await this.loadStatic(); this.merge(); this.ready=true; this.emit();
+    const fb=await fbStart(); if(!fb) return;
+    try{ this.db=fb.firestore(); this.subscribe() }catch(e){ this.db=null }
+    if(typeof pvSyncPublic==='function') pvSyncPublic();
   },
   async loadStatic(){
-    try{ const r=await fetch('data/catalog.json',{cache:'no-cache'}); if(r.ok){ const j=await r.json(); this.metas=(j.banks||[]).filter(m=>!m.hidden); this.static=true } }catch(e){}
+    try{ const r=await fetch('data/catalog.json',{cache:'no-cache'}); if(r.ok){ const j=await r.json(); this.staticMetas=(j.banks||[]).filter(m=>!m.hidden).map(m=>({...m,src:'static'})) } }catch(e){}
   },
+  merge(){ this.metas=[...this.userMetas,...this.staticMetas] },
   subscribe(){
-    let timer=setTimeout(()=>{this.ready=true;this.stale=true;this.emit()},10000);
     this.unsub=this.db.collection('banks').orderBy('createdAt','desc').limit(1000).onSnapshot(s=>{
-      if(!s.metadata.fromCache){clearTimeout(timer);this.stale=false}
-      this.metas=s.docs.map(d=>({id:d.id,...d.data()})).filter(m=>!m.hidden); this.ready=true; this.emit();
-    },e=>{clearTimeout(timer);this.ready=true;this.err=e.code;this.emit()});
+      this.stale=false; this.userMetas=s.docs.map(d=>({id:d.id,...d.data(),src:'user'})).filter(m=>!m.hidden); this.merge(); this.emit();
+    },e=>{ this.err=e.code; this.stale=true; this.emit() });
   },
   on(f){this.listeners.push(f)}, emit(){this.listeners.forEach(f=>{try{f()}catch(e){}})},
+  canRemove(m){ const u=FB.user; return !!(m&&m.src==='user'&&isReal(u)&&(m.uid===u.uid||isAdmin())) },
   async publish(b){
-    if(!this.db) throw {code:'no_db'};
-    const id='k'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
-    const chunks=[]; const per=150; for(let i=0;i<b.qs.length;i+=per) chunks.push(b.qs.slice(i,i+per));
-    for(let k=0;k<chunks.length;k++){ await this.db.doc(`bankdata/${id}/parts/p${k}`).set({qs:chunks[k]}); }
-    await this.db.doc('banks/'+id).set({name:b.name,type:b.type||'mc',format:b.format||'test',uni:b.uni,uniLabel:b.uniLabel,fac:b.fac,subj:b.subj,lang:b.lang,count:b.qs.length,parts:chunks.length,createdAt:Date.now()});
+    if(!this.db||!isReal(FB.user)) throw {code:'no_db'};
+    const lim=store.get('sp_publim',{}); const n=lim.day===dayKey()?lim.n:0; if(n>=PUB_PER_DAY) throw {code:'quota_exceeded'};
+    const uid=FB.user.uid, id='k'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+    const qs=b.qs.slice(0,3000).map(x=>b.type==='mc'?{q:String(x.q).slice(0,2000),o:x.o.map(o=>String(o).slice(0,1000)),a:x.a}:{q:String(x.q).slice(0,2000),ans:String(x.ans||'').slice(0,5000)});
+    const chunks=[]; const per=150; for(let i=0;i<qs.length;i+=per) chunks.push(qs.slice(i,i+per));
+    for(let k=0;k<chunks.length;k++){ await this.db.doc(`bankdata/${id}/parts/p${k}`).set({qs:chunks[k],uid}); }
+    await this.db.doc('banks/'+id).set({name:String(b.name).slice(0,120),type:b.type||'mc',format:b.format||'test',uni:String(b.uni).slice(0,60),uniLabel:String(b.uniLabel||'').slice(0,120),
+      fac:String(b.fac||'').slice(0,120),subj:String(b.subj||'').slice(0,120),lang:b.lang||'az',count:qs.length,parts:chunks.length,uid,author:String(FB.user.displayName||'').slice(0,60),createdAt:Date.now()});
+    store.set('sp_publim',{day:dayKey(),n:n+1});
     return id;
   },
   async loadQs(meta){
-    if(this.static){ const r=await fetch('data/banks/'+meta.id+'.json'); return r.ok?((await r.json()).qs||[]):[] }
+    if(meta.src!=='user'){ const r=await fetch('data/banks/'+meta.id+'.json'); return r.ok?((await r.json()).qs||[]):[] }
+    if(!this.db) throw 0;
     const out=[]; for(let k=0;k<(meta.parts||0);k++){const s=await this.db.doc(`bankdata/${meta.id}/parts/p${k}`).get(); if(s.exists) out.push(...(s.data().qs||[]))} return out;
   },
-  async report(id,reason){ if(!this.db) return; await this.db.collection('reports').add({bank:id,reason:reason||'',at:Date.now()}) },
+  async report(id,reason){ if(!this.db||!FB.user) return; await this.db.collection('reports').add({bank:id,reason:reason||'',uid:FB.user.uid,at:Date.now()}) },
   async remove(id){ await this.db.doc('banks/'+id).update({hidden:true}) }
 };
 
 // ---------- router (#home, #catalog, #u-<uni>, #f-<uni>--<fac>, #s-<uni>--<fac>--<subj>, #b-<id>) ----------
 const VIEWS=['home','catalog','board','post','tools','about','profile','preview','bank','quiz','result','cards','ticket'];
 function show(v){for(const s of VIEWS) $('v-'+s).classList.toggle('hide',s!==v);
-  document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',a.dataset.go===v));
+  const nv={preview:'catalog',bank:'catalog',quiz:'catalog',result:'catalog',cards:'catalog',ticket:'catalog',post:'board',about:'profile'}[v]||v;
+  document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',a.dataset.go===nv));
   window.scrollTo(0,0)}
 function go(h){ if(location.hash==='#'+h) route(); else location.hash=h }
 document.querySelectorAll('[data-go]').forEach(a=>a.onclick=()=>go(a.dataset.go)); $('logo').onclick=()=>go('home');
@@ -672,7 +678,7 @@ function renderCatalog(st){
   $('catList').querySelectorAll('.tile').forEach(el=>el.onclick=()=>go(el.dataset.h));
   $('catNote').textContent=catNote();
 }
-function catNote(){ if(Cat.static) return t('cat_static'); if(!Cat.db) return t('cat_offline'); if(Cat.stale) return t('cat_stale'); return '' }
+function catNote(){ if(Cat.stale&&Cat.db) return t('cat_stale'); return t('cat_static') }
 $('catSearch').oninput=()=>renderCatalog(catState);
 
 // ---------- upload ----------
@@ -730,9 +736,10 @@ function handleText(text,fname){
   $('pvFile').textContent=fname; $('pvName').value=nm; $('pvSubj').value=nm;
   $('pvLang').value=guessLang(type==='mc'?mc:list); $('pvMsg').textContent='';
   const facs=[...new Set(Cat.metas.map(m=>m.fac).filter(Boolean))]; $('facList').innerHTML=facs.map(f=>`<option value="${esc(f)}">`).join('');
-  $('pvPublic').disabled=!Cat.db; if(!Cat.db) $('pvPublic').checked=false;
+  pvSyncPublic();
   renderPreview(); show('preview');
 }
+function pvSyncPublic(){ const ok=!!Cat.db&&isReal(FB.user); $('pvPublic').disabled=!ok; if(!ok) $('pvPublic').checked=false }
 function renderPreview(){
   const P=pending; const isMc=P.type==='mc';
   document.querySelectorAll('#pvType button').forEach(b=>{b.classList.toggle('on',b.dataset.v===P.type); b.disabled=(b.dataset.v==='mc'&&!P.mc.length)||(b.dataset.v==='open'&&P.list.length<1)});
@@ -783,7 +790,7 @@ function fillBankHeader(b,shared){
   $('bkCrumbs').innerHTML=crumbsFor(b);
   const langName={az:'Azərbaycan dili',ru:'Русский',en:'English'};
   $('bkTags').innerHTML=[b.lang?`<span class="pill">${langName[b.lang]||b.lang}</span>`:'',b.tag?`<span class="pill acc">${t('ready_tag')}</span>`:'',W?`<span class="pill">${b.format==='test'?t('test_noopts_tag'):t('written_tag')}</span>`:'',shared||b.sharedId?`<span class="pill acc">${t('in_catalog')}</span>`:''].join('');
-  $('bkShare').classList.toggle('hide',!(shared?b.id:b.sharedId)); $('bkReport').classList.toggle('hide',!shared); $('bkDelete').classList.toggle('hide',!!b.tag||(shared&&!Cat.isOwner));
+  $('bkShare').classList.toggle('hide',!(shared?b.id:b.sharedId)); $('bkReport').classList.toggle('hide',!shared); $('bkDelete').classList.toggle('hide',!!b.tag||(shared&&!Cat.canRemove(b)));
   $('bkMsg').textContent='';
 }
 function openBank(id){

@@ -2,6 +2,9 @@ rules_version = '2';
 // Firestore rules for Sessiya+ (notice board + user accounts) — paste into Firebase console → Firestore → Rules.
 service cloud.firestore {
   match /databases/{database}/documents {
+    function real() { return request.auth != null && request.auth.token.firebase.sign_in_provider != 'anonymous'; }
+    function admin() { return real() && request.auth.token.email_verified == true
+      && request.auth.token.email in ['reskiygor@gmail.com','elmineyvazov6@gmail.com']; }
     match /ads/{id} {
       allow read: if true;
       allow create: if request.auth != null && request.auth.token.firebase.sign_in_provider != 'anonymous'
@@ -18,17 +21,43 @@ service cloud.firestore {
         && request.resource.data.gender in ['any','f','m']
         && request.resource.data.contact is string && request.resource.data.contact.size() >= 5 && request.resource.data.contact.size() <= 60
         && request.resource.data.lang in ['az','ru','en'];
-      allow delete: if request.auth != null && resource.data.uid == request.auth.uid;
+      allow delete: if (request.auth != null && resource.data.uid == request.auth.uid) || admin();
       allow update: if false;
     }
     match /users/{uid} {
       allow read, write: if request.auth != null && request.auth.uid == uid
         && request.auth.token.firebase.sign_in_provider != 'anonymous';
     }
+    match /banks/{id} {
+      allow read: if true;
+      allow create: if real()
+        && request.resource.data.keys().hasOnly(['name','type','format','uni','uniLabel','fac','subj','lang','count','parts','uid','author','createdAt'])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.name is string && request.resource.data.name.size() >= 1 && request.resource.data.name.size() <= 120
+        && request.resource.data.type in ['mc','written'] && request.resource.data.format in ['test','written']
+        && request.resource.data.uni is string && request.resource.data.uni.size() >= 1 && request.resource.data.uni.size() <= 60
+        && request.resource.data.uniLabel is string && request.resource.data.uniLabel.size() <= 120
+        && request.resource.data.fac is string && request.resource.data.fac.size() <= 120
+        && request.resource.data.subj is string && request.resource.data.subj.size() >= 1 && request.resource.data.subj.size() <= 120
+        && request.resource.data.lang in ['az','ru','en']
+        && request.resource.data.count is int && request.resource.data.count > 0 && request.resource.data.count <= 3000
+        && request.resource.data.parts is int && request.resource.data.parts > 0 && request.resource.data.parts <= 20
+        && request.resource.data.author is string && request.resource.data.author.size() <= 60
+        && request.resource.data.createdAt is int;
+      allow update: if (real() && resource.data.uid == request.auth.uid || admin())
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['hidden'])
+        && request.resource.data.hidden == true;
+    }
+    match /bankdata/{id}/parts/{part} {
+      allow read: if true;
+      allow create: if real() && request.resource.data.keys().hasOnly(['qs','uid'])
+        && request.resource.data.uid == request.auth.uid && request.resource.data.qs is list && request.resource.data.qs.size() <= 150;
+    }
     match /reports/{id} {
       allow create: if request.auth != null
-        && request.resource.data.keys().hasOnly(['ad','uid','at'])
-        && request.resource.data.uid == request.auth.uid;
+        && request.resource.data.keys().hasOnly(['ad','bank','reason','uid','at'])
+        && request.resource.data.uid == request.auth.uid
+        && (!('reason' in request.resource.data) || (request.resource.data.reason is string && request.resource.data.reason.size() <= 500));
     }
   }
 }

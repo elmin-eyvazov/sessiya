@@ -10,6 +10,9 @@ const FB_SDK='https://www.gstatic.com/firebasejs/10.12.2/';
 const GOOGLE_CLIENT_ID='175959046502-91srge6iojgtttlcr715t808g6a9pghf.apps.googleusercontent.com';
 const FB={ready:null,user:null,ls:[]};
 const isReal=u=>!!(u&&!u.isAnonymous);
+// Модераторы: могут скрывать любые банки и удалять любые объявления (только подтверждённый Google-email)
+const ADMIN_EMAILS=['reskiygor@gmail.com','elmineyvazov6@gmail.com'];
+const isAdmin=()=>{ const u=FB.user; return !!(isReal(u)&&u.emailVerified&&ADMIN_EMAILS.includes(String(u.email||'').toLowerCase())) };
 
 function fbStart(){
   if(FB.ready) return FB.ready;
