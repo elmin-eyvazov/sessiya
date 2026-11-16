@@ -6,6 +6,8 @@ const FB_CONFIG={apiKey:"AIzaSyC_N1DLI9V8fkmZY6kBS0cNX5uxGQAn2e0",authDomain:"se
 // Вход по SMS работает только на тарифе Blaze (с картой). Включить: true.
 const FB_PHONE=false;
 const FB_SDK='https://www.gstatic.com/firebasejs/10.12.2/';
+// Google One Tap («Продолжить как …»): OAuth web client из Firebase → Authentication → Google → Web SDK configuration
+const GOOGLE_CLIENT_ID='175959046502-91srge6iojgtttlcr715t808g6a9pghf.apps.googleusercontent.com';
 const FB={ready:null,user:null,ls:[]};
 const isReal=u=>!!(u&&!u.isAnonymous);
 
@@ -82,7 +84,7 @@ function drawAccount(){
     box.innerHTML=`<div class="row" style="gap:14px;align-items:center;flex-wrap:nowrap">${av}<div style="min-width:0"><div style="font-weight:700;font-size:18px">${t('acc_hello',esc(u.displayName||name.split('@')[0]))}</div><div class="note" style="overflow:hidden;text-overflow:ellipsis">${esc(u.email||u.phoneNumber||'')}</div></div></div>
       <p class="note" style="margin:12px 0 0">☁️ ${t('acc_synced')}</p>
       <div class="row" style="margin-top:12px"><button class="btn sec small" id="acOut">${t('acc_logout')}</button></div>`;
-    $('acOut').onclick=()=>acRun(async()=>{ await firebase.auth().signOut(); try{ await firebase.auth().signInAnonymously() }catch(e){} });
+    $('acOut').onclick=()=>acRun(async()=>{ try{ window.google&&google.accounts&&google.accounts.id.disableAutoSelect() }catch(e){} Gate.tapStarted=false; await firebase.auth().signOut(); try{ await firebase.auth().signInAnonymously() }catch(e){} });
     return }
   const m=AC.mode;
   box.innerHTML=`${gate?'':`<h2 style="margin:0 0 6px">👤 ${t('acc_title')}</h2><p class="note" style="margin:0 0 4px">${t('acc_why')}</p>`}
@@ -133,7 +135,15 @@ const Gate={open:false,started:false,
     document.documentElement.classList.toggle('gated',open);
     if(open) this.draw(); else { $('gateBox').innerHTML=''; if(was){ route(); if(!$('v-profile').classList.contains('hide')) drawAccount() } }
   },
-  update(){ if(!FB.loaded) return; const real=isReal(FB.user);
+  async oneTap(){
+    if(this.tapStarted||!GOOGLE_CLIENT_ID||!window.firebase) return; this.tapStarted=true;
+    try{ if(!(window.google&&google.accounts&&google.accounts.id)) await loadScript('https://accounts.google.com/gsi/client');
+      google.accounts.id.initialize({client_id:GOOGLE_CLIENT_ID,auto_select:true,cancel_on_tap_outside:false,context:'signin',itp_support:true,use_fedcm_for_prompt:true,
+        callback:async r=>{ try{ await firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(r.credential)) }catch(e){ AC.msg=acErr(e); drawAccount() } }});
+      google.accounts.id.prompt();
+    }catch(e){ console.warn('one tap',e) }
+  },
+  update(){ if(!FB.loaded) return; const real=isReal(FB.user); if(!real&&window.firebase) this.oneTap();
     try{ real?localStorage.setItem('sp_authed','1'):localStorage.removeItem('sp_authed') }catch(e){}
     this.set(!real) },
   draw(){ document.querySelectorAll('#gateLang button').forEach(b=>b.classList.toggle('on',b.dataset.l===LANG)); drawAccount() },
