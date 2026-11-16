@@ -1,7 +1,8 @@
 // ---------- Firebase: общая инициализация, вход (Google / e-poçt / telefon) и синхронизация прогресса ----------
 // Firebase web config (Firebase console → Project settings → Your apps → Web app → Config).
 // null → вход и доска объявлений показывают «tezliklə»; ?demo в URL включает доску с локальными тестовыми данными.
-const FB_CONFIG=null;
+const FB_CONFIG={apiKey:"AIzaSyC_N1DLI9V8fkmZY6kBS0cNX5uxGQAn2e0",authDomain:"sessiya-23601.firebaseapp.com",projectId:"sessiya-23601",
+  storageBucket:"sessiya-23601.firebasestorage.app",messagingSenderId:"175959046502",appId:"1:175959046502:web:10f3dea120ccad80da30a7"};
 // Вход по SMS работает только на тарифе Blaze (с картой). Включить: true.
 const FB_PHONE=false;
 const FB_SDK='https://www.gstatic.com/firebasejs/10.12.2/';
