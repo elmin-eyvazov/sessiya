@@ -5,7 +5,7 @@ import json, os, html, shutil, datetime
 BASE = 'https://elmin-eyvazov.github.io/sessiya/'   # при переезде на свой домен поменять здесь
 
 a = open('src/app.html', encoding='utf-8').read()
-for k, f in (('/*TOOLSJS*/', 'tools.js'), ('/*BOARDJS*/', 'board.js'), ('/*PARSER*/', 'parser.js'), ('/*SETS*/', 'sets.js'), ('/*I18N*/', 'i18n.js')):
+for k, f in (('/*TOOLSJS*/', 'tools.js'), ('/*AUTHJS*/', 'auth.js'), ('/*BOARDJS*/', 'board.js'), ('/*PARSER*/', 'parser.js'), ('/*SETS*/', 'sets.js'), ('/*I18N*/', 'i18n.js')):
     a = a.replace(k, open('src/' + f, encoding='utf-8').read())
 a = a.replace('%%BASE%%', BASE)
 for out in ('index.html', '404.html'):

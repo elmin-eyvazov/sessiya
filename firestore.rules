@@ -1,10 +1,10 @@
 rules_version = '2';
-// Firestore rules for the Sessiya+ notice board (ads) — paste into Firebase console → Firestore → Rules.
+// Firestore rules for Sessiya+ (notice board + user accounts) — paste into Firebase console → Firestore → Rules.
 service cloud.firestore {
   match /databases/{database}/documents {
     match /ads/{id} {
       allow read: if true;
-      allow create: if request.auth != null
+      allow create: if request.auth != null && request.auth.token.firebase.sign_in_provider != 'anonymous'
         && request.resource.data.keys().hasOnly(['uid','cat','kind','title','text','price','place','uni','gender','contact','lang','createdAt'])
         && request.resource.data.uid == request.auth.uid
         && request.resource.data.createdAt == request.time
@@ -20,6 +20,10 @@ service cloud.firestore {
         && request.resource.data.lang in ['az','ru','en'];
       allow delete: if request.auth != null && resource.data.uid == request.auth.uid;
       allow update: if false;
+    }
+    match /users/{uid} {
+      allow read, write: if request.auth != null && request.auth.uid == uid
+        && request.auth.token.firebase.sign_in_provider != 'anonymous';
     }
     match /reports/{id} {
       allow create: if request.auth != null

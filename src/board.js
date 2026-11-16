@@ -1,8 +1,4 @@
 // ---------- board: elanlar lövhəsi (otaq yoldaşı, kirayə, satış, xidmətlər) ----------
-// Firebase web config (Firebase console → Project settings → Your apps → Web app → Config).
-// null → board shows "coming soon"; add ?demo to the URL to try it with local test data.
-const FB_CONFIG=null;
-const FB_SDK='https://www.gstatic.com/firebasejs/10.12.2/';
 const AD_CATS=[['room','🏠'],['sell','📚'],['service','🧑‍🏫'],['job','💼'],['lost','🔎'],['other','📌']];
 const AD_KINDS={room:['need_mate','offer_room','need_room'],sell:['sell','buy'],service:['offer','need'],job:['offer','need']};
 const AD_DAYS=45, AD_PER_DAY=5;
@@ -26,11 +22,8 @@ function demoApi(B){ B.uid='demo'; const ls=[]; const get=()=>store.get('sp_demo
 const Board={api:null,ads:[],ready:false,err:null,uid:null,started:false,
   async init(){
     if(FB_CONFIG){
-      try{ for(const f of ['firebase-app-compat.js','firebase-auth-compat.js','firebase-firestore-compat.js']) if(!window.firebase||!firebase[f.split('-')[1]]) await loadScript(FB_SDK+f);
-        if(!firebase.apps.length) firebase.initializeApp(FB_CONFIG);
-        const cred=await firebase.auth().signInAnonymously(); this.uid=cred.user.uid;
-        this.api=fbApi(firebase.firestore(),this);
-      }catch(e){ this.err='init'; this.api=null }
+      const fb=await fbStart();
+      if(fb){ this.uid=FB.user&&FB.user.uid; this.api=fbApi(fb.firestore(),this) } else this.err='init';
     } else if(/[?&]demo\b/.test(location.search)) this.api=demoApi(this);
     return this.api },
   async start(){ if(this.started) return; this.started=true;
@@ -93,7 +86,7 @@ function adCard(a){
   <div class="row" style="margin-top:12px;gap:8px">${contactBtns(a.contact)}<span style="flex:1"></span>${own?`<button class="btn ghost small" data-del="${esc(a.id)}">${t('delete')}</button>`:`<button class="btn ghost small" style="color:var(--mute)" data-rep="${esc(a.id)}">${t('report')}</button>`}</div></div>` }
 
 // ---------- home teaser ----------
-function renderHomeBoard(){
+function renderHomeBoard(){ if(!$('hbTiles')) return;
   const cnt={}; Board.ads.forEach(a=>cnt[a.cat]=(cnt[a.cat]||0)+1);
   $('hbTiles').innerHTML=['room','sell','service','job'].map(c=>`<a class="tile" data-h="board-${c}"><span><span class="tico">${catIcon(c)}</span><b>${t('cat_'+c)}</b></span>${cnt[c]?`<span class="pill">${cnt[c]}</span>`:''}</a>`).join('');
 }
@@ -127,6 +120,7 @@ function initBoard(){
     if(title.length<3) return msg.textContent=t('post_need_title');
     if(contact.length<5) return msg.textContent=t('post_need_contact');
     if(!$('poAgree').checked) return msg.textContent=t('post_need_agree');
+    if(FB_CONFIG&&!isReal(FB.user)) return msg.innerHTML=t('post_need_login')+` <a data-h="profile" style="color:var(--acc);cursor:pointer;font-weight:600">${t('acc_login')} →</a>`;
     const lim=store.get('sp_postlim',{}); const n=lim.day===dayKey()?lim.n:0; if(n>=AD_PER_DAY) return msg.textContent=t('post_limit');
     const price=pr===''?null:Math.min(100000,Math.max(0,Math.round(parseFloat(pr.replace(',','.'))||0)));
     const ad={cat:PO.cat,kind:AD_KINDS[PO.cat]?PO.kind:'',title:title.slice(0,80),text:$('poText').value.trim().slice(0,1000),price,

@@ -93,6 +93,17 @@ mark{background:#fff1a8;color:inherit;border-radius:3px;padding:0 1px}
 .hub a:hover{border-color:var(--acc);background:var(--acc2)}
 .hub .hi{font-size:26px;display:block;margin-bottom:6px}.hub b{display:block;font-size:15px;line-height:1.25}.hub span.note{display:block;margin-top:4px;font-size:12.5px}
 .hub a.main{grid-column:1/-1;background:var(--acc);border-color:var(--acc);color:#fff}.hub a.main .note{color:#dbe4ff}.hub a.main:hover{background:#2850d6}
+.tabsbar{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;scrollbar-width:none}
+.tabsbar a{flex:1;white-space:nowrap;text-align:center;text-decoration:none;font-weight:600;font-size:14px;color:var(--mute);background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer}
+.tabsbar a.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.tabbar{display:none}
+.acbtn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin-top:10px;font-weight:600}
+.acbtn.g{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.avatar{width:56px;height:56px;border-radius:50%;background:var(--acc);color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;object-fit:cover;flex:none}
+@media (max-width:760px){header nav{display:none}.tabbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:60;background:#fff;border-top:1px solid var(--line);padding:4px 2px calc(4px + env(safe-area-inset-bottom));box-shadow:0 -4px 16px rgba(0,0,0,.04)}
+.tabbar a{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;font-weight:600;color:var(--mute);padding:6px 0;text-decoration:none;cursor:pointer;background:none!important}
+.tabbar a .ti{font-size:21px;line-height:1;filter:grayscale(1);opacity:.7}.tabbar a.on{color:var(--acc)}.tabbar a.on .ti{filter:none;opacity:1}
+body{padding-bottom:72px}}
 .about h3{margin:18px 0 6px;font-size:16px}.about p{margin:0 0 8px;line-height:1.55}
 footer a{color:var(--mute)}
 .gb{display:inline-block;min-width:26px;text-align:center;font-size:13px;font-weight:800;padding:3px 7px;border-radius:8px;color:#fff;vertical-align:middle}
@@ -114,12 +125,13 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
 <div class="wrap">
 <header>
   <div class="logo" id="logo">Sessiya<b>+</b></div>
-  <nav><a data-go="home" data-i="nav_home"></a><a data-go="catalog" data-i="nav_catalog"></a><a data-go="board" data-i="nav_board"></a><a data-go="tools" data-i="nav_tools"></a></nav>
+  <nav><a data-go="home" data-i="nav_home"></a><a data-go="catalog" data-i="nav_catalog"></a><a data-go="board" data-i="nav_board"></a><a data-go="tools" data-i="nav_tools"></a><a data-go="profile" data-i="nav_profile"></a></nav>
   <div class="lang" id="lang"><button data-l="az">AZ</button><button data-l="ru">RU</button><button data-l="en">EN</button></div>
 </header>
 
 <!-- HOME -->
 <section id="v-home">
+
   <div class="card">
     <h1 style="margin:0 0 6px" data-i="hub_title"></h1>
     <p class="muted" style="margin:0" data-i="hub_sub"></p>
@@ -139,7 +151,19 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
     <input type="text" class="search" id="hmSearch" autocomplete="off">
     <div class="grid" id="hmFound" style="margin-top:12px"></div>
   </div>
+</section>
 
+<!-- CATALOG -->
+<section id="v-catalog" class="hide">
+  <div class="tabsbar" id="tsTabs"><a data-h="catalog" data-v="cat">📚 <span data-i="ts_cat"></span></a><a data-h="mybanks" data-v="my">📂 <span data-i="ts_my"></span></a><a data-h="upload" data-v="up">⬆️ <span data-i="ts_up"></span></a></div>
+  <div id="tsMy" class="hide">
+  <div class="card">
+    <h2 data-i="my_banks"></h2>
+    <div class="grid" id="myBanks"></div>
+    <div class="note" id="noBanks" data-i="no_banks"></div>
+  </div>
+  </div>
+  <div id="tsUp" class="hide">
   <div class="card" id="hmUpload">
     <h2 style="margin:0 0 6px" data-i="hero_title"></h2>
     <p class="muted" style="margin:0 0 16px" data-i="hero_sub"></p>
@@ -163,53 +187,12 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
   </div>
 
   <div class="card">
-    <div class="row" style="justify-content:space-between;margin-bottom:10px"><h2 style="margin:0" data-i="prog_title"></h2><button class="btn ghost small" data-go="tools" data-i="all_tools"></button></div>
-    <div class="row">
-      <div class="stat"><span class="note" data-i="prog_streak"></span><b id="prStreak"></b></div>
-      <div class="stat"><span class="note" data-i="prog_today"></span><b id="prToday"></b></div>
-      <div class="stat"><span class="note" data-i="prog_total"></span><b id="prTotal"></b></div>
-      <div class="stat"><span class="note" data-i="prog_next"></span><b id="prNext" style="font-size:16px"></b></div>
-    </div>
-    <div class="note" id="prTip" style="margin-top:10px"></div>
-    <div class="grid" style="margin-top:12px;grid-template-columns:repeat(auto-fill,minmax(160px,1fr))">
-      <a class="tile" data-h="tools-calc"><span><span class="tico">🧮</span><b data-i="tl_calc"></b></span></a>
-      <a class="tile" data-h="tools-gpa"><span><span class="tico">🎓</span><b data-i="tl_gpa"></b></span></a>
-      <a class="tile" data-h="tools-cal"><span><span class="tico">📅</span><b data-i="tl_cal"></b></span></a>
-      <a class="tile" data-h="tools-pomo"><span><span class="tico">🍅</span><b data-i="tl_pomo"></b></span></a>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="row" style="justify-content:space-between;margin-bottom:4px"><h2 style="margin:0" data-i="board_title"></h2><button class="btn ghost small" data-go="board" data-i="see_all"></button></div>
-    <p class="note" style="margin:0 0 12px" data-i="home_board_sub"></p>
-    <div class="grid" id="hbTiles" style="grid-template-columns:repeat(auto-fill,minmax(160px,1fr))"></div>
-    <div class="row" style="margin-top:12px"><a class="btn small" data-h="post-room" data-i="post_btn"></a></div>
-  </div>
-
-  <div class="card">
-    <div class="row" style="justify-content:space-between;margin-bottom:10px"><h2 style="margin:0" data-i="catalog_title"></h2><button class="btn ghost small" data-go="catalog" data-i="see_all"></button></div>
-    <div class="grid" id="homeUnis"></div>
-  </div>
-
-  <div class="card">
-    <h2 data-i="my_banks"></h2>
-    <div class="grid" id="myBanks"></div>
-    <div class="note" id="noBanks" data-i="no_banks"></div>
-  </div>
-
-  <div class="card">
-    <h2 data-i="ready_tests"></h2>
-    <div class="grid" id="readyBanks"></div>
-  </div>
-
-  <div class="card">
     <h2 data-i="formats_title"></h2>
     <div class="note" data-i="formats_body"></div>
   </div>
-</section>
 
-<!-- CATALOG -->
-<section id="v-catalog" class="hide">
+  </div>
+  <div id="tsCat">
   <div class="card">
     <div class="crumbs" id="crumbs"></div>
     <h1 id="catTitle" style="font-size:24px"></h1>
@@ -217,6 +200,11 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
     <input type="text" class="search" id="catSearch">
     <div id="catList"></div>
     <div class="note" id="catNote" style="margin-top:12px"></div>
+  </div>
+  <div class="card" id="tsReady">
+    <h2 data-i="ready_tests"></h2>
+    <div class="grid" id="readyBanks"></div>
+  </div>
   </div>
 </section>
 
@@ -434,6 +422,32 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
 </section>
 
 <!-- RESULT -->
+<section id="v-profile" class="hide">
+  <div class="card" id="acCard"><div id="acBox"></div><div id="acRecaptcha"></div></div>
+  <div class="card">
+    <div class="row" style="justify-content:space-between;margin-bottom:10px"><h2 style="margin:0" data-i="prog_title"></h2><button class="btn ghost small" data-go="tools" data-i="all_tools"></button></div>
+    <div class="row">
+      <div class="stat"><span class="note" data-i="prog_streak"></span><b id="prStreak"></b></div>
+      <div class="stat"><span class="note" data-i="prog_today"></span><b id="prToday"></b></div>
+      <div class="stat"><span class="note" data-i="prog_total"></span><b id="prTotal"></b></div>
+      <div class="stat"><span class="note" data-i="prog_next"></span><b id="prNext" style="font-size:16px"></b></div>
+    </div>
+    <div class="note" id="prTip" style="margin-top:10px"></div>
+    <div class="grid" style="margin-top:12px;grid-template-columns:repeat(auto-fill,minmax(160px,1fr))">
+      <a class="tile" data-h="tools-calc"><span><span class="tico">🧮</span><b data-i="tl_calc"></b></span></a>
+      <a class="tile" data-h="tools-gpa"><span><span class="tico">🎓</span><b data-i="tl_gpa"></b></span></a>
+      <a class="tile" data-h="tools-cal"><span><span class="tico">📅</span><b data-i="tl_cal"></b></span></a>
+      <a class="tile" data-h="tools-pomo"><span><span class="tico">🍅</span><b data-i="tl_pomo"></b></span></a>
+    </div>
+  </div>
+  <div class="card">
+    <h2 data-i="settings_title"></h2>
+    <div class="note" style="margin-bottom:6px" data-i="lang_title"></div>
+    <div class="seg" id="pfLang"><button data-l="az">Azərbaycanca</button><button data-l="ru">Русский</button><button data-l="en">English</button></div>
+    <div class="row" style="margin-top:16px;gap:8px"><a class="btn sec small" data-h="about" data-i="about_link"></a><a class="btn sec small" href="app/sessiya.apk" download="Sessiya.apk" data-i="apk_link"></a></div>
+  </div>
+</section>
+
 <section id="v-about" class="hide">
   <div class="card about"><h1 style="margin:0 0 10px" data-i="about_link"></h1><div id="abBody"></div></div>
 </section>
@@ -448,6 +462,7 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
   <div class="card" id="rsListCard"><h2 data-i="wrong_answers"></h2><div id="rsList"></div></div>
 </section>
 
+<nav class="tabbar" id="tabbar"><a data-go="home"><span class="ti">🏠</span><span data-i="nav_home"></span></a><a data-go="catalog"><span class="ti">📝</span><span data-i="nav_catalog"></span></a><a data-go="board"><span class="ti">📌</span><span data-i="nav_board"></span></a><a data-go="tools"><span class="ti">🧮</span><span data-i="nav_tools"></span></a><a data-go="profile"><span class="ti">👤</span><span data-i="nav_profile"></span></a></nav>
 <footer><div data-i="footer"></div><p style="margin-top:8px"><a data-h="about" href="#about" data-i="about_link">Sayt haqqında</a> · <a href="t/" data-i="all_banks_link">📚 Bütün test bankları və suallar</a> · <a href="app/sessiya.apk" download="Sessiya.apk" data-i="apk_link">🤖 Android tətbiqi (APK)</a></p></footer>
 </div>
 
@@ -482,7 +497,7 @@ function applyI18n(){
   document.documentElement.lang=LANG;
   document.querySelectorAll('[data-i]').forEach(el=>{const v=t(el.dataset.i); if(/<[a-z]/.test(v)) el.innerHTML=v; else el.textContent=v});
   document.querySelectorAll('[data-ph]').forEach(el=>el.placeholder=t(el.dataset.ph));
-  document.querySelectorAll('#lang button').forEach(b=>b.classList.toggle('on',b.dataset.l===LANG));
+  document.querySelectorAll('#lang button,#pfLang button').forEach(b=>b.classList.toggle('on',b.dataset.l===LANG));
   $('catSearch').placeholder=t('search_ph'); $('hmSearch').placeholder=t('find_ph'); $('bkSearch').placeholder=t('search_q_ph'); $('caSubj').placeholder=t('cal_subj_ph'); if(typeof HOME!=='undefined') renderHomeType();
   $('pvUniOther').placeholder=t('f_uni_other'); $('pvFac').placeholder=t('f_fac_ph'); $('pvSubj').placeholder=t('f_subj_ph');
   $('exCount').innerHTML=[25,50,100,0].map(n=>`<option value="${n}" ${n===50?'selected':''}>${n?t('n_questions',n):t('all_q')}</option>`).join('');
@@ -491,6 +506,7 @@ function applyI18n(){
   $('tkTime').innerHTML=[[20,'t_20m'],[40,'t_40m'],[0,'t_none']].map(([v,k])=>`<option value="${v}">${t(k)}</option>`).join('');
   $('pvUni').innerHTML=`<option value="">${t('choose')}</option>`+UNIS.map(u=>`<option value="${u[0]}">${esc(u[1])}</option>`).join('')+`<option value="other">${t('other')}</option>`;
 }
+document.querySelectorAll('#pfLang button').forEach(b=>b.onclick=()=>document.querySelector('#lang button[data-l="'+b.dataset.l+'"]').click());
 document.querySelectorAll('#lang button').forEach(b=>b.onclick=()=>{LANG=b.dataset.l;store.set('sp_lang',LANG);applyI18n();
   if(!$('v-quiz').classList.contains('hide')){ $('qzPos').textContent=`${Q.i+1} / ${Q.ids.length} · `+(Q.mode==='exam'?t('exam_l'):t('practice_l')); $('qzNext').textContent=Q.i===Q.ids.length-1?t('finish'):t('next'); }
   else if(!$('v-result').classList.contains('hide')||!$('v-preview').classList.contains('hide')){ if(!$('v-preview').classList.contains('hide')) renderPreview(); }
@@ -537,7 +553,7 @@ const Cat={db:null,user:null,canWrite:null,metas:[],ready:false,unsub:null,liste
 };
 
 // ---------- router (#home, #catalog, #u-<uni>, #f-<uni>--<fac>, #s-<uni>--<fac>--<subj>, #b-<id>) ----------
-const VIEWS=['home','catalog','board','post','tools','about','preview','bank','quiz','result','cards','ticket'];
+const VIEWS=['home','catalog','board','post','tools','about','profile','preview','bank','quiz','result','cards','ticket'];
 function show(v){for(const s of VIEWS) $('v-'+s).classList.toggle('hide',s!==v);
   document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',a.dataset.go===v));
   window.scrollTo(0,0)}
@@ -550,6 +566,9 @@ function route(){
   if(h==='home') return renderHome();
   if(h==='catalog') return renderCatalog({});
   if(h==='about') return renderAbout();
+  if(h==='mybanks') return renderTests('my');
+  if(h==='upload') return renderTests('up');
+  if(h==='profile') return renderProfile();
   if(m=h.match(/^board(?:-([a-z]+))?$/)) return renderBoard(m[1]);
   if(m=h.match(/^post(?:-([a-z]+))?$/)) return renderPost(m[1]);
   if(m=h.match(/^tools(?:-(calc|gpa|cal|pomo))?$/)) return renderTools(m&&m[1]);
@@ -565,13 +584,18 @@ function bankCard(b,shared){const st=mem.stats[b.id]||{};const n=b.qs?b.qs.lengt
   return `<div class="bank" data-id="${b.id}" data-shared="${shared?1:''}"><div style="font-weight:700;margin-bottom:6px">${esc(b.name)}</div>${shared?`<div class="note" style="margin-bottom:6px">${esc(b.uniLabel||uniName(b.uni))}</div>`:''}<div class="row"><span class="pill ${b.tag?'acc':''}">${t('n_q',n)}</span>${b.type==='written'?`<span class="pill">${b.format==='test'?t('test_noopts_tag'):t('written_tag')}</span>`:''}${st.best!=null?`<span class="pill">${t('best_pct',st.best)}</span>`:''}</div></div>`}
 function bindBankCards(root){root.querySelectorAll('.bank').forEach(el=>el.onclick=()=>el.dataset.shared?go('b-'+el.dataset.id):openBank(el.dataset.id))}
 function uniCounts(){const c={};for(const m of Cat.metas){c[m.uni]=(c[m.uni]||0)+1}return c}
-function renderHome(){
-  $('myBanks').innerHTML=mem.banks.map(b=>bankCard(b)).join(''); $('noBanks').classList.toggle('hide',mem.banks.length>0);
-  $('readyBanks').innerHTML=READY_SETS.map(b=>bankCard(b)).join('');
-  bindBankCards($('myBanks')); bindBankCards($('readyBanks'));
-  renderHomeUnis(); renderFind(); renderProgress(); renderHomeBoard(); show('home'); Board.start(); document.title=t('doc_title');
+function renderMyBanks(){
+  $('myBanks').innerHTML=mem.banks.map(b=>bankCard(b)).join(''); $('noBanks').classList.toggle('hide',mem.banks.length>0); bindBankCards($('myBanks'));
 }
-function renderHomeUnis(){
+function renderReady(){ $('readyBanks').innerHTML=READY_SETS.map(b=>bankCard(b)).join(''); bindBankCards($('readyBanks')) }
+function setTsTab(tab){ $('tsCat').classList.toggle('hide',tab!=='cat'); $('tsMy').classList.toggle('hide',tab!=='my'); $('tsUp').classList.toggle('hide',tab!=='up');
+  document.querySelectorAll('#tsTabs a').forEach(x=>x.classList.toggle('on',x.dataset.v===tab)) }
+function renderTests(tab){ show('catalog'); setTsTab(tab);
+  if(tab==='my'){ renderMyBanks(); document.title=t('ts_my')+' | Sessiya+' } else { document.title=t('ts_up')+' | Sessiya+' } }
+function renderHome(){
+  renderFind(); show('home'); document.title=t('doc_title');
+}
+function renderHomeUnis(){ if(!$('homeUnis')) return;
   const c=uniCounts(); const ids=Object.keys(c).sort((a,b)=>c[b]-c[a]).slice(0,6);
   $('homeUnis').innerHTML=ids.length?ids.map(id=>`<div class="tile" data-u="${id}"><span style="font-weight:600">${esc(labelForUni(id))}</span><span class="pill">${c[id]}</span></div>`).join(''):`<div class="empty" style="grid-column:1/-1">${Cat.ready?t('cat_empty_home'):t('loading')}</div>`;
   $('homeUnis').querySelectorAll('.tile').forEach(el=>el.onclick=()=>go('u-'+el.dataset.u));
@@ -597,7 +621,7 @@ Cat.on(()=>{const h=location.hash.replace(/^#/,'')||'home'; if(h==='home'){rende
 // ---------- catalog ----------
 let catState={};
 function renderCatalog(st){
-  catState=st; show('catalog');
+  catState=st; show('catalog'); setTsTab('cat'); $('tsReady').classList.toggle('hide',!!st.uni); renderReady();
   const M=Cat.metas; const q=$('catSearch').value.trim().toLowerCase();
   const facs=m=>slug(m.fac||'umumi'), subs=m=>slug(m.subj||m.name);
   let crumbs=[`<a data-h="catalog">${t('nav_catalog')}</a>`]; let title,sub,items=[];
@@ -708,7 +732,7 @@ function renderPreview(){
 document.querySelectorAll('#pvType button').forEach(b=>b.onclick=()=>{pending.type=b.dataset.v;renderPreview()});
 document.querySelectorAll('#pvFmt button').forEach(b=>b.onclick=()=>{pending.fmt=b.dataset.v;renderPreview()});
 $('pvUni').onchange=()=>$('pvUniOther').classList.toggle('hide',$('pvUni').value!=='other');
-$('pvCancel').onclick=()=>go('home');
+$('pvCancel').onclick=()=>go('upload');
 $('pvSave').onclick=async()=>{
   const uniSel=$('pvUni').value, uniOther=$('pvUniOther').value.trim();
   const isMc=pending.type==='mc';
@@ -747,7 +771,7 @@ function fillBankHeader(b,shared){
   $('bkMsg').textContent='';
 }
 function openBank(id){
-  const b=getLocal(id); if(!b) return go('home');
+  const b=getLocal(id); if(!b) return go('mybanks');
   curBank=b; curBank.shared=false; fillBankHeader(b,false); $('bkLoading').classList.add('hide'); showModes();
   if(location.hash!=='#bank') history.replaceState(null,'','#bank'); show('bank');
 }
@@ -766,7 +790,7 @@ $('bkDelete').onclick=async()=>{
   const btn=$('bkDelete'); if(btn.dataset.c!=='1'){btn.textContent=t('confirm_delete');btn.dataset.c='1';setTimeout(()=>{btn.textContent=t('delete');btn.dataset.c=''},3000);return}
   btn.dataset.c=''; btn.textContent=t('delete');
   if(curBank.shared){ try{await Cat.remove(curBank.id)}catch(e){$('bkMsg').textContent=t('pub_fail');return} return go('catalog') }
-  mem.banks=mem.banks.filter(b=>b.id!==curBank.id); delete mem.stats[curBank.id]; saveBanks(); saveStats(); go('home');
+  mem.banks=mem.banks.filter(b=>b.id!==curBank.id); delete mem.stats[curBank.id]; saveBanks(); saveStats(); go('mybanks');
 };
 $('bkReport').onclick=async()=>{ try{await Cat.report(curBank.id,'')}catch(e){} $('bkMsg').textContent=t('reported'); $('bkReport').disabled=true };
 $('bkPractice').onclick=()=>startQuiz('practice',curBank.qs.map((_,i)=>i));
@@ -919,6 +943,7 @@ function scoreTicket(){ const n=TK.ids.length, ok=[...document.querySelectorAll(
 $('bkTicket').onclick=startTicket; $('tkDone').onclick=checkTicket; $('tkAgain').onclick=startTicket; $('tkBack').onclick=()=>{clearInterval(tkTick);backToBank()};
 
 /*TOOLSJS*/
+/*AUTHJS*/
 /*BOARDJS*/
 applyI18n(); renderHomeType(); initTools(); initBoard(); route(); Cat.init();
 // ---------- Android app (APK) download ----------
