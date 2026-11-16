@@ -111,6 +111,13 @@ html.gated body{overflow:hidden}
 .lbrow{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;margin-bottom:6px;background:#fff}
 .lbrow.me{border-color:var(--acc);background:var(--acc2)}.lbn{width:28px;text-align:center;font-weight:700;color:var(--mute)}.lbname{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #qzFav.on{color:#f59e0b}
+.duscore{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#f7f8fa;border-radius:14px;padding:12px 16px}
+.duscore>div{display:flex;flex-direction:column;align-items:center;min-width:0;flex:1}.duscore b{font-size:30px;line-height:1.1}.duscore .vs{flex:none;font-weight:800;color:var(--mute)}
+.badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
+.badge{border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center;opacity:.45;filter:grayscale(1)}.badge.on{opacity:1;filter:none;border-color:#f5c451;background:#fffbea}
+.badge span{font-size:26px;display:block}.badge b{display:block;font-size:13px;margin-top:4px}.badge small{display:block;font-size:11px;color:var(--mute);margin-top:2px;line-height:1.3}
+.toast{position:fixed;left:50%;bottom:90px;transform:translate(-50%,20px);background:var(--ink);color:#fff;padding:12px 18px;border-radius:14px;font-weight:600;font-size:14px;z-index:300;opacity:0;transition:.3s;max-width:90vw;text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
 .about h3{margin:18px 0 6px;font-size:16px}.about p{margin:0 0 8px;line-height:1.55}
 footer a{color:var(--mute)}
 .gb{display:inline-block;min-width:26px;text-align:center;font-size:13px;font-weight:800;padding:3px 7px;border-radius:8px;color:#fff;vertical-align:middle}
@@ -148,7 +155,7 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
       <a data-h="board"><span class="hi">🏠</span><b data-i="hub_ads"></b><span class="note" data-i="hub_ads_d"></span></a>
       <a data-h="tools"><span class="hi">🧮</span><b data-i="hub_tools"></b><span class="note" data-i="hub_tools_d"></span></a>
       <a data-h="rating"><span class="hi">🏆</span><b data-i="rating_title"></b><span class="note" data-i="hub_rating_d"></span></a>
-      <a data-h="about"><span class="hi">ℹ️</span><b data-i="about_link"></b><span class="note" data-i="hub_about_d"></span></a>
+      <a data-h="arena"><span class="hi">⚔️</span><b data-i="arena_title"></b><span class="note" data-i="hub_arena_d"></span></a>
     </div>
   </div>
 
@@ -344,7 +351,7 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
       <div class="card" style="background:#fafbfc">
         <h2 data-i="practice"></h2>
         <p class="note" style="margin-top:-6px" data-i="practice_sub"></p>
-        <div class="row"><button class="btn" id="bkPractice" data-i="seq_start"></button><button class="btn sec" id="bkPracticeRnd" data-i="shuffled"></button><button class="btn sec hide" id="bkFav"></button><button class="btn sec" id="bkMistakes" data-i="repeat_mistakes"></button></div>
+        <div class="row"><button class="btn" id="bkPractice" data-i="seq_start"></button><button class="btn sec" id="bkPracticeRnd" data-i="shuffled"></button><button class="btn sec hide" id="bkFav"></button><button class="btn sec" id="bkDuel" data-i="bk_duel"></button><button class="btn sec" id="bkMistakes" data-i="repeat_mistakes"></button></div>
       </div>
       <div class="card" style="background:#fafbfc;margin-bottom:0">
         <h2 data-i="exam"></h2>
@@ -449,6 +456,7 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
       <a class="tile" data-h="tools-pomo"><span><span class="tico">🍅</span><b data-i="tl_pomo"></b></span></a>
     </div>
   </div>
+  <div class="card"><h2 style="margin:0 0 6px">🏅 <span data-i="badges_title"></span></h2><div id="pfBadges"></div></div>
   <div class="card">
     <h2 data-i="settings_title"></h2>
     <div class="note" style="margin-bottom:6px" data-i="lang_title"></div>
@@ -468,6 +476,25 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
     <div id="rtList"></div>
     <div class="row" style="margin-top:14px"><a class="btn" data-h="catalog" data-i="rating_go"></a></div>
   </div>
+</section>
+
+<section id="v-arena" class="hide">
+  <div class="card">
+    <h1 style="margin:0 0 6px;font-size:24px">⚔️ <span data-i="arena_title"></span></h1>
+    <p class="note" style="margin:0 0 14px" data-i="arena_sub"></p>
+    <label class="f" data-i="ar_pick"></label><select id="arBank"></select>
+    <div class="row" style="margin-top:10px"><button class="btn" id="arCreate" data-i="ar_create"></button></div>
+  </div>
+  <div class="card">
+    <h2 style="margin:0 0 8px" data-i="ar_join_t"></h2>
+    <div class="row" style="gap:8px;flex-wrap:nowrap"><input type="text" id="arCode" maxlength="6" autocomplete="off" style="text-transform:uppercase;letter-spacing:.1em"><button class="btn" id="arJoin" data-i="ar_join"></button></div>
+    <div class="note" id="arMsg" style="margin-top:8px;color:var(--bad)"></div>
+  </div>
+  <div class="card"><h2 style="margin:0 0 10px" data-i="ar_mine"></h2><div id="arMine"></div></div>
+</section>
+
+<section id="v-duel" class="hide">
+  <div class="card" id="duBox"></div>
 </section>
 
 <section id="v-about" class="hide">
@@ -593,9 +620,9 @@ const Cat={db:null,staticMetas:[],userMetas:[],metas:[],ready:false,unsub:null,l
 };
 
 // ---------- router (#home, #catalog, #u-<uni>, #f-<uni>--<fac>, #s-<uni>--<fac>--<subj>, #b-<id>) ----------
-const VIEWS=['home','catalog','board','post','tools','about','profile','rating','preview','bank','quiz','result','cards','ticket'];
-function show(v){for(const s of VIEWS) $('v-'+s).classList.toggle('hide',s!==v);
-  const nv={preview:'catalog',bank:'catalog',quiz:'catalog',result:'catalog',cards:'catalog',ticket:'catalog',post:'board',about:'profile',rating:'home'}[v]||v;
+const VIEWS=['home','catalog','board','post','tools','about','profile','rating','arena','duel','preview','bank','quiz','result','cards','ticket'];
+function show(v){ if(v!=='duel'&&typeof DU!=='undefined'&&DU.unsub){ DU.unsub(); DU.unsub=null; DU.code=null }for(const s of VIEWS) $('v-'+s).classList.toggle('hide',s!==v);
+  const nv={preview:'catalog',bank:'catalog',quiz:'catalog',result:'catalog',cards:'catalog',ticket:'catalog',post:'board',about:'profile',rating:'home',arena:'home',duel:'home'}[v]||v;
   document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',a.dataset.go===nv));
   window.scrollTo(0,0)}
 function go(h){ if(location.hash==='#'+h) route(); else location.hash=h }
@@ -608,6 +635,8 @@ function route(){
   if(h==='catalog') return renderCatalog({});
   if(h==='about') return renderAbout();
   if(h==='rating') return renderRating();
+  if(h==='arena') return renderArena();
+  if(m=h.match(/^duel-([A-Za-z0-9]{6})$/)) return renderDuel(m[1].toUpperCase());
   if(h==='mybanks') return renderTests('my');
   if(h==='upload') return renderTests('up');
   if(h==='profile') return renderProfile();
@@ -838,6 +867,7 @@ $('bkDelete').onclick=async()=>{
 };
 $('bkReport').onclick=async()=>{ try{await Cat.report(curBank.id,'')}catch(e){} $('bkMsg').textContent=t('reported'); $('bkReport').disabled=true };
 $('bkPractice').onclick=()=>startQuiz('practice',curBank.qs.map((_,i)=>i));
+$('bkDuel').onclick=()=>{ const m=Cat.metas.find(x=>x.id===curBank.id)||(curBank.qs&&{id:curBank.id,name:curBank.name,subj:curBank.subj||curBank.name}); if(!m) return; if(!bankCache[m.id]&&curBank.qs) bankCache[m.id]=curBank.qs; duelFromBank(m,$('bkDuel')) };
 $('bkFav').onclick=()=>startQuiz('practice',favs(curBank.id).slice());
 $('bkPracticeRnd').onclick=()=>startQuiz('practice',shuffle(curBank.qs.map((_,i)=>i)));
 $('bkMistakes').onclick=()=>startQuiz('practice',shuffle((mem.stats[curBank.id]||{}).wrong||[]));
@@ -990,9 +1020,10 @@ $('bkTicket').onclick=startTicket; $('tkDone').onclick=checkTicket; $('tkAgain')
 
 /*TOOLSJS*/
 /*GAMEJS*/
+/*ARENAJS*/
 /*AUTHJS*/
 /*BOARDJS*/
-applyI18n(); renderHomeType(); initTools(); initBoard(); route(); Cat.init(); Gate.init();
+applyI18n(); renderHomeType(); initTools(); initBoard(); initArena(); route(); Cat.init(); Gate.init(); setTimeout(checkBadges,2500);
 // ---------- Android app (APK) download ----------
 (function(){
   const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;

@@ -61,6 +61,26 @@ service cloud.firestore {
         && request.resource.data.wk is int && request.resource.data.wk >= 0 && request.resource.data.wk <= 50000
         && request.resource.data.at is int;
     }
+    match /duels/{id} {
+      allow read: if real();
+      allow create: if real() && request.resource.data.host == request.auth.uid
+        && request.resource.data.keys().hasOnly(['code','bank','qs','host','hostName','guest','guestName','status','p','s','d','uids','createdAt'])
+        && request.resource.data.code == id && request.resource.data.guest == null && request.resource.data.status == 'waiting'
+        && request.resource.data.qs is list && request.resource.data.qs.size() <= 15
+        && request.resource.data.p.size() == 0 && request.resource.data.s.size() == 0 && request.resource.data.d.size() == 0
+        && request.resource.data.uids == [request.auth.uid];
+      allow update: if real() && (
+          (resource.data.guest == null && resource.data.host != request.auth.uid
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['guest','guestName','status','uids'])
+            && request.resource.data.guest == request.auth.uid && request.resource.data.status == 'playing'
+            && request.resource.data.uids == [resource.data.host, request.auth.uid]
+            && request.resource.data.guestName is string && request.resource.data.guestName.size() <= 40)
+        || ((resource.data.host == request.auth.uid || resource.data.guest == request.auth.uid)
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['p','s','d'])
+            && request.resource.data.p.diff(resource.data.p).affectedKeys().hasOnly([request.auth.uid])
+            && request.resource.data.s.diff(resource.data.s).affectedKeys().hasOnly([request.auth.uid])
+            && request.resource.data.d.diff(resource.data.d).affectedKeys().hasOnly([request.auth.uid])));
+    }
     match /reports/{id} {
       allow create: if request.auth != null
         && request.resource.data.keys().hasOnly(['ad','bank','reason','uid','at'])
