@@ -7,6 +7,7 @@
 <title>Sessiya+ — tələbə üçün testlər, elanlar və alətlər</title>
 <meta name="description" content="Sessiya+ — Azərbaycan tələbələri üçün hər şey bir yerdə: imtahana hazırlıq testləri, otaq yoldaşı və mənzil elanları, kitablar, repetitorlar, bal kalkulyatoru.">
 <meta name="theme-color" content="#2f5bea">
+<script>try{var th=JSON.parse(localStorage.getItem('sp_theme')||'"auto"');if(th==='dark'||(th==='auto'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
 <link rel="icon" href="icons/favicon.svg" type="image/svg+xml"><link rel="icon" href="icons/icon-192.png" sizes="192x192">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png"><link rel="manifest" href="manifest.webmanifest">
 <meta property="og:type" content="website"><meta property="og:site_name" content="Sessiya+">
@@ -16,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f4f5f7;--card:#fff;--ink:#16181d;--mute:#6b7280;--line:#e3e6eb;--acc:#2f5bea;--acc2:#e9eefe;--ok:#16a34a;--okbg:#e9f8ef;--bad:#dc2626;--badbg:#fdecec}
+:root{--soft:#f7f8fa;--chip:#e9ebef;--bg:#f4f5f7;--card:#fff;--ink:#16181d;--mute:#6b7280;--line:#e3e6eb;--acc:#2f5bea;--acc2:#e9eefe;--ok:#16a34a;--okbg:#e9f8ef;--bad:#dc2626;--badbg:#fdecec}
 *{box-sizing:border-box}
 body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
 .wrap{max-width:780px;margin:0 auto;padding:18px 16px 60px}
@@ -25,15 +26,15 @@ header{display:flex;align-items:center;justify-content:space-between;gap:10px;ma
 .logo b{color:var(--acc)}
 nav{display:flex;gap:4px;align-items:center}
 nav a{font-size:14px;font-weight:600;color:var(--mute);text-decoration:none;padding:8px 10px;border-radius:10px;cursor:pointer}
-nav a.on{color:var(--ink);background:#e9ebef}
-.lang{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+nav a.on{color:var(--ink);background:var(--chip)}
+.lang{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--card)}
 .lang button{border:0;background:none;font:600 12px Inter,sans-serif;padding:7px 9px;cursor:pointer;color:var(--mute)}
 .lang button.on{background:var(--ink);color:#fff}
 .muted{color:var(--mute)}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:14px}
 h1{font-size:28px;line-height:1.15;letter-spacing:-.02em;margin:0 0 8px}
 h2{font-size:18px;margin:0 0 12px}
-.drop{border:2px dashed #c9cfd8;border-radius:14px;padding:24px;text-align:center;cursor:pointer;transition:.15s;background:#fafbfc}
+.drop{border:2px dashed #c9cfd8;border-radius:14px;padding:24px;text-align:center;cursor:pointer;transition:.15s;background:var(--soft)}
 .drop:hover,.drop.over{border-color:var(--acc);background:var(--acc2)}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:12px;padding:12px 18px;font:600 15px Inter,sans-serif;cursor:pointer;background:var(--acc);color:#fff}
 .btn.sec{background:#eceef2;color:var(--ink)}
@@ -42,19 +43,19 @@ h2{font-size:18px;margin:0 0 12px}
 .btn:disabled{opacity:.45;cursor:default}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
-.bank,.tile{border:1px solid var(--line);border-radius:14px;padding:14px 16px;cursor:pointer;background:#fff;transition:.15s}
+.bank,.tile{border:1px solid var(--line);border-radius:14px;padding:14px 16px;cursor:pointer;background:var(--card);transition:.15s}
 .bank:hover,.tile:hover{border-color:var(--acc)}
 .tile{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .pill{display:inline-block;font-size:12px;font-weight:600;padding:3px 9px;border-radius:99px;background:#eceef2;color:var(--mute)}
 .pill.acc{background:var(--acc2);color:var(--acc)}
-textarea,input[type=text],input[type=number],input[type=date],select{width:100%;font:15px Inter,sans-serif;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
+textarea,input[type=text],input[type=number],input[type=date],select{width:100%;font:15px Inter,sans-serif;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink)}
 textarea{min-height:150px}
 label.f{display:block;font-size:13px;color:var(--mute);margin:12px 0 6px}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .bar{height:6px;background:#e6e9ee;border-radius:9px;overflow:hidden}
 .bar i{display:block;height:100%;background:var(--acc);transition:width .2s}
 .q{font-size:19px;font-weight:600;line-height:1.4;margin:16px 0}
-.opt{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;border:1px solid var(--line);background:#fff;border-radius:12px;padding:13px 14px;margin-bottom:9px;font:15px/1.4 Inter,sans-serif;color:var(--ink);cursor:pointer}
+.opt{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:13px 14px;margin-bottom:9px;font:15px/1.4 Inter,sans-serif;color:var(--ink);cursor:pointer}
 .opt:hover{border-color:#b9c2d0}
 .opt .k{flex:none;width:24px;height:24px;border-radius:7px;background:#eceef2;display:grid;place-items:center;font-weight:700;font-size:13px}
 .opt.sel{border-color:var(--acc);background:var(--acc2)}
@@ -67,16 +68,16 @@ label.f{display:block;font-size:13px;color:var(--mute);margin:12px 0 6px}
 .hide{display:none!important}
 .timer{font-variant-numeric:tabular-nums;font-weight:700}
 .note{font-size:13px;color:var(--mute);line-height:1.5}
-.stat{flex:1;min-width:120px;background:#f7f8fa;border-radius:12px;padding:12px}
+.stat{flex:1;min-width:120px;background:var(--soft);border-radius:12px;padding:12px}
 .stat b{display:block;font-size:22px}
 .crumbs{font-size:13px;color:var(--mute);margin-bottom:10px}
 .crumbs a{color:var(--acc);cursor:pointer;text-decoration:none}
 .search{margin-bottom:12px}
-.seg{display:inline-flex;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;flex-wrap:wrap}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card);flex-wrap:wrap}
 .seg button{border:0;background:none;font:600 14px Inter,sans-serif;padding:10px 14px;cursor:pointer;color:var(--mute)}
 .seg button.on{background:var(--acc);color:#fff}
 .seg button:disabled{opacity:.4;cursor:default}
-.ans{background:#f7f8fa;border-radius:12px;padding:14px;white-space:pre-wrap;line-height:1.5;font-size:15px}
+.ans{background:var(--soft);border-radius:12px;padding:14px;white-space:pre-wrap;line-height:1.5;font-size:15px}
 .ans .lbl{display:block;font-size:12px;font-weight:700;color:var(--mute);margin-bottom:6px;text-transform:uppercase;letter-spacing:.03em}
 .tkq{border-top:1px solid var(--line);padding:14px 0}
 .tkq textarea{min-height:110px;margin-top:8px}
@@ -89,44 +90,49 @@ a.btn{text-decoration:none}
 mark{background:#fff1a8;color:inherit;border-radius:3px;padding:0 1px}
 .tico{font-size:20px;margin-right:6px}
 .hub{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}
-.hub a{display:block;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:14px;background:#fff;cursor:pointer;transition:.15s}
+.hub a{display:block;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:14px;background:var(--card);cursor:pointer;transition:.15s}
 .hub a:hover{border-color:var(--acc);background:var(--acc2)}
 .hub .hi{font-size:26px;display:block;margin-bottom:6px}.hub b{display:block;font-size:15px;line-height:1.25}.hub span.note{display:block;margin-top:4px;font-size:12.5px}
 .hub a.main{grid-column:1/-1;background:var(--acc);border-color:var(--acc);color:#fff}.hub a.main .note{color:#dbe4ff}.hub a.main:hover{background:#2850d6}
 .tabsbar{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;scrollbar-width:none}
-.tabsbar a{flex:1;white-space:nowrap;text-align:center;text-decoration:none;font-weight:600;font-size:13.5px;color:var(--mute);background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 8px;cursor:pointer}
+.tabsbar a{flex:1;white-space:nowrap;text-align:center;text-decoration:none;font-weight:600;font-size:13.5px;color:var(--mute);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 8px;cursor:pointer}
 .tabsbar a.on{background:var(--acc);border-color:var(--acc);color:#fff}
 .tabbar{display:none}
 .acbtn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin-top:10px;font-weight:600}
-.acbtn.g{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.acbtn.g{background:var(--card);color:var(--ink);border:1px solid var(--line)}
 .avatar{width:56px;height:56px;border-radius:50%;background:var(--acc);color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;object-fit:cover;flex:none}
-@media (max-width:760px){header nav{display:none}.tabbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:60;background:#fff;border-top:1px solid var(--line);padding:4px 2px calc(4px + env(safe-area-inset-bottom));box-shadow:0 -4px 16px rgba(0,0,0,.04)}
+@media (max-width:760px){header nav{display:none}.tabbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--card);border-top:1px solid var(--line);padding:4px 2px calc(4px + env(safe-area-inset-bottom));box-shadow:0 -4px 16px rgba(0,0,0,.04)}
 .tabbar a{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;font-weight:600;color:var(--mute);padding:6px 0;text-decoration:none;cursor:pointer;background:none!important}
 .tabbar a .ti{font-size:21px;line-height:1;filter:grayscale(1);opacity:.7}.tabbar a.on{color:var(--acc)}.tabbar a.on .ti{filter:none;opacity:1}
 body{padding-bottom:72px}}
 #gate{position:fixed;inset:0;z-index:200;background:var(--bg);overflow-y:auto;-webkit-overflow-scrolling:touch}
 .gate-in{max-width:460px;margin:0 auto;padding:22px 16px 40px}
 html.gated body{overflow:hidden}
-.gate-feat{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0 6px}.gate-feat span{background:#f7f8fa;border-radius:12px;padding:10px;font-size:13px;line-height:1.3}
-.lbrow{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;margin-bottom:6px;background:#fff}
+.gate-feat{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0 6px}.gate-feat span{background:var(--soft);border-radius:12px;padding:10px;font-size:13px;line-height:1.3}
+.lbrow{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;margin-bottom:6px;background:var(--card)}
 .lbrow.me{border-color:var(--acc);background:var(--acc2)}.lbn{width:28px;text-align:center;font-weight:700;color:var(--mute)}.lbname{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #qzFav.on{color:#f59e0b}
-.duscore{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#f7f8fa;border-radius:14px;padding:12px 16px}
+.duscore{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--soft);border-radius:14px;padding:12px 16px}
 .duscore>div{display:flex;flex-direction:column;align-items:center;min-width:0;flex:1}.duscore b{font-size:30px;line-height:1.1}.duscore .vs{flex:none;font-weight:800;color:var(--mute)}
 .badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
 .badge{border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center;opacity:.45;filter:grayscale(1)}.badge.on{opacity:1;filter:none;border-color:#f5c451;background:#fffbea}
 .badge span{font-size:26px;display:block}.badge b{display:block;font-size:13px;margin-top:4px}.badge small{display:block;font-size:11px;color:var(--mute);margin-top:2px;line-height:1.3}
 .toast{position:fixed;left:50%;bottom:90px;transform:translate(-50%,20px);background:var(--ink);color:#fff;padding:12px 18px;border-radius:14px;font-weight:600;font-size:14px;z-index:300;opacity:0;transition:.3s;max-width:90vw;text-align:center}
 .toast.show{opacity:1;transform:translate(-50%,0)}
+html.dark{--bg:#0f1115;--card:#181b21;--ink:#e8eaed;--mute:#9aa1ad;--line:#2a2f38;--acc:#5b84ff;--acc2:#1d2747;--okbg:#0f2e1c;--badbg:#3a1517;--soft:#20242c;--chip:#272c35;color-scheme:dark}
+html.dark .lang button.on{color:#111}html.dark .toast{background:#e8eaed;color:#111}html.dark .opt .k{background:var(--chip);color:var(--ink)}html.dark .opt.ok .k{background:var(--ok);color:#fff}html.dark .opt.bad .k{background:var(--bad);color:#fff}html.dark .opt.sel .k{background:var(--acc);color:#fff}html.dark .badge.on{background:#2c2614;border-color:#7a6320}html.dark .drop{border-color:#3a404b}html.dark mark{background:#5c4d10}
+html.dark .hub a.main{background:var(--acc);border-color:var(--acc)}html.dark .btn.sec{background:var(--chip);color:var(--ink)}html.dark .pill{background:var(--chip);color:var(--ink)}html.dark .pill.acc{background:var(--acc2);color:#b9c9ff}
+.actchart{display:flex;align-items:flex-end;gap:4px;height:90px}.actchart div{flex:1;display:flex;flex-direction:column;align-items:center;height:100%;justify-content:flex-end}
+.actchart i{display:block;width:100%;background:var(--acc);border-radius:4px 4px 2px 2px;min-height:2px}.actchart span{font-size:10px;color:var(--mute);margin-top:3px}
 .about h3{margin:18px 0 6px;font-size:16px}.about p{margin:0 0 8px;line-height:1.55}
 footer a{color:var(--mute)}
 .gb{display:inline-block;min-width:26px;text-align:center;font-size:13px;font-weight:800;padding:3px 7px;border-radius:8px;color:#fff;vertical-align:middle}
 .chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin:0 -2px;scrollbar-width:none}
 .chips::-webkit-scrollbar{display:none}
-.chip{flex:none;font-size:14px;font-weight:600;padding:8px 12px;border-radius:99px;background:#fff;border:1px solid var(--line);color:var(--ink);text-decoration:none;cursor:pointer;white-space:nowrap}
+.chip{flex:none;font-size:14px;font-weight:600;padding:8px 12px;border-radius:99px;background:var(--card);border:1px solid var(--line);color:var(--ink);text-decoration:none;cursor:pointer;white-space:nowrap}
 .chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
 .chip .cn{font-size:12px;opacity:.6}
-.ad{border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px;background:#fff}
+.ad{border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px;background:var(--card)}
 .adt{font-weight:700;font-size:17px;line-height:1.35;margin-top:8px}
 .adm{gap:4px 12px;margin-top:4px;font-size:13px}
 .adx{font-size:14px;line-height:1.5;white-space:pre-wrap;margin-top:8px;color:#30343b}
@@ -348,12 +354,12 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
     </div>
     <div id="bkLoading" class="note hide" data-i="loading"></div>
     <div id="bkModes">
-      <div class="card" style="background:#fafbfc">
+      <div class="card" style="background:var(--soft)">
         <h2 data-i="practice"></h2>
         <p class="note" style="margin-top:-6px" data-i="practice_sub"></p>
         <div class="row"><button class="btn" id="bkPractice" data-i="seq_start"></button><button class="btn sec" id="bkPracticeRnd" data-i="shuffled"></button><button class="btn sec hide" id="bkFav"></button><button class="btn sec" id="bkDuel" data-i="bk_duel"></button><button class="btn sec" id="bkMistakes" data-i="repeat_mistakes"></button></div>
       </div>
-      <div class="card" style="background:#fafbfc;margin-bottom:0">
+      <div class="card" style="background:var(--soft);margin-bottom:0">
         <h2 data-i="exam"></h2>
         <p class="note" style="margin-top:-6px" data-i="exam_sub"></p>
         <div class="row">
@@ -364,12 +370,12 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
       </div>
     </div>
     <div id="bkWModes" class="hide">
-      <div class="card" style="background:#fafbfc">
+      <div class="card" style="background:var(--soft)">
         <h2 data-i="cards"></h2>
         <p class="note" style="margin-top:-6px" data-i="cards_sub"></p>
         <div class="row"><button class="btn" id="bkCards" data-i="seq_start"></button><button class="btn sec" id="bkCardsRnd" data-i="shuffled"></button><button class="btn sec" id="bkCardsUnk" data-i="repeat_unknown"></button></div>
       </div>
-      <div class="card" style="background:#fafbfc;margin-bottom:0">
+      <div class="card" style="background:var(--soft);margin-bottom:0">
         <h2 data-i="ticket"></h2>
         <p class="note" style="margin-top:-6px" data-i="ticket_sub"></p>
         <div class="row"><select id="tkCount" style="width:auto"></select><select id="tkTime" style="width:auto"></select><button class="btn" id="bkTicket" data-i="ticket_start"></button></div>
@@ -427,7 +433,7 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
     <div class="row" style="justify-content:space-between;margin-bottom:10px">
       <span class="note" id="qzPos"></span>
       <span class="timer" id="qzTimer"></span>
-      <span><button class="btn ghost" id="qzFav" style="font-size:20px;padding:4px 10px">☆</button><button class="btn ghost" id="qzStop" data-i="finish"></button></span>
+      <span><button class="btn ghost" id="qzTts" style="font-size:18px;padding:4px 8px" title="🔊">🔊</button><button class="btn ghost" id="qzFav" style="font-size:20px;padding:4px 10px">☆</button><button class="btn ghost" id="qzStop" data-i="finish"></button></span>
     </div>
     <div class="bar"><i id="qzBar"></i></div>
     <div class="q" id="qzQ"></div>
@@ -449,6 +455,7 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
       <div class="stat"><span class="note" data-i="prog_next"></span><b id="prNext" style="font-size:16px"></b></div>
     </div>
     <div class="note" id="prTip" style="margin-top:10px"></div>
+    <div id="prChart"></div>
     <div class="grid" style="margin-top:12px;grid-template-columns:repeat(auto-fill,minmax(160px,1fr))">
       <a class="tile" data-h="tools-calc"><span><span class="tico">🧮</span><b data-i="tl_calc"></b></span></a>
       <a class="tile" data-h="tools-gpa"><span><span class="tico">🎓</span><b data-i="tl_gpa"></b></span></a>
@@ -461,6 +468,8 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
     <h2 data-i="settings_title"></h2>
     <div class="note" style="margin-bottom:6px" data-i="lang_title"></div>
     <div class="seg" id="pfLang"><button data-l="az">Azərbaycanca</button><button data-l="ru">Русский</button><button data-l="en">English</button></div>
+    <div class="note" style="margin:16px 0 6px" data-i="theme_title"></div>
+    <div class="seg" id="pfTheme"><button data-v="auto" data-i="theme_auto"></button><button data-v="light" data-i="theme_light"></button><button data-v="dark" data-i="theme_dark"></button></div>
     <div class="note" style="margin:16px 0 6px" data-i="goal_set"></div>
     <div class="seg" id="pfGoal"><button data-v="10">10</button><button data-v="20">20</button><button data-v="50">50</button><button data-v="100">100</button></div>
     <div class="row" style="margin-top:16px;gap:8px"><a class="btn sec small" data-h="rating" data-i="rating_btn"></a><a class="btn sec small" data-h="about" data-i="about_link"></a><a class="btn sec small" href="app/sessiya.apk" download="Sessiya.apk" data-i="apk_link"></a></div>
@@ -745,6 +754,7 @@ parse_fail:"Bu faylda düzgün cavabı işarələnmiş sual tapılmadı. Aşağ�
 not_found:"Bank tapılmadı və ya silinib.",load_fail:"Bankı yükləmək alınmadı.",
 footer:"Sessiya+ heç bir universitetlə əlaqəli deyil. Fayllar sənin brauzerində emal olunur; kataloqa yalnız sən seçdiyin banklar düşür. Müəllif hüquqlarını pozan material barədə «Şikayət et» düyməsi ilə xəbər ver.<br>Hazır testlər müəllif tərəfindən hazırlanmış nümunə suallardır.",
 all_banks_link:"📚 Bütün test bankları və suallar",
+srs_title:"Ağıllı təkrar",srs_btn:"Ağıllı təkrar: {0} sual",rs_scale:"50 bal şkalası ilə: {0}/50 — {1}",rs_pass:"keçid həddi (17) keçildi ✅",rs_fail:"keçid həddinə (17) çatmır ❌",chart_title:"Son 14 gün (yaşıl — gündəlik hədəf yerinə yetirilib)",theme_title:"Tema",theme_auto:"Avtomatik",theme_light:"☀️ Açıq",theme_dark:"🌙 Tünd",
 du_soon:"Arena bir neçə saata açılacaq ⏳",
 arena_title:"Arena",arena_sub:"Dostunla duel: eyni 10 sual, kim çox düzgün cavab versə — qalib. Duel yarat və linki dostuna göndər.",hub_arena_d:"Dostunla 1-ə 1 bilik dueli",ar_pick:"Fənn / test bankı",ar_create:"⚔️ Duel yarat",ar_join_t:"Kodla qoşul",ar_join:"Qoşul",ar_mine:"Mənim duellərim",bk_duel:"⚔️ Dostunla yarış",du_wait_short:"gözləyir",du_won:"qələbə",du_lost:"məğlubiyyət",du_draw:"Heç-heçə",du_playing:"davam edir",du_none:"Hələ duel yoxdur — ilkini yarat!",du_notfound:"Duel tapılmadı. Kodu yoxla.",du_full:"Bu duelə artıq iki nəfər qoşulub.",du_code:"Kod",du_share:"Bu kodu və ya linki dostuna göndər:",du_invite_msg:"Sessiya+ Arenada mənimlə yarış: {0} 🔥",du_copy:"Linki paylaş",du_waiting:"Rəqib gözlənilir… O qoşulan kimi oyun başlayacaq.",du_you:"Sən",du_opp:"Rəqib",du_win:"Qalib gəldin!",du_lose:"Bu dəfə rəqib qalib gəldi",du_xp_win:"+30 XP qələbə üçün",du_xp_play:"+10 XP iştirak üçün",du_rematch:"🔁 Revanş",du_wait_opp:"Sən bitirdin! Rəqib cavablandırır…",du_few:"Bu bankda duel üçün kifayət qədər sual yoxdur",du_badcode:"Kod 6 simvoldan ibarətdir",badges_title:"Nailiyyətlər",badges_count:"{0} / {1} açılıb",badge_new:"Yeni nailiyyət",b_first:"İlk addım",bd_first:"İlk sualı həll et",b_q100:"100 sual",bd_q100:"100 suala cavab ver",b_q500:"500 sual",bd_q500:"500 suala cavab ver",b_q1000:"Bilik ustası",bd_q1000:"1000 suala cavab ver",b_s3:"3 gün ardıcıl",bd_s3:"3 gün dalbadal oxu",b_s7:"Həftəlik seriya",bd_s7:"7 gün dalbadal oxu",b_s30:"Ayın çempionu",bd_s30:"30 gün dalbadal oxu",b_lv5:"Səviyyə 5",bd_lv5:"5-ci səviyyəyə çat",b_lv10:"Səviyyə 10",bd_lv10:"10-cu səviyyəyə çat",b_daily:"Günün testi",bd_daily:"Günün 10 sualını həll et",b_daily7:"7 günün testi",bd_daily7:"Günün testini 7 dəfə həll et",b_duel:"İlk duel",bd_duel:"Dostunla duel oyna",b_win:"Qalib",bd_win:"Dueldə qalib gəl",b_win10:"Arena ustası",bd_win10:"10 dueldə qalib gəl",b_upload:"Öz bankım",bd_upload:"Öz test bankını yüklə",b_share:"Paylaşan",bd_share:"Bankını kataloqa əlavə et",b_fav:"Kolleksiyaçı",bd_fav:"10 sualı seçilmişlərə əlavə et",
 today_title:"Bu gün",goal_lbl:"Gündəlik hədəf: {0} / {1} sual",lvl:"Səviyyə {0}",xp_lbl:"{0} XP · növbəti səviyyə {1} XP-də",daily_btn:"🎯 Günün 10 sualı",daily_done:"✅ Günün testi: {0}",daily_title:"Günün 10 sualı",rating_btn:"🏆 Reytinq",rating_title:"Həftəlik reytinq",rating_sub:"Hər düzgün cavab +10 XP, kartda «Bilirəm» +5 XP, günün testi +30 XP. Reytinq hər bazar ertəsi sıfırlanır.",rating_you:"Sənin yerin: #{0} · {1} XP",rating_empty:"Bu həftə hələ heç kim xal toplamayıb. İlk sən ol!",rating_go:"Testləri həll et →",xp_week:"bu həftə {0} XP",xp_total:"cəmi {0} XP",student:"Tələbə",fav_add:"Seçilmişlərə əlavə et",fav_btn:"★ Seçilmişlər ({0})",goal_set:"Gündəlik hədəf (sual)",hub_rating_d:"Həftənin ən fəal tələbələri, XP və səviyyələr",
@@ -798,6 +808,7 @@ parse_fail:"В этом файле не найдено вопросов с от�
 not_found:"Банк не найден или удалён.",load_fail:"Не удалось загрузить банк.",
 footer:"Sessiya+ не связан ни с одним университетом. Файлы обрабатываются в твоём браузере; в каталог попадают только банки, которые ты сам добавил. О материалах, нарушающих авторские права, сообщай кнопкой «Пожаловаться».<br>Готовые тесты — примерные вопросы, составленные автором сайта.",
 all_banks_link:"📚 Все тестовые банки и вопросы",
+srs_title:"Умное повторение",srs_btn:"Умное повторение: {0} вопросов",rs_scale:"По шкале 50 баллов: {0}/50 — {1}",rs_pass:"порог 17 пройден ✅",rs_fail:"не дотягивает до порога 17 ❌",chart_title:"Последние 14 дней (зелёный — дневная цель выполнена)",theme_title:"Тема",theme_auto:"Авто",theme_light:"☀️ Светлая",theme_dark:"🌙 Тёмная",
 du_soon:"Арена откроется через несколько часов ⏳",
 arena_title:"Арена",arena_sub:"Дуэль с другом: одни и те же 10 вопросов, кто ответит правильно на большее число — побеждает. Создай дуэль и отправь ссылку другу.",hub_arena_d:"Дуэль знаний 1 на 1 с другом",ar_pick:"Предмет / банк тестов",ar_create:"⚔️ Создать дуэль",ar_join_t:"Войти по коду",ar_join:"Войти",ar_mine:"Мои дуэли",bk_duel:"⚔️ Сразиться с другом",du_wait_short:"ожидание",du_won:"победа",du_lost:"поражение",du_draw:"Ничья",du_playing:"идёт",du_none:"Дуэлей пока нет — создай первую!",du_notfound:"Дуэль не найдена. Проверь код.",du_full:"В этой дуэли уже два участника.",du_code:"Код",du_share:"Отправь другу этот код или ссылку:",du_invite_msg:"Сразись со мной на Арене Sessiya+: {0} 🔥",du_copy:"Поделиться ссылкой",du_waiting:"Ждём соперника… Игра начнётся, как только он войдёт.",du_you:"Ты",du_opp:"Соперник",du_win:"Ты победил!",du_lose:"В этот раз победил соперник",du_xp_win:"+30 XP за победу",du_xp_play:"+10 XP за участие",du_rematch:"🔁 Реванш",du_wait_opp:"Ты закончил! Соперник ещё отвечает…",du_few:"В этом банке мало вопросов для дуэли",du_badcode:"Код состоит из 6 символов",badges_title:"Достижения",badges_count:"Открыто {0} из {1}",badge_new:"Новое достижение",b_first:"Первый шаг",bd_first:"Реши первый вопрос",b_q100:"100 вопросов",bd_q100:"Ответь на 100 вопросов",b_q500:"500 вопросов",bd_q500:"Ответь на 500 вопросов",b_q1000:"Мастер знаний",bd_q1000:"Ответь на 1000 вопросов",b_s3:"3 дня подряд",bd_s3:"Занимайся 3 дня подряд",b_s7:"Неделя подряд",bd_s7:"Занимайся 7 дней подряд",b_s30:"Чемпион месяца",bd_s30:"Занимайся 30 дней подряд",b_lv5:"Уровень 5",bd_lv5:"Достигни 5-го уровня",b_lv10:"Уровень 10",bd_lv10:"Достигни 10-го уровня",b_daily:"Тест дня",bd_daily:"Пройди «10 вопросов дня»",b_daily7:"7 тестов дня",bd_daily7:"Пройди тест дня 7 раз",b_duel:"Первая дуэль",bd_duel:"Сыграй дуэль с другом",b_win:"Победитель",bd_win:"Выиграй дуэль",b_win10:"Мастер арены",bd_win10:"Выиграй 10 дуэлей",b_upload:"Свой банк",bd_upload:"Загрузи свой банк",b_share:"Делюсь с другими",bd_share:"Добавь банк в каталог",b_fav:"Коллекционер",bd_fav:"Добавь 10 вопросов в избранное",
 today_title:"Сегодня",goal_lbl:"Цель на день: {0} / {1} вопросов",lvl:"Уровень {0}",xp_lbl:"{0} XP · следующий уровень на {1} XP",daily_btn:"🎯 10 вопросов дня",daily_done:"✅ Тест дня: {0}",daily_title:"10 вопросов дня",rating_btn:"🏆 Рейтинг",rating_title:"Рейтинг недели",rating_sub:"Каждый верный ответ +10 XP, «Знаю» в карточках +5 XP, тест дня +30 XP. Рейтинг обнуляется каждый понедельник.",rating_you:"Твоё место: #{0} · {1} XP",rating_empty:"На этой неделе ещё никто не набрал очков. Будь первым!",rating_go:"Решать тесты →",xp_week:"за неделю {0} XP",xp_total:"всего {0} XP",student:"Студент",fav_add:"Добавить в избранное",fav_btn:"★ Избранное ({0})",goal_set:"Цель на день (вопросов)",hub_rating_d:"Самые активные студенты недели, XP и уровни",
@@ -851,6 +862,7 @@ parse_fail:"No questions with a marked correct answer were found. See the format
 not_found:"Bank not found or deleted.",load_fail:"Couldn't load the bank.",
 footer:"Sessiya+ is not affiliated with any university. Files are processed in your browser; only banks you choose are added to the catalog. Report copyright-infringing material with the “Report” button.<br>Ready-made quizzes are sample questions written by the site author.",
 all_banks_link:"📚 All question banks",
+srs_title:"Smart review",srs_btn:"Smart review: {0} questions",rs_scale:"On the 50-point scale: {0}/50 — {1}",rs_pass:"passed the 17 threshold ✅",rs_fail:"below the 17 threshold ❌",chart_title:"Last 14 days (green — daily goal reached)",theme_title:"Theme",theme_auto:"Auto",theme_light:"☀️ Light",theme_dark:"🌙 Dark",
 du_soon:"The Arena opens in a few hours ⏳",
 arena_title:"Arena",arena_sub:"Duel a friend: the same 10 questions, whoever gets more right wins. Create a duel and send the link to a friend.",hub_arena_d:"1-on-1 knowledge duel with a friend",ar_pick:"Subject / question bank",ar_create:"⚔️ Create duel",ar_join_t:"Join with a code",ar_join:"Join",ar_mine:"My duels",bk_duel:"⚔️ Duel a friend",du_wait_short:"waiting",du_won:"win",du_lost:"loss",du_draw:"Draw",du_playing:"in progress",du_none:"No duels yet — create the first one!",du_notfound:"Duel not found. Check the code.",du_full:"This duel already has two players.",du_code:"Code",du_share:"Send this code or link to a friend:",du_invite_msg:"Duel me on the Sessiya+ Arena: {0} 🔥",du_copy:"Share link",du_waiting:"Waiting for your opponent… The game starts as soon as they join.",du_you:"You",du_opp:"Opponent",du_win:"You won!",du_lose:"Your opponent won this time",du_xp_win:"+30 XP for the win",du_xp_play:"+10 XP for playing",du_rematch:"🔁 Rematch",du_wait_opp:"You're done! Your opponent is still answering…",du_few:"This bank has too few questions for a duel",du_badcode:"The code has 6 characters",badges_title:"Achievements",badges_count:"{0} of {1} unlocked",badge_new:"New achievement",b_first:"First step",bd_first:"Answer your first question",b_q100:"100 questions",bd_q100:"Answer 100 questions",b_q500:"500 questions",bd_q500:"Answer 500 questions",b_q1000:"Knowledge master",bd_q1000:"Answer 1000 questions",b_s3:"3-day streak",bd_s3:"Study 3 days in a row",b_s7:"7-day streak",bd_s7:"Study 7 days in a row",b_s30:"30-day streak",bd_s30:"Study 30 days in a row",b_lv5:"Level 5",bd_lv5:"Reach level 5",b_lv10:"Level 10",bd_lv10:"Reach level 10",b_daily:"Daily quiz",bd_daily:"Finish the daily quiz",b_daily7:"7 daily quizzes",bd_daily7:"Finish the daily quiz 7 times",b_duel:"First duel",bd_duel:"Play a duel",b_win:"Winner",bd_win:"Win a duel",b_win10:"Arena master",bd_win10:"Win 10 duels",b_upload:"My own bank",bd_upload:"Upload your own bank",b_share:"Sharer",bd_share:"Add a bank to the catalog",b_fav:"Collector",bd_fav:"Add 10 questions to favourites",
 today_title:"Today",goal_lbl:"Daily goal: {0} / {1} questions",lvl:"Level {0}",xp_lbl:"{0} XP · next level at {1} XP",daily_btn:"🎯 10 questions of the day",daily_done:"✅ Daily quiz: {0}",daily_title:"10 questions of the day",rating_btn:"🏆 Leaderboard",rating_title:"Weekly leaderboard",rating_sub:"Each correct answer +10 XP, “I know” in flashcards +5 XP, daily quiz +30 XP. Resets every Monday.",rating_you:"Your place: #{0} · {1} XP",rating_empty:"No one has scored this week yet. Be the first!",rating_go:"Solve quizzes →",xp_week:"{0} XP this week",xp_total:"{0} XP total",student:"Student",fav_add:"Add to favourites",fav_btn:"★ Favourites ({0})",goal_set:"Daily goal (questions)",hub_rating_d:"Most active students of the week, XP and levels",
@@ -1015,6 +1027,8 @@ function renderFind(){
 }
 $('hmSearch').addEventListener('input',renderFind);
 $('hmSearch').addEventListener('keydown',e=>{if(e.key==='Enter'){const f=$('hmFound').querySelector('.bank'); if(f) f.click()}});
+document.querySelectorAll('#pfTheme button').forEach(b=>b.onclick=()=>{ store.set('sp_theme',b.dataset.v); applyTheme() });
+try{ matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>applyTheme()) }catch(e){}
 function drawGoalSeg(){ document.querySelectorAll('#pfGoal button').forEach(b=>{ b.classList.toggle('on',+b.dataset.v===getGoal()); b.onclick=()=>{ store.set('sp_goal',+b.dataset.v); drawGoalSeg() } }) }
 function renderAbout(){ show('about'); $('abBody').innerHTML=t('about_html'); document.title=t('about_link')+' | Sessiya+' }
 function labelForUni(id){const m=Cat.metas.find(x=>x.uni===id);return (m&&m.uniLabel)||uniName(id)}
@@ -1218,7 +1232,7 @@ function updTimer(){
   $('qzTimer').style.color=left<60?'var(--bad)':'';
   if(left===0)finish();
 }
-function renderQ(){
+function renderQ(){ try{ window.speechSynthesis&&speechSynthesis.cancel() }catch(e){}
   const x=curBank.qs[Q.ids[Q.i]];
   Q.order=shuffle(x.o.map((_,j)=>j)); Q.picked=null;
   $('qzPos').textContent=`${Q.i+1} / ${Q.ids.length} · `+(Q.mode==='exam'?t('exam_l'):t('practice_l'));
@@ -1237,9 +1251,10 @@ function pick(j){
     else if(bj===j)b.classList.add('sel')});
   $('qzNext').disabled=false;
 }
-function next(){ if(Q.picked===null)return; Q.answers[Q.i]=Q.picked; bump(1); if(Q.picked===curBank.qs[Q.ids[Q.i]].a) award(10); if(Q.i<Q.ids.length-1){Q.i++;renderQ()}else finish(); }
+function next(){ if(Q.picked===null)return; Q.answers[Q.i]=Q.picked; bump(1); const okA=Q.picked===curBank.qs[Q.ids[Q.i]].a; if(okA) award(10); srsRecord(Q.ids[Q.i],okA); if(Q.i<Q.ids.length-1){Q.i++;renderQ()}else finish(); }
 $('qzNext').onclick=next;
-$('qzStop').onclick=()=>{if(Q.picked!==null){Q.answers[Q.i]=Q.picked;bump(1);if(Q.picked===curBank.qs[Q.ids[Q.i]].a)award(10)}finish(true)};
+$('qzStop').onclick=()=>{if(Q.picked!==null){Q.answers[Q.i]=Q.picked;bump(1);const okA=Q.picked===curBank.qs[Q.ids[Q.i]].a;if(okA)award(10);srsRecord(Q.ids[Q.i],okA)}finish(true)};
+if(!('speechSynthesis' in window)) $('qzTts').classList.add('hide'); $('qzTts').onclick=speakQ;
 $('qzFav').onclick=()=>{ if(!Q||curBank.daily) return; toggleFav(curBank.id,Q.ids[Q.i]); drawFavBtn(); syncBkFav() };
 document.addEventListener('keydown',e=>{
   if($('v-quiz').classList.contains('hide'))return;
@@ -1256,10 +1271,10 @@ function finish(early){
   const wrongSet=new Set(st.wrong||[]);
   Q.ids.forEach((qi,k)=>{if(k>=done)return; if(Q.answers[k]===curBank.qs[qi].a)wrongSet.delete(qi);else wrongSet.add(qi)});
   st.wrong=[...wrongSet]; if(Q.mode==='exam'&&!early) st.best=Math.max(st.best||0,pct);
-  if(curBank.daily) dailyFinished(ok,total); else { mem.stats[curBank.id]=st; saveStats(); }
+  if(curBank.daily) dailyFinished(ok,total); else if(!curBank.review){ mem.stats[curBank.id]=st; saveStats(); }
   const secs=Math.round((Date.now()-Q.start)/1000);
   $('rsScore').textContent=pct+'%';
-  $('rsDetail').textContent=t('rs_detail',ok,total,Math.floor(secs/60),secs%60);
+  $('rsDetail').textContent=t('rs_detail',ok,total,Math.floor(secs/60),secs%60)+(Q.mode==='exam'&&!early?' · '+t('rs_scale',Math.round(ok/total*50),Math.round(ok/total*50)>=17?t('rs_pass'):t('rs_fail')):'');
   $('rsList').innerHTML=wrongIdx.map(k=>{const x=curBank.qs[Q.ids[k]];return `<div class="mistake"><b>${esc(x.q)}</b><div class="note"><span class="y">${t('your_ans')}: ${esc(x.o[Q.answers[k]]??'—')}</span><br><span class="c">${t('correct')}: ${esc(x.o[x.a])}</span></div></div>`}).join('');
   $('rsListCard').classList.toggle('hide',!wrongIdx.length);
   $('rsMist').disabled=!st.wrong.length;
@@ -1510,8 +1525,9 @@ function renderToday(){
   box.innerHTML=`<div class="row" style="justify-content:space-between;align-items:center;margin-bottom:10px"><h2 style="margin:0">${t('today_title')}</h2><span class="pill acc">🔥 ${s} · ⭐ ${t('lvl',lv.L)}</span></div>
     <div class="note" style="margin-bottom:6px">${t('goal_lbl',n,g)}${n>=g?' ✅':''}</div><div class="bar"><i style="width:${pct}%"></i></div>
     <div class="note" style="margin:10px 0 6px">${t('xp_lbl',x.total,lv.to)}</div><div class="bar"><i style="width:${lpct}%;background:#f59e0b"></i></div>
+    ${srsDue().length?`<button class="btn acbtn" id="hmReview" style="margin-top:14px;background:#7c3aed">🧠 ${t('srs_btn',Math.min(30,srsDue().length))}</button>`:''}
     <div class="row" style="margin-top:14px;gap:8px"><button class="btn" id="hmDaily">${d.day===dayKey()?t('daily_done',d.score):t('daily_btn')}</button><a class="btn sec" data-h="arena">⚔️ ${t('arena_title')}</a><a class="btn sec" data-h="rating">${t('rating_btn')}</a></div>`;
-  $('hmDaily').onclick=startDaily;
+  $('hmDaily').onclick=startDaily; if($('hmReview')) $('hmReview').onclick=()=>startReview($('hmReview'));
 }
 
 // ---------- «10 вопросов дня»: одинаковые для всех в этот день ----------
@@ -1550,7 +1566,7 @@ async function renderRating(){
 function favs(id){ return (store.get('sp_fav',{})[id])||[] }
 function toggleFav(id,qi){ const f=store.get('sp_fav',{}); const s=new Set(f[id]||[]); s.has(qi)?s.delete(qi):s.add(qi); f[id]=[...s]; if(!f[id].length) delete f[id]; store.set('sp_fav',f); return s.has(qi) }
 function syncBkFav(){ const b=$('bkFav'); if(!b||!curBank||curBank.daily) return; const n=favs(curBank.id).length; b.classList.toggle('hide',!n); b.textContent=t('fav_btn',n) }
-function drawFavBtn(){ const b=$('qzFav'); if(!b||!Q) return; if(curBank.daily){ b.classList.add('hide'); return } b.classList.remove('hide');
+function drawFavBtn(){ const b=$('qzFav'); if(!b||!Q) return; if(curBank.daily||curBank.review){ b.classList.add('hide'); return } b.classList.remove('hide');
   const on=favs(curBank.id).includes(Q.ids[Q.i]); b.textContent=on?'★':'☆'; b.title=t('fav_add'); b.classList.toggle('on',on) }
 
 // ---------- достижения ----------
@@ -1574,6 +1590,46 @@ function renderBadges(){
   box.innerHTML=`<div class="note" style="margin-bottom:10px">${t('badges_count',have.size,BADGES.length)}</div><div class="badges">`+BADGES.map(([id,ic])=>`<div class="badge${have.has(id)?' on':''}" title="${esc(t('bd_'+id))}"><span>${ic}</span><b>${esc(t('b_'+id))}</b><small>${esc(t('bd_'+id))}</small></div>`).join('')+'</div>';
 }
 function toast(msg){ const el=document.createElement('div'); el.className='toast'; el.textContent=msg; document.body.appendChild(el); setTimeout(()=>el.classList.add('show'),20); setTimeout(()=>{ el.classList.remove('show'); setTimeout(()=>el.remove(),400) },3200) }
+
+// ---------- умное повторение (интервалы как в Anki) ----------
+const dayNum=()=>Math.floor((Date.now()-new Date().getTimezoneOffset()*60000)/864e5);
+function srsKey(qi){ if(!curBank||curBank.daily) return null; return curBank.review?curBank.refs[qi]:curBank.id+'|'+qi }
+function srsRecord(qi,ok){
+  const k=srsKey(qi); if(!k) return; const S=store.get('sp_srs',{}); const e=S[k]||{iv:0,n:0};
+  if(ok){ e.iv=e.iv?Math.min(120,Math.round(e.iv*2.5)):3; e.n=(e.n||0)+1 } else { e.iv=1; e.n=0 }
+  e.due=dayNum()+e.iv; S[k]=e; store.set('sp_srs',S);
+}
+function srsDue(){ const S=store.get('sp_srs',{}), d=dayNum(); return Object.keys(S).filter(k=>S[k].due<=d&&S[k].iv<=60) }
+async function startReview(btn){
+  const keys=shuffle(srsDue()).slice(0,30); if(!keys.length) return;
+  if(btn){ btn.disabled=true; btn.textContent=t('loading') }
+  const qs=[],refs=[];
+  for(const k of keys){ const i=k.lastIndexOf('|'), id=k.slice(0,i), qi=+k.slice(i+1);
+    try{ let arr=bankCache[id]; if(!arr){ const loc=getLocal(id); if(loc&&loc.qs) arr=loc.qs; else { const m=Cat.metas.find(x=>x.id===id); if(m) arr=await Cat.loadQs(m) } if(arr) bankCache[id]=arr }
+      const q=arr&&arr[qi]; if(q&&q.o){ qs.push(q); refs.push(k) } else if(arr){ const S=store.get('sp_srs',{}); delete S[k]; store.set('sp_srs',S) } }catch(e){} }
+  if(!qs.length){ if(btn){ btn.disabled=false; renderToday() } return }
+  curBank={id:'review',name:t('srs_title'),type:'mc',qs,refs,review:true}; startQuiz('practice',qs.map((_,i)=>i));
+}
+
+// ---------- график активности за 14 дней ----------
+function drawActChart(){
+  const box=$('prChart'); if(!box) return; const a=getAct().days; const days=[];
+  for(let i=13;i>=0;i--){ const d=new Date(); d.setDate(d.getDate()-i); days.push([d,a[dayKey(d)]||0]) }
+  const mx=Math.max(getGoal(),...days.map(x=>x[1]),1);
+  box.innerHTML=`<div class="note" style="margin:14px 0 6px">${t('chart_title')}</div><div class="actchart">`+days.map(([d,n])=>`<div title="${dayKey(d)}: ${n}"><i style="height:${Math.max(2,Math.round(n/mx*100))}%${n>=getGoal()?';background:var(--ok)':''}"></i><span>${d.getDate()}</span></div>`).join('')+'</div>';
+}
+
+// ---------- озвучка вопроса ----------
+function speakQ(){
+  if(!('speechSynthesis' in window)||!Q) return; const x=curBank.qs[Q.ids[Q.i]]; speechSynthesis.cancel();
+  const lang={az:'az-AZ',ru:'ru-RU',en:'en-US'}[curBank.lang||LANG]||'az-AZ';
+  const u=new SpeechSynthesisUtterance(x.q+'. '+Q.order.map((j,k)=>(k+1)+'. '+x.o[j]).join('. ')); u.lang=lang;
+  const v=speechSynthesis.getVoices().find(v=>v.lang&&v.lang.toLowerCase().startsWith(lang.slice(0,2))); if(v) u.voice=v; u.rate=.95; speechSynthesis.speak(u);
+}
+
+// ---------- тема ----------
+function applyTheme(){ const th=store.get('sp_theme','auto'); document.documentElement.classList.toggle('dark',th==='dark'||(th==='auto'&&matchMedia('(prefers-color-scheme: dark)').matches));
+  document.querySelectorAll('#pfTheme button').forEach(b=>b.classList.toggle('on',b.dataset.v===th)) }
 
 // ---------- Арена: дуэль 1 на 1 (Firestore duels/{CODE}) ----------
 const DUEL_Q=10;
@@ -1709,7 +1765,7 @@ function fbStart(){
 }
 
 // ---------- синхронизация (users/{uid}) ----------
-const SYNC_KEYS=['sp_stats','sp_act','sp_exams','sp_gpa','sp_calc','sp_banks','sp_xp','sp_fav','sp_goal','sp_daily','sp_dcount','sp_duels','sp_duelwins','sp_badges'];
+const SYNC_KEYS=['sp_stats','sp_act','sp_exams','sp_gpa','sp_calc','sp_banks','sp_xp','sp_fav','sp_goal','sp_daily','sp_dcount','sp_duels','sp_duelwins','sp_badges','sp_srs'];
 let syncTimer=null;
 const _storeSet=store.set.bind(store);
 store.set=function(k,v){ _storeSet(k,v); if(SYNC_KEYS.includes(k)&&isReal(FB.user)){ clearTimeout(syncTimer); syncTimer=setTimeout(syncPush,2500) } };
@@ -1767,7 +1823,7 @@ async function deleteAccount(){
   for(const k of [...SYNC_KEYS,'sp_sync_at','sp_authed']) try{ localStorage.removeItem(k) }catch(e){}
   location.reload();
 }
-function renderProfile(){ drawGoalSeg(); checkBadges(); renderBadges(); show('profile'); document.title=t('nav_profile')+' | Sessiya+'; renderProgress(); drawAccount();
+function renderProfile(){ drawGoalSeg(); applyTheme(); checkBadges(); renderBadges(); show('profile'); document.title=t('nav_profile')+' | Sessiya+'; renderProgress(); drawActChart(); drawAccount();
   fbStart().then(()=>drawAccount()) }
 FB.ls.push(()=>{ if(!$('v-profile').classList.contains('hide')) drawAccount() });
 

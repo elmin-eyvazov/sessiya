@@ -22,8 +22,9 @@ function renderToday(){
   box.innerHTML=`<div class="row" style="justify-content:space-between;align-items:center;margin-bottom:10px"><h2 style="margin:0">${t('today_title')}</h2><span class="pill acc">🔥 ${s} · ⭐ ${t('lvl',lv.L)}</span></div>
     <div class="note" style="margin-bottom:6px">${t('goal_lbl',n,g)}${n>=g?' ✅':''}</div><div class="bar"><i style="width:${pct}%"></i></div>
     <div class="note" style="margin:10px 0 6px">${t('xp_lbl',x.total,lv.to)}</div><div class="bar"><i style="width:${lpct}%;background:#f59e0b"></i></div>
+    ${srsDue().length?`<button class="btn acbtn" id="hmReview" style="margin-top:14px;background:#7c3aed">🧠 ${t('srs_btn',Math.min(30,srsDue().length))}</button>`:''}
     <div class="row" style="margin-top:14px;gap:8px"><button class="btn" id="hmDaily">${d.day===dayKey()?t('daily_done',d.score):t('daily_btn')}</button><a class="btn sec" data-h="arena">⚔️ ${t('arena_title')}</a><a class="btn sec" data-h="rating">${t('rating_btn')}</a></div>`;
-  $('hmDaily').onclick=startDaily;
+  $('hmDaily').onclick=startDaily; if($('hmReview')) $('hmReview').onclick=()=>startReview($('hmReview'));
 }
 
 // ---------- «10 вопросов дня»: одинаковые для всех в этот день ----------
@@ -62,7 +63,7 @@ async function renderRating(){
 function favs(id){ return (store.get('sp_fav',{})[id])||[] }
 function toggleFav(id,qi){ const f=store.get('sp_fav',{}); const s=new Set(f[id]||[]); s.has(qi)?s.delete(qi):s.add(qi); f[id]=[...s]; if(!f[id].length) delete f[id]; store.set('sp_fav',f); return s.has(qi) }
 function syncBkFav(){ const b=$('bkFav'); if(!b||!curBank||curBank.daily) return; const n=favs(curBank.id).length; b.classList.toggle('hide',!n); b.textContent=t('fav_btn',n) }
-function drawFavBtn(){ const b=$('qzFav'); if(!b||!Q) return; if(curBank.daily){ b.classList.add('hide'); return } b.classList.remove('hide');
+function drawFavBtn(){ const b=$('qzFav'); if(!b||!Q) return; if(curBank.daily||curBank.review){ b.classList.add('hide'); return } b.classList.remove('hide');
   const on=favs(curBank.id).includes(Q.ids[Q.i]); b.textContent=on?'★':'☆'; b.title=t('fav_add'); b.classList.toggle('on',on) }
 
 // ---------- достижения ----------
@@ -86,3 +87,43 @@ function renderBadges(){
   box.innerHTML=`<div class="note" style="margin-bottom:10px">${t('badges_count',have.size,BADGES.length)}</div><div class="badges">`+BADGES.map(([id,ic])=>`<div class="badge${have.has(id)?' on':''}" title="${esc(t('bd_'+id))}"><span>${ic}</span><b>${esc(t('b_'+id))}</b><small>${esc(t('bd_'+id))}</small></div>`).join('')+'</div>';
 }
 function toast(msg){ const el=document.createElement('div'); el.className='toast'; el.textContent=msg; document.body.appendChild(el); setTimeout(()=>el.classList.add('show'),20); setTimeout(()=>{ el.classList.remove('show'); setTimeout(()=>el.remove(),400) },3200) }
+
+// ---------- умное повторение (интервалы как в Anki) ----------
+const dayNum=()=>Math.floor((Date.now()-new Date().getTimezoneOffset()*60000)/864e5);
+function srsKey(qi){ if(!curBank||curBank.daily) return null; return curBank.review?curBank.refs[qi]:curBank.id+'|'+qi }
+function srsRecord(qi,ok){
+  const k=srsKey(qi); if(!k) return; const S=store.get('sp_srs',{}); const e=S[k]||{iv:0,n:0};
+  if(ok){ e.iv=e.iv?Math.min(120,Math.round(e.iv*2.5)):3; e.n=(e.n||0)+1 } else { e.iv=1; e.n=0 }
+  e.due=dayNum()+e.iv; S[k]=e; store.set('sp_srs',S);
+}
+function srsDue(){ const S=store.get('sp_srs',{}), d=dayNum(); return Object.keys(S).filter(k=>S[k].due<=d&&S[k].iv<=60) }
+async function startReview(btn){
+  const keys=shuffle(srsDue()).slice(0,30); if(!keys.length) return;
+  if(btn){ btn.disabled=true; btn.textContent=t('loading') }
+  const qs=[],refs=[];
+  for(const k of keys){ const i=k.lastIndexOf('|'), id=k.slice(0,i), qi=+k.slice(i+1);
+    try{ let arr=bankCache[id]; if(!arr){ const loc=getLocal(id); if(loc&&loc.qs) arr=loc.qs; else { const m=Cat.metas.find(x=>x.id===id); if(m) arr=await Cat.loadQs(m) } if(arr) bankCache[id]=arr }
+      const q=arr&&arr[qi]; if(q&&q.o){ qs.push(q); refs.push(k) } else if(arr){ const S=store.get('sp_srs',{}); delete S[k]; store.set('sp_srs',S) } }catch(e){} }
+  if(!qs.length){ if(btn){ btn.disabled=false; renderToday() } return }
+  curBank={id:'review',name:t('srs_title'),type:'mc',qs,refs,review:true}; startQuiz('practice',qs.map((_,i)=>i));
+}
+
+// ---------- график активности за 14 дней ----------
+function drawActChart(){
+  const box=$('prChart'); if(!box) return; const a=getAct().days; const days=[];
+  for(let i=13;i>=0;i--){ const d=new Date(); d.setDate(d.getDate()-i); days.push([d,a[dayKey(d)]||0]) }
+  const mx=Math.max(getGoal(),...days.map(x=>x[1]),1);
+  box.innerHTML=`<div class="note" style="margin:14px 0 6px">${t('chart_title')}</div><div class="actchart">`+days.map(([d,n])=>`<div title="${dayKey(d)}: ${n}"><i style="height:${Math.max(2,Math.round(n/mx*100))}%${n>=getGoal()?';background:var(--ok)':''}"></i><span>${d.getDate()}</span></div>`).join('')+'</div>';
+}
+
+// ---------- озвучка вопроса ----------
+function speakQ(){
+  if(!('speechSynthesis' in window)||!Q) return; const x=curBank.qs[Q.ids[Q.i]]; speechSynthesis.cancel();
+  const lang={az:'az-AZ',ru:'ru-RU',en:'en-US'}[curBank.lang||LANG]||'az-AZ';
+  const u=new SpeechSynthesisUtterance(x.q+'. '+Q.order.map((j,k)=>(k+1)+'. '+x.o[j]).join('. ')); u.lang=lang;
+  const v=speechSynthesis.getVoices().find(v=>v.lang&&v.lang.toLowerCase().startsWith(lang.slice(0,2))); if(v) u.voice=v; u.rate=.95; speechSynthesis.speak(u);
+}
+
+// ---------- тема ----------
+function applyTheme(){ const th=store.get('sp_theme','auto'); document.documentElement.classList.toggle('dark',th==='dark'||(th==='auto'&&matchMedia('(prefers-color-scheme: dark)').matches));
+  document.querySelectorAll('#pfTheme button').forEach(b=>b.classList.toggle('on',b.dataset.v===th)) }

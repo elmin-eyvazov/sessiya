@@ -33,7 +33,7 @@ function fbStart(){
 }
 
 // ---------- синхронизация (users/{uid}) ----------
-const SYNC_KEYS=['sp_stats','sp_act','sp_exams','sp_gpa','sp_calc','sp_banks','sp_xp','sp_fav','sp_goal','sp_daily','sp_dcount','sp_duels','sp_duelwins','sp_badges'];
+const SYNC_KEYS=['sp_stats','sp_act','sp_exams','sp_gpa','sp_calc','sp_banks','sp_xp','sp_fav','sp_goal','sp_daily','sp_dcount','sp_duels','sp_duelwins','sp_badges','sp_srs'];
 let syncTimer=null;
 const _storeSet=store.set.bind(store);
 store.set=function(k,v){ _storeSet(k,v); if(SYNC_KEYS.includes(k)&&isReal(FB.user)){ clearTimeout(syncTimer); syncTimer=setTimeout(syncPush,2500) } };
@@ -91,7 +91,7 @@ async function deleteAccount(){
   for(const k of [...SYNC_KEYS,'sp_sync_at','sp_authed']) try{ localStorage.removeItem(k) }catch(e){}
   location.reload();
 }
-function renderProfile(){ drawGoalSeg(); checkBadges(); renderBadges(); show('profile'); document.title=t('nav_profile')+' | Sessiya+'; renderProgress(); drawAccount();
+function renderProfile(){ drawGoalSeg(); applyTheme(); checkBadges(); renderBadges(); show('profile'); document.title=t('nav_profile')+' | Sessiya+'; renderProgress(); drawActChart(); drawAccount();
   fbStart().then(()=>drawAccount()) }
 FB.ls.push(()=>{ if(!$('v-profile').classList.contains('hide')) drawAccount() });
 
