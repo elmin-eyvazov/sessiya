@@ -1,11 +1,11 @@
-# Собирает index.html и 404.html из src/ (app.html + tools.js + board.js + parser.js + sets.js + i18n.js),
+# Собирает index.html и 404.html из src/ (app.html + tools.js + game.js + arena.js + ai.js + auth.js + parser.js + sets.js + i18n.js),
 # а также статические SEO-страницы банков t/<id>.html, t/index.html и sitemap.xml.
 import json, os, html, shutil, datetime
 
 BASE = 'https://elmin-eyvazov.github.io/sessiya/'   # при переезде на свой домен поменять здесь
 
 a = open('src/app.html', encoding='utf-8').read()
-for k, f in (('/*TOOLSJS*/', 'tools.js'), ('/*GAMEJS*/', 'game.js'), ('/*ARENAJS*/', 'arena.js'), ('/*AUTHJS*/', 'auth.js'), ('/*BOARDJS*/', 'board.js'), ('/*PARSER*/', 'parser.js'), ('/*SETS*/', 'sets.js'), ('/*I18N*/', 'i18n.js')):
+for k, f in (('/*TOOLSJS*/', 'tools.js'), ('/*GAMEJS*/', 'game.js'), ('/*ARENAJS*/', 'arena.js'), ('/*AIJS*/', 'ai.js'), ('/*AUTHJS*/', 'auth.js'), ('/*PARSER*/', 'parser.js'), ('/*SETS*/', 'sets.js'), ('/*I18N*/', 'i18n.js')):
     a = a.replace(k, open('src/' + f, encoding='utf-8').read())
 a = a.replace('%%BASE%%', BASE)
 for out in ('index.html', '404.html'):

@@ -2,17 +2,18 @@
 <html lang="az">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Sessiya+"><meta name="format-detection" content="telephone=no">
 <meta name="google-site-verification" content="lP3hxovqAq7WJnPxLm0JtIpXFez7lgq6jF0V_5w3Gco" />
-<title>Sessiya+ — tələbə üçün testlər, elanlar və alətlər</title>
-<meta name="description" content="Sessiya+ — Azərbaycan tələbələri üçün hər şey bir yerdə: imtahana hazırlıq testləri, otaq yoldaşı və mənzil elanları, kitablar, repetitorlar, bal kalkulyatoru.">
+<title>Sessiya+ — tələbə üçün testlər, kartlar və alətlər</title>
+<meta name="description" content="Sessiya+ — Azərbaycan tələbələri üçün sessiyaya hazırlıq: testlər, kartlar, imtahan biletləri, süni intellektlə test yaratma, dostlarla duel, bal kalkulyatoru.">
 <meta name="theme-color" content="#2f5bea">
 <script>try{var th=JSON.parse(localStorage.getItem('sp_theme')||'"auto"');if(th==='dark'||(th==='auto'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
 <link rel="icon" href="icons/favicon.svg" type="image/svg+xml"><link rel="icon" href="icons/icon-192.png" sizes="192x192">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png"><link rel="manifest" href="manifest.webmanifest">
 <meta property="og:type" content="website"><meta property="og:site_name" content="Sessiya+">
 <meta property="og:title" content="Sessiya+ — tələbə üçün hər şey bir yerdə">
-<meta property="og:description" content="İmtahana hazırlıq testləri, otaq yoldaşı və mənzil, kitablar, repetitorlar və faydalı alətlər. Pulsuz.">
+<meta property="og:description" content="Sessiyaya hazırlıq: testlər, kartlar, süni intellektlə test yaratma, dostlarla duel və faydalı alətlər. Pulsuz.">
 <meta property="og:image" content="https://elmin-eyvazov.github.io/sessiya/og.png"><meta property="og:url" content="https://elmin-eyvazov.github.io/sessiya/"><meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -132,11 +133,21 @@ footer a{color:var(--mute)}
 .chip{flex:none;font-size:14px;font-weight:600;padding:8px 12px;border-radius:99px;background:var(--card);border:1px solid var(--line);color:var(--ink);text-decoration:none;cursor:pointer;white-space:nowrap}
 .chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
 .chip .cn{font-size:12px;opacity:.6}
-.ad{border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px;background:var(--card)}
-.adt{font-weight:700;font-size:17px;line-height:1.35;margin-top:8px}
-.adm{gap:4px 12px;margin-top:4px;font-size:13px}
-.adx{font-size:14px;line-height:1.5;white-space:pre-wrap;margin-top:8px;color:#30343b}
-.price{font-size:17px;white-space:nowrap}
+.aibox{background:linear-gradient(135deg,var(--acc2),var(--soft));border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:14px 0}
+.aibox .row{gap:8px;margin-top:10px}.aibar{height:6px;border-radius:9px;background:var(--chip);overflow:hidden;margin-top:10px}.aibar i{display:block;height:100%;width:0;background:var(--acc);transition:width .3s}
+.ed{border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px;background:var(--card)}
+.ed.noans{border-color:#f59e0b;box-shadow:0 0 0 1px #f59e0b inset}
+.edh{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px;font-size:13px;color:var(--mute)}
+.ed textarea{min-height:52px;font-size:15px}.ed .eda{min-height:70px;margin-top:6px}
+.edo{display:flex;align-items:center;gap:8px;margin-top:6px}.edo input[type=radio]{width:20px;height:20px;flex:none;accent-color:var(--ok);margin:0}
+.edo input[type=text]{flex:1;padding:8px 10px;font-size:14px}.edo.ok input[type=text]{border-color:var(--ok);background:var(--okbg)}
+.ix{border:0;background:none;color:var(--mute);font-size:18px;cursor:pointer;padding:4px 6px;line-height:1}.ix:hover{color:var(--bad)}
+.aitag{font-size:11px;font-weight:700;color:var(--acc);background:var(--acc2);border-radius:6px;padding:1px 6px}
+#pvFind{width:100%;max-width:240px;font:14px Inter,sans-serif;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);padding:9px 12px}
+@media (display-mode: standalone){.wrap{padding-top:calc(12px + env(safe-area-inset-top))}}
+.wrap{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+input,textarea,select{font-size:16px}
+.pager{display:flex;align-items:center;justify-content:center;gap:10px;margin:10px 0}
 footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-height:1.6}
 @media (max-width:560px){h1{font-size:23px}.q{font-size:17px}.two{grid-template-columns:1fr}nav a{padding:7px 7px;font-size:13px}}
 </style>
@@ -145,7 +156,7 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
 <div class="wrap">
 <header>
   <div class="logo" id="logo">Sessiya<b>+</b></div>
-  <nav><a data-go="home" data-i="nav_home"></a><a data-go="catalog" data-i="nav_catalog"></a><a data-go="board" data-i="nav_board"></a><a data-go="tools" data-i="nav_tools"></a><a data-go="profile" data-i="nav_profile"></a></nav>
+  <nav><a data-go="home" data-i="nav_home"></a><a data-go="catalog" data-i="nav_catalog"></a><a data-go="arena" data-i="arena_title"></a><a data-go="tools" data-i="nav_tools"></a><a data-go="profile" data-i="nav_profile"></a></nav>
   <div class="lang" id="lang"><button data-l="az">AZ</button><button data-l="ru">RU</button><button data-l="en">EN</button></div>
 </header>
 
@@ -155,10 +166,10 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
   <div class="card">
     <h1 style="margin:0 0 6px" data-i="hub_title"></h1>
     <p class="muted" style="margin:0" data-i="hub_sub"></p>
-    <div id="instBox" class="hide" style="margin-top:12px"><a class="btn hide" id="apkBtn" href="app/sessiya.apk" download="Sessiya.apk" style="width:100%;display:block;text-align:center;text-decoration:none" data-i="apk_btn"></a><div class="note hide" id="instHelp" style="margin-top:8px;background:var(--acc2);border-radius:10px;padding:10px 12px;color:var(--ink)"></div></div>
+    <div id="instBox" class="hide" style="margin-top:12px"><a class="btn hide" id="apkBtn" href="app/sessiya.apk" download="Sessiya.apk" style="width:100%;display:block;text-align:center;text-decoration:none" data-i="apk_btn"></a><button class="btn hide" id="iosBtn" style="width:100%" data-i="ios_btn"></button><div class="note hide" id="instHelp" style="margin-top:8px;background:var(--acc2);border-radius:10px;padding:10px 12px;color:var(--ink)"></div></div>
     <div class="hub">
       <a class="main" data-h="catalog"><span class="hi">📝</span><b data-i="hub_tests"></b><span class="note" data-i="hub_tests_d"></span></a>
-      <a data-h="board"><span class="hi">🏠</span><b data-i="hub_ads"></b><span class="note" data-i="hub_ads_d"></span></a>
+      <a data-h="upload"><span class="hi">⬆️</span><b data-i="hub_up"></b><span class="note" data-i="hub_up_d"></span></a>
       <a data-h="tools"><span class="hi">🧮</span><b data-i="hub_tools"></b><span class="note" data-i="hub_tools_d"></span></a>
       <a data-h="rating"><span class="hi">🏆</span><b data-i="rating_title"></b><span class="note" data-i="hub_rating_d"></span></a>
       <a data-h="arena"><span class="hi">⚔️</span><b data-i="arena_title"></b><span class="note" data-i="hub_arena_d"></span></a>
@@ -198,9 +209,10 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
       <div style="font-size:30px">📄</div>
       <div style="font-weight:600;margin:6px 0 2px" data-i="drop_title"></div>
       <div class="note" data-i="drop_note"></div>
-      <input type="file" id="file" accept=".pdf,.docx,.txt" class="hide">
+      <input type="file" id="file" accept=".pdf,.docx,.txt,image/*" multiple class="hide">
     </div>
-    <div class="row" style="margin-top:12px"><button class="btn ghost" id="pasteToggle" data-i="paste_toggle"></button></div>
+    <div class="note" style="margin-top:10px" data-i="ai_upload_note"></div>
+    <div class="row" style="margin-top:12px"><button class="btn ghost" id="pasteToggle" data-i="paste_toggle"></button><button class="btn ghost" id="manualNew" data-i="manual_new"></button></div>
     <div id="pasteBox" class="hide" style="margin-top:6px">
       <textarea id="pasteText"></textarea>
       <div class="row" style="margin-top:10px"><button class="btn" id="pasteGo" data-i="paste_go"></button></div>
@@ -231,44 +243,6 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
 </section>
 
 <!-- BOARD -->
-<section id="v-board" class="hide">
-  <div class="card">
-    <div class="row" style="justify-content:space-between;align-items:flex-start"><div style="flex:1;min-width:200px"><h1 style="font-size:24px" data-i="board_title"></h1><p class="note" style="margin:0" data-i="board_sub"></p></div>
-      <button class="btn" id="bdPost" data-i="post_btn"></button></div>
-    <div class="chips" id="bdCats" style="margin-top:14px"></div>
-    <div class="seg hide" id="bdKind" style="margin-top:10px"></div>
-    <div id="bdRoomF" class="hide" style="margin-top:10px"><div class="row"><div class="seg" id="bdSex"></div><input type="number" id="bdMax" inputmode="numeric" style="width:150px" data-ph="max_price_ph"></div></div>
-    <input type="text" id="bdSearch" style="margin-top:10px" data-ph="board_search_ph">
-  </div>
-  <div id="bdList"></div>
-  <div class="note" style="text-align:center;margin-top:6px" data-i="board_note"></div>
-</section>
-
-<!-- POST AD -->
-<section id="v-post" class="hide">
-  <div class="card">
-    <div class="crumbs"><a data-h="board" data-i="board_title"></a></div>
-    <h1 style="font-size:24px" data-i="post_title"></h1>
-    <label class="f" data-i="f_cat"></label><div class="seg" id="poCat"></div>
-    <div id="poKindBox"><label class="f" data-i="f_kind"></label><div class="seg" id="poKind"></div></div>
-    <label class="f" data-i="f_title"></label><input type="text" id="poTitle" maxlength="80">
-    <label class="f" data-i="f_text"></label><textarea id="poText" maxlength="1000" style="min-height:110px"></textarea>
-    <div class="two">
-      <div><label class="f" id="poPriceL"></label><input type="number" id="poPrice" inputmode="numeric" min="0" placeholder="250"></div>
-      <div><label class="f" data-i="f_place"></label><input type="text" id="poPlace" list="placeList" maxlength="60" data-ph="place_ph"><datalist id="placeList"></datalist></div>
-    </div>
-    <div class="two">
-      <div><label class="f" data-i="f_uni"></label><select id="poUni"></select></div>
-      <div id="poSexBox"><label class="f" data-i="f_sex"></label><select id="poSex"></select></div>
-    </div>
-    <label class="f" data-i="f_contact"></label><input type="text" id="poContact" maxlength="60" placeholder="+994 50 123 45 67 / @telegram">
-    <div class="note" style="margin-top:6px" data-i="contact_note"></div>
-    <label class="row note" style="margin-top:14px;gap:8px;cursor:pointer;flex-wrap:nowrap;align-items:flex-start"><input type="checkbox" id="poAgree" style="margin-top:2px"> <span data-i="post_agree"></span></label>
-    <div class="row" style="margin-top:14px"><button class="btn" id="poSave" data-i="post_publish"></button><button class="btn sec" id="poCancel" data-i="cancel"></button></div>
-    <div class="note" id="poMsg" style="margin-top:10px"></div>
-  </div>
-</section>
-
 <!-- TOOLS -->
 <section id="v-tools" class="hide">
   <div class="card">
@@ -333,8 +307,17 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
       <div><label class="f" data-i="f_subj"></label><input type="text" id="pvSubj"></div>
     </div>
     <label class="row note" style="margin-top:14px;gap:8px;cursor:pointer"><input type="checkbox" id="pvPublic" checked> <span data-i="f_public"></span></label>
-    <div class="note" style="margin:14px 0 8px" data-i="pv_check"></div>
+    <div class="aibox" id="pvAI">
+      <div class="row" style="justify-content:space-between;margin:0"><b data-i="ai_title"></b><span class="note" id="aiLeft"></span></div>
+      <div class="note" id="aiHint" style="margin-top:4px"></div>
+      <div class="row" id="aiBtns"></div>
+      <div class="aibar hide" id="aiBarBox"><i id="aiBar"></i></div>
+      <div class="note" id="aiMsg" style="margin-top:8px"></div>
+    </div>
+    <div class="row" style="justify-content:space-between;margin:14px 0 8px"><span class="note" data-i="pv_check"></span><input type="search" id="pvFind" style="max-width:220px;padding:8px 10px" data-ph="pv_find"></div>
     <div id="pvList"></div>
+    <div class="pager" id="pvPager"></div>
+    <button class="btn sec" id="pvAdd" data-i="pv_add"></button>
     <div class="row" style="margin-top:14px"><button class="btn" id="pvSave" data-i="pv_save"></button><button class="btn sec" id="pvCancel" data-i="cancel"></button></div>
     <div class="note" id="pvMsg" style="margin-top:10px"></div>
   </div>
@@ -345,7 +328,7 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
   <div class="card">
     <div class="crumbs" id="bkCrumbs"></div>
     <div class="row" style="justify-content:space-between"><h2 id="bkName" style="margin:0"></h2>
-      <div class="row" style="gap:2px"><button class="btn ghost small" id="bkShare" data-i="share"></button><button class="btn ghost small" id="bkReport" data-i="report"></button><button class="btn ghost small" id="bkDelete" data-i="delete"></button></div></div>
+      <div class="row" style="gap:2px"><button class="btn ghost small hide" id="bkEdit" data-i="edit"></button><button class="btn ghost small hide" id="bkPub" data-i="pub_btn"></button><button class="btn ghost small" id="bkShare" data-i="share"></button><button class="btn ghost small" id="bkReport" data-i="report"></button><button class="btn ghost small" id="bkDelete" data-i="delete"></button></div></div>
     <div class="row" id="bkTags" style="margin-top:8px"></div>
     <div class="row" style="margin:14px 0">
       <div class="stat"><span class="note" data-i="st_q"></span><b id="bkTotal"></b></div>
@@ -526,14 +509,14 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
   <div class="card" style="margin:0">
     <h1 style="margin:0 0 8px;font-size:26px" data-i="gate_title"></h1>
     <p class="muted" style="margin:0 0 6px" data-i="gate_sub"></p>
-    <div class="gate-feat"><span>📝 <b data-i="hub_tests"></b></span><span>🏠 <b data-i="hub_ads"></b></span><span>🏆 <b data-i="rating_title"></b></span><span>🧮 <b data-i="hub_tools"></b></span></div>
+    <div class="gate-feat"><span>📝 <b data-i="hub_tests"></b></span><span>⚔️ <b data-i="arena_title"></b></span><span>🏆 <b data-i="rating_title"></b></span><span>🧮 <b data-i="hub_tools"></b></span></div>
     <div id="gateBox"></div><div id="acRecaptcha2"></div>
   </div>
   <a id="gateApk" class="btn sec hide" href="app/sessiya.apk" download="Sessiya.apk" style="display:block;text-align:center;text-decoration:none;margin-top:12px" data-i="apk_btn"></a>
   <p class="note" style="text-align:center;margin-top:14px"><a id="gateRules" style="color:var(--mute);cursor:pointer;text-decoration:underline" data-i="gate_rules"></a></p>
   <div id="gateAbout" class="card about hide" style="font-size:14px"></div>
 </div></div>
-<nav class="tabbar" id="tabbar"><a data-go="home"><span class="ti">🏠</span><span data-i="nav_home"></span></a><a data-go="catalog"><span class="ti">📝</span><span data-i="nav_catalog"></span></a><a data-go="board"><span class="ti">📌</span><span data-i="nav_board"></span></a><a data-go="tools"><span class="ti">🧮</span><span data-i="nav_tools"></span></a><a data-go="profile"><span class="ti">👤</span><span data-i="nav_profile"></span></a></nav>
+<nav class="tabbar" id="tabbar"><a data-go="home"><span class="ti">🏠</span><span data-i="nav_home"></span></a><a data-go="catalog"><span class="ti">📝</span><span data-i="nav_catalog"></span></a><a data-go="arena"><span class="ti">⚔️</span><span data-i="arena_title"></span></a><a data-go="tools"><span class="ti">🧮</span><span data-i="nav_tools"></span></a><a data-go="profile"><span class="ti">👤</span><span data-i="nav_profile"></span></a></nav>
 <footer><div data-i="footer"></div><p style="margin-top:8px"><a data-h="about" href="#about" data-i="about_link">Sayt haqqında</a> · <a href="t/" data-i="all_banks_link">📚 Bütün test bankları və suallar</a> · <a href="app/sessiya.apk" download="Sessiya.apk" data-i="apk_link">🤖 Android tətbiqi (APK)</a></p></footer>
 </div>
 
@@ -712,8 +695,8 @@ const READY_SETS=[
 
 const I18N={
 az:{
-nav_board:"Elanlar",board_title:"Elanlar lövhəsi",board_sub:"Otaq yoldaşı və kirayə, kitab və əşya satışı, repetitorlar, iş — tələbələrdən tələbələrə.",home_board_sub:"Otaq yoldaşı axtarırsan, kitab satırsan və ya repetitor lazımdır? Elan yerləşdir — pulsuz.",post_btn:"+ Elan yerləşdir",cat_all:"Hamısı",cat_room:"Otaq yoldaşı / mənzil",cat_sell:"Kitab və əşyalar",cat_service:"Repetitor və xidmətlər",cat_job:"İş və təcrübə",cat_lost:"İtirilmiş / tapılmış",cat_other:"Digər",kinds_all:"Hamısı",kind_need_mate:"Otaq yoldaşı axtarır",kind_offer_room:"Otaq / yer təklif edir",kind_need_room:"Mənzil axtarır",kind_sell:"Satılır",kind_buy:"Alıram",kind_offer:"Təklif edir",kind_need:"Axtarır",sex_any:"Fərq etməz",sex_f:"Qızlar üçün",sex_m:"Oğlanlar üçün",max_price_ph:"Maks. ₼ / ay",board_search_ph:"Elanlarda axtar: metro, vuz, kitab…",per_month:" / ay",ago_now:"indicə",ago_min:"{0} dəq əvvəl",ago_h:"{0} saat əvvəl",ago_d:"{0} gün əvvəl",board_soon:"Elanlar lövhəsi tezliklə açılır — hazırlanır.",board_err:"Elanları yükləmək alınmadı. Səhifəni yenilə.",board_empty:"Bu bölmədə hələ elan yoxdur. İlk elanı sən yerləşdir!",board_note:"Elanlar 45 gün sonra avtomatik gizlənir. Pul köçürməzdən əvvəl şəxslə görüş və ehtiyatlı ol.",ad_reported:"Göndərildi ✓",post_title:"Yeni elan",f_cat:"Bölmə",f_kind:"Növ",f_title:"Başlıq",f_text:"Ətraflı",f_price_room:"Qiymət, ₼ / ay (adambaşı)",f_price:"Qiymət, ₼",f_place:"Yer: rayon, metro, yataqxana",place_ph:"məs. 28 May",f_sex:"Kimin üçün",f_contact:"Əlaqə: telefon / WhatsApp və ya Telegram @ad",contact_note:"Bu əlaqə elanda hamıya görünəcək.",post_agree:"Elandakı məlumat doğrudur; saxta və qadağan olunmuş məzmun yoxdur.",post_publish:"Elanı yerləşdir",ph_title_need_mate:"məs. Gənclik yaxınlığında otaq yoldaşı axtarıram",ph_title_offer_room:"məs. 2 otaqlı mənzildə 1 yer boşdur, 28 May",ph_title_need_room:"məs. Universitetə yaxın otaq axtarıram",ph_title_sell:"məs. Ali riyaziyyat dərsliyi, yaxşı vəziyyətdə",ph_title_gen:"Qısa və aydın başlıq",ph_text_room:"Neçə nəfər, qiymətə nə daxildir (kommunal, internet), nə vaxtdan, özün haqqında: kurs, vuz, vərdişlər…",ph_text_gen:"Ətraflı: vəziyyət, şərtlər, vaxt…",post_need_title:"Başlıq yaz (ən azı 3 hərf).",post_need_contact:"Əlaqə məlumatını yaz.",post_need_agree:"Təsdiq qutusunu işarələ.",post_limit:"Bir gündə ən çox 5 elan yerləşdirmək olar.",post_fail:"Elanı yerləşdirmək alınmadı. Yenidən cəhd et.",post_wait:"Yerləşdirilir…",
-nav_tools:"Alətlər",all_tools:"Alətlər →",doc_title:"Sessiya+ — tələbə üçün testlər, elanlar və alətlər",prog_title:"Sənin irəliləyişin",prog_streak:"Ardıcıl günlər",prog_today:"Bu gün suallar",prog_total:"Cəmi həll edilib",prog_next:"Növbəti imtahan",prog_tip_new:"Testlər həll et — burada ardıcıl günlərin, gündəlik irəliləyişin və imtahanlara geri sayım görünəcək.",prog_tip:"Bu gün hələ sual həll etməmisən — seriyanı qırma! 🔥",prog_tip_done:"Əla, bu gün məşq etmisən! Sabah da davam et 💪",tools_title:"Tələbə alətləri",tools_sub:"Balını hesabla, ÜOMG-ni öyrən, imtahanlara geri sayım qur və fokuslanaraq oxu. Hamısı pulsuz, məlumatlar hesabında saxlanılır.",tl_calc:"Bal kalkulyatoru",tl_gpa:"ÜOMG",tl_cal:"İmtahan təqvimi",tl_pomo:"Pomodoro",calc_title:"İmtahandan neçə bal lazımdır?",calc_sub:"Semestr balını (0–50) yaz — hər qiymət üçün imtahandan neçə bal toplamalı olduğunu göstərəcəyik. Qayda: 50 semestr + 50 imtahan = 100, imtahandan ən azı 17 bal lazımdır. Vuzunda qaydalar fərqli ola bilər.",calc_sem:"Semestr balı (0–50)",calc_exam:"İmtahan balı (0–50) — yekun qiyməti görmək üçün",calc_empty:"Semestr balını yaz.",calc_need:"imtahandan {0} bal",calc_imp:"mümkün deyil",calc_total:"Yekun bal",calc_fail_min:"İmtahandan 17-dən az bal — fənn keçilmir.",g_A:"Əla",g_B:"Çox yaxşı",g_C:"Yaxşı",g_D:"Kafi",g_E:"Qənaətbəxş",g_F:"Qeyri-kafi",gpa_title:"ÜOMG kalkulyatoru",gpa_sub:"Fənləri, kreditləri və yekun balları (0–100) yaz. ÜOMG = Σ(bal × kredit) ÷ Σ kredit.",gpa_subj:"Fənn",gpa_cr:"Kredit",gpa_score:"Bal",gpa_add:"+ Fənn əlavə et",gpa_out:"Sənin ÜOMG",gpa_meta:"{0} fənn · {1} kredit",cal_title:"İmtahan təqvimi",cal_sub:"İmtahanlarını əlavə et — neçə gün qaldığını görəcəksən. Ən yaxın imtahan əsas səhifədə də görünür.",cal_subj:"Fənn",cal_subj_ph:"məs. Riyaziyyat",cal_date:"Tarix",cal_add:"İmtahan əlavə et",cal_empty:"Hələ imtahan yoxdur. Yuxarıdan əlavə et.",days_left:"{0} gün qaldı",today_exam:"Bu gün! Uğurlar 🍀",tomorrow:"Sabah!",passed:"Keçdi",pomo_title:"Pomodoro taymer",pomo_sub:"25 dəqiqə diqqətlə oxu, 5 dəqiqə dincəl. Hər 4 dövrdən sonra 15 dəqiqəlik fasilə ver.",pomo_work:"Fokus 25",pomo_break:"Fasilə 5",pomo_long:"Uzun 15",pomo_start:"Başla",pomo_pause:"Pauza",pomo_reset:"Sıfırla",pomo_done_n:"Bu gün: {0} pomodoro 🍅",pomo_end:"Vaxt bitdi!",share:"Paylaş",share_text:"Sessiya+-da «{1}» testindən {0} topladım! Sən də özünü yoxla 👇",share_bank_text:"«{0}» — Sessiya+-da pulsuz test, birlikdə hazırlaşaq 👇",search_title:"Sual axtarışı",search_q_ph:"Sualın bir hissəsini yaz — cavabı dərhal gör…",search_none:"Heç nə tapılmadı",search_more:"və daha {0} nəticə — sorğunu dəqiqləşdir",
+
+nav_tools:"Alətlər",all_tools:"Alətlər →",doc_title:"Sessiya+ — tələbə üçün testlər, kartlar və alətlər",prog_title:"Sənin irəliləyişin",prog_streak:"Ardıcıl günlər",prog_today:"Bu gün suallar",prog_total:"Cəmi həll edilib",prog_next:"Növbəti imtahan",prog_tip_new:"Testlər həll et — burada ardıcıl günlərin, gündəlik irəliləyişin və imtahanlara geri sayım görünəcək.",prog_tip:"Bu gün hələ sual həll etməmisən — seriyanı qırma! 🔥",prog_tip_done:"Əla, bu gün məşq etmisən! Sabah da davam et 💪",tools_title:"Tələbə alətləri",tools_sub:"Balını hesabla, ÜOMG-ni öyrən, imtahanlara geri sayım qur və fokuslanaraq oxu. Hamısı pulsuz, məlumatlar hesabında saxlanılır.",tl_calc:"Bal kalkulyatoru",tl_gpa:"ÜOMG",tl_cal:"İmtahan təqvimi",tl_pomo:"Pomodoro",calc_title:"İmtahandan neçə bal lazımdır?",calc_sub:"Semestr balını (0–50) yaz — hər qiymət üçün imtahandan neçə bal toplamalı olduğunu göstərəcəyik. Qayda: 50 semestr + 50 imtahan = 100, imtahandan ən azı 17 bal lazımdır. Vuzunda qaydalar fərqli ola bilər.",calc_sem:"Semestr balı (0–50)",calc_exam:"İmtahan balı (0–50) — yekun qiyməti görmək üçün",calc_empty:"Semestr balını yaz.",calc_need:"imtahandan {0} bal",calc_imp:"mümkün deyil",calc_total:"Yekun bal",calc_fail_min:"İmtahandan 17-dən az bal — fənn keçilmir.",g_A:"Əla",g_B:"Çox yaxşı",g_C:"Yaxşı",g_D:"Kafi",g_E:"Qənaətbəxş",g_F:"Qeyri-kafi",gpa_title:"ÜOMG kalkulyatoru",gpa_sub:"Fənləri, kreditləri və yekun balları (0–100) yaz. ÜOMG = Σ(bal × kredit) ÷ Σ kredit.",gpa_subj:"Fənn",gpa_cr:"Kredit",gpa_score:"Bal",gpa_add:"+ Fənn əlavə et",gpa_out:"Sənin ÜOMG",gpa_meta:"{0} fənn · {1} kredit",cal_title:"İmtahan təqvimi",cal_sub:"İmtahanlarını əlavə et — neçə gün qaldığını görəcəksən. Ən yaxın imtahan əsas səhifədə də görünür.",cal_subj:"Fənn",cal_subj_ph:"məs. Riyaziyyat",cal_date:"Tarix",cal_add:"İmtahan əlavə et",cal_empty:"Hələ imtahan yoxdur. Yuxarıdan əlavə et.",days_left:"{0} gün qaldı",today_exam:"Bu gün! Uğurlar 🍀",tomorrow:"Sabah!",passed:"Keçdi",pomo_title:"Pomodoro taymer",pomo_sub:"25 dəqiqə diqqətlə oxu, 5 dəqiqə dincəl. Hər 4 dövrdən sonra 15 dəqiqəlik fasilə ver.",pomo_work:"Fokus 25",pomo_break:"Fasilə 5",pomo_long:"Uzun 15",pomo_start:"Başla",pomo_pause:"Pauza",pomo_reset:"Sıfırla",pomo_done_n:"Bu gün: {0} pomodoro 🍅",pomo_end:"Vaxt bitdi!",share:"Paylaş",share_text:"Sessiya+-da «{1}» testindən {0} topladım! Sən də özünü yoxla 👇",share_bank_text:"«{0}» — Sessiya+-da pulsuz test, birlikdə hazırlaşaq 👇",search_title:"Sual axtarışı",search_q_ph:"Sualın bir hissəsini yaz — cavabı dərhal gör…",search_none:"Heç nə tapılmadı",search_more:"və daha {0} nəticə — sorğunu dəqiqləşdir",
 hm_hint_mc:"Test bankı: suallar, variantlar və düzgün cavab işarəsi (√, •, «))»).",hm_hint_written:"Yalnız suallar siyahısı. Yazılı imtahan: kartlar və bilet rejimi, nümunə cavablarla.",hm_hint_test:"Yalnız suallar siyahısı, imtahan isə test formasında olacaq.",paste_ph_open:"1. Birinci sual\n2. İkinci sual\nCavab: (istəyə bağlı) cavab mətni\n3. Üçüncü sual",
 f_type:"Fayl növü",type_mc:"Variantlı test",type_open:"Variantsız suallar",f_format:"İmtahan necə olacaq?",fmt_written:"Yazılı (açıq suallar)",fmt_test:"Test (variantlı)",
 fmt_written_note:"Faylda cavablar yoxdur. Kartlarda öz cavablarını yaza bilərsən; kataloq üçün nümunə cavabları biz hazırlayırıq.",fmt_written_has:"{0} sualın cavabı faylda tapıldı.",
@@ -727,7 +710,7 @@ written_tag:"Yazılı",test_noopts_tag:"Test · variantsız",cards_done:"{0} / {
 nav_home:"Əsas",nav_catalog:"Testlər",
 hero_title:"Test bankını yüklə — saniyələr içində interaktiv testə çevir",
 hero_sub:"Variantlı test bankı və ya sadəcə suallar siyahısı — PDF, Word və ya mətn faylını at. Testlərdə məşq və imtahan rejimi, yazılı imtahan üçün kartlar və bilet.",
-drop_title:"Faylı bura at və ya seç",drop_note:"PDF, DOCX, TXT · fayl brauzerində emal olunur",
+drop_title:"Faylı bura at və ya seç",drop_note:"PDF, DOCX, TXT və ya səhifələrin fotosu · süni intellekt strukturu özü tanıyır",
 paste_toggle:"və ya mətni yapışdır",paste_go:"Testə çevir",paste_ph:"1. Sual mətni?\n• yanlış variant\n√ düzgün variant\n• yanlış variant",
 catalog_title:"Vuzlar üzrə kataloq",see_all:"Hamısı →",cat_empty_home:"Kataloq hələ boşdur. Bankını yüklə və kataloqa əlavə et — ilk sən ol!",
 my_banks:"Mənim banklarım",no_banks:"Hələ bank yoxdur. «Yüklə» bölməsində faylını yüklə.",ready_tests:"Hazır testlər",
@@ -739,7 +722,7 @@ cat_empty:"Kataloqda hələ bank yoxdur. Əsas səhifədən faylını yüklə v�
 cat_offline:"Kataloq bu baxışda əlçatan deyil — banklar yalnız sənin cihazında saxlanılır.",cat_stale:"Kataloqa qoşulmaq olmur, məlumat köhnə ola bilər.",cat_static:"Bankını kataloqa əlavə et: «Yüklə» bölməsində faylı yüklə və «Kataloqa əlavə et» işarəsini saxla.",
 loading:"Yüklənir…",n_banks:"{0} bank",
 pv_title:"Fayl oxundu",f_name:"Bankın adı",f_uni:"Universitet",f_uni_other:"Universitetin adı",f_lang:"Testin dili",f_fac:"Fakültə",f_fac_ph:"məs. İqtisadiyyat",f_subj:"Fənn",f_subj_ph:"məs. Mikroiqtisadiyyat",
-f_public:"Kataloqa əlavə et (digər tələbələr də görəcək)",pv_check:"İlk suallar — düzgün oxunduğunu yoxla:",pv_save:"Saxla və başla",cancel:"Ləğv et",choose:"— seç —",other:"Digər…",
+f_public:"Kataloqa əlavə et (digər tələbələr də görəcək)",pv_check:"Sualları yoxla və lazım olsa düzəlt:",pv_save:"Saxla və başla",cancel:"Ləğv et",choose:"— seç —",other:"Digər…",
 need_uni_subj:"Kataloq üçün universiteti və fənni göstər.",publishing:"Kataloqa əlavə olunur…",pub_fail:"Kataloqa əlavə etmək alınmadı. Bank «Mənim banklarım» bölməsində saxlanıldı.",pub_quota:"Bu gün üçün limit doldu. Bank «Mənim banklarım» bölməsində saxlanıldı.",
 report:"Şikayət et",reported:"Şikayət göndərildi. Təşəkkür edirik!",delete:"Sil",confirm_delete:"Təsdiqlə: sil",
 st_q:"Sual",st_best:"Ən yaxşı nəticə",st_wrong:"Səhvlər",
@@ -754,20 +737,23 @@ parse_fail:"Bu faylda düzgün cavabı işarələnmiş sual tapılmadı. Aşağ�
 not_found:"Bank tapılmadı və ya silinib.",load_fail:"Bankı yükləmək alınmadı.",
 footer:"Sessiya+ heç bir universitetlə əlaqəli deyil. Fayllar sənin brauzerində emal olunur; kataloqa yalnız sən seçdiyin banklar düşür. Müəllif hüquqlarını pozan material barədə «Şikayət et» düyməsi ilə xəbər ver.<br>Hazır testlər müəllif tərəfindən hazırlanmış nümunə suallardır.",
 all_banks_link:"📚 Bütün test bankları və suallar",
+ios_btn:"📲 iPhone-a quraşdır",ios_help:"Safari-də aşağıdakı <b>«Paylaş»</b> düyməsini bas (oxlu kvadrat) → <b>«Ana ekrana əlavə et»</b> → <b>«Əlavə et»</b>. Sessiya+ ikonu ana ekranda görünəcək və tətbiq kimi açılacaq.",
+ai_upload_note:"🤖 Süni intellekt istənilən formatı başa düşür: düzgün cavab işarəsi olmasa da, PDF skan, Word və ya səhifələrin fotosu olsa da.",manual_new:"✍️ Testi əl ilə yarat",ai_title:"🤖 Süni intellekt köməkçisi",pv_find:"Axtar… («?» — cavabsızlar)",pv_add:"+ Sual əlavə et",edit:"✏️ Redaktə",pub_btn:"🌍 Kataloqa paylaş",photos_n:"{0} foto",ai_reading:"Süni intellekt faylın strukturunu oxuyur…",ai_working:"Süni intellekt işləyir…",ai_done_extract:"Hazırdır: {0} sual tanındı",fmt_written_note_ai:"Faylda cavablar yoxdur — yuxarıda «Cavabları yaz» düyməsi ilə süni intellekt nümunə cavabları hazırlayacaq.",fmt_test_note_ai:"Variantlar yoxdur — «Variantlı test et» düyməsi ilə süni intellekt hər suala 4 variant hazırlayacaq.",pv_noans_n:"{0} cavabsız",save_changes:"Dəyişiklikləri saxla",q_n:"Sual {0}",q_ph:"Sualın mətni",mark_ok:"Düzgün cavab kimi işarələ",opt_ph:"Variant {0}",add_opt:"+ variant",ans_ph:"Cavab (istəyə görə)",no_results:"Heç nə tapılmadı",ai_reparse:"🔍 Strukturu yenidən tanı",ai_solve:"✅ Düzgün cavabları tap ({0})",ai_answers:"✍️ Cavabları yaz ({0})",ai_options:"🔀 Variantlı test et ({0})",ai_hint:"Süni intellekt düzgün cavabları tapa, açıq suallara cavab yaza və ya variantlar hazırlaya bilər. Nəticəni aşağıda yoxla və düzəlt.",ai_hint_done:"Süni intellekt faylı tanıdı. Sualları aşağıda yoxla — hər şeyi redaktə etmək olar.",ai_hint_ok:"Hər şey hazırdır. Sualları aşağıda yoxla və ya düzəlt.",ai_left:"bu gün {0} sorğu qalıb",ai_done_solve:"{0} sualın düzgün cavabı işarələndi — yoxlamağı unutma",ai_done_answers:"{0} suala cavab yazıldı",ai_done_options:"{0} test sualı hazırlandı",pv_need_ok:"Hər sualda düzgün cavabı işarələ (dairəni bas) və ya «Düzgün cavabları tap» düyməsini bas.",pv_empty:"Heç bir sual yoxdur.",pv_skip_warn:"{0} sualda düzgün cavab işarələnməyib — onlar saxlanmayacaq. Yenə də saxlamaq üçün düyməni bir də bas.",my_test:"Mənim testim",pub_ok:"Test kataloqda paylaşıldı",pub_need_acc:"Kataloqa paylaşmaq üçün Google və ya e-poçt ilə daxil ol.",ai_limit:"Bugünkü süni intellekt limiti bitdi — sabah yenə yoxla.",ai_busy:"Süni intellekt hazırda məşğuldur. Bir dəqiqədən sonra yenə cəhd et.",ai_empty:"Süni intellekt bu faylda sual tapmadı.",ai_fail:"Süni intellekt cavab vermədi. İnterneti yoxla və yenə cəhd et.",
+hub_up:"Test yüklə",hub_up_d:"PDF, Word və ya mətn — süni intellekt testə çevirir",
 srs_title:"Ağıllı təkrar",srs_btn:"Ağıllı təkrar: {0} sual",rs_scale:"50 bal şkalası ilə: {0}/50 — {1}",rs_pass:"keçid həddi (17) keçildi ✅",rs_fail:"keçid həddinə (17) çatmır ❌",chart_title:"Son 14 gün (yaşıl — gündəlik hədəf yerinə yetirilib)",theme_title:"Tema",theme_auto:"Avtomatik",theme_light:"☀️ Açıq",theme_dark:"🌙 Tünd",
 du_soon:"Arena bir neçə saata açılacaq ⏳",
 arena_title:"Arena",arena_sub:"Dostunla duel: eyni 10 sual, kim çox düzgün cavab versə — qalib. Duel yarat və linki dostuna göndər.",hub_arena_d:"Dostunla 1-ə 1 bilik dueli",ar_pick:"Fənn / test bankı",ar_create:"⚔️ Duel yarat",ar_join_t:"Kodla qoşul",ar_join:"Qoşul",ar_mine:"Mənim duellərim",bk_duel:"⚔️ Dostunla yarış",du_wait_short:"gözləyir",du_won:"qələbə",du_lost:"məğlubiyyət",du_draw:"Heç-heçə",du_playing:"davam edir",du_none:"Hələ duel yoxdur — ilkini yarat!",du_notfound:"Duel tapılmadı. Kodu yoxla.",du_full:"Bu duelə artıq iki nəfər qoşulub.",du_code:"Kod",du_share:"Bu kodu və ya linki dostuna göndər:",du_invite_msg:"Sessiya+ Arenada mənimlə yarış: {0} 🔥",du_copy:"Linki paylaş",du_waiting:"Rəqib gözlənilir… O qoşulan kimi oyun başlayacaq.",du_you:"Sən",du_opp:"Rəqib",du_win:"Qalib gəldin!",du_lose:"Bu dəfə rəqib qalib gəldi",du_xp_win:"+30 XP qələbə üçün",du_xp_play:"+10 XP iştirak üçün",du_rematch:"🔁 Revanş",du_wait_opp:"Sən bitirdin! Rəqib cavablandırır…",du_few:"Bu bankda duel üçün kifayət qədər sual yoxdur",du_badcode:"Kod 6 simvoldan ibarətdir",badges_title:"Nailiyyətlər",badges_count:"{0} / {1} açılıb",badge_new:"Yeni nailiyyət",b_first:"İlk addım",bd_first:"İlk sualı həll et",b_q100:"100 sual",bd_q100:"100 suala cavab ver",b_q500:"500 sual",bd_q500:"500 suala cavab ver",b_q1000:"Bilik ustası",bd_q1000:"1000 suala cavab ver",b_s3:"3 gün ardıcıl",bd_s3:"3 gün dalbadal oxu",b_s7:"Həftəlik seriya",bd_s7:"7 gün dalbadal oxu",b_s30:"Ayın çempionu",bd_s30:"30 gün dalbadal oxu",b_lv5:"Səviyyə 5",bd_lv5:"5-ci səviyyəyə çat",b_lv10:"Səviyyə 10",bd_lv10:"10-cu səviyyəyə çat",b_daily:"Günün testi",bd_daily:"Günün 10 sualını həll et",b_daily7:"7 günün testi",bd_daily7:"Günün testini 7 dəfə həll et",b_duel:"İlk duel",bd_duel:"Dostunla duel oyna",b_win:"Qalib",bd_win:"Dueldə qalib gəl",b_win10:"Arena ustası",bd_win10:"10 dueldə qalib gəl",b_upload:"Öz bankım",bd_upload:"Öz test bankını yüklə",b_share:"Paylaşan",bd_share:"Bankını kataloqa əlavə et",b_fav:"Kolleksiyaçı",bd_fav:"10 sualı seçilmişlərə əlavə et",
 today_title:"Bu gün",goal_lbl:"Gündəlik hədəf: {0} / {1} sual",lvl:"Səviyyə {0}",xp_lbl:"{0} XP · növbəti səviyyə {1} XP-də",daily_btn:"🎯 Günün 10 sualı",daily_done:"✅ Günün testi: {0}",daily_title:"Günün 10 sualı",rating_btn:"🏆 Reytinq",rating_title:"Həftəlik reytinq",rating_sub:"Hər düzgün cavab +10 XP, kartda «Bilirəm» +5 XP, günün testi +30 XP. Reytinq hər bazar ertəsi sıfırlanır.",rating_you:"Sənin yerin: #{0} · {1} XP",rating_empty:"Bu həftə hələ heç kim xal toplamayıb. İlk sən ol!",rating_go:"Testləri həll et →",xp_week:"bu həftə {0} XP",xp_total:"cəmi {0} XP",student:"Tələbə",fav_add:"Seçilmişlərə əlavə et",fav_btn:"★ Seçilmişlər ({0})",goal_set:"Gündəlik hədəf (sual)",hub_rating_d:"Həftənin ən fəal tələbələri, XP və səviyyələr",
-acc_edit_name:"Adı dəyiş",acc_name_ph2:"Adın",acc_save:"Saxla",acc_my_ads:"Mənim elanlarım",acc_no_ads:"Hələ elanın yoxdur.",acc_danger:"Hesabı silmək",acc_delete_note:"Hesab, elanların, kataloqa əlavə etdiyin banklar və saxlanmış irəliləyişin silinəcək. Bunu geri qaytarmaq olmaz.",acc_delete:"Hesabı birdəfəlik sil",acc_delete_confirm:"Əminsən? Yenidən bas",acc_err_recent:"Təhlükəsizlik üçün çıxış et, yenidən daxil ol və 5 dəqiqə ərzində təkrar yoxla.",
+acc_edit_name:"Adı dəyiş",acc_name_ph2:"Adın",acc_save:"Saxla",acc_danger:"Hesabı silmək",acc_delete_note:"Hesab, kataloqa əlavə etdiyin banklar və saxlanmış irəliləyişin silinəcək. Bunu geri qaytarmaq olmaz.",acc_delete:"Hesabı birdəfəlik sil",acc_delete_confirm:"Əminsən? Yenidən bas",acc_err_recent:"Təhlükəsizlik üçün çıxış et, yenidən daxil ol və 5 dəqiqə ərzində təkrar yoxla.",
 gate_title:"Xoş gəldin! 👋",gate_sub:"Sessiya+ — tələbə üçün hər şey bir yerdə. Davam etmək üçün daxil ol və ya qeydiyyatdan keç — pulsuz, 10 saniyə.",gate_rules:"Qaydalar və məxfilik",gate_offline:"Bağlantı yoxdur. İnterneti yoxla və yenidən cəhd et.",gate_retry:"Yenidən cəhd et",acc_name_ph:"Adın (qeydiyyat üçün)",
-nav_profile:"Profil",ts_cat:"Kataloq",ts_my:"Mənim banklarım",ts_up:"Yüklə",settings_title:"Parametrlər",lang_title:"Dil",acc_title:"Hesab",acc_why:"Daxil ol — irəliləyişin, bankların və imtahan təqvimin bütün cihazlarında saxlanılsın, elan yerləşdirə biləsən.",acc_google:"Google ilə daxil ol",acc_email:"E-poçt ilə daxil ol",acc_phone:"Telefon nömrəsi ilə daxil ol",acc_mail_ph:"E-poçt",acc_pass:"Şifrə (ən azı 6 simvol)",acc_login:"Daxil ol",acc_signup:"Qeydiyyat",acc_forgot:"Şifrəni unutmusan?",acc_reset_sent:"Şifrəni yeniləmək üçün məktub göndərildi.",acc_logout:"Çıxış",acc_hello:"Salam, {0}!",acc_synced:"İrəliləyişin, bankların və imtahan təqvimin bu hesabda saxlanılır və digər cihazlarda da görünəcək.",acc_soon:"Google, e-poçt və telefonla giriş tezliklə işə düşəcək. Hələlik hər şey bu cihazda saxlanılır.",acc_phone_ph:"50 123 45 67",acc_send_code:"Kod göndər",acc_code_ph:"SMS-dəki 6 rəqəmli kod",acc_confirm:"Təsdiqlə",acc_wait:"Gözlə…",acc_err_cred:"E-poçt və ya şifrə yanlışdır.",acc_err_exists:"Bu e-poçtla hesab artıq var — «Daxil ol» düyməsinə bas.",acc_err_weak:"Şifrə ən azı 6 simvol olmalıdır.",acc_err_email:"E-poçtu düzgün yaz.",acc_err_phone:"Nömrəni düzgün yaz: 50 123 45 67.",acc_err_code:"Kod yanlışdır və ya vaxtı keçib.",acc_err_many:"Çox cəhd oldu. Bir az sonra yenidən yoxla.",acc_err_net:"İnternet bağlantısını yoxla.",acc_err_gen:"Xəta baş verdi. Yenidən yoxla.",post_need_login:"Elan yerləşdirmək üçün hesaba daxil ol.",
+nav_profile:"Profil",ts_cat:"Kataloq",ts_my:"Mənim banklarım",ts_up:"Yüklə",settings_title:"Parametrlər",lang_title:"Dil",acc_title:"Hesab",acc_why:"Daxil ol — irəliləyişin, bankların və imtahan təqvimin bütün cihazlarında saxlanılsın, testlərini hamı ilə paylaşa biləsən.",acc_google:"Google ilə daxil ol",acc_email:"E-poçt ilə daxil ol",acc_phone:"Telefon nömrəsi ilə daxil ol",acc_mail_ph:"E-poçt",acc_pass:"Şifrə (ən azı 6 simvol)",acc_login:"Daxil ol",acc_signup:"Qeydiyyat",acc_forgot:"Şifrəni unutmusan?",acc_reset_sent:"Şifrəni yeniləmək üçün məktub göndərildi.",acc_logout:"Çıxış",acc_hello:"Salam, {0}!",acc_synced:"İrəliləyişin, bankların və imtahan təqvimin bu hesabda saxlanılır və digər cihazlarda da görünəcək.",acc_soon:"Google, e-poçt və telefonla giriş tezliklə işə düşəcək. Hələlik hər şey bu cihazda saxlanılır.",acc_phone_ph:"50 123 45 67",acc_send_code:"Kod göndər",acc_code_ph:"SMS-dəki 6 rəqəmli kod",acc_confirm:"Təsdiqlə",acc_wait:"Gözlə…",acc_err_cred:"E-poçt və ya şifrə yanlışdır.",acc_err_exists:"Bu e-poçtla hesab artıq var — «Daxil ol» düyməsinə bas.",acc_err_weak:"Şifrə ən azı 6 simvol olmalıdır.",acc_err_email:"E-poçtu düzgün yaz.",acc_err_phone:"Nömrəni düzgün yaz: 50 123 45 67.",acc_err_code:"Kod yanlışdır və ya vaxtı keçib.",acc_err_many:"Çox cəhd oldu. Bir az sonra yenidən yoxla.",acc_err_net:"İnternet bağlantısını yoxla.",acc_err_gen:"Xəta baş verdi. Yenidən yoxla.",
 apk_btn:"📥 Tətbiqi yüklə (Android)",apk_link:"🤖 Android tətbiqi (APK)",apk_help:"Fayl yükləndikdən sonra onu aç → telefon soruşsa, «Bu mənbədən quraşdırmaya icazə ver» → «Quraşdır». Sessiya+ ikonu ana ekranda görünəcək.",
-install_btn:"📲 Telefona yüklə",install_sub:"Sessiya+ telefonunda tətbiq kimi açılacaq, açdığın testlər internetsiz də işləyəcək.",install_ios:"iPhone-da: Safari-də «Paylaş» düyməsinə bas (ox olan kvadrat) → «Ana ekrana» (Add to Home Screen) seç.",install_other:"Brauzerin menyusunu aç (⋮) → «Tətbiqi quraşdır» və ya «Ana ekrana əlavə et» seç.",
-hub_title:"Tələbə üçün hər şey — bir yerdə",hub_sub:"Sessiyaya hazırlıq, otaq yoldaşı və mənzil, kitablar, repetitorlar və faydalı alətlər. Hamısı pulsuz.",hub_tests:"Testlər və imtahana hazırlıq",hub_tests_d:"Hazır testlər, öz bankını yüklə, kartlar və imtahan biletləri",hub_room:"Otaq yoldaşı və mənzil",hub_room_d:"Kirayə, yataqxana, birlikdə yaşamaq üçün yoldaş",hub_ads:"Elanlar",hub_ads_d:"Otaq yoldaşı və mənzil, kitab və əşyalar, repetitorlar, iş",hub_tools:"Alətlər",hub_tools_d:"Bal və ÜOMG kalkulyatoru, imtahan təqvimi, Pomodoro",hub_about_d:"Qaydalar, məxfilik, əlaqə",find_title:"Testlərdə axtar",find_sub:"Fənnin adını yaz — məsələn, «tarix», «riyaziyyat», «C++».",find_ph:"Fənn və ya test axtar…",find_none:"Heç nə tapılmadı. Öz bankını aşağıda yüklə.",find_more:"Bütün testlər →",about_link:"Sayt haqqında",about_html:"<p><b>Sessiya+</b> — Azərbaycan tələbələri üçün pulsuz platformadır. Burada imtahana hazırlaşmaq (testlər, kartlar, imtahan biletləri), otaq yoldaşı və mənzil tapmaq, kitab və əşya satmaq, repetitor və iş tapmaq, balını və ÜOMG-ni hesablamaq olar.</p><h3>Necə işləyir</h3><p>Google və ya e-poçtla daxil ol. Hazır testləri «Testlər» bölməsində tap və ya öz test bankını (PDF, Word, mətn) yüklə — sayt onu interaktiv testə çevirəcək və istəsən ümumi kataloqa əlavə edəcək. Suallar variantsızdırsa, kartlar və imtahan biletləri rejimindən istifadə et.</p><h3>Məxfilik</h3><p>Biz yalnız hesabının adını, e-poçtunu (və ya telefonunu) saxlayırıq. Yüklədiyin fayllar brauzerində emal olunur — faylın özü serverə göndərilmir; kataloqa yalnız sən özün əlavə etdiyin suallar düşür. İrəliləyişin, bankların və imtahan təqvimin hesabında saxlanılır ki, istənilən cihazdan davam edə biləsən. Elanlarda yazdığın mətn və əlaqə məlumatı hamıya görünür — şəxsi məlumatları ehtiyatla paylaş. Hesabını istənilən vaxt «Profil» bölməsində silə bilərsən.</p><h3>Qaydalar</h3><p>Qadağandır: spam və saxta elanlar, qanunsuz mal və xidmətlər, təhqir, başqasının şəxsi məlumatları, müəllif hüquqlarını pozan materiallar. Belə elan və testləri «Şikayət et» düyməsi ilə bildir — onlar silinəcək. Görüşə gedəndə və pul köçürəndə ehtiyatlı ol: əvvəlcədən ödəniş tələb edən elanlara inanma.</p><h3>Testlər haqqında</h3><p>Hazır testlər Sessiya+ tərəfindən nümunə kimi tərtib olunub və rəsmi universitet banklarını əvəz etmir. Tələbələrin əlavə etdiyi banklara görə onların müəllifləri məsuliyyət daşıyır. Səhv görsən, testdə «Şikayət et» düyməsi ilə bildir.</p><p class=\"note\">Sessiya+ heç bir universitetlə əlaqəli deyil.</p>",
+
+hub_title:"Tələbə üçün hər şey — bir yerdə",hub_sub:"Sessiyaya hazırlıq: testlər, kartlar, imtahan biletləri, ağıllı təkrar, dostlarla duel və faydalı alətlər. Hamısı pulsuz.",hub_tests:"Testlər və imtahana hazırlıq",hub_tests_d:"Hazır testlər, öz bankını yüklə, kartlar və imtahan biletləri",hub_tools:"Alətlər",hub_tools_d:"Bal və ÜOMG kalkulyatoru, imtahan təqvimi, Pomodoro",hub_about_d:"Qaydalar, məxfilik, əlaqə",find_title:"Testlərdə axtar",find_sub:"Fənnin adını yaz — məsələn, «tarix», «riyaziyyat», «C++».",find_ph:"Fənn və ya test axtar…",find_none:"Heç nə tapılmadı. Öz bankını aşağıda yüklə.",find_more:"Bütün testlər →",about_link:"Sayt haqqında",about_html:"<p><b>Sessiya+</b> — Azərbaycan tələbələri üçün pulsuz sessiyaya hazırlıq platformasıdır: testlər, kartlar, imtahan biletləri, ağıllı təkrar, dostlarla duel, bal və ÜOMG kalkulyatoru.</p><h3>Necə işləyir</h3><p>Google və ya e-poçtla daxil ol. Hazır testləri «Testlər» bölməsində tap və ya öz test bankını (PDF, Word, mətn) yüklə — sayt onu interaktiv testə çevirəcək; çətin fayllarda süni intellekt strukturu özü tanıyır. İstəsən, testini hamı üçün kataloqa əlavə et.</p><h3>Məxfilik</h3><p>Biz yalnız hesabının adını və e-poçtunu saxlayırıq. Fayl brauzerində oxunur; «Süni intellektlə tanı» seçəndə faylın mətni emal üçün Google Gemini-yə göndərilir. Kataloqa yalnız sən özün əlavə etdiyin suallar düşür. İrəliləyişin hesabında saxlanılır ki, istənilən cihazdan davam edə biləsən. Hesabını istənilən vaxt «Profil» bölməsində silə bilərsən.</p><h3>Qaydalar</h3><p>Kataloqa spam, təhqir, başqasının şəxsi məlumatları və müəllif hüquqlarını pozan materiallar əlavə etmək qadağandır. Belə testləri «Şikayət et» düyməsi ilə bildir — onlar silinəcək.</p><h3>Testlər haqqında</h3><p>Hazır testlər Sessiya+ tərəfindən nümunə kimi tərtib olunub və rəsmi universitet banklarını əvəz etmir. Süni intellektin tərtib etdiyi cavablarda səhv ola bilər — yoxla. Tələbələrin əlavə etdiyi banklara görə onların müəllifləri məsuliyyət daşıyır.</p><p class=\"note\">Sessiya+ heç bir universitetlə əlaqəli deyil.</p>",
 },
 ru:{
-nav_board:"Объявления",board_title:"Доска объявлений",board_sub:"Соседи и аренда, продажа книг и вещей, репетиторы, работа — от студентов для студентов.",home_board_sub:"Ищешь соседа, продаёшь учебники или нужен репетитор? Размести объявление — бесплатно.",post_btn:"+ Разместить объявление",cat_all:"Все",cat_room:"Сосед / квартира",cat_sell:"Книги и вещи",cat_service:"Репетиторы и услуги",cat_job:"Работа и стажировки",cat_lost:"Потеряно / найдено",cat_other:"Другое",kinds_all:"Все",kind_need_mate:"Ищет соседа",kind_offer_room:"Сдаёт комнату / место",kind_need_room:"Ищет жильё",kind_sell:"Продаю",kind_buy:"Куплю",kind_offer:"Предлагаю",kind_need:"Ищу",sex_any:"Неважно",sex_f:"Для девушек",sex_m:"Для парней",max_price_ph:"Макс. ₼ / мес",board_search_ph:"Поиск: метро, вуз, книга…",per_month:" / мес",ago_now:"только что",ago_min:"{0} мин назад",ago_h:"{0} ч назад",ago_d:"{0} дн назад",board_soon:"Доска объявлений скоро откроется — готовим.",board_err:"Не удалось загрузить объявления. Обнови страницу.",board_empty:"В этом разделе пока нет объявлений. Размести первое!",board_note:"Объявления скрываются автоматически через 45 дней. Не переводи деньги, не встретившись с человеком, — будь осторожен.",ad_reported:"Отправлено ✓",post_title:"Новое объявление",f_cat:"Раздел",f_kind:"Тип",f_title:"Заголовок",f_text:"Подробнее",f_price_room:"Цена, ₼ / мес (с человека)",f_price:"Цена, ₼",f_place:"Место: район, метро, общежитие",place_ph:"напр. 28 Мая",f_sex:"Для кого",f_contact:"Контакт: телефон / WhatsApp или Telegram @ник",contact_note:"Этот контакт будет виден всем в объявлении.",post_agree:"Информация в объявлении правдива; нет обмана и запрещённого контента.",post_publish:"Разместить",ph_title_need_mate:"напр. Ищу соседа возле Гянджлик",ph_title_offer_room:"напр. Свободно 1 место в 2-комн. квартире, 28 Мая",ph_title_need_room:"напр. Ищу комнату рядом с университетом",ph_title_sell:"напр. Учебник по высшей математике, в хорошем состоянии",ph_title_gen:"Короткий и понятный заголовок",ph_text_room:"Сколько человек, что входит в цену (коммуналка, интернет), с какого числа, о себе: курс, вуз, привычки…",ph_text_gen:"Подробнее: состояние, условия, время…",post_need_title:"Напиши заголовок (минимум 3 символа).",post_need_contact:"Укажи контакт.",post_need_agree:"Поставь галочку подтверждения.",post_limit:"Можно разместить не больше 5 объявлений в день.",post_fail:"Не удалось разместить объявление. Попробуй ещё раз.",post_wait:"Размещаем…",
-nav_tools:"Инструменты",all_tools:"Инструменты →",doc_title:"Sessiya+ — тесты, объявления и инструменты для студентов",prog_title:"Твой прогресс",prog_streak:"Дней подряд",prog_today:"Вопросов сегодня",prog_total:"Всего решено",prog_next:"Ближайший экзамен",prog_tip_new:"Решай тесты — здесь появятся дни подряд, прогресс за день и обратный отсчёт до экзаменов.",prog_tip:"Сегодня ты ещё не решал — не прерывай серию! 🔥",prog_tip_done:"Отлично, сегодня ты уже занимался! Продолжай завтра 💪",tools_title:"Инструменты студента",tools_sub:"Посчитай баллы, узнай свой средний балл (ÜOMG), поставь отсчёт до экзаменов и занимайся без отвлечений. Всё бесплатно, данные сохраняются в твоём аккаунте.",tl_calc:"Калькулятор баллов",tl_gpa:"Средний балл",tl_cal:"Календарь сессии",tl_pomo:"Помодоро",calc_title:"Сколько баллов нужно на экзамене?",calc_sub:"Введи баллы за семестр (0–50) — покажем, сколько нужно набрать на экзамене для каждой оценки. Правило: 50 за семестр + 50 за экзамен = 100, на экзамене нужно минимум 17 баллов. В твоём вузе правила могут отличаться.",calc_sem:"Баллы за семестр (0–50)",calc_exam:"Баллы за экзамен (0–50) — чтобы увидеть итог",calc_empty:"Введи баллы за семестр.",calc_need:"{0} на экзамене",calc_imp:"невозможно",calc_total:"Итоговый балл",calc_fail_min:"На экзамене меньше 17 баллов — предмет не сдан.",g_A:"Отлично",g_B:"Очень хорошо",g_C:"Хорошо",g_D:"Достаточно",g_E:"Удовлетворительно",g_F:"Неудовлетворительно",gpa_title:"Калькулятор среднего балла (ÜOMG)",gpa_sub:"Впиши предметы, кредиты и итоговые баллы (0–100). ÜOMG = Σ(балл × кредит) ÷ Σ кредитов.",gpa_subj:"Предмет",gpa_cr:"Кредит",gpa_score:"Балл",gpa_add:"+ Добавить предмет",gpa_out:"Твой средний балл",gpa_meta:"{0} предм. · {1} кредитов",cal_title:"Календарь сессии",cal_sub:"Добавь свои экзамены — увидишь, сколько дней осталось. Ближайший экзамен появится и на главной.",cal_subj:"Предмет",cal_subj_ph:"напр. Математика",cal_date:"Дата",cal_add:"Добавить экзамен",cal_empty:"Экзаменов пока нет. Добавь выше.",days_left:"осталось {0} дн.",today_exam:"Сегодня! Удачи 🍀",tomorrow:"Завтра!",passed:"Прошёл",pomo_title:"Таймер Помодоро",pomo_sub:"25 минут занимайся сосредоточенно, 5 минут отдыхай. После 4 циклов — перерыв 15 минут.",pomo_work:"Фокус 25",pomo_break:"Перерыв 5",pomo_long:"Длинный 15",pomo_start:"Старт",pomo_pause:"Пауза",pomo_reset:"Сброс",pomo_done_n:"Сегодня: {0} помодоро 🍅",pomo_end:"Время вышло!",share:"Поделиться",share_text:"Набрал {0} в тесте «{1}» на Sessiya+! Проверь себя тоже 👇",share_bank_text:"«{0}» — бесплатный тест на Sessiya+, готовимся вместе 👇",search_title:"Поиск вопроса",search_q_ph:"Напиши часть вопроса — сразу увидишь ответ…",search_none:"Ничего не найдено",search_more:"и ещё {0} — уточни запрос",
+
+nav_tools:"Инструменты",all_tools:"Инструменты →",doc_title:"Sessiya+ — тесты, карточки и инструменты для студентов",prog_title:"Твой прогресс",prog_streak:"Дней подряд",prog_today:"Вопросов сегодня",prog_total:"Всего решено",prog_next:"Ближайший экзамен",prog_tip_new:"Решай тесты — здесь появятся дни подряд, прогресс за день и обратный отсчёт до экзаменов.",prog_tip:"Сегодня ты ещё не решал — не прерывай серию! 🔥",prog_tip_done:"Отлично, сегодня ты уже занимался! Продолжай завтра 💪",tools_title:"Инструменты студента",tools_sub:"Посчитай баллы, узнай свой средний балл (ÜOMG), поставь отсчёт до экзаменов и занимайся без отвлечений. Всё бесплатно, данные сохраняются в твоём аккаунте.",tl_calc:"Калькулятор баллов",tl_gpa:"Средний балл",tl_cal:"Календарь сессии",tl_pomo:"Помодоро",calc_title:"Сколько баллов нужно на экзамене?",calc_sub:"Введи баллы за семестр (0–50) — покажем, сколько нужно набрать на экзамене для каждой оценки. Правило: 50 за семестр + 50 за экзамен = 100, на экзамене нужно минимум 17 баллов. В твоём вузе правила могут отличаться.",calc_sem:"Баллы за семестр (0–50)",calc_exam:"Баллы за экзамен (0–50) — чтобы увидеть итог",calc_empty:"Введи баллы за семестр.",calc_need:"{0} на экзамене",calc_imp:"невозможно",calc_total:"Итоговый балл",calc_fail_min:"На экзамене меньше 17 баллов — предмет не сдан.",g_A:"Отлично",g_B:"Очень хорошо",g_C:"Хорошо",g_D:"Достаточно",g_E:"Удовлетворительно",g_F:"Неудовлетворительно",gpa_title:"Калькулятор среднего балла (ÜOMG)",gpa_sub:"Впиши предметы, кредиты и итоговые баллы (0–100). ÜOMG = Σ(балл × кредит) ÷ Σ кредитов.",gpa_subj:"Предмет",gpa_cr:"Кредит",gpa_score:"Балл",gpa_add:"+ Добавить предмет",gpa_out:"Твой средний балл",gpa_meta:"{0} предм. · {1} кредитов",cal_title:"Календарь сессии",cal_sub:"Добавь свои экзамены — увидишь, сколько дней осталось. Ближайший экзамен появится и на главной.",cal_subj:"Предмет",cal_subj_ph:"напр. Математика",cal_date:"Дата",cal_add:"Добавить экзамен",cal_empty:"Экзаменов пока нет. Добавь выше.",days_left:"осталось {0} дн.",today_exam:"Сегодня! Удачи 🍀",tomorrow:"Завтра!",passed:"Прошёл",pomo_title:"Таймер Помодоро",pomo_sub:"25 минут занимайся сосредоточенно, 5 минут отдыхай. После 4 циклов — перерыв 15 минут.",pomo_work:"Фокус 25",pomo_break:"Перерыв 5",pomo_long:"Длинный 15",pomo_start:"Старт",pomo_pause:"Пауза",pomo_reset:"Сброс",pomo_done_n:"Сегодня: {0} помодоро 🍅",pomo_end:"Время вышло!",share:"Поделиться",share_text:"Набрал {0} в тесте «{1}» на Sessiya+! Проверь себя тоже 👇",share_bank_text:"«{0}» — бесплатный тест на Sessiya+, готовимся вместе 👇",search_title:"Поиск вопроса",search_q_ph:"Напиши часть вопроса — сразу увидишь ответ…",search_none:"Ничего не найдено",search_more:"и ещё {0} — уточни запрос",
 hm_hint_mc:"Тестовый банк: вопросы, варианты и отметка правильного ответа (√, •, «))»).",hm_hint_written:"Только список вопросов. Письменный экзамен: карточки и билеты с образцами ответов.",hm_hint_test:"Только список вопросов, а экзамен будет в форме теста.",paste_ph_open:"1. Первый вопрос\n2. Второй вопрос\nОтвет: (необязательно) текст ответа\n3. Третий вопрос",
 f_type:"Тип файла",type_mc:"Тест с вариантами",type_open:"Вопросы без вариантов",f_format:"Какой будет экзамен?",fmt_written:"Письменный (открытые вопросы)",fmt_test:"Тест (с вариантами)",
 fmt_written_note:"В файле нет ответов. В карточках можно записать свои ответы; для каталога образцы ответов готовим мы.",fmt_written_has:"Ответы найдены для {0} вопросов.",
@@ -781,7 +767,7 @@ written_tag:"Письменный",test_noopts_tag:"Тест · без вари�
 nav_home:"Главная",nav_catalog:"Тесты",
 hero_title:"Загрузи тестовый банк — и через секунды он станет интерактивным тестом",
 hero_sub:"Тестовый банк с вариантами или просто список вопросов — перетащи PDF, Word или текст. Для тестов — тренировка и экзамен, для письменного экзамена — карточки и билеты.",
-drop_title:"Перетащи файл сюда или выбери",drop_note:"PDF, DOCX, TXT · файл обрабатывается в твоём браузере",
+drop_title:"Перетащи файл сюда или выбери",drop_note:"PDF, DOCX, TXT или фото страниц · ИИ сам распознаёт структуру",
 paste_toggle:"или вставь текст",paste_go:"Сделать тест",paste_ph:"1. Текст вопроса?\n• неверный вариант\n√ верный вариант\n• неверный вариант",
 catalog_title:"Каталог по вузам",see_all:"Все →",cat_empty_home:"Каталог пока пуст. Загрузи свой банк и добавь в каталог — будь первым!",
 my_banks:"Мои банки",no_banks:"Пока нет банков. Загрузи файл во вкладке «Загрузить».",ready_tests:"Готовые тесты",
@@ -793,7 +779,7 @@ cat_empty:"В каталоге пока нет банков. Загрузи фа
 cat_offline:"Каталог недоступен в этом просмотре — банки сохраняются только на твоём устройстве.",cat_stale:"Не удаётся подключиться к каталогу, данные могут быть устаревшими.",cat_static:"Добавь свой банк в каталог: загрузи файл во вкладке «Загрузить» и оставь галочку «Добавить в каталог».",
 loading:"Загрузка…",n_banks:"{0} банк(а)",
 pv_title:"Файл прочитан",f_name:"Название банка",f_uni:"Университет",f_uni_other:"Название университета",f_lang:"Язык теста",f_fac:"Факультет",f_fac_ph:"напр. Экономика",f_subj:"Предмет",f_subj_ph:"напр. Микроэкономика",
-f_public:"Добавить в каталог (увидят другие студенты)",pv_check:"Первые вопросы — проверь, что всё прочиталось правильно:",pv_save:"Сохранить и начать",cancel:"Отмена",choose:"— выбрать —",other:"Другой…",
+f_public:"Добавить в каталог (увидят другие студенты)",pv_check:"Проверь вопросы и поправь, если нужно:",pv_save:"Сохранить и начать",cancel:"Отмена",choose:"— выбрать —",other:"Другой…",
 need_uni_subj:"Для каталога укажи университет и предмет.",publishing:"Добавляем в каталог…",pub_fail:"Не удалось добавить в каталог. Банк сохранён в «Мои банки».",pub_quota:"Лимит на сегодня исчерпан. Банк сохранён в «Мои банки».",
 report:"Пожаловаться",reported:"Жалоба отправлена. Спасибо!",delete:"Удалить",confirm_delete:"Точно удалить?",
 st_q:"Вопросов",st_best:"Лучший результат",st_wrong:"Ошибки",
@@ -808,20 +794,23 @@ parse_fail:"В этом файле не найдено вопросов с от�
 not_found:"Банк не найден или удалён.",load_fail:"Не удалось загрузить банк.",
 footer:"Sessiya+ не связан ни с одним университетом. Файлы обрабатываются в твоём браузере; в каталог попадают только банки, которые ты сам добавил. О материалах, нарушающих авторские права, сообщай кнопкой «Пожаловаться».<br>Готовые тесты — примерные вопросы, составленные автором сайта.",
 all_banks_link:"📚 Все тестовые банки и вопросы",
+ios_btn:"📲 Установить на iPhone",ios_help:"В Safari нажми внизу <b>«Поделиться»</b> (квадрат со стрелкой) → <b>«На экран „Домой“»</b> → <b>«Добавить»</b>. Иконка Sessiya+ появится на главном экране и будет открываться как приложение.",
+ai_upload_note:"🤖 ИИ понимает любой формат: даже если правильные ответы не отмечены, PDF отсканирован, это Word или фото страниц.",manual_new:"✍️ Создать тест вручную",ai_title:"🤖 ИИ-помощник",pv_find:"Поиск… («?» — без ответа)",pv_add:"+ Добавить вопрос",edit:"✏️ Изменить",pub_btn:"🌍 Опубликовать в каталог",photos_n:"{0} фото",ai_reading:"ИИ читает структуру файла…",ai_working:"ИИ работает…",ai_done_extract:"Готово: распознано вопросов — {0}",fmt_written_note_ai:"В файле нет ответов — кнопка «Написать ответы» выше, и ИИ составит образцовые ответы.",fmt_test_note_ai:"Вариантов нет — кнопка «Сделать тест с вариантами», и ИИ составит по 4 варианта к каждому вопросу.",pv_noans_n:"без ответа: {0}",save_changes:"Сохранить изменения",q_n:"Вопрос {0}",q_ph:"Текст вопроса",mark_ok:"Отметить как правильный",opt_ph:"Вариант {0}",add_opt:"+ вариант",ans_ph:"Ответ (необязательно)",no_results:"Ничего не найдено",ai_reparse:"🔍 Распознать структуру заново",ai_solve:"✅ Найти правильные ответы ({0})",ai_answers:"✍️ Написать ответы ({0})",ai_options:"🔀 Сделать тест с вариантами ({0})",ai_hint:"ИИ может найти правильные ответы, написать ответы на открытые вопросы или составить варианты. Результат проверь и поправь ниже.",ai_hint_done:"ИИ распознал файл. Проверь вопросы ниже — всё можно отредактировать.",ai_hint_ok:"Всё готово. Проверь или поправь вопросы ниже.",ai_left:"осталось запросов сегодня: {0}",ai_done_solve:"Отмечены правильные ответы: {0} — проверь их",ai_done_answers:"Написаны ответы: {0}",ai_done_options:"Готово тестовых вопросов: {0}",pv_need_ok:"Отметь правильный ответ в каждом вопросе (кружок слева) или нажми «Найти правильные ответы».",pv_empty:"Нет ни одного вопроса.",pv_skip_warn:"В {0} вопросах не отмечен правильный ответ — они не сохранятся. Нажми ещё раз, чтобы сохранить остальное.",my_test:"Мой тест",pub_ok:"Тест опубликован в каталоге",pub_need_acc:"Чтобы публиковать в каталог, войди через Google или почту.",ai_limit:"Дневной лимит ИИ исчерпан — попробуй завтра.",ai_busy:"ИИ сейчас перегружен. Попробуй через минуту.",ai_empty:"ИИ не нашёл вопросов в этом файле.",ai_fail:"ИИ не ответил. Проверь интернет и попробуй ещё раз.",
+hub_up:"Загрузить тест",hub_up_d:"PDF, Word или текст — ИИ превратит в тест",
 srs_title:"Умное повторение",srs_btn:"Умное повторение: {0} вопросов",rs_scale:"По шкале 50 баллов: {0}/50 — {1}",rs_pass:"порог 17 пройден ✅",rs_fail:"не дотягивает до порога 17 ❌",chart_title:"Последние 14 дней (зелёный — дневная цель выполнена)",theme_title:"Тема",theme_auto:"Авто",theme_light:"☀️ Светлая",theme_dark:"🌙 Тёмная",
 du_soon:"Арена откроется через несколько часов ⏳",
 arena_title:"Арена",arena_sub:"Дуэль с другом: одни и те же 10 вопросов, кто ответит правильно на большее число — побеждает. Создай дуэль и отправь ссылку другу.",hub_arena_d:"Дуэль знаний 1 на 1 с другом",ar_pick:"Предмет / банк тестов",ar_create:"⚔️ Создать дуэль",ar_join_t:"Войти по коду",ar_join:"Войти",ar_mine:"Мои дуэли",bk_duel:"⚔️ Сразиться с другом",du_wait_short:"ожидание",du_won:"победа",du_lost:"поражение",du_draw:"Ничья",du_playing:"идёт",du_none:"Дуэлей пока нет — создай первую!",du_notfound:"Дуэль не найдена. Проверь код.",du_full:"В этой дуэли уже два участника.",du_code:"Код",du_share:"Отправь другу этот код или ссылку:",du_invite_msg:"Сразись со мной на Арене Sessiya+: {0} 🔥",du_copy:"Поделиться ссылкой",du_waiting:"Ждём соперника… Игра начнётся, как только он войдёт.",du_you:"Ты",du_opp:"Соперник",du_win:"Ты победил!",du_lose:"В этот раз победил соперник",du_xp_win:"+30 XP за победу",du_xp_play:"+10 XP за участие",du_rematch:"🔁 Реванш",du_wait_opp:"Ты закончил! Соперник ещё отвечает…",du_few:"В этом банке мало вопросов для дуэли",du_badcode:"Код состоит из 6 символов",badges_title:"Достижения",badges_count:"Открыто {0} из {1}",badge_new:"Новое достижение",b_first:"Первый шаг",bd_first:"Реши первый вопрос",b_q100:"100 вопросов",bd_q100:"Ответь на 100 вопросов",b_q500:"500 вопросов",bd_q500:"Ответь на 500 вопросов",b_q1000:"Мастер знаний",bd_q1000:"Ответь на 1000 вопросов",b_s3:"3 дня подряд",bd_s3:"Занимайся 3 дня подряд",b_s7:"Неделя подряд",bd_s7:"Занимайся 7 дней подряд",b_s30:"Чемпион месяца",bd_s30:"Занимайся 30 дней подряд",b_lv5:"Уровень 5",bd_lv5:"Достигни 5-го уровня",b_lv10:"Уровень 10",bd_lv10:"Достигни 10-го уровня",b_daily:"Тест дня",bd_daily:"Пройди «10 вопросов дня»",b_daily7:"7 тестов дня",bd_daily7:"Пройди тест дня 7 раз",b_duel:"Первая дуэль",bd_duel:"Сыграй дуэль с другом",b_win:"Победитель",bd_win:"Выиграй дуэль",b_win10:"Мастер арены",bd_win10:"Выиграй 10 дуэлей",b_upload:"Свой банк",bd_upload:"Загрузи свой банк",b_share:"Делюсь с другими",bd_share:"Добавь банк в каталог",b_fav:"Коллекционер",bd_fav:"Добавь 10 вопросов в избранное",
 today_title:"Сегодня",goal_lbl:"Цель на день: {0} / {1} вопросов",lvl:"Уровень {0}",xp_lbl:"{0} XP · следующий уровень на {1} XP",daily_btn:"🎯 10 вопросов дня",daily_done:"✅ Тест дня: {0}",daily_title:"10 вопросов дня",rating_btn:"🏆 Рейтинг",rating_title:"Рейтинг недели",rating_sub:"Каждый верный ответ +10 XP, «Знаю» в карточках +5 XP, тест дня +30 XP. Рейтинг обнуляется каждый понедельник.",rating_you:"Твоё место: #{0} · {1} XP",rating_empty:"На этой неделе ещё никто не набрал очков. Будь первым!",rating_go:"Решать тесты →",xp_week:"за неделю {0} XP",xp_total:"всего {0} XP",student:"Студент",fav_add:"Добавить в избранное",fav_btn:"★ Избранное ({0})",goal_set:"Цель на день (вопросов)",hub_rating_d:"Самые активные студенты недели, XP и уровни",
-acc_edit_name:"Изменить имя",acc_name_ph2:"Твоё имя",acc_save:"Сохранить",acc_my_ads:"Мои объявления",acc_no_ads:"У тебя пока нет объявлений.",acc_danger:"Удаление аккаунта",acc_delete_note:"Будут удалены аккаунт, твои объявления, добавленные тобой в каталог банки и сохранённый прогресс. Это нельзя отменить.",acc_delete:"Удалить аккаунт навсегда",acc_delete_confirm:"Точно? Нажми ещё раз",acc_err_recent:"Для безопасности выйди, войди снова и повтори в течение 5 минут.",
+acc_edit_name:"Изменить имя",acc_name_ph2:"Твоё имя",acc_save:"Сохранить",acc_danger:"Удаление аккаунта",acc_delete_note:"Будут удалены аккаунт, добавленные тобой в каталог банки и сохранённый прогресс. Это нельзя отменить.",acc_delete:"Удалить аккаунт навсегда",acc_delete_confirm:"Точно? Нажми ещё раз",acc_err_recent:"Для безопасности выйди, войди снова и повтори в течение 5 минут.",
 gate_title:"Добро пожаловать! 👋",gate_sub:"Sessiya+ — всё для студента в одном месте. Чтобы продолжить, войди или зарегистрируйся — бесплатно, 10 секунд.",gate_rules:"Правила и конфиденциальность",gate_offline:"Нет подключения. Проверь интернет и попробуй ещё раз.",gate_retry:"Попробовать ещё раз",acc_name_ph:"Твоё имя (для регистрации)",
-nav_profile:"Профиль",ts_cat:"Каталог",ts_my:"Мои банки",ts_up:"Загрузить",settings_title:"Настройки",lang_title:"Язык",acc_title:"Аккаунт",acc_why:"Войди — прогресс, банки и календарь экзаменов сохранятся на всех твоих устройствах, и ты сможешь размещать объявления.",acc_google:"Войти через Google",acc_email:"Войти по почте",acc_phone:"Войти по номеру телефона",acc_mail_ph:"Почта",acc_pass:"Пароль (минимум 6 символов)",acc_login:"Войти",acc_signup:"Регистрация",acc_forgot:"Забыл пароль?",acc_reset_sent:"Письмо для смены пароля отправлено.",acc_logout:"Выйти",acc_hello:"Привет, {0}!",acc_synced:"Прогресс, банки и календарь экзаменов сохраняются в этом аккаунте и будут видны на других устройствах.",acc_soon:"Вход через Google, почту и телефон скоро заработает. Пока всё хранится на этом устройстве.",acc_phone_ph:"50 123 45 67",acc_send_code:"Отправить код",acc_code_ph:"6-значный код из SMS",acc_confirm:"Подтвердить",acc_wait:"Подожди…",acc_err_cred:"Неверная почта или пароль.",acc_err_exists:"Аккаунт с этой почтой уже есть — нажми «Войти».",acc_err_weak:"Пароль должен быть не короче 6 символов.",acc_err_email:"Проверь адрес почты.",acc_err_phone:"Введи номер правильно: 50 123 45 67.",acc_err_code:"Неверный или устаревший код.",acc_err_many:"Слишком много попыток. Попробуй чуть позже.",acc_err_net:"Проверь подключение к интернету.",acc_err_gen:"Произошла ошибка. Попробуй ещё раз.",post_need_login:"Чтобы разместить объявление, войди в аккаунт.",
+nav_profile:"Профиль",ts_cat:"Каталог",ts_my:"Мои банки",ts_up:"Загрузить",settings_title:"Настройки",lang_title:"Язык",acc_title:"Аккаунт",acc_why:"Войди — прогресс, банки и календарь экзаменов сохранятся на всех устройствах, и ты сможешь делиться тестами со всеми.",acc_google:"Войти через Google",acc_email:"Войти по почте",acc_phone:"Войти по номеру телефона",acc_mail_ph:"Почта",acc_pass:"Пароль (минимум 6 символов)",acc_login:"Войти",acc_signup:"Регистрация",acc_forgot:"Забыл пароль?",acc_reset_sent:"Письмо для смены пароля отправлено.",acc_logout:"Выйти",acc_hello:"Привет, {0}!",acc_synced:"Прогресс, банки и календарь экзаменов сохраняются в этом аккаунте и будут видны на других устройствах.",acc_soon:"Вход через Google, почту и телефон скоро заработает. Пока всё хранится на этом устройстве.",acc_phone_ph:"50 123 45 67",acc_send_code:"Отправить код",acc_code_ph:"6-значный код из SMS",acc_confirm:"Подтвердить",acc_wait:"Подожди…",acc_err_cred:"Неверная почта или пароль.",acc_err_exists:"Аккаунт с этой почтой уже есть — нажми «Войти».",acc_err_weak:"Пароль должен быть не короче 6 символов.",acc_err_email:"Проверь адрес почты.",acc_err_phone:"Введи номер правильно: 50 123 45 67.",acc_err_code:"Неверный или устаревший код.",acc_err_many:"Слишком много попыток. Попробуй чуть позже.",acc_err_net:"Проверь подключение к интернету.",acc_err_gen:"Произошла ошибка. Попробуй ещё раз.",
 apk_btn:"📥 Скачать приложение (Android)",apk_link:"🤖 Android-приложение (APK)",apk_help:"Когда файл скачается, открой его → если телефон спросит, разреши установку из этого источника → «Установить». Иконка Sessiya+ появится на главном экране.",
-install_btn:"📲 Установить на телефон",install_sub:"Sessiya+ будет открываться как приложение, а открытые тесты — работать без интернета.",install_ios:"На iPhone: в Safari нажми «Поделиться» (квадрат со стрелкой) → «На экран „Домой“».",install_other:"Открой меню браузера (⋮) → «Установить приложение» или «Добавить на главный экран».",
-hub_title:"Всё для студента — в одном месте",hub_sub:"Подготовка к сессии, соседи и квартиры, учебники, репетиторы и полезные инструменты. Всё бесплатно.",hub_tests:"Тесты и подготовка к экзаменам",hub_tests_d:"Готовые тесты, загрузка своего банка, карточки и билеты",hub_room:"Сосед и квартира",hub_room_d:"Аренда, общежитие, сосед для совместного проживания",hub_ads:"Объявления",hub_ads_d:"Соседи и жильё, книги и вещи, репетиторы, работа",hub_tools:"Инструменты",hub_tools_d:"Калькулятор баллов и среднего балла, календарь сессии, Помодоро",hub_about_d:"Правила, конфиденциальность, контакты",find_title:"Поиск по тестам",find_sub:"Напиши предмет — например, «история», «математика», «C++».",find_ph:"Найти предмет или тест…",find_none:"Ничего не найдено. Загрузи свой банк ниже.",find_more:"Все тесты →",about_link:"О сайте",about_html:"<p><b>Sessiya+</b> — бесплатная платформа для студентов Азербайджана. Здесь можно готовиться к экзаменам (тесты, карточки, билеты), найти соседа и квартиру, продать книги и вещи, найти репетитора или работу, посчитать баллы и средний балл.</p><h3>Как это работает</h3><p>Войди через Google или почту. Найди готовые тесты в разделе «Тесты» или загрузи свой банк (PDF, Word, текст) — сайт превратит его в интерактивный тест и, если хочешь, добавит в общий каталог. Если вопросы без вариантов, используй карточки и экзаменационные билеты.</p><h3>Конфиденциальность</h3><p>Мы храним только имя, почту (или телефон) твоего аккаунта. Загруженные файлы обрабатываются в браузере — сам файл на сервер не отправляется; в каталог попадают только вопросы, которые ты сам добавил. Прогресс, банки и календарь экзаменов сохраняются в аккаунте, чтобы продолжать с любого устройства. Текст и контакты в объявлениях видны всем — делись личными данными осторожно. Аккаунт можно удалить в любой момент в разделе «Профиль».</p><h3>Правила</h3><p>Запрещено: спам и фейковые объявления, незаконные товары и услуги, оскорбления, чужие личные данные, материалы с нарушением авторских прав. Сообщай о таком кнопкой «Пожаловаться» — это будет удалено. Будь осторожен при встречах и переводах денег: не верь объявлениям с требованием предоплаты.</p><h3>О тестах</h3><p>Готовые тесты составлены Sessiya+ как примеры и не заменяют официальные банки вузов. За банки, добавленные студентами, отвечают их авторы. Нашёл ошибку — сообщи кнопкой «Пожаловаться» в тесте.</p><p class=\"note\">Sessiya+ не связан ни с одним университетом.</p>",
+
+hub_title:"Всё для студента — в одном месте",hub_sub:"Подготовка к сессии: тесты, карточки, билеты, умное повторение, дуэли с друзьями и полезные инструменты. Всё бесплатно.",hub_tests:"Тесты и подготовка к экзаменам",hub_tests_d:"Готовые тесты, загрузка своего банка, карточки и билеты",hub_tools:"Инструменты",hub_tools_d:"Калькулятор баллов и среднего балла, календарь сессии, Помодоро",hub_about_d:"Правила, конфиденциальность, контакты",find_title:"Поиск по тестам",find_sub:"Напиши предмет — например, «история», «математика», «C++».",find_ph:"Найти предмет или тест…",find_none:"Ничего не найдено. Загрузи свой банк ниже.",find_more:"Все тесты →",about_link:"О сайте",about_html:"<p><b>Sessiya+</b> — бесплатная платформа подготовки к сессии для студентов Азербайджана: тесты, карточки, билеты, умное повторение, дуэли с друзьями, калькулятор баллов и среднего балла.</p><h3>Как это работает</h3><p>Войди через Google или почту. Найди готовые тесты в разделе «Тесты» или загрузи свой банк (PDF, Word, текст) — сайт превратит его в интерактивный тест; в сложных файлах структуру сам распознаёт искусственный интеллект. Если хочешь, добавь тест в общий каталог для всех.</p><h3>Конфиденциальность</h3><p>Мы храним только имя и почту аккаунта. Файл читается в браузере; если выбрать «Распознать с ИИ», текст файла отправляется на обработку в Google Gemini. В каталог попадают только вопросы, которые ты сам добавил. Прогресс сохраняется в аккаунте, чтобы продолжать с любого устройства. Аккаунт можно удалить в любой момент в «Профиле».</p><h3>Правила</h3><p>Запрещено добавлять в каталог спам, оскорбления, чужие личные данные и материалы с нарушением авторских прав. Сообщай о таком кнопкой «Пожаловаться» — это будет удалено.</p><h3>О тестах</h3><p>Готовые тесты составлены Sessiya+ как примеры и не заменяют официальные банки вузов. Ответы, составленные ИИ, могут содержать ошибки — проверяй. За банки, добавленные студентами, отвечают их авторы.</p><p class=\"note\">Sessiya+ не связан ни с одним университетом.</p>",
 },
 en:{
-nav_board:"Board",board_title:"Notice board",board_sub:"Roommates and rentals, books and stuff for sale, tutors, jobs — from students to students.",home_board_sub:"Looking for a roommate, selling textbooks or need a tutor? Post an ad — it's free.",post_btn:"+ Post an ad",cat_all:"All",cat_room:"Roommate / housing",cat_sell:"Books & stuff",cat_service:"Tutors & services",cat_job:"Jobs & internships",cat_lost:"Lost & found",cat_other:"Other",kinds_all:"All",kind_need_mate:"Looking for a roommate",kind_offer_room:"Room / spot available",kind_need_room:"Looking for a place",kind_sell:"For sale",kind_buy:"Want to buy",kind_offer:"Offering",kind_need:"Looking for",sex_any:"Any",sex_f:"Girls only",sex_m:"Guys only",max_price_ph:"Max ₼ / month",board_search_ph:"Search: metro, university, book…",per_month:" / mo",ago_now:"just now",ago_min:"{0} min ago",ago_h:"{0} h ago",ago_d:"{0} d ago",board_soon:"The notice board is opening soon — getting it ready.",board_err:"Couldn't load ads. Refresh the page.",board_empty:"No ads in this section yet. Be the first to post!",board_note:"Ads are hidden automatically after 45 days. Don't send money before meeting the person — stay safe.",ad_reported:"Sent ✓",post_title:"New ad",f_cat:"Section",f_kind:"Type",f_title:"Title",f_text:"Details",f_price_room:"Price, ₼ / month (per person)",f_price:"Price, ₼",f_place:"Place: district, metro, dorm",place_ph:"e.g. 28 May",f_sex:"Who for",f_contact:"Contact: phone / WhatsApp or Telegram @username",contact_note:"This contact will be visible to everyone in the ad.",post_agree:"The information is true; no scams or prohibited content.",post_publish:"Post ad",ph_title_need_mate:"e.g. Looking for a roommate near Ganjlik",ph_title_offer_room:"e.g. 1 spot free in a 2-room flat, 28 May",ph_title_need_room:"e.g. Looking for a room near the university",ph_title_sell:"e.g. Higher maths textbook, good condition",ph_title_gen:"Short, clear title",ph_text_room:"How many people, what's included (utilities, internet), from when, about you: year, university, habits…",ph_text_gen:"Details: condition, terms, timing…",post_need_title:"Write a title (at least 3 characters).",post_need_contact:"Add a contact.",post_need_agree:"Tick the confirmation box.",post_limit:"You can post at most 5 ads per day.",post_fail:"Couldn't post the ad. Try again.",post_wait:"Posting…",
-nav_tools:"Tools",all_tools:"Tools →",doc_title:"Sessiya+ — quizzes, listings and tools for students",prog_title:"Your progress",prog_streak:"Day streak",prog_today:"Questions today",prog_total:"Total solved",prog_next:"Next exam",prog_tip_new:"Solve quizzes — your streak, daily progress and exam countdown will show up here.",prog_tip:"You haven't practised today yet — keep your streak alive! 🔥",prog_tip_done:"Nice, you've practised today! Keep it up tomorrow 💪",tools_title:"Student tools",tools_sub:"Calculate your scores, find your GPA, count down to exams and study with focus. All free; data is saved to your account.",tl_calc:"Score calculator",tl_gpa:"GPA",tl_cal:"Exam calendar",tl_pomo:"Pomodoro",calc_title:"How many points do I need on the exam?",calc_sub:"Enter your semester score (0–50) and see what you need on the exam for each grade. Rule: 50 semester + 50 exam = 100, and you need at least 17 on the exam. Your university's rules may differ.",calc_sem:"Semester score (0–50)",calc_exam:"Exam score (0–50) — to see your final grade",calc_empty:"Enter your semester score.",calc_need:"{0} on the exam",calc_imp:"not possible",calc_total:"Final score",calc_fail_min:"Less than 17 on the exam — the course is failed.",g_A:"Excellent",g_B:"Very good",g_C:"Good",g_D:"Sufficient",g_E:"Satisfactory",g_F:"Fail",gpa_title:"GPA (ÜOMG) calculator",gpa_sub:"Enter subjects, credits and final scores (0–100). GPA = Σ(score × credits) ÷ Σ credits.",gpa_subj:"Subject",gpa_cr:"Credits",gpa_score:"Score",gpa_add:"+ Add subject",gpa_out:"Your GPA",gpa_meta:"{0} subjects · {1} credits",cal_title:"Exam calendar",cal_sub:"Add your exams and see how many days are left. The nearest exam also shows on the home page.",cal_subj:"Subject",cal_subj_ph:"e.g. Mathematics",cal_date:"Date",cal_add:"Add exam",cal_empty:"No exams yet. Add one above.",days_left:"{0} days left",today_exam:"Today! Good luck 🍀",tomorrow:"Tomorrow!",passed:"Done",pomo_title:"Pomodoro timer",pomo_sub:"Study with focus for 25 minutes, rest for 5. After 4 rounds take a 15-minute break.",pomo_work:"Focus 25",pomo_break:"Break 5",pomo_long:"Long 15",pomo_start:"Start",pomo_pause:"Pause",pomo_reset:"Reset",pomo_done_n:"Today: {0} pomodoros 🍅",pomo_end:"Time's up!",share:"Share",share_text:"I scored {0} on “{1}” at Sessiya+! Test yourself too 👇",share_bank_text:"“{0}” — free quiz on Sessiya+, let's prepare together 👇",search_title:"Find a question",search_q_ph:"Type part of a question — see the answer instantly…",search_none:"Nothing found",search_more:"and {0} more — refine your search",
+
+nav_tools:"Tools",all_tools:"Tools →",doc_title:"Sessiya+ — quizzes, flashcards and tools for students",prog_title:"Your progress",prog_streak:"Day streak",prog_today:"Questions today",prog_total:"Total solved",prog_next:"Next exam",prog_tip_new:"Solve quizzes — your streak, daily progress and exam countdown will show up here.",prog_tip:"You haven't practised today yet — keep your streak alive! 🔥",prog_tip_done:"Nice, you've practised today! Keep it up tomorrow 💪",tools_title:"Student tools",tools_sub:"Calculate your scores, find your GPA, count down to exams and study with focus. All free; data is saved to your account.",tl_calc:"Score calculator",tl_gpa:"GPA",tl_cal:"Exam calendar",tl_pomo:"Pomodoro",calc_title:"How many points do I need on the exam?",calc_sub:"Enter your semester score (0–50) and see what you need on the exam for each grade. Rule: 50 semester + 50 exam = 100, and you need at least 17 on the exam. Your university's rules may differ.",calc_sem:"Semester score (0–50)",calc_exam:"Exam score (0–50) — to see your final grade",calc_empty:"Enter your semester score.",calc_need:"{0} on the exam",calc_imp:"not possible",calc_total:"Final score",calc_fail_min:"Less than 17 on the exam — the course is failed.",g_A:"Excellent",g_B:"Very good",g_C:"Good",g_D:"Sufficient",g_E:"Satisfactory",g_F:"Fail",gpa_title:"GPA (ÜOMG) calculator",gpa_sub:"Enter subjects, credits and final scores (0–100). GPA = Σ(score × credits) ÷ Σ credits.",gpa_subj:"Subject",gpa_cr:"Credits",gpa_score:"Score",gpa_add:"+ Add subject",gpa_out:"Your GPA",gpa_meta:"{0} subjects · {1} credits",cal_title:"Exam calendar",cal_sub:"Add your exams and see how many days are left. The nearest exam also shows on the home page.",cal_subj:"Subject",cal_subj_ph:"e.g. Mathematics",cal_date:"Date",cal_add:"Add exam",cal_empty:"No exams yet. Add one above.",days_left:"{0} days left",today_exam:"Today! Good luck 🍀",tomorrow:"Tomorrow!",passed:"Done",pomo_title:"Pomodoro timer",pomo_sub:"Study with focus for 25 minutes, rest for 5. After 4 rounds take a 15-minute break.",pomo_work:"Focus 25",pomo_break:"Break 5",pomo_long:"Long 15",pomo_start:"Start",pomo_pause:"Pause",pomo_reset:"Reset",pomo_done_n:"Today: {0} pomodoros 🍅",pomo_end:"Time's up!",share:"Share",share_text:"I scored {0} on “{1}” at Sessiya+! Test yourself too 👇",share_bank_text:"“{0}” — free quiz on Sessiya+, let's prepare together 👇",search_title:"Find a question",search_q_ph:"Type part of a question — see the answer instantly…",search_none:"Nothing found",search_more:"and {0} more — refine your search",
 hm_hint_mc:"Test bank: questions, options and a mark on the correct answer (√, •, “))”).",hm_hint_written:"A list of questions only. Written exam: flashcards and tickets with model answers.",hm_hint_test:"A list of questions only; the exam itself will be multiple choice.",paste_ph_open:"1. First question\n2. Second question\nAnswer: (optional) answer text\n3. Third question",
 f_type:"File type",type_mc:"Test with options",type_open:"Questions without options",f_format:"What kind of exam?",fmt_written:"Written (open questions)",fmt_test:"Test (multiple choice)",
 fmt_written_note:"The file has no answers. You can write your own in flashcards; for the catalog we prepare model answers.",fmt_written_has:"Answers found for {0} questions.",
@@ -835,7 +824,7 @@ written_tag:"Written",test_noopts_tag:"Test · no options",cards_done:"Knew {0} 
 nav_home:"Home",nav_catalog:"Quizzes",
 hero_title:"Upload your test bank — get an interactive quiz in seconds",
 hero_sub:"A test bank with options or just a list of questions — drop a PDF, Word or text file. Practice and mock exams for tests; flashcards and exam tickets for written exams.",
-drop_title:"Drop a file here or choose one",drop_note:"PDF, DOCX, TXT · processed in your browser",
+drop_title:"Drop a file here or choose one",drop_note:"PDF, DOCX, TXT or photos of pages · the AI detects the structure itself",
 paste_toggle:"or paste text",paste_go:"Make a quiz",paste_ph:"1. Question text?\n• wrong option\n√ correct option\n• wrong option",
 catalog_title:"Catalog by university",see_all:"All →",cat_empty_home:"The catalog is empty. Upload your bank and add it to the catalog — be the first!",
 my_banks:"My banks",no_banks:"No banks yet. Upload a file in the “Upload” tab.",ready_tests:"Ready-made quizzes",
@@ -847,7 +836,7 @@ cat_empty:"No banks in the catalog yet. Upload a file on the home page and tick 
 cat_offline:"The catalog isn't available in this view — banks are saved on your device only.",cat_stale:"Can't reach the catalog; data may be out of date.",cat_static:"Add your bank to the catalog: upload a file in the “Upload” tab and keep “Add to catalog” checked.",
 loading:"Loading…",n_banks:"{0} bank(s)",
 pv_title:"File read",f_name:"Bank name",f_uni:"University",f_uni_other:"University name",f_lang:"Quiz language",f_fac:"Faculty",f_fac_ph:"e.g. Economics",f_subj:"Subject",f_subj_ph:"e.g. Microeconomics",
-f_public:"Add to catalog (other students will see it)",pv_check:"First questions — check they were read correctly:",pv_save:"Save and start",cancel:"Cancel",choose:"— choose —",other:"Other…",
+f_public:"Add to catalog (other students will see it)",pv_check:"Check the questions and fix them if needed:",pv_save:"Save and start",cancel:"Cancel",choose:"— choose —",other:"Other…",
 need_uni_subj:"To add to the catalog, set the university and subject.",publishing:"Adding to catalog…",pub_fail:"Couldn't add to the catalog. The bank is saved in “My banks”.",pub_quota:"Today's limit is reached. The bank is saved in “My banks”.",
 report:"Report",reported:"Report sent. Thank you!",delete:"Delete",confirm_delete:"Confirm delete",
 st_q:"Questions",st_best:"Best score",st_wrong:"Mistakes",
@@ -862,16 +851,19 @@ parse_fail:"No questions with a marked correct answer were found. See the format
 not_found:"Bank not found or deleted.",load_fail:"Couldn't load the bank.",
 footer:"Sessiya+ is not affiliated with any university. Files are processed in your browser; only banks you choose are added to the catalog. Report copyright-infringing material with the “Report” button.<br>Ready-made quizzes are sample questions written by the site author.",
 all_banks_link:"📚 All question banks",
+ios_btn:"📲 Install on iPhone",ios_help:"In Safari tap <b>Share</b> (the square with an arrow) → <b>Add to Home Screen</b> → <b>Add</b>. The Sessiya+ icon appears on your home screen and opens like an app.",
+ai_upload_note:"🤖 The AI understands any format: even with no marked answers, a scanned PDF, Word or photos of pages.",manual_new:"✍️ Create a test manually",ai_title:"🤖 AI assistant",pv_find:"Search… (“?” — unanswered)",pv_add:"+ Add question",edit:"✏️ Edit",pub_btn:"🌍 Publish to catalog",photos_n:"{0} photos",ai_reading:"The AI is reading the file structure…",ai_working:"The AI is working…",ai_done_extract:"Done: {0} questions recognized",fmt_written_note_ai:"No answers in the file — press “Write answers” above and the AI will draft model answers.",fmt_test_note_ai:"No options — press “Make a multiple-choice test” and the AI will write 4 options per question.",pv_noans_n:"{0} unanswered",save_changes:"Save changes",q_n:"Question {0}",q_ph:"Question text",mark_ok:"Mark as correct",opt_ph:"Option {0}",add_opt:"+ option",ans_ph:"Answer (optional)",no_results:"Nothing found",ai_reparse:"🔍 Re-detect structure",ai_solve:"✅ Find correct answers ({0})",ai_answers:"✍️ Write answers ({0})",ai_options:"🔀 Make a multiple-choice test ({0})",ai_hint:"The AI can find correct answers, write answers to open questions or create options. Check and fix the result below.",ai_hint_done:"The AI recognized the file. Check the questions below — everything is editable.",ai_hint_ok:"All set. Check or edit the questions below.",ai_left:"{0} requests left today",ai_done_solve:"Marked {0} correct answers — please check them",ai_done_answers:"Wrote {0} answers",ai_done_options:"{0} test questions ready",pv_need_ok:"Mark the correct answer in each question (the circle) or press “Find correct answers”.",pv_empty:"There are no questions.",pv_skip_warn:"{0} questions have no marked answer and won't be saved. Press again to save the rest.",my_test:"My test",pub_ok:"Test published to the catalog",pub_need_acc:"Sign in with Google or email to publish to the catalog.",ai_limit:"Today's AI limit is used up — try again tomorrow.",ai_busy:"The AI is busy right now. Try again in a minute.",ai_empty:"The AI found no questions in this file.",ai_fail:"The AI did not respond. Check your connection and try again.",
+hub_up:"Upload a quiz",hub_up_d:"PDF, Word or text — AI turns it into a quiz",
 srs_title:"Smart review",srs_btn:"Smart review: {0} questions",rs_scale:"On the 50-point scale: {0}/50 — {1}",rs_pass:"passed the 17 threshold ✅",rs_fail:"below the 17 threshold ❌",chart_title:"Last 14 days (green — daily goal reached)",theme_title:"Theme",theme_auto:"Auto",theme_light:"☀️ Light",theme_dark:"🌙 Dark",
 du_soon:"The Arena opens in a few hours ⏳",
 arena_title:"Arena",arena_sub:"Duel a friend: the same 10 questions, whoever gets more right wins. Create a duel and send the link to a friend.",hub_arena_d:"1-on-1 knowledge duel with a friend",ar_pick:"Subject / question bank",ar_create:"⚔️ Create duel",ar_join_t:"Join with a code",ar_join:"Join",ar_mine:"My duels",bk_duel:"⚔️ Duel a friend",du_wait_short:"waiting",du_won:"win",du_lost:"loss",du_draw:"Draw",du_playing:"in progress",du_none:"No duels yet — create the first one!",du_notfound:"Duel not found. Check the code.",du_full:"This duel already has two players.",du_code:"Code",du_share:"Send this code or link to a friend:",du_invite_msg:"Duel me on the Sessiya+ Arena: {0} 🔥",du_copy:"Share link",du_waiting:"Waiting for your opponent… The game starts as soon as they join.",du_you:"You",du_opp:"Opponent",du_win:"You won!",du_lose:"Your opponent won this time",du_xp_win:"+30 XP for the win",du_xp_play:"+10 XP for playing",du_rematch:"🔁 Rematch",du_wait_opp:"You're done! Your opponent is still answering…",du_few:"This bank has too few questions for a duel",du_badcode:"The code has 6 characters",badges_title:"Achievements",badges_count:"{0} of {1} unlocked",badge_new:"New achievement",b_first:"First step",bd_first:"Answer your first question",b_q100:"100 questions",bd_q100:"Answer 100 questions",b_q500:"500 questions",bd_q500:"Answer 500 questions",b_q1000:"Knowledge master",bd_q1000:"Answer 1000 questions",b_s3:"3-day streak",bd_s3:"Study 3 days in a row",b_s7:"7-day streak",bd_s7:"Study 7 days in a row",b_s30:"30-day streak",bd_s30:"Study 30 days in a row",b_lv5:"Level 5",bd_lv5:"Reach level 5",b_lv10:"Level 10",bd_lv10:"Reach level 10",b_daily:"Daily quiz",bd_daily:"Finish the daily quiz",b_daily7:"7 daily quizzes",bd_daily7:"Finish the daily quiz 7 times",b_duel:"First duel",bd_duel:"Play a duel",b_win:"Winner",bd_win:"Win a duel",b_win10:"Arena master",bd_win10:"Win 10 duels",b_upload:"My own bank",bd_upload:"Upload your own bank",b_share:"Sharer",bd_share:"Add a bank to the catalog",b_fav:"Collector",bd_fav:"Add 10 questions to favourites",
 today_title:"Today",goal_lbl:"Daily goal: {0} / {1} questions",lvl:"Level {0}",xp_lbl:"{0} XP · next level at {1} XP",daily_btn:"🎯 10 questions of the day",daily_done:"✅ Daily quiz: {0}",daily_title:"10 questions of the day",rating_btn:"🏆 Leaderboard",rating_title:"Weekly leaderboard",rating_sub:"Each correct answer +10 XP, “I know” in flashcards +5 XP, daily quiz +30 XP. Resets every Monday.",rating_you:"Your place: #{0} · {1} XP",rating_empty:"No one has scored this week yet. Be the first!",rating_go:"Solve quizzes →",xp_week:"{0} XP this week",xp_total:"{0} XP total",student:"Student",fav_add:"Add to favourites",fav_btn:"★ Favourites ({0})",goal_set:"Daily goal (questions)",hub_rating_d:"Most active students of the week, XP and levels",
-acc_edit_name:"Change name",acc_name_ph2:"Your name",acc_save:"Save",acc_my_ads:"My listings",acc_no_ads:"You have no listings yet.",acc_danger:"Delete account",acc_delete_note:"Your account, listings, banks you added to the catalog and saved progress will be deleted. This can't be undone.",acc_delete:"Delete account permanently",acc_delete_confirm:"Sure? Tap again",acc_err_recent:"For security, sign out, sign in again and retry within 5 minutes.",
+acc_edit_name:"Change name",acc_name_ph2:"Your name",acc_save:"Save",acc_danger:"Delete account",acc_delete_note:"Your account, banks you added to the catalog and saved progress will be deleted. This can't be undone.",acc_delete:"Delete account permanently",acc_delete_confirm:"Sure? Tap again",acc_err_recent:"For security, sign out, sign in again and retry within 5 minutes.",
 gate_title:"Welcome! 👋",gate_sub:"Sessiya+ — everything a student needs in one place. Sign in or sign up to continue — free, takes 10 seconds.",gate_rules:"Rules and privacy",gate_offline:"No connection. Check your internet and try again.",gate_retry:"Try again",acc_name_ph:"Your name (for sign-up)",
-nav_profile:"Profile",ts_cat:"Catalog",ts_my:"My banks",ts_up:"Upload",settings_title:"Settings",lang_title:"Language",acc_title:"Account",acc_why:"Sign in to keep your progress, banks and exam calendar on all your devices and to post listings.",acc_google:"Continue with Google",acc_email:"Continue with email",acc_phone:"Continue with phone number",acc_mail_ph:"Email",acc_pass:"Password (at least 6 characters)",acc_login:"Sign in",acc_signup:"Sign up",acc_forgot:"Forgot password?",acc_reset_sent:"Password reset email sent.",acc_logout:"Sign out",acc_hello:"Hi, {0}!",acc_synced:"Your progress, banks and exam calendar are saved to this account and appear on your other devices.",acc_soon:"Sign-in with Google, email and phone is coming soon. For now everything is stored on this device.",acc_phone_ph:"50 123 45 67",acc_send_code:"Send code",acc_code_ph:"6-digit code from SMS",acc_confirm:"Confirm",acc_wait:"Please wait…",acc_err_cred:"Wrong email or password.",acc_err_exists:"An account with this email exists — tap “Sign in”.",acc_err_weak:"Password must be at least 6 characters.",acc_err_email:"Check the email address.",acc_err_phone:"Enter the number as 50 123 45 67.",acc_err_code:"Wrong or expired code.",acc_err_many:"Too many attempts. Try again a bit later.",acc_err_net:"Check your internet connection.",acc_err_gen:"Something went wrong. Try again.",post_need_login:"Sign in to post a listing.",
+nav_profile:"Profile",ts_cat:"Catalog",ts_my:"My banks",ts_up:"Upload",settings_title:"Settings",lang_title:"Language",acc_title:"Account",acc_why:"Sign in to keep your progress, banks and exam calendar on all your devices and to share your quizzes with everyone.",acc_google:"Continue with Google",acc_email:"Continue with email",acc_phone:"Continue with phone number",acc_mail_ph:"Email",acc_pass:"Password (at least 6 characters)",acc_login:"Sign in",acc_signup:"Sign up",acc_forgot:"Forgot password?",acc_reset_sent:"Password reset email sent.",acc_logout:"Sign out",acc_hello:"Hi, {0}!",acc_synced:"Your progress, banks and exam calendar are saved to this account and appear on your other devices.",acc_soon:"Sign-in with Google, email and phone is coming soon. For now everything is stored on this device.",acc_phone_ph:"50 123 45 67",acc_send_code:"Send code",acc_code_ph:"6-digit code from SMS",acc_confirm:"Confirm",acc_wait:"Please wait…",acc_err_cred:"Wrong email or password.",acc_err_exists:"An account with this email exists — tap “Sign in”.",acc_err_weak:"Password must be at least 6 characters.",acc_err_email:"Check the email address.",acc_err_phone:"Enter the number as 50 123 45 67.",acc_err_code:"Wrong or expired code.",acc_err_many:"Too many attempts. Try again a bit later.",acc_err_net:"Check your internet connection.",acc_err_gen:"Something went wrong. Try again.",
 apk_btn:"📥 Download the app (Android)",apk_link:"🤖 Android app (APK)",apk_help:"Once downloaded, open the file → if asked, allow installs from this source → “Install”. The Sessiya+ icon will appear on your home screen.",
-install_btn:"📲 Install on phone",install_sub:"Sessiya+ opens like an app, and quizzes you opened work offline.",install_ios:"On iPhone: in Safari tap Share (square with an arrow) → “Add to Home Screen”.",install_other:"Open the browser menu (⋮) → “Install app” or “Add to Home screen”.",
-hub_title:"Everything a student needs — in one place",hub_sub:"Exam prep, roommates and housing, books, tutors and handy tools. All free.",hub_tests:"Quizzes and exam prep",hub_tests_d:"Ready quizzes, upload your own bank, flashcards and exam tickets",hub_room:"Roommates and housing",hub_room_d:"Rentals, dorms, find someone to live with",hub_ads:"Listings",hub_ads_d:"Roommates and housing, books and stuff, tutors, jobs",hub_tools:"Tools",hub_tools_d:"Score and GPA calculators, exam calendar, Pomodoro",hub_about_d:"Rules, privacy, contact",find_title:"Search quizzes",find_sub:"Type a subject — e.g. “history”, “math”, “C++”.",find_ph:"Search subjects or quizzes…",find_none:"Nothing found. Upload your own bank below.",find_more:"All quizzes →",about_link:"About",about_html:"<p><b>Sessiya+</b> is a free platform for students in Azerbaijan: prepare for exams (quizzes, flashcards, exam tickets), find a roommate or a flat, sell books and stuff, find a tutor or a job, calculate your scores and GPA.</p><h3>How it works</h3><p>Sign in with Google or email. Find ready quizzes in “Quizzes” or upload your own test bank (PDF, Word, text) — the site turns it into an interactive quiz and, if you like, adds it to the shared catalog. If questions have no options, use flashcards and exam tickets.</p><h3>Privacy</h3><p>We only store your account name and email (or phone). Uploaded files are processed in your browser — the file itself is never sent to a server; only questions you choose to add go to the catalog. Your progress, banks and exam calendar are saved to your account so you can continue on any device. Text and contacts in listings are public — share personal data carefully. You can delete your account at any time in “Profile”.</p><h3>Rules</h3><p>Not allowed: spam and fake listings, illegal goods and services, insults, other people’s personal data, copyright-infringing material. Report such content with the “Report” button and it will be removed. Be careful with meetings and money transfers: don’t trust listings that ask for prepayment.</p><h3>About the quizzes</h3><p>Ready-made quizzes are sample questions written by Sessiya+ and do not replace official university banks. Banks added by students are their authors’ responsibility. Found a mistake? Report it from the quiz.</p><p class=\"note\">Sessiya+ is not affiliated with any university.</p>",
+
+hub_title:"Everything a student needs — in one place",hub_sub:"Exam prep: quizzes, flashcards, exam tickets, smart review, duels with friends and handy tools. All free.",hub_tests:"Quizzes and exam prep",hub_tests_d:"Ready quizzes, upload your own bank, flashcards and exam tickets",hub_tools:"Tools",hub_tools_d:"Score and GPA calculators, exam calendar, Pomodoro",hub_about_d:"Rules, privacy, contact",find_title:"Search quizzes",find_sub:"Type a subject — e.g. “history”, “math”, “C++”.",find_ph:"Search subjects or quizzes…",find_none:"Nothing found. Upload your own bank below.",find_more:"All quizzes →",about_link:"About",about_html:"<p><b>Sessiya+</b> is a free exam-prep platform for students in Azerbaijan: quizzes, flashcards, exam tickets, smart review, duels with friends, score and GPA calculators.</p><h3>How it works</h3><p>Sign in with Google or email. Find ready quizzes in “Quizzes” or upload your own bank (PDF, Word, text) — the site turns it into an interactive quiz; for tricky files, AI recognises the structure. If you like, add your quiz to the shared catalog for everyone.</p><h3>Privacy</h3><p>We only store your account name and email. Files are read in your browser; if you choose “Recognise with AI”, the file's text is sent to Google Gemini for processing. Only questions you choose to add go to the catalog. Your progress is saved to your account so you can continue on any device. You can delete your account at any time in “Profile”.</p><h3>Rules</h3><p>Spam, insults, other people's personal data and copyright-infringing material are not allowed in the catalog. Report them with the “Report” button and they will be removed.</p><h3>About the quizzes</h3><p>Ready-made quizzes are samples written by Sessiya+ and do not replace official university banks. AI-written answers can contain mistakes — double-check. Banks added by students are their authors' responsibility.</p><p class=\"note\">Sessiya+ is not affiliated with any university.</p>",
 }};
 
 
@@ -962,9 +954,9 @@ const Cat={db:null,staticMetas:[],userMetas:[],metas:[],ready:false,unsub:null,l
 };
 
 // ---------- router (#home, #catalog, #u-<uni>, #f-<uni>--<fac>, #s-<uni>--<fac>--<subj>, #b-<id>) ----------
-const VIEWS=['home','catalog','board','post','tools','about','profile','rating','arena','duel','preview','bank','quiz','result','cards','ticket'];
+const VIEWS=['home','catalog','tools','about','profile','rating','arena','duel','preview','bank','quiz','result','cards','ticket'];
 function show(v){ if(v!=='duel'&&typeof DU!=='undefined'&&DU.unsub){ DU.unsub(); DU.unsub=null; DU.code=null }for(const s of VIEWS) $('v-'+s).classList.toggle('hide',s!==v);
-  const nv={preview:'catalog',bank:'catalog',quiz:'catalog',result:'catalog',cards:'catalog',ticket:'catalog',post:'board',about:'profile',rating:'home',arena:'home',duel:'home'}[v]||v;
+  const nv={preview:'catalog',bank:'catalog',quiz:'catalog',result:'catalog',cards:'catalog',ticket:'catalog',about:'profile',rating:'home',duel:'arena'}[v]||v;
   document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',a.dataset.go===nv));
   window.scrollTo(0,0)}
 function go(h){ if(location.hash==='#'+h) route(); else location.hash=h }
@@ -982,8 +974,7 @@ function route(){
   if(h==='mybanks') return renderTests('my');
   if(h==='upload') return renderTests('up');
   if(h==='profile') return renderProfile();
-  if(m=h.match(/^board(?:-([a-z]+))?$/)) return renderBoard(m[1]);
-  if(m=h.match(/^post(?:-([a-z]+))?$/)) return renderPost(m[1]);
+  if(/^(board|post)\b/.test(h)) return go('home');
   if(m=h.match(/^tools(?:-(calc|gpa|cal|pomo))?$/)) return renderTools(m&&m[1]);
   if(m=h.match(/^u-([a-z0-9-]+)$/)) return renderCatalog({uni:m[1]});
   if(m=h.match(/^f-([a-z0-9-]+?)--([a-z0-9-]+)$/)) return renderCatalog({uni:m[1],fac:m[2]});
@@ -1082,8 +1073,8 @@ const drop=$('drop');
 drop.onclick=()=>$('file').click();
 drop.ondragover=e=>{e.preventDefault();drop.classList.add('over')};
 drop.ondragleave=()=>drop.classList.remove('over');
-drop.ondrop=e=>{e.preventDefault();drop.classList.remove('over');if(e.dataTransfer.files[0])handleFile(e.dataTransfer.files[0])};
-$('file').onchange=e=>{if(e.target.files[0])handleFile(e.target.files[0]);e.target.value=''};
+drop.ondrop=e=>{e.preventDefault();drop.classList.remove('over');if(e.dataTransfer.files.length)handleFiles(e.dataTransfer.files)};
+$('file').onchange=e=>{if(e.target.files.length)handleFiles(e.target.files);e.target.value=''};
 function loadScript(src){return new Promise((res,rej)=>{const s=document.createElement('script');s.src=src;s.onload=res;s.onerror=()=>rej(new Error('load '+src));document.head.appendChild(s)})}
 async function pdfText(buf){
   if(!window.pdfjsLib){await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js');}
@@ -1101,71 +1092,185 @@ async function pdfText(buf){
     }
     if(cur)lines.push(cur); out.push(...lines);
   }
-  return out.join('\n');
+  return {text:out.join('\n'),pages:doc.numPages};
 }
 async function docxText(buf){
   if(!window.mammoth){await loadScript('https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js');}
-  return (await mammoth.extractRawText({arrayBuffer:buf})).value;
+  const text=(await mammoth.extractRawText({arrayBuffer:buf})).value;
+  let rich='';   // для ИИ: жирный шрифт (часто так отмечают правильный ответ) → **текст**
+  try{ const h=(await mammoth.convertToHtml({arrayBuffer:buf})).value;
+    rich=h.replace(/<(strong|b)>/g,'**').replace(/<\/(strong|b)>/g,'**').replace(/<u>/g,'__').replace(/<\/u>/g,'__').replace(/<\/(p|li|h\d|tr)>/g,'\n').replace(/<\/t[dh]>/g,' | ').replace(/<br\s*\/?>/g,'\n').replace(/<[^>]+>/g,'')
+      .replace(/&nbsp;/g,' ').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&amp;/g,'&').replace(/\*\*\s*\*\*/g,'') }catch(e){}
+  return {text,rich};
 }
 let pending=null;
+async function handleFiles(files){
+  files=[...files]; if(!files.length) return;
+  const imgs=files.filter(f=>/^image\//.test(f.type));
+  if(imgs.length&&imgs.length===files.length) return aiFromSource({images:imgs,fname:imgs.length>1?t('photos_n',imgs.length):imgs[0].name});
+  return handleFile(files.find(f=>!/^image\//.test(f.type))||files[0]);
+}
 async function handleFile(f){
   $('status').textContent=t('reading');
   try{
-    const buf=await f.arrayBuffer(); let text='';
-    if(/\.pdf$/i.test(f.name)) text=await pdfText(buf);
-    else if(/\.docx$/i.test(f.name)) text=await docxText(buf);
+    const buf=await f.arrayBuffer(); let text='', pages=0, rich='';
+    if(/\.pdf$/i.test(f.name)){ const r=await pdfText(buf); text=r.text; pages=r.pages }
+    else if(/\.docx$/i.test(f.name)){ const r=await docxText(buf); text=r.text; rich=r.rich }
+    else if(/^image\//.test(f.type)) return aiFromSource({images:[f],fname:f.name});
     else text=new TextDecoder().decode(buf);
-    handleText(text,f.name);
+    handleText(text,f.name,{file:f,pages,rich});
   }catch(e){$('status').textContent=t('read_fail')}
 }
 function guessLang(qs){const s=qs.slice(0,20).map(x=>x.q).join(' ');const cyr=(s.match(/[а-яё]/gi)||[]).length,az=(s.match(/[əğışçöü]/gi)||[]).length,lat=(s.match(/[a-z]/gi)||[]).length;return cyr>lat?'ru':(az>0?'az':'en')}
-function handleText(text,fname){
-  const mc=parseBank(text||''), list=parseQuestionList(text||'');
-  if(mc.length<1 && list.length<3){$('status').innerHTML=t('parse_fail');return}
-  const fenn=(text.match(/F[əә]nn\s*:\s*([^\n]+)/i)||[])[1] || (text.match(/[“"«]([^”"»]{3,60})[”"»]\s*f[əә]nnind[əә]n/i)||[])[1];
-  const nm=(fenn||fname.replace(/\.(pdf|docx|txt)$/i,'')).replace(/^\s*\d+[a-zA-Z]?\s*/,'').trim().slice(0,80);
-  let type=HOME.type; if(type==='mc'&&mc.length<1) type='open'; if(type==='open'&&list.length<1&&mc.length) type='mc';
-  pending={mc,list,type,fmt:HOME.fmt,name:nm};
+function bankName(text,fname){
+  const fenn=(String(text).match(/F[əә]nn\s*:\s*([^\n]+)/i)||[])[1] || (String(text).match(/[“"«]([^”"»]{3,60})[”"»]\s*f[əә]nnind[əә]n/i)||[])[1];
+  return (fenn||String(fname||'').replace(/\.(pdf|docx|txt|jpe?g|png|webp|heic)$/i,'')).replace(/^\s*\d+[a-zA-Z]?\s*/,'').trim().slice(0,80);
+}
+function handleText(text,fname,src){
+  text=text||''; const mc=parseBank(text), list=parseQuestionList(text);
+  const rich=src&&src.rich&&/\*\*/.test(src.rich)?src.rich:'';
+  const source={text:rich||text,fname,file:src&&src.file,pages:src&&src.pages};
+  const optLines=(text.match(/^\s*[A-Ea-eА-Да-д][\)\.]\s*\S/gm)||[]).length;
+  // обычный разбор не нашёл отмеченных ответов, но в файле явно есть варианты/структура — отдаём ИИ
+  if(mc.length<1 && (list.length<3 || optLines>=6)){ return aiFromSource(source,true) }
+  openPending({mc,list,name:bankName(text,fname),fname,source});
+}
+// ИИ распознаёт структуру (автоматически, если обычный разбор не справился)
+async function aiFromSource(source,auto){
+  const st=$('status');
+  if(aiLeft()<=0){ st.innerHTML=auto?t('parse_fail')+'<br>'+t('ai_limit'):t('ai_limit'); return }
+  st.innerHTML=`<b>🤖 ${t('ai_reading')}</b><div class="aibar"><i id="upBar" style="width:8%"></i></div>`;
+  try{
+    const r=await aiExtract(source,(d,n)=>{ const b=$('upBar'); if(b) b.style.width=Math.max(8,Math.round(d/n*100))+'%' });
+    st.textContent='';
+    openPending({mc:r.mc,list:r.list,name:bankName(source.text||'',source.fname),fname:source.fname,source,ai:true});
+    toast('🤖 '+t('ai_done_extract',r.mc.length+r.list.length));
+  }catch(e){ st.innerHTML=(auto?t('parse_fail')+'<br>':'')+aiErrText(e) }
+}
+function openPending({mc,list,name,fname,source,ai,manual,editId,type}){
+  let ty=type||HOME.type; if(ty==='mc'&&mc.length<1) ty='open'; if(ty==='open'&&list.length<1&&mc.length) ty='mc';
+  if(mc.length&&mc.length>=list.length*2) ty='mc';
+  pending={mc,list,type:ty,fmt:HOME.fmt,name,source:source||null,ai:!!ai,manual:!!manual,editId:editId||null,page:0,find:'',warn:false};
   $('status').textContent='';
-  $('pvFile').textContent=fname; $('pvName').value=nm; $('pvSubj').value=nm;
-  $('pvLang').value=guessLang(type==='mc'?mc:list); $('pvMsg').textContent='';
+  $('pvFile').textContent=fname||''; $('pvFile').classList.toggle('hide',!fname); $('pvName').value=name||''; $('pvSubj').value=name||'';
+  $('pvLang').value=guessLang(ty==='mc'?mc:list); $('pvMsg').textContent=''; $('aiMsg').textContent=''; $('pvFind').value='';
   const facs=[...new Set(Cat.metas.map(m=>m.fac).filter(Boolean))]; $('facList').innerHTML=facs.map(f=>`<option value="${esc(f)}">`).join('');
   pvSyncPublic();
   renderPreview(); show('preview');
 }
-function pvSyncPublic(){ const ok=!!Cat.db&&isReal(FB.user); $('pvPublic').disabled=!ok; if(!ok) $('pvPublic').checked=false }
+$('manualNew').onclick=()=>openPending({mc:[{q:'',o:['','','',''],a:-1}],list:[],name:'',manual:true,type:'mc'});
+function pvSyncPublic(){ const ok=!!Cat.db&&isReal(FB.user); $('pvPublic').disabled=!ok; if(!ok) $('pvPublic').checked=false; else if(pending&&pending.editId) $('pvPublic').checked=false }
+const PV_PER=15;
+function pvItems(){ return pending.type==='mc'?pending.mc:pending.list }
+function pvVisible(){ const all=pvItems().map((x,i)=>i), f=(pending.find||'').trim().toLowerCase();
+  if(!f) return all; if(f==='?') return all.filter(i=>pending.type==='mc'?!(pending.mc[i].a>=0):!pending.list[i].ans);
+  return all.filter(i=>{const x=pvItems()[i]; return (x.q+' '+(x.o||[]).join(' ')+' '+(x.ans||'')).toLowerCase().includes(f)}) }
 function renderPreview(){
   const P=pending; const isMc=P.type==='mc';
-  document.querySelectorAll('#pvType button').forEach(b=>{b.classList.toggle('on',b.dataset.v===P.type); b.disabled=(b.dataset.v==='mc'&&!P.mc.length)||(b.dataset.v==='open'&&P.list.length<1)});
+  document.querySelectorAll('#pvType button').forEach(b=>{b.classList.toggle('on',b.dataset.v===P.type); b.disabled=false});
   document.querySelectorAll('#pvFmt button').forEach(b=>b.classList.toggle('on',b.dataset.v===P.fmt));
   $('pvFmtBox').classList.toggle('hide',isMc);
   const withAns=P.list.filter(x=>x.ans).length;
-  $('pvFmtNote').textContent=isMc?'':(P.fmt==='written'?(withAns?t('fmt_written_has',withAns):t('fmt_written_note')):t('fmt_test_note'));
-  $('pvCount').textContent=isMc?t('found_q',P.mc.length):t('found_open',P.list.length);
-  $('pvList').innerHTML=isMc
-    ? P.mc.slice(0,3).map((x,i)=>`<div class="mistake"><b>${i+1}. ${esc(x.q)}</b><div class="note">${x.o.map((o,j)=>j===x.a?`<span class="c">✓ ${esc(o)}</span>`:esc(o)).join(' · ')}</div></div>`).join('')
-    : P.list.slice(0,4).map((x,i)=>`<div class="mistake"><b>${i+1}. ${esc(x.q)}</b>${x.ans?`<div class="note c">${esc(x.ans.slice(0,140))}${x.ans.length>140?'…':''}</div>`:''}</div>`).join('');
+  $('pvFmtNote').textContent=isMc?'':(P.fmt==='written'?(withAns?t('fmt_written_has',withAns):t('fmt_written_note_ai')):t('fmt_test_note_ai'));
+  const noAns=isMc?P.mc.filter(x=>!(x.a>=0)).length:P.list.length-withAns;
+  $('pvCount').textContent=(isMc?t('found_q',P.mc.length):t('found_open',P.list.length))+(noAns?' · '+t('pv_noans_n',noAns):'');
+  $('pvSave').textContent=P.editId?t('save_changes'):t('pv_save');
+  renderAIBox(); renderEditor();
 }
-document.querySelectorAll('#pvType button').forEach(b=>b.onclick=()=>{pending.type=b.dataset.v;renderPreview()});
+function renderEditor(){
+  const P=pending, isMc=P.type==='mc', items=pvItems(), vis=pvVisible(), pages=Math.max(1,Math.ceil(vis.length/PV_PER));
+  if(P.page>=pages) P.page=pages-1;
+  const ids=vis.slice(P.page*PV_PER,(P.page+1)*PV_PER);
+  $('pvList').innerHTML=ids.length?ids.map(i=>{ const x=items[i];
+    const head=`<div class="edh"><span>${t('q_n',i+1)}${x.ai?' <span class="aitag">AI</span>':''}</span><button class="ix" data-act="del" title="${esc(t('delete'))}">🗑</button></div>`;
+    if(isMc) return `<div class="ed${x.a>=0?'':' noans'}" data-i="${i}">${head}<textarea data-f="q" placeholder="${esc(t('q_ph'))}">${esc(x.q)}</textarea>`+
+      x.o.map((o,j)=>`<div class="edo${j===x.a?' ok':''}"><input type="radio" name="r${i}" data-act="ok" data-j="${j}"${j===x.a?' checked':''} title="${esc(t('mark_ok'))}"><input type="text" data-f="o" data-j="${j}" value="${esc(o)}" placeholder="${esc(t('opt_ph',String.fromCharCode(65+j)))}"><button class="ix" data-act="delo" data-j="${j}">×</button></div>`).join('')+
+      `<button class="btn ghost small" data-act="addo" style="margin-top:6px">${t('add_opt')}</button></div>`;
+    return `<div class="ed" data-i="${i}">${head}<textarea data-f="q" placeholder="${esc(t('q_ph'))}">${esc(x.q)}</textarea><textarea class="eda" data-f="ans" placeholder="${esc(t('ans_ph'))}">${esc(x.ans||'')}</textarea></div>`;
+  }).join(''):`<div class="note">${t('no_results')}</div>`;
+  $('pvPager').innerHTML=pages>1?`<button class="btn sec small" data-p="-1"${P.page?'':' disabled'}>‹</button><span class="note">${P.page+1} / ${pages}</span><button class="btn sec small" data-p="1"${P.page<pages-1?'':' disabled'}>›</button>`:'';
+}
+$('pvPager').onclick=e=>{ const b=e.target.closest('[data-p]'); if(!b) return; pending.page+=+b.dataset.p; renderEditor(); $('pvList').scrollIntoView({behavior:'smooth',block:'start'}) };
+$('pvFind').oninput=()=>{ pending.find=$('pvFind').value; pending.page=0; renderEditor() };
+$('pvList').addEventListener('input',e=>{
+  const el=e.target, box=el.closest('.ed'); if(!box||!el.dataset.f) return; const x=pvItems()[+box.dataset.i];
+  if(el.dataset.f==='q') x.q=el.value; else if(el.dataset.f==='ans') x.ans=el.value; else if(el.dataset.f==='o') x.o[+el.dataset.j]=el.value;
+  pending.warn=false;
+});
+$('pvList').addEventListener('click',e=>{
+  const b=e.target.closest('[data-act]'); if(!b) return; const box=b.closest('.ed'), i=+box.dataset.i, items=pvItems(), x=items[i], act=b.dataset.act;
+  if(act==='del'){ items.splice(i,1); renderPreview(); return }
+  if(act==='ok'){ x.a=+b.dataset.j; box.classList.remove('noans'); box.querySelectorAll('.edo').forEach((r,j)=>r.classList.toggle('ok',j===x.a)); pending.warn=false; renderAIBox(); 
+    const noAns=pending.mc.filter(y=>!(y.a>=0)).length; $('pvCount').textContent=t('found_q',pending.mc.length)+(noAns?' · '+t('pv_noans_n',noAns):''); return }
+  if(act==='delo'){ const j=+b.dataset.j; x.o.splice(j,1); if(x.a===j) x.a=-1; else if(x.a>j) x.a--; renderEditor(); return }
+  if(act==='addo'){ x.o.push(''); renderEditor(); const ins=$('pvList').querySelector(`.ed[data-i="${i}"] .edo:last-of-type input[type=text]`); if(ins) ins.focus(); return }
+});
+$('pvAdd').onclick=()=>{ const items=pvItems(); items.push(pending.type==='mc'?{q:'',o:['','','',''],a:-1}:{q:'',ans:''}); pending.find=''; $('pvFind').value=''; renderPreview();
+  pending.page=Math.ceil(items.length/PV_PER)-1; renderEditor(); const last=$('pvList').querySelector('.ed:last-child textarea'); if(last){ last.focus(); last.scrollIntoView({block:'center'}) } };
+// ---- ИИ-помощник в предпросмотре ----
+function renderAIBox(){
+  const P=pending, isMc=P.type==='mc', btns=[];
+  const noAns=isMc?P.mc.filter(x=>!(x.a>=0)&&x.o.filter(o=>String(o).trim()).length>=2).length:0, open=P.list.length, noOpenAns=P.list.filter(x=>!x.ans).length;
+  if(P.source&&(P.source.text||P.source.file||P.source.images)) btns.push(['reparse',t('ai_reparse')]);
+  if(isMc&&noAns) btns.push(['solve',t('ai_solve',noAns)]);
+  if(!isMc&&open&&noOpenAns) btns.push(['answers',t('ai_answers',noOpenAns)]);
+  if(!isMc&&open) btns.push(['options',t('ai_options',open)]);
+  if(isMc&&P.list.length&&!P.mc.length) btns.push(['options',t('ai_options',P.list.length)]);
+  $('aiBtns').innerHTML=btns.map(([k,l],n)=>`<button class="btn ${n?'sec':''} small" data-ai="${k}">${esc(l)}</button>`).join('');
+  $('aiHint').textContent=btns.length?(P.ai?t('ai_hint_done'):t('ai_hint')):t('ai_hint_ok');
+  $('aiLeft').textContent=t('ai_left',aiLeft());
+}
+async function aiRun(kind){
+  const P=pending; if(!P||P.busy) return; P.busy=true;
+  const bar=$('aiBar'), box=$('aiBarBox'), msg=$('aiMsg'); box.classList.remove('hide'); bar.style.width='6%';
+  $('aiBtns').querySelectorAll('button').forEach(b=>b.disabled=true); $('pvSave').disabled=true;
+  const prog=(d,n)=>bar.style.width=Math.max(6,Math.round(d/n*100))+'%', lang=$('pvLang').value;
+  try{
+    if(kind==='reparse'){ msg.textContent='🤖 '+t('ai_reading'); const r=await aiExtract(P.source,prog); P.mc=r.mc; P.list=r.list; P.ai=true; P.page=0;
+      P.type=r.mc.length>=r.list.length?'mc':'open'; msg.textContent=t('ai_done_extract',r.mc.length+r.list.length) }
+    if(kind==='solve'){ msg.textContent='🤖 '+t('ai_working'); const n=await aiSolve(P.mc,prog); msg.textContent=t('ai_done_solve',n) }
+    if(kind==='answers'){ msg.textContent='🤖 '+t('ai_working'); const n=await aiAnswers(P.list,lang,prog); msg.textContent=t('ai_done_answers',n) }
+    if(kind==='options'){ msg.textContent='🤖 '+t('ai_working'); const mc=await aiOptions(P.list,lang,prog); P.mc=mc; P.type='mc'; P.page=0; msg.textContent=t('ai_done_options',mc.filter(x=>x.a>=0).length) }
+    bar.style.width='100%';
+  }catch(e){ msg.textContent=aiErrText(e) }
+  P.busy=false; $('pvSave').disabled=false; setTimeout(()=>box.classList.add('hide'),800); renderPreview();
+}
+$('aiBtns').onclick=e=>{ const b=e.target.closest('[data-ai]'); if(b) aiRun(b.dataset.ai) };
+document.querySelectorAll('#pvType button').forEach(b=>b.onclick=()=>{ const v=b.dataset.v; if(v===pending.type) return;
+  if(v==='open'&&!pending.list.length) pending.list=pending.mc.filter(x=>String(x.q).trim()).map(x=>({q:x.q,ans:x.a>=0?x.o[x.a]:''}));
+  if(v==='mc'&&!pending.mc.length) pending.mc=pending.list.filter(x=>String(x.q).trim()).map(x=>({q:x.q,o:['','','',''],a:-1}));
+  if(v==='open'&&!pending.list.length) pending.list=[{q:'',ans:''}]; if(v==='mc'&&!pending.mc.length) pending.mc=[{q:'',o:['','','',''],a:-1}];
+  pending.type=v; pending.page=0; renderPreview() });
 document.querySelectorAll('#pvFmt button').forEach(b=>b.onclick=()=>{pending.fmt=b.dataset.v;renderPreview()});
 $('pvUni').onchange=()=>$('pvUniOther').classList.toggle('hide',$('pvUni').value!=='other');
-$('pvCancel').onclick=()=>go('upload');
-$('pvSave').onclick=async()=>{
-  const uniSel=$('pvUni').value, uniOther=$('pvUniOther').value.trim();
+$('pvCancel').onclick=()=>{ const id=pending&&pending.editId; pending=null; id?openBank(id):go('upload') };
+function pvClean(){
   const isMc=pending.type==='mc';
-  const b={id:'b'+Date.now(),name:$('pvName').value.trim()||pending.name,type:isMc?'mc':'written',format:isMc?'test':pending.fmt,
-    qs:isMc?pending.mc:pending.list.map(x=>({q:x.q,ans:x.ans||''})),
+  if(isMc){ const all=pending.mc.map(x=>{ const o=[],map={}; x.o.forEach((s,j)=>{ s=String(s).trim(); if(s){ map[j]=o.length; o.push(s) } }); return {q:String(x.q).trim(),o,a:x.a>=0&&map[x.a]!=null?map[x.a]:-1} }).filter(x=>x.q&&x.o.length>=2);
+    return {qs:all.filter(x=>x.a>=0),skipped:all.filter(x=>x.a<0).length} }
+  const qs=pending.list.map(x=>({q:String(x.q).trim(),ans:String(x.ans||'').trim()})).filter(x=>x.q); return {qs,skipped:0};
+}
+$('pvSave').onclick=async()=>{
+  if(!pending) return;
+  const uniSel=$('pvUni').value, uniOther=$('pvUniOther').value.trim();
+  const isMc=pending.type==='mc', {qs,skipped}=pvClean();
+  if(!qs.length){ $('pvMsg').textContent=isMc&&skipped?t('pv_need_ok'):t('pv_empty'); return }
+  if(skipped&&!pending.warn){ pending.warn=true; $('pvMsg').textContent=t('pv_skip_warn',skipped); return }
+  const old=pending.editId&&mem.banks.find(x=>x.id===pending.editId);
+  const b={id:old?old.id:'b'+Date.now(),name:$('pvName').value.trim()||pending.name||t('my_test'),type:isMc?'mc':'written',format:isMc?'test':pending.fmt,qs,
     uni:uniSel==='other'?slug(uniOther):uniSel, uniLabel:uniSel==='other'?uniOther:uniName(uniSel),
     fac:$('pvFac').value.trim(), subj:$('pvSubj').value.trim()||$('pvName').value.trim(), lang:$('pvLang').value};
-  mem.banks.unshift(b); saveBanks();
+  if(old){ if(old.sharedId) b.sharedId=old.sharedId; Object.keys(old).forEach(k=>delete old[k]); Object.assign(old,b); if(mem.stats[b.id]) delete mem.stats[b.id]; saveStats(); }
+  else mem.banks.unshift(b);
+  saveBanks(); if(!old) award(Math.min(30,5+Math.floor(qs.length/10)));
   if($('pvPublic').checked){
-    if(!b.uni||!b.subj){$('pvMsg').textContent=t('need_uni_subj');mem.banks.shift();saveBanks();return}
+    if(!b.uni||!b.subj){$('pvMsg').textContent=t('need_uni_subj'); if(!old){mem.banks.shift();saveBanks()} return}
     $('pvSave').disabled=true; $('pvMsg').textContent=t('publishing');
-    try{ const id=await Cat.publish(b); b.sharedId=id; saveBanks(); }
-    catch(e){ $('pvSave').disabled=false; openBank(b.id); $('bkMsg').textContent=e&&e.code==='quota_exceeded'?t('pub_quota'):t('pub_fail'); return }
+    try{ const id=await Cat.publish(b); b.sharedId=id; saveBanks(); toast('🌍 '+t('pub_ok')) }
+    catch(e){ $('pvSave').disabled=false; pending=null; openBank(b.id); $('bkMsg').textContent=e&&e.code==='quota_exceeded'?t('pub_quota'):t('pub_fail'); return }
     $('pvSave').disabled=false;
   }
-  openBank(b.id);
+  pending=null; openBank(b.id);
 };
 
 // ---------- bank ----------
@@ -1184,6 +1289,7 @@ function fillBankHeader(b,shared){
   $('bkCrumbs').innerHTML=crumbsFor(b);
   const langName={az:'Azərbaycan dili',ru:'Русский',en:'English'};
   $('bkTags').innerHTML=[b.lang?`<span class="pill">${langName[b.lang]||b.lang}</span>`:'',b.tag?`<span class="pill acc">${t('ready_tag')}</span>`:'',W?`<span class="pill">${b.format==='test'?t('test_noopts_tag'):t('written_tag')}</span>`:'',shared||b.sharedId?`<span class="pill acc">${t('in_catalog')}</span>`:''].join('');
+  const own=!shared&&!b.tag; $('bkEdit').classList.toggle('hide',!own); $('bkPub').classList.toggle('hide',!(own&&!b.sharedId));
   $('bkShare').classList.toggle('hide',!(shared?b.id:b.sharedId)); $('bkReport').classList.toggle('hide',!shared); $('bkDelete').classList.toggle('hide',!!b.tag||(shared&&!Cat.canRemove(b)));
   $('bkMsg').textContent='';
 }
@@ -1208,6 +1314,25 @@ $('bkDelete').onclick=async()=>{
   btn.dataset.c=''; btn.textContent=t('delete');
   if(curBank.shared){ try{await Cat.remove(curBank.id)}catch(e){$('bkMsg').textContent=t('pub_fail');return} return go('catalog') }
   mem.banks=mem.banks.filter(b=>b.id!==curBank.id); delete mem.stats[curBank.id]; saveBanks(); saveStats(); go('mybanks');
+};
+function editBank(b,pub){
+  const isMc=b.type==='mc', cp=JSON.parse(JSON.stringify(b.qs||[]));
+  openPending({mc:isMc?cp:[],list:isMc?[]:cp,name:b.name,editId:b.id,type:isMc?'mc':'open'});
+  pending.fmt=b.format==='test'&&!isMc?'test':'written';
+  $('pvSubj').value=b.subj||b.name; $('pvLang').value=b.lang||'az'; $('pvFac').value=b.fac||'';
+  const known=UNIS.some(u=>u[0]===b.uni); $('pvUni').value=b.uni?(known?b.uni:'other'):''; $('pvUniOther').value=known?'':(b.uniLabel||''); $('pvUniOther').classList.toggle('hide',$('pvUni').value!=='other');
+  if(pub&&!$('pvPublic').disabled){ $('pvPublic').checked=true; $('pvMsg').textContent=t('need_uni_subj') }
+  renderPreview();
+}
+$('bkEdit').onclick=()=>{ if(curBank&&!curBank.shared) editBank(curBank,false) };
+$('bkPub').onclick=async()=>{
+  const b=curBank; if(!b||b.shared) return;
+  if(!Cat.db||!isReal(FB.user)){ $('bkMsg').textContent=t('pub_need_acc'); return }
+  if(!b.uni||!b.subj) return editBank(b,true);
+  $('bkPub').disabled=true; $('bkMsg').textContent=t('publishing');
+  try{ b.sharedId=await Cat.publish(b); saveBanks(); $('bkMsg').textContent=''; toast('🌍 '+t('pub_ok')); fillBankHeader(b,false) }
+  catch(e){ $('bkMsg').textContent=e&&e.code==='quota_exceeded'?t('pub_quota'):t('pub_fail') }
+  $('bkPub').disabled=false;
 };
 $('bkReport').onclick=async()=>{ try{await Cat.report(curBank.id,'')}catch(e){} $('bkMsg').textContent=t('reported'); $('bkReport').disabled=true };
 $('bkPractice').onclick=()=>startQuiz('practice',curBank.qs.map((_,i)=>i));
@@ -1730,6 +1855,158 @@ function initArena(){
   $('arCode').onkeydown=e=>{ if(e.key==='Enter') $('arJoin').click() };
 }
 
+// ---------- AI: Gemini через Firebase AI Logic (бесплатный тариф Spark, ключ не нужен) ----------
+// Распознаёт структуру тестов из PDF/DOCX/фото, отмечает правильные ответы, пишет ответы к вопросам и делает варианты.
+const AI_SDK='12.12.0';
+const AI_MODELS=['gemini-3.5-flash-lite','gemini-3.6-flash','gemini-3.1-flash-lite'];
+const AI_LIMIT={real:60,guest:15};             // запросов к ИИ в день на пользователя (админам без лимита)
+const AI_APPCHECK_KEY='6LfjciouAAAAANhW9OWYhQLTRX1Ro9NGdSzxaLHc'; // reCAPTCHA v3 (сайт elmin-eyvazov.github.io)
+const AI_APPCHECK_ON=false;                    // включить после того, как секретный ключ добавлен в Firebase → App Check
+const AI_CHUNK=7000;                           // символов текста на один запрос
+let _ai=null, _aiModel=0;
+async function aiCore(){
+  if(_ai) return _ai;
+  const base='https://www.gstatic.com/firebasejs/'+AI_SDK+'/';
+  const A=await import(base+'firebase-app.js'), M=await import(base+'firebase-ai.js');
+  const app=A.getApps().find(a=>a.name==='ai')||A.initializeApp(FB_CONFIG,'ai');
+  if(AI_APPCHECK_ON){ try{ const C=await import(base+'firebase-app-check.js'); C.initializeAppCheck(app,{provider:new C.ReCaptchaV3Provider(AI_APPCHECK_KEY),isTokenAutoRefreshEnabled:true}) }catch(e){} }
+  _ai={M,ai:M.getAI(app,{backend:new M.GoogleAIBackend()})}; return _ai;
+}
+function aiUsage(){ const u=store.get('sp_ai',{}); return u.day===dayKey()?u.n:0 }
+function aiLimit(){ return (typeof isAdmin==='function'&&isAdmin())?9999:(isReal(FB.user)?AI_LIMIT.real:AI_LIMIT.guest) }
+function aiLeft(){ return Math.max(0,aiLimit()-aiUsage()) }
+function aiSpend(n){ store.set('sp_ai',{day:dayKey(),n:aiUsage()+(n||1)}) }
+function aiErr(code){ const e=new Error(code); e.code=code; return e }
+function jsonSalvage(s){
+  try{ return JSON.parse(s) }catch(e){}
+  let p=s.length;                                    // обрезанный ответ: отрезаем по последнему целому объекту и закрываем массив
+  for(let k=0;k<300;k++){ p=s.lastIndexOf('}',p-1); if(p<0) return null; try{ return JSON.parse(s.slice(0,p+1)+']}') }catch(e){} }
+  return null;
+}
+// один запрос к модели с перебором моделей при 404/429/перегрузке
+async function aiCall(parts,schema,{temp=0}={}){
+  if(aiLeft()<=0) throw aiErr('ai_limit');
+  const {M,ai}=await aiCore(); let last=null;
+  for(let k=0;k<AI_MODELS.length;k++){
+    const name=AI_MODELS[(_aiModel+k)%AI_MODELS.length];
+    try{
+      const model=M.getGenerativeModel(ai,{model:name,generationConfig:{responseMimeType:'application/json',responseSchema:schema(M.Schema),temperature:temp}});
+      const r=await model.generateContent(parts); aiSpend(1);
+      const j=jsonSalvage(r.response.text()); if(!j) throw aiErr('ai_bad');
+      _aiModel=(_aiModel+k)%AI_MODELS.length; return j;
+    }catch(e){ last=e; const s=String(e&&e.message||e);
+      if(e.code==='ai_bad'||/404|429|503|500|overloaded|not found|no longer|quota|RESOURCE_EXHAUSTED|UNAVAILABLE/i.test(s)) continue;
+      throw e; }
+  }
+  if(last&&/429|quota|RESOURCE_EXHAUSTED/i.test(String(last.message))) throw aiErr('ai_busy');
+  throw last||aiErr('ai_fail');
+}
+async function aiPool(jobs,n,onDone){ const out=new Array(jobs.length); let i=0,done=0;
+  await Promise.all(Array.from({length:Math.min(n,jobs.length)},async()=>{ while(i<jobs.length){ const k=i++; out[k]=await jobs[k](); done++; onDone&&onDone(done,jobs.length) } }));
+  return out }
+function aiChunks(text,size){
+  const lines=String(text).replace(/\r/g,'').split('\n'), out=[]; let cur='';
+  for(const l of lines){
+    const startsQ=/^\s*(\d{1,4}\s*[\.\)]|sual\s*\d|вопрос\s*\d|question\s*\d|#\s*\d)/i.test(l);
+    if(cur.length>size&&startsQ || cur.length>size*1.6){ out.push(cur); cur='' }
+    cur+=l+'\n';
+  }
+  if(cur.trim()) out.push(cur); return out;
+}
+function b64(buf){ let s='',b=new Uint8Array(buf); for(let i=0;i<b.length;i+=0x8000) s+=String.fromCharCode.apply(null,b.subarray(i,i+0x8000)); return btoa(s) }
+
+const AI_EXTRACT_RULES=`You convert a university exam question bank (Azerbaijan; Azerbaijani, Russian or English) into structured JSON.
+The input may be messy: broken lines, page headers/footers, page numbers, titles, teacher names — ignore everything that is not a question.
+Return EVERY question in the original order. Do not invent, merge, translate or summarize questions.
+- q: the question text exactly as written; join broken line wraps; remove the leading number/label.
+- o: the answer options WITHOUT their labels (A) a) 1. • - etc.); [] if the question has no options.
+- a: 0-based index of the correct option. It can be marked by √ ✓ + * • » «))» ●, bold (**text**), underline, highlighting, "(düzgün)"/"(верно)", or given in an answer key ("1-B", "1) C", "Cavab: A", "Ответ: б", a table at the end). If nothing marks it use -1 — never guess.
+- ans: for questions WITHOUT options — the answer/explanation if the document contains it, else "". For questions with options — "".`;
+const aiQSchema=S=>S.object({properties:{questions:S.array({items:S.object({properties:{q:S.string(),o:S.array({items:S.string()}),a:S.integer(),ans:S.string()}})})}});
+
+// Распознать структуру: из текста (кусками) или из самого файла (PDF/фото — модель видит жирный шрифт и разметку)
+async function aiExtract(src,onProgress){
+  let res=[];
+  if(src.images&&src.images.length){                 // несколько фото страниц: по 4 фото на запрос
+    const groups=[]; for(let i=0;i<src.images.length;i+=4) groups.push(src.images.slice(i,i+4));
+    if(groups.length>aiLeft()) throw aiErr('ai_limit');
+    const outs=await aiPool(groups.map(g=>async()=>aiCall([{text:AI_EXTRACT_RULES+'\n\nThe pages are attached as photos, in order.'},...await Promise.all(g.map(async im=>({inlineData:{mimeType:im.type||'image/jpeg',data:b64(await im.arrayBuffer())}})))],aiQSchema)),2,onProgress);
+    for(const j of outs) res.push(...((j&&j.questions)||[]));
+    return aiSplit(res);
+  }
+  const f=src.file, isPdf=f&&/\.pdf$/i.test(f.name), isImg=f&&/^image\//.test(f.type);
+  const scanned=isPdf&&(src.text||'').trim().length<Math.max(300,(src.pages||1)*80);
+  const useFile=isImg||isPdf&&f.size<18e6&&(scanned||(src.pages||99)<=12);
+  if(useFile){
+    onProgress&&onProgress(0,1);
+    const mime=isPdf?'application/pdf':(f.type||'image/jpeg');
+    const j=await aiCall([{text:AI_EXTRACT_RULES+'\n\nThe document is attached.'},{inlineData:{mimeType:mime,data:b64(await src.file.arrayBuffer())}}],aiQSchema);
+    res=(j&&j.questions)||[]; onProgress&&onProgress(1,1);
+  }else{
+    const parts=aiChunks(src.text||'',AI_CHUNK).slice(0,40);
+    if(!parts.length) throw aiErr('ai_empty');
+    if(parts.length>aiLeft()) throw aiErr('ai_limit');
+    const outs=await aiPool(parts.map(p=>()=>aiCall(AI_EXTRACT_RULES+'\n\nTEXT:\n'+p,aiQSchema).catch(e=>{ if(e.code==='ai_limit') throw e; return {questions:[]} })),3,onProgress);
+    for(const j of outs) res.push(...((j&&j.questions)||[]));
+  }
+  return aiSplit(res);
+}
+function aiSplit(res){
+  const mc=[],list=[],seen=new Set();
+  for(const x of res){
+    const q=String(x.q||'').trim(); if(!q) continue;
+    const o=(x.o||[]).map(s=>String(s).trim()).filter(Boolean);
+    const key=q.toLowerCase()+'|'+o.join('|').toLowerCase(); if(seen.has(key)) continue; seen.add(key);
+    if(o.length>=2) mc.push({q,o,a:Number.isInteger(x.a)&&x.a>=0&&x.a<o.length?x.a:-1});
+    else list.push({q,ans:String(x.ans||'').trim()});
+  }
+  if(!mc.length&&!list.length) throw aiErr('ai_empty');
+  return {mc,list};
+}
+const LANG_NAME={az:'Azerbaijani',ru:'Russian',en:'English'};
+// Отметить правильные ответы в тестах, где они не отмечены
+async function aiSolve(items,onProgress){
+  const idx=items.map((x,i)=>i).filter(i=>!(items[i].a>=0)); const batches=[]; for(let i=0;i<idx.length;i+=25) batches.push(idx.slice(i,i+25));
+  if(batches.length>aiLeft()) throw aiErr('ai_limit');
+  const sch=S=>S.object({properties:{answers:S.array({items:S.object({properties:{i:S.integer(),a:S.integer()}})})}});
+  let n=0;
+  await aiPool(batches.map(b=>async()=>{
+    const body=b.map(i=>({i,q:items[i].q,o:items[i].o}));
+    const j=await aiCall(`You are an expert university lecturer. For each multiple-choice question choose the correct option. Return i (as given) and a = 0-based index of the correct option.\n\n`+JSON.stringify(body),sch);
+    for(const r of (j.answers||[])){ const it=items[r.i]; if(it&&b.includes(r.i)&&r.a>=0&&r.a<it.o.length){ it.a=r.a; it.ai=1; n++ } }
+  }),3,onProgress);
+  return n;
+}
+// Написать образцовые ответы к открытым вопросам
+async function aiAnswers(list,lang,onProgress,all){
+  const idx=list.map((x,i)=>i).filter(i=>all||!list[i].ans); const batches=[]; for(let i=0;i<idx.length;i+=12) batches.push(idx.slice(i,i+12));
+  if(batches.length>aiLeft()) throw aiErr('ai_limit');
+  const sch=S=>S.object({properties:{answers:S.array({items:S.object({properties:{i:S.integer(),ans:S.string()}})})}});
+  let n=0;
+  await aiPool(batches.map(b=>async()=>{
+    const body=b.map(i=>({i,q:list[i].q}));
+    const j=await aiCall(`You are an expert university lecturer preparing model answers for a written exam. Write the answer for each question in ${LANG_NAME[lang]||'the language of the question'}.
+Each answer: 3–7 sentences, accurate, with the key definition, main points and terms (formula or example if relevant). Plain text, no markdown, no "Answer:" prefix. Return i as given.\n\n`+JSON.stringify(body),sch,{temp:0.3});
+    for(const r of (j.answers||[])){ const it=list[r.i]; if(it&&b.includes(r.i)&&String(r.ans||'').trim()){ it.ans=String(r.ans).trim(); it.ai=1; n++ } }
+  }),3,onProgress);
+  return n;
+}
+// Превратить открытые вопросы в тест с 4 вариантами
+async function aiOptions(list,lang,onProgress){
+  const batches=[]; for(let i=0;i<list.length;i+=15) batches.push(list.slice(i,i+15).map((x,k)=>i+k));
+  if(batches.length>aiLeft()) throw aiErr('ai_limit');
+  const sch=S=>S.object({properties:{items:S.array({items:S.object({properties:{i:S.integer(),q:S.string(),o:S.array({items:S.string()}),a:S.integer()}})})}});
+  const out=new Array(list.length);
+  await aiPool(batches.map(b=>async()=>{
+    const body=b.map(i=>({i,q:list[i].q,ref:list[i].ans||undefined}));
+    const j=await aiCall(`Turn each exam question into a multiple-choice test question in ${LANG_NAME[lang]||'the language of the question'}.
+Keep q close to the original (rephrase only if needed so it has one short correct answer). Give exactly 4 options: one correct (based on "ref" when given) and three plausible, similar-length distractors. Put the correct option at a random position; a = its 0-based index. No labels like "A)". Return i as given.\n\n`+JSON.stringify(body),sch,{temp:0.4});
+    for(const r of (j.items||[])){ const o=(r.o||[]).map(s=>String(s).trim()).filter(Boolean); if(b.includes(r.i)&&o.length>=2&&r.a>=0&&r.a<o.length) out[r.i]={q:String(r.q||list[r.i].q).trim(),o,a:r.a,ai:1} }
+  }),3,onProgress);
+  return out.map((x,i)=>x||{q:list[i].q,o:['','','',''],a:-1});
+}
+function aiErrText(e){ const c=e&&e.code; return t(c==='ai_limit'?'ai_limit':c==='ai_busy'?'ai_busy':c==='ai_empty'?'ai_empty':'ai_fail') }
+
 // ---------- Firebase: общая инициализация, вход (Google / e-poçt / telefon) и синхронизация прогресса ----------
 // Firebase web config (Firebase console → Project settings → Your apps → Web app → Config).
 // null → вход и доска объявлений показывают «tezliklə»; ?demo в URL включает доску с локальными тестовыми данными.
@@ -1757,7 +2034,7 @@ function fbStart(){
     await new Promise(r=>{const un=auth.onAuthStateChanged(()=>{un();r()})});
     if(!auth.currentUser){ try{ await auth.signInAnonymously() }catch(e){} }
     FB.user=auth.currentUser;
-    auth.onAuthStateChanged(u=>{ const was=FB.user&&FB.user.uid; FB.user=u; if(typeof Board!=='undefined') Board.uid=u&&u.uid;
+    auth.onAuthStateChanged(u=>{ const was=FB.user&&FB.user.uid; FB.user=u;
       if(u&&!u.isAnonymous&&u.uid!==was) syncPull(); FB.ls.forEach(f=>{try{f(u)}catch(e){}}) });
     if(isReal(FB.user)) syncPull();
     FB.loaded=true; return firebase;
@@ -1805,18 +2082,11 @@ async function acRun(fn){ if(AC.busy) return; AC.busy=true;
   const m=$('acMsg'); if(m){ m.style.color='var(--mute)'; m.textContent=t('acc_wait') } document.querySelectorAll('#acBox button').forEach(b=>b.disabled=true);
   try{ await fn(); AC.msg='' }catch(e){ AC.msg=acErr(e) } AC.busy=false; drawAccount() }
 
-function myAdsHtml(u){
-  if(typeof Board==='undefined'||!Board.ready) return `<div class="note">${t('loading')}</div>`;
-  const L=Board.ads.filter(a=>a.uid===u.uid);
-  if(!L.length) return `<div class="note">${t('acc_no_ads')} <a data-h="post" style="color:var(--acc);cursor:pointer;font-weight:600">${t('post_btn')}</a></div>`;
-  return L.map(a=>`<div class="row" style="justify-content:space-between;gap:8px;flex-wrap:nowrap;border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px"><div style="min-width:0"><b style="display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(a.title)}</b><span class="note">${catIcon(a.cat)} ${t('cat_'+a.cat)} · ${ago(a.createdAt)}</span></div><button class="btn ghost small" data-del="${esc(a.id)}">${t('delete')}</button></div>`).join('');
-}
 async function deleteAccount(){
   const u=firebase.auth().currentUser; if(!u) return;
   const last=Date.parse(u.metadata&&u.metadata.lastSignInTime||0)||0;
   if(Date.now()-last>4.5*60e3) throw {code:'auth/requires-recent-login'};
   const db=firebase.firestore();
-  for(const a of (Board.ads||[]).filter(a=>a.uid===u.uid)){ try{ await db.collection('ads').doc(a.id).delete() }catch(e){} }
   for(const m of (Cat.userMetas||[]).filter(m=>m.uid===u.uid)){ try{ await db.doc('banks/'+m.id).update({hidden:true}) }catch(e){} }
   try{ await db.doc('users/'+u.uid).delete() }catch(e){}
   await u.delete();
@@ -1840,14 +2110,12 @@ function drawAccount(){
       <div class="row" style="margin-top:12px;gap:8px"><button class="btn sec small" id="acName2">✏️ ${t('acc_edit_name')}</button><button class="btn sec small" id="acOut">${t('acc_logout')}</button></div>
       ${AC.editName?`<div class="row" style="margin-top:10px;gap:8px;flex-wrap:nowrap"><input type="text" id="acNameIn" maxlength="40" value="${esc(u.displayName||'')}" placeholder="${t('acc_name_ph2')}"><button class="btn small" id="acNameSave">${t('acc_save')}</button></div>`:''}
       <div class="note" id="acMsg" style="margin-top:8px;color:var(--bad)">${esc(AC.msg)}</div>
-      <h3 style="margin:18px 0 8px;font-size:16px">📌 ${t('acc_my_ads')}</h3><div id="acAds">${myAdsHtml(u)}</div>
       <details style="margin-top:18px"><summary class="note" style="cursor:pointer">${t('acc_danger')}</summary>
         <p class="note">${t('acc_delete_note')}</p><button class="btn small" style="background:var(--bad)" id="acDel">${t('acc_delete')}</button></details>`;
     $('acName2').onclick=()=>{ AC.editName=!AC.editName; AC.msg=''; drawAccount() };
     if(AC.editName){ $('acNameSave').onclick=()=>acRun(async()=>{ const v=$('acNameIn').value.trim().slice(0,40); await firebase.auth().currentUser.updateProfile({displayName:v}); AC.editName=false; FB.user=firebase.auth().currentUser; syncPush() }); }
-    $('acAds').querySelectorAll('[data-del]').forEach(b=>b.onclick=async()=>{ if(b.dataset.c!=='1'){ b.textContent=t('confirm_delete'); b.dataset.c='1'; return } b.disabled=true; try{ await Board.api.remove(b.dataset.del) }catch(e){ b.disabled=false } });
     $('acDel').onclick=()=>{ const b=$('acDel'); if(b.dataset.c!=='1'){ b.textContent=t('acc_delete_confirm'); b.dataset.c='1'; return } acRun(deleteAccount) };
-    if(typeof Board!=='undefined') Board.start();
+
     $('acOut').onclick=()=>acRun(async()=>{ try{ window.google&&google.accounts&&google.accounts.id.disableAutoSelect() }catch(e){} Gate.tapStarted=false; await firebase.auth().signOut(); try{ await firebase.auth().signInAnonymously() }catch(e){} });
     return }
   const m=AC.mode;
@@ -1914,148 +2182,15 @@ const Gate={open:false,started:false,
   offline(){ $('gateBox').innerHTML=`<div class="note" style="color:var(--bad);margin-bottom:10px">${t('gate_offline')}</div><button class="btn acbtn" onclick="location.reload()">${t('gate_retry')}</button>` }
 };
 
-// ---------- board: elanlar lövhəsi (otaq yoldaşı, kirayə, satış, xidmətlər) ----------
-const AD_CATS=[['room','🏠'],['sell','📚'],['service','🧑‍🏫'],['job','💼'],['lost','🔎'],['other','📌']];
-const AD_KINDS={room:['need_mate','offer_room','need_room'],sell:['sell','buy'],service:['offer','need'],job:['offer','need']};
-const AD_DAYS=45, AD_PER_DAY=5;
-const PLACES=['Yataqxana','28 May','Gənclik','Nəriman Nərimanov','Koroğlu','Qara Qarayev','Neftçilər','Xalqlar Dostluğu','Əhmədli','Həzi Aslanov','Sahil','İçərişəhər','Nizami','Elmlər Akademiyası','İnşaatçılar','20 Yanvar','Memar Əcəmi','Nəsimi (metro)','Azadlıq prospekti','Dərnəgül','Avtovağzal','8 Noyabr','Xocəsən','Cəfər Cabbarlı','Şah İsmayıl Xətai','Ulduz','Bakmil',
-  'Yasamal r.','Nəsimi r.','Nərimanov r.','Səbail r.','Binəqədi r.','Xətai r.','Nizami r.','Sabunçu r.','Suraxanı r.','Xəzər r.','Qaradağ r.','Sumqayıt','Gəncə'];
-const catIcon=c=>(AD_CATS.find(x=>x[0]===c)||[0,'📌'])[1];
-
-function fbApi(db,B){ const FV=firebase.firestore.FieldValue; return {
-  subscribe(cb,ecb){ const since=firebase.firestore.Timestamp.fromMillis(Date.now()-AD_DAYS*864e5);
-    return db.collection('ads').where('createdAt','>',since).orderBy('createdAt','desc').limit(500).onSnapshot(
-      s=>cb(s.docs.map(d=>{const x=d.data(); return {...x,id:d.id,createdAt:x.createdAt&&x.createdAt.toMillis?x.createdAt.toMillis():Date.now()}})),ecb) },
-  create(ad){ return db.collection('ads').add({...ad,uid:B.uid,createdAt:FV.serverTimestamp()}) },
-  remove(id){ return db.collection('ads').doc(id).delete() },
-  report(id){ return db.collection('reports').add({ad:id,uid:B.uid,at:FV.serverTimestamp()}) }
-}}
-function demoApi(B){ B.uid='demo'; const ls=[]; const get=()=>store.get('sp_demo_ads',[]); const put=v=>{store.set('sp_demo_ads',v); ls.forEach(f=>f(get()))};
-  return { subscribe(cb){ ls.push(cb); setTimeout(()=>cb(get()),150) },
-    async create(ad){ put([{...ad,uid:B.uid,id:'d'+Date.now().toString(36),createdAt:Date.now()},...get()]) },
-    async remove(id){ put(get().filter(a=>a.id!==id)) }, async report(){} } }
-
-const Board={api:null,ads:[],ready:false,err:null,uid:null,started:false,
-  async init(){
-    if(FB_CONFIG){
-      const fb=await fbStart();
-      if(fb){ this.uid=FB.user&&FB.user.uid; this.api=fbApi(fb.firestore(),this) } else this.err='init';
-    } else if(/[?&]demo\b/.test(location.search)) this.api=demoApi(this);
-    return this.api },
-  async start(){ if(this.started) return; this.started=true;
-    const api=await this.init(); if(!api){ this.ready=true; return boardRefresh() }
-    api.subscribe(list=>{ this.ads=list.filter(a=>a.createdAt>Date.now()-AD_DAYS*864e5); this.ready=true; this.err=null; boardRefresh() },
-      e=>{ this.err=(e&&e.code)||'err'; this.ready=true; boardRefresh() }) }
-};
-function boardRefresh(){ if(!$('v-board').classList.contains('hide')) renderAds(); if(!$('v-profile').classList.contains('hide')&&$('acAds')&&FB.user) $('acAds').innerHTML=myAdsHtml(FB.user); if(!$('v-home').classList.contains('hide')) renderHomeBoard() }
-
-// ---------- board view ----------
-const BS={cat:'all',kind:'all',sex:'any',max:'',q:''};
-function renderBoard(cat){
-  cat=AD_CATS.some(x=>x[0]===cat)?cat:'all';
-  if(cat!==BS.cat){ BS.cat=cat; BS.kind='all' }
-  show('board'); document.title=(cat==='all'?t('board_title'):t('cat_'+cat))+' | Sessiya+';
-  const cnt={}; Board.ads.forEach(a=>cnt[a.cat]=(cnt[a.cat]||0)+1);
-  $('bdCats').innerHTML=[['all','🗂']].concat(AD_CATS).map(([c,ic])=>`<a class="chip ${c===BS.cat?'on':''}" data-h="${c==='all'?'board':'board-'+c}">${ic} ${t('cat_'+c)}${Board.ready&&(c==='all'?Board.ads.length:cnt[c])?` <span class="cn">${c==='all'?Board.ads.length:cnt[c]}</span>`:''}</a>`).join('');
-  const kinds=AD_KINDS[BS.cat];
-  $('bdKind').classList.toggle('hide',!kinds);
-  if(kinds) $('bdKind').innerHTML=['all',...kinds].map(k=>`<button data-v="${k}" class="${k===BS.kind?'on':''}">${k==='all'?t('kinds_all'):t('kind_'+k)}</button>`).join('');
-  $('bdKind').querySelectorAll('button').forEach(b=>b.onclick=()=>{BS.kind=b.dataset.v;renderBoard(BS.cat)});
-  $('bdRoomF').classList.toggle('hide',BS.cat!=='room');
-  $('bdSex').innerHTML=['any','f','m'].map(s=>`<button data-v="${s}" class="${s===BS.sex?'on':''}">${t('sex_'+s)}</button>`).join('');
-  $('bdSex').querySelectorAll('button').forEach(b=>b.onclick=()=>{BS.sex=b.dataset.v;renderBoard(BS.cat)});
-  $('bdPost').onclick=()=>go(BS.cat==='all'?'post':'post-'+BS.cat);
-  renderAds(); Board.start();
-}
-function filteredAds(){
-  const q=lowq(BS.q.trim()), max=parseFloat(BS.max);
-  return Board.ads.filter(a=>(BS.cat==='all'||a.cat===BS.cat)&&(BS.kind==='all'||a.kind===BS.kind)
-    &&(BS.cat!=='room'||BS.sex==='any'||!a.gender||a.gender==='any'||a.gender===BS.sex)
-    &&(BS.cat!=='room'||!max||a.price==null||a.price<=max)
-    &&(!q||lowq([a.title,a.text,a.place,a.uni].join(' ')).includes(q)));
-}
-function renderAds(){
-  const box=$('bdList');
-  if(!FB_CONFIG&&!Board.api&&Board.ready){ box.innerHTML=`<div class="empty">🚧 ${t('board_soon')}</div>`; return }
-  if(!Board.ready){ box.innerHTML=`<div class="empty">${t('loading')}</div>`; return }
-  if(Board.err&&!Board.ads.length){ box.innerHTML=`<div class="empty">${t('board_err')}</div>`; return }
-  const L=filteredAds();
-  box.innerHTML=L.length?L.map(adCard).join(''):`<div class="empty">${t('board_empty')}<div style="margin-top:10px"><button class="btn small" onclick="$('bdPost').click()">${t('post_btn')}</button></div></div>`;
-  box.querySelectorAll('[data-del]').forEach(b=>b.onclick=async()=>{
-    if(b.dataset.c!=='1'){ b.textContent=t('confirm_delete'); b.dataset.c='1'; setTimeout(()=>{b.textContent=t('delete');b.dataset.c=''},3000); return }
-    b.disabled=true; try{ await Board.api.remove(b.dataset.del) }catch(e){ b.disabled=false } });
-  box.querySelectorAll('[data-rep]').forEach(b=>b.onclick=async()=>{ b.disabled=true; b.textContent=t('ad_reported'); try{ await Board.api.report(b.dataset.rep) }catch(e){} });
-}
-function ago(ms){ const m=Math.max(0,Math.floor((Date.now()-ms)/60000)); if(m<2) return t('ago_now'); if(m<60) return t('ago_min',m); const h=Math.floor(m/60); if(h<24) return t('ago_h',h); return t('ago_d',Math.floor(h/24)) }
-function contactBtns(c){
-  c=String(c||'').trim(); let d=c.replace(/\D/g,'');
-  if(/^[+\d\s().-]+$/.test(c)&&d.length>=9){ if(d.length===10&&d[0]==='0') d='994'+d.slice(1); else if(d.length===9) d='994'+d;
-    return `<a class="btn small" style="background:#1fa855" href="https://wa.me/${d}" target="_blank" rel="noopener">WhatsApp</a><a class="btn sec small" href="tel:+${d}">📞 ${esc(c)}</a>` }
-  const tg=c.match(/^@([a-zA-Z][a-zA-Z0-9_]{3,31})$/);
-  if(tg) return `<a class="btn small" style="background:#229ed9" href="https://t.me/${tg[1]}" target="_blank" rel="noopener">Telegram ${esc(c)}</a>`;
-  return `<span class="pill" style="font-size:14px;padding:7px 12px">${esc(c)}</span>` }
-function adCard(a){
-  const own=(Board.uid&&a.uid===Board.uid)||isAdmin(), room=a.cat==='room';
-  const meta=[a.place?`📍 ${esc(a.place)}`:'',a.uni?`🎓 ${esc(a.uni)}`:'',room&&a.gender&&a.gender!=='any'?(a.gender==='f'?'👩 ':'👨 ')+t('sex_'+a.gender):'',`🕒 ${ago(a.createdAt)}`].filter(Boolean).map(s=>`<span>${s}</span>`).join('');
-  return `<div class="ad"><div class="row" style="justify-content:space-between;align-items:flex-start;gap:8px;flex-wrap:nowrap"><span class="pill acc">${catIcon(a.cat)} ${a.kind?t('kind_'+a.kind):t('cat_'+a.cat)}</span>${a.price!=null&&a.price!==''?`<b class="price">${a.price} ₼${room?t('per_month'):''}</b>`:''}</div>
-  <div class="adt">${esc(a.title)}</div><div class="row note adm">${meta}</div>${a.text?`<div class="adx">${esc(a.text)}</div>`:''}
-  <div class="row" style="margin-top:12px;gap:8px">${contactBtns(a.contact)}<span style="flex:1"></span>${own?`<button class="btn ghost small" data-del="${esc(a.id)}">${t('delete')}</button>`:`<button class="btn ghost small" style="color:var(--mute)" data-rep="${esc(a.id)}">${t('report')}</button>`}</div></div>` }
-
-// ---------- home teaser ----------
-function renderHomeBoard(){ if(!$('hbTiles')) return;
-  const cnt={}; Board.ads.forEach(a=>cnt[a.cat]=(cnt[a.cat]||0)+1);
-  $('hbTiles').innerHTML=['room','sell','service','job'].map(c=>`<a class="tile" data-h="board-${c}"><span><span class="tico">${catIcon(c)}</span><b>${t('cat_'+c)}</b></span>${cnt[c]?`<span class="pill">${cnt[c]}</span>`:''}</a>`).join('');
-}
-
-// ---------- post form ----------
-const PO={cat:'room',kind:'need_mate'};
-function renderPost(cat){
-  if(cat&&AD_CATS.some(x=>x[0]===cat)&&cat!==PO.cat){ PO.cat=cat; PO.kind=(AD_KINDS[cat]||[''])[0] }
-  show('post'); document.title=t('post_title')+' | Sessiya+';
-  $('poCat').innerHTML=AD_CATS.map(([c,ic])=>`<button data-v="${c}" class="${c===PO.cat?'on':''}">${ic} ${t('cat_'+c)}</button>`).join('');
-  $('poCat').querySelectorAll('button').forEach(b=>b.onclick=()=>{PO.cat=b.dataset.v;PO.kind=(AD_KINDS[PO.cat]||[''])[0];renderPost()});
-  const kinds=AD_KINDS[PO.cat]; $('poKindBox').classList.toggle('hide',!kinds);
-  if(kinds){ $('poKind').innerHTML=kinds.map(k=>`<button data-v="${k}" class="${k===PO.kind?'on':''}">${t('kind_'+k)}</button>`).join('');
-    $('poKind').querySelectorAll('button').forEach(b=>b.onclick=()=>{PO.kind=b.dataset.v;renderPost()}) }
-  const room=PO.cat==='room';
-  const sv=$('poSex').value||'any'; $('poSex').innerHTML=['any','f','m'].map(s=>`<option value="${s}">${t('sex_'+s)}</option>`).join(''); $('poSex').value=sv;
-  $('poSexBox').classList.toggle('hide',!room); $('poPriceL').textContent=room?t('f_price_room'):t('f_price');
-  $('poTitle').placeholder=t('ph_title_'+(room?PO.kind:PO.cat==='sell'?'sell':'gen')); $('poText').placeholder=room?t('ph_text_room'):t('ph_text_gen');
-  if(!$('poContact').value) $('poContact').value=store.get('sp_contact','');
-  $('poMsg').textContent=''; $('poSave').disabled=!Board.api&&Board.ready;
-  if($('poSave').disabled) $('poMsg').textContent=t('board_soon');
-  Board.start().then(()=>{ $('poSave').disabled=!Board.api; if(!Board.api) $('poMsg').textContent=t('board_soon') });
-}
-function initBoard(){
-  $('placeList').innerHTML=PLACES.map(p=>`<option value="${esc(p)}">`).join('');
-  $('poUni').innerHTML=`<option value="">—</option>`+UNIS.map(u=>{const s=(u[1].match(/\(([^)]+)\)/)||[0,u[1]])[1];return `<option value="${esc(s)}">${esc(u[1])}</option>`}).join('');
-  $('bdSearch').oninput=()=>{BS.q=$('bdSearch').value;renderAds()}; $('bdMax').oninput=()=>{BS.max=$('bdMax').value;renderAds()};
-  $('poCancel').onclick=()=>go(PO.cat?'board-'+PO.cat:'board');
-  $('poSave').onclick=async()=>{
-    const msg=$('poMsg'), title=$('poTitle').value.trim(), contact=$('poContact').value.trim(), pr=$('poPrice').value.trim();
-    if(title.length<3) return msg.textContent=t('post_need_title');
-    if(contact.length<5) return msg.textContent=t('post_need_contact');
-    if(!$('poAgree').checked) return msg.textContent=t('post_need_agree');
-    if(FB_CONFIG&&!isReal(FB.user)) return msg.innerHTML=t('post_need_login')+` <a data-h="profile" style="color:var(--acc);cursor:pointer;font-weight:600">${t('acc_login')} →</a>`;
-    const lim=store.get('sp_postlim',{}); const n=lim.day===dayKey()?lim.n:0; if(n>=AD_PER_DAY) return msg.textContent=t('post_limit');
-    const price=pr===''?null:Math.min(100000,Math.max(0,Math.round(parseFloat(pr.replace(',','.'))||0)));
-    const ad={cat:PO.cat,kind:AD_KINDS[PO.cat]?PO.kind:'',title:title.slice(0,80),text:$('poText').value.trim().slice(0,1000),price,
-      place:$('poPlace').value.trim().slice(0,60),uni:$('poUni').value,gender:PO.cat==='room'?$('poSex').value:'any',contact:contact.slice(0,60),lang:LANG};
-    $('poSave').disabled=true; msg.textContent=t('post_wait');
-    try{ await Board.api.create(ad) }catch(e){ $('poSave').disabled=false; msg.textContent=t('post_fail'); return }
-    store.set('sp_postlim',{day:dayKey(),n:n+1}); store.set('sp_contact',contact);
-    ['poTitle','poText','poPrice','poPlace'].forEach(id=>$(id).value=''); $('poAgree').checked=false; $('poSave').disabled=false;
-    BS.kind='all'; BS.q=''; $('bdSearch').value=''; go('board-'+PO.cat);
-  };
-}
-
-applyI18n(); renderHomeType(); initTools(); initBoard(); initArena(); route(); Cat.init(); Gate.init(); setTimeout(checkBadges,2500);
+applyI18n(); renderHomeType(); initTools(); initArena(); route(); Cat.init(); Gate.init(); setTimeout(checkBadges,2500);
 // ---------- Android app (APK) download ----------
 (function(){
   const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
   const android=/android/i.test(navigator.userAgent), help=$('instHelp');
-  $('instBox').classList.toggle('hide',standalone||!android); $('gateApk').classList.toggle('hide',standalone||!android);
-  $('apkBtn').classList.remove('hide');
+  const ios=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+  $('instBox').classList.toggle('hide',standalone||!(android||ios)); $('gateApk').classList.toggle('hide',standalone||!android);
+  $('apkBtn').classList.toggle('hide',!android); $('iosBtn').classList.toggle('hide',!ios);
+  $('iosBtn').onclick=()=>{ help.innerHTML=t('ios_help'); help.classList.remove('hide') };
   $('apkBtn').addEventListener('click',()=>{ help.textContent=t('apk_help'); help.classList.remove('hide') });
 })();
 if('serviceWorker' in navigator && location.protocol==='https:') addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));

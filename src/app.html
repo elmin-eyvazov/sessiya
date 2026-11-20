@@ -2,17 +2,18 @@
 <html lang="az">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Sessiya+"><meta name="format-detection" content="telephone=no">
 <meta name="google-site-verification" content="lP3hxovqAq7WJnPxLm0JtIpXFez7lgq6jF0V_5w3Gco" />
-<title>Sessiya+ — tələbə üçün testlər, elanlar və alətlər</title>
-<meta name="description" content="Sessiya+ — Azərbaycan tələbələri üçün hər şey bir yerdə: imtahana hazırlıq testləri, otaq yoldaşı və mənzil elanları, kitablar, repetitorlar, bal kalkulyatoru.">
+<title>Sessiya+ — tələbə üçün testlər, kartlar və alətlər</title>
+<meta name="description" content="Sessiya+ — Azərbaycan tələbələri üçün sessiyaya hazırlıq: testlər, kartlar, imtahan biletləri, süni intellektlə test yaratma, dostlarla duel, bal kalkulyatoru.">
 <meta name="theme-color" content="#2f5bea">
 <script>try{var th=JSON.parse(localStorage.getItem('sp_theme')||'"auto"');if(th==='dark'||(th==='auto'&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.classList.add('dark')}catch(e){}</script>
 <link rel="icon" href="icons/favicon.svg" type="image/svg+xml"><link rel="icon" href="icons/icon-192.png" sizes="192x192">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png"><link rel="manifest" href="manifest.webmanifest">
 <meta property="og:type" content="website"><meta property="og:site_name" content="Sessiya+">
 <meta property="og:title" content="Sessiya+ — tələbə üçün hər şey bir yerdə">
-<meta property="og:description" content="İmtahana hazırlıq testləri, otaq yoldaşı və mənzil, kitablar, repetitorlar və faydalı alətlər. Pulsuz.">
+<meta property="og:description" content="Sessiyaya hazırlıq: testlər, kartlar, süni intellektlə test yaratma, dostlarla duel və faydalı alətlər. Pulsuz.">
 <meta property="og:image" content="%%BASE%%og.png"><meta property="og:url" content="%%BASE%%"><meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -132,11 +133,21 @@ footer a{color:var(--mute)}
 .chip{flex:none;font-size:14px;font-weight:600;padding:8px 12px;border-radius:99px;background:var(--card);border:1px solid var(--line);color:var(--ink);text-decoration:none;cursor:pointer;white-space:nowrap}
 .chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
 .chip .cn{font-size:12px;opacity:.6}
-.ad{border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px;background:var(--card)}
-.adt{font-weight:700;font-size:17px;line-height:1.35;margin-top:8px}
-.adm{gap:4px 12px;margin-top:4px;font-size:13px}
-.adx{font-size:14px;line-height:1.5;white-space:pre-wrap;margin-top:8px;color:#30343b}
-.price{font-size:17px;white-space:nowrap}
+.aibox{background:linear-gradient(135deg,var(--acc2),var(--soft));border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:14px 0}
+.aibox .row{gap:8px;margin-top:10px}.aibar{height:6px;border-radius:9px;background:var(--chip);overflow:hidden;margin-top:10px}.aibar i{display:block;height:100%;width:0;background:var(--acc);transition:width .3s}
+.ed{border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px;background:var(--card)}
+.ed.noans{border-color:#f59e0b;box-shadow:0 0 0 1px #f59e0b inset}
+.edh{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px;font-size:13px;color:var(--mute)}
+.ed textarea{min-height:52px;font-size:15px}.ed .eda{min-height:70px;margin-top:6px}
+.edo{display:flex;align-items:center;gap:8px;margin-top:6px}.edo input[type=radio]{width:20px;height:20px;flex:none;accent-color:var(--ok);margin:0}
+.edo input[type=text]{flex:1;padding:8px 10px;font-size:14px}.edo.ok input[type=text]{border-color:var(--ok);background:var(--okbg)}
+.ix{border:0;background:none;color:var(--mute);font-size:18px;cursor:pointer;padding:4px 6px;line-height:1}.ix:hover{color:var(--bad)}
+.aitag{font-size:11px;font-weight:700;color:var(--acc);background:var(--acc2);border-radius:6px;padding:1px 6px}
+#pvFind{width:100%;max-width:240px;font:14px Inter,sans-serif;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);padding:9px 12px}
+@media (display-mode: standalone){.wrap{padding-top:calc(12px + env(safe-area-inset-top))}}
+.wrap{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+input,textarea,select{font-size:16px}
+.pager{display:flex;align-items:center;justify-content:center;gap:10px;margin:10px 0}
 footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-height:1.6}
 @media (max-width:560px){h1{font-size:23px}.q{font-size:17px}.two{grid-template-columns:1fr}nav a{padding:7px 7px;font-size:13px}}
 </style>
@@ -145,7 +156,7 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
 <div class="wrap">
 <header>
   <div class="logo" id="logo">Sessiya<b>+</b></div>
-  <nav><a data-go="home" data-i="nav_home"></a><a data-go="catalog" data-i="nav_catalog"></a><a data-go="board" data-i="nav_board"></a><a data-go="tools" data-i="nav_tools"></a><a data-go="profile" data-i="nav_profile"></a></nav>
+  <nav><a data-go="home" data-i="nav_home"></a><a data-go="catalog" data-i="nav_catalog"></a><a data-go="arena" data-i="arena_title"></a><a data-go="tools" data-i="nav_tools"></a><a data-go="profile" data-i="nav_profile"></a></nav>
   <div class="lang" id="lang"><button data-l="az">AZ</button><button data-l="ru">RU</button><button data-l="en">EN</button></div>
 </header>
 
@@ -155,10 +166,10 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
   <div class="card">
     <h1 style="margin:0 0 6px" data-i="hub_title"></h1>
     <p class="muted" style="margin:0" data-i="hub_sub"></p>
-    <div id="instBox" class="hide" style="margin-top:12px"><a class="btn hide" id="apkBtn" href="app/sessiya.apk" download="Sessiya.apk" style="width:100%;display:block;text-align:center;text-decoration:none" data-i="apk_btn"></a><div class="note hide" id="instHelp" style="margin-top:8px;background:var(--acc2);border-radius:10px;padding:10px 12px;color:var(--ink)"></div></div>
+    <div id="instBox" class="hide" style="margin-top:12px"><a class="btn hide" id="apkBtn" href="app/sessiya.apk" download="Sessiya.apk" style="width:100%;display:block;text-align:center;text-decoration:none" data-i="apk_btn"></a><button class="btn hide" id="iosBtn" style="width:100%" data-i="ios_btn"></button><div class="note hide" id="instHelp" style="margin-top:8px;background:var(--acc2);border-radius:10px;padding:10px 12px;color:var(--ink)"></div></div>
     <div class="hub">
       <a class="main" data-h="catalog"><span class="hi">📝</span><b data-i="hub_tests"></b><span class="note" data-i="hub_tests_d"></span></a>
-      <a data-h="board"><span class="hi">🏠</span><b data-i="hub_ads"></b><span class="note" data-i="hub_ads_d"></span></a>
+      <a data-h="upload"><span class="hi">⬆️</span><b data-i="hub_up"></b><span class="note" data-i="hub_up_d"></span></a>
       <a data-h="tools"><span class="hi">🧮</span><b data-i="hub_tools"></b><span class="note" data-i="hub_tools_d"></span></a>
       <a data-h="rating"><span class="hi">🏆</span><b data-i="rating_title"></b><span class="note" data-i="hub_rating_d"></span></a>
       <a data-h="arena"><span class="hi">⚔️</span><b data-i="arena_title"></b><span class="note" data-i="hub_arena_d"></span></a>
@@ -198,9 +209,10 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
       <div style="font-size:30px">📄</div>
       <div style="font-weight:600;margin:6px 0 2px" data-i="drop_title"></div>
       <div class="note" data-i="drop_note"></div>
-      <input type="file" id="file" accept=".pdf,.docx,.txt" class="hide">
+      <input type="file" id="file" accept=".pdf,.docx,.txt,image/*" multiple class="hide">
     </div>
-    <div class="row" style="margin-top:12px"><button class="btn ghost" id="pasteToggle" data-i="paste_toggle"></button></div>
+    <div class="note" style="margin-top:10px" data-i="ai_upload_note"></div>
+    <div class="row" style="margin-top:12px"><button class="btn ghost" id="pasteToggle" data-i="paste_toggle"></button><button class="btn ghost" id="manualNew" data-i="manual_new"></button></div>
     <div id="pasteBox" class="hide" style="margin-top:6px">
       <textarea id="pasteText"></textarea>
       <div class="row" style="margin-top:10px"><button class="btn" id="pasteGo" data-i="paste_go"></button></div>
@@ -231,44 +243,6 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
 </section>
 
 <!-- BOARD -->
-<section id="v-board" class="hide">
-  <div class="card">
-    <div class="row" style="justify-content:space-between;align-items:flex-start"><div style="flex:1;min-width:200px"><h1 style="font-size:24px" data-i="board_title"></h1><p class="note" style="margin:0" data-i="board_sub"></p></div>
-      <button class="btn" id="bdPost" data-i="post_btn"></button></div>
-    <div class="chips" id="bdCats" style="margin-top:14px"></div>
-    <div class="seg hide" id="bdKind" style="margin-top:10px"></div>
-    <div id="bdRoomF" class="hide" style="margin-top:10px"><div class="row"><div class="seg" id="bdSex"></div><input type="number" id="bdMax" inputmode="numeric" style="width:150px" data-ph="max_price_ph"></div></div>
-    <input type="text" id="bdSearch" style="margin-top:10px" data-ph="board_search_ph">
-  </div>
-  <div id="bdList"></div>
-  <div class="note" style="text-align:center;margin-top:6px" data-i="board_note"></div>
-</section>
-
-<!-- POST AD -->
-<section id="v-post" class="hide">
-  <div class="card">
-    <div class="crumbs"><a data-h="board" data-i="board_title"></a></div>
-    <h1 style="font-size:24px" data-i="post_title"></h1>
-    <label class="f" data-i="f_cat"></label><div class="seg" id="poCat"></div>
-    <div id="poKindBox"><label class="f" data-i="f_kind"></label><div class="seg" id="poKind"></div></div>
-    <label class="f" data-i="f_title"></label><input type="text" id="poTitle" maxlength="80">
-    <label class="f" data-i="f_text"></label><textarea id="poText" maxlength="1000" style="min-height:110px"></textarea>
-    <div class="two">
-      <div><label class="f" id="poPriceL"></label><input type="number" id="poPrice" inputmode="numeric" min="0" placeholder="250"></div>
-      <div><label class="f" data-i="f_place"></label><input type="text" id="poPlace" list="placeList" maxlength="60" data-ph="place_ph"><datalist id="placeList"></datalist></div>
-    </div>
-    <div class="two">
-      <div><label class="f" data-i="f_uni"></label><select id="poUni"></select></div>
-      <div id="poSexBox"><label class="f" data-i="f_sex"></label><select id="poSex"></select></div>
-    </div>
-    <label class="f" data-i="f_contact"></label><input type="text" id="poContact" maxlength="60" placeholder="+994 50 123 45 67 / @telegram">
-    <div class="note" style="margin-top:6px" data-i="contact_note"></div>
-    <label class="row note" style="margin-top:14px;gap:8px;cursor:pointer;flex-wrap:nowrap;align-items:flex-start"><input type="checkbox" id="poAgree" style="margin-top:2px"> <span data-i="post_agree"></span></label>
-    <div class="row" style="margin-top:14px"><button class="btn" id="poSave" data-i="post_publish"></button><button class="btn sec" id="poCancel" data-i="cancel"></button></div>
-    <div class="note" id="poMsg" style="margin-top:10px"></div>
-  </div>
-</section>
-
 <!-- TOOLS -->
 <section id="v-tools" class="hide">
   <div class="card">
@@ -333,8 +307,17 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
       <div><label class="f" data-i="f_subj"></label><input type="text" id="pvSubj"></div>
     </div>
     <label class="row note" style="margin-top:14px;gap:8px;cursor:pointer"><input type="checkbox" id="pvPublic" checked> <span data-i="f_public"></span></label>
-    <div class="note" style="margin:14px 0 8px" data-i="pv_check"></div>
+    <div class="aibox" id="pvAI">
+      <div class="row" style="justify-content:space-between;margin:0"><b data-i="ai_title"></b><span class="note" id="aiLeft"></span></div>
+      <div class="note" id="aiHint" style="margin-top:4px"></div>
+      <div class="row" id="aiBtns"></div>
+      <div class="aibar hide" id="aiBarBox"><i id="aiBar"></i></div>
+      <div class="note" id="aiMsg" style="margin-top:8px"></div>
+    </div>
+    <div class="row" style="justify-content:space-between;margin:14px 0 8px"><span class="note" data-i="pv_check"></span><input type="search" id="pvFind" style="max-width:220px;padding:8px 10px" data-ph="pv_find"></div>
     <div id="pvList"></div>
+    <div class="pager" id="pvPager"></div>
+    <button class="btn sec" id="pvAdd" data-i="pv_add"></button>
     <div class="row" style="margin-top:14px"><button class="btn" id="pvSave" data-i="pv_save"></button><button class="btn sec" id="pvCancel" data-i="cancel"></button></div>
     <div class="note" id="pvMsg" style="margin-top:10px"></div>
   </div>
@@ -345,7 +328,7 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
   <div class="card">
     <div class="crumbs" id="bkCrumbs"></div>
     <div class="row" style="justify-content:space-between"><h2 id="bkName" style="margin:0"></h2>
-      <div class="row" style="gap:2px"><button class="btn ghost small" id="bkShare" data-i="share"></button><button class="btn ghost small" id="bkReport" data-i="report"></button><button class="btn ghost small" id="bkDelete" data-i="delete"></button></div></div>
+      <div class="row" style="gap:2px"><button class="btn ghost small hide" id="bkEdit" data-i="edit"></button><button class="btn ghost small hide" id="bkPub" data-i="pub_btn"></button><button class="btn ghost small" id="bkShare" data-i="share"></button><button class="btn ghost small" id="bkReport" data-i="report"></button><button class="btn ghost small" id="bkDelete" data-i="delete"></button></div></div>
     <div class="row" id="bkTags" style="margin-top:8px"></div>
     <div class="row" style="margin:14px 0">
       <div class="stat"><span class="note" data-i="st_q"></span><b id="bkTotal"></b></div>
@@ -526,14 +509,14 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
   <div class="card" style="margin:0">
     <h1 style="margin:0 0 8px;font-size:26px" data-i="gate_title"></h1>
     <p class="muted" style="margin:0 0 6px" data-i="gate_sub"></p>
-    <div class="gate-feat"><span>📝 <b data-i="hub_tests"></b></span><span>🏠 <b data-i="hub_ads"></b></span><span>🏆 <b data-i="rating_title"></b></span><span>🧮 <b data-i="hub_tools"></b></span></div>
+    <div class="gate-feat"><span>📝 <b data-i="hub_tests"></b></span><span>⚔️ <b data-i="arena_title"></b></span><span>🏆 <b data-i="rating_title"></b></span><span>🧮 <b data-i="hub_tools"></b></span></div>
     <div id="gateBox"></div><div id="acRecaptcha2"></div>
   </div>
   <a id="gateApk" class="btn sec hide" href="app/sessiya.apk" download="Sessiya.apk" style="display:block;text-align:center;text-decoration:none;margin-top:12px" data-i="apk_btn"></a>
   <p class="note" style="text-align:center;margin-top:14px"><a id="gateRules" style="color:var(--mute);cursor:pointer;text-decoration:underline" data-i="gate_rules"></a></p>
   <div id="gateAbout" class="card about hide" style="font-size:14px"></div>
 </div></div>
-<nav class="tabbar" id="tabbar"><a data-go="home"><span class="ti">🏠</span><span data-i="nav_home"></span></a><a data-go="catalog"><span class="ti">📝</span><span data-i="nav_catalog"></span></a><a data-go="board"><span class="ti">📌</span><span data-i="nav_board"></span></a><a data-go="tools"><span class="ti">🧮</span><span data-i="nav_tools"></span></a><a data-go="profile"><span class="ti">👤</span><span data-i="nav_profile"></span></a></nav>
+<nav class="tabbar" id="tabbar"><a data-go="home"><span class="ti">🏠</span><span data-i="nav_home"></span></a><a data-go="catalog"><span class="ti">📝</span><span data-i="nav_catalog"></span></a><a data-go="arena"><span class="ti">⚔️</span><span data-i="arena_title"></span></a><a data-go="tools"><span class="ti">🧮</span><span data-i="nav_tools"></span></a><a data-go="profile"><span class="ti">👤</span><span data-i="nav_profile"></span></a></nav>
 <footer><div data-i="footer"></div><p style="margin-top:8px"><a data-h="about" href="#about" data-i="about_link">Sayt haqqında</a> · <a href="t/" data-i="all_banks_link">📚 Bütün test bankları və suallar</a> · <a href="app/sessiya.apk" download="Sessiya.apk" data-i="apk_link">🤖 Android tətbiqi (APK)</a></p></footer>
 </div>
 
@@ -629,9 +612,9 @@ const Cat={db:null,staticMetas:[],userMetas:[],metas:[],ready:false,unsub:null,l
 };
 
 // ---------- router (#home, #catalog, #u-<uni>, #f-<uni>--<fac>, #s-<uni>--<fac>--<subj>, #b-<id>) ----------
-const VIEWS=['home','catalog','board','post','tools','about','profile','rating','arena','duel','preview','bank','quiz','result','cards','ticket'];
+const VIEWS=['home','catalog','tools','about','profile','rating','arena','duel','preview','bank','quiz','result','cards','ticket'];
 function show(v){ if(v!=='duel'&&typeof DU!=='undefined'&&DU.unsub){ DU.unsub(); DU.unsub=null; DU.code=null }for(const s of VIEWS) $('v-'+s).classList.toggle('hide',s!==v);
-  const nv={preview:'catalog',bank:'catalog',quiz:'catalog',result:'catalog',cards:'catalog',ticket:'catalog',post:'board',about:'profile',rating:'home',arena:'home',duel:'home'}[v]||v;
+  const nv={preview:'catalog',bank:'catalog',quiz:'catalog',result:'catalog',cards:'catalog',ticket:'catalog',about:'profile',rating:'home',duel:'arena'}[v]||v;
   document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',a.dataset.go===nv));
   window.scrollTo(0,0)}
 function go(h){ if(location.hash==='#'+h) route(); else location.hash=h }
@@ -649,8 +632,7 @@ function route(){
   if(h==='mybanks') return renderTests('my');
   if(h==='upload') return renderTests('up');
   if(h==='profile') return renderProfile();
-  if(m=h.match(/^board(?:-([a-z]+))?$/)) return renderBoard(m[1]);
-  if(m=h.match(/^post(?:-([a-z]+))?$/)) return renderPost(m[1]);
+  if(/^(board|post)\b/.test(h)) return go('home');
   if(m=h.match(/^tools(?:-(calc|gpa|cal|pomo))?$/)) return renderTools(m&&m[1]);
   if(m=h.match(/^u-([a-z0-9-]+)$/)) return renderCatalog({uni:m[1]});
   if(m=h.match(/^f-([a-z0-9-]+?)--([a-z0-9-]+)$/)) return renderCatalog({uni:m[1],fac:m[2]});
@@ -749,8 +731,8 @@ const drop=$('drop');
 drop.onclick=()=>$('file').click();
 drop.ondragover=e=>{e.preventDefault();drop.classList.add('over')};
 drop.ondragleave=()=>drop.classList.remove('over');
-drop.ondrop=e=>{e.preventDefault();drop.classList.remove('over');if(e.dataTransfer.files[0])handleFile(e.dataTransfer.files[0])};
-$('file').onchange=e=>{if(e.target.files[0])handleFile(e.target.files[0]);e.target.value=''};
+drop.ondrop=e=>{e.preventDefault();drop.classList.remove('over');if(e.dataTransfer.files.length)handleFiles(e.dataTransfer.files)};
+$('file').onchange=e=>{if(e.target.files.length)handleFiles(e.target.files);e.target.value=''};
 function loadScript(src){return new Promise((res,rej)=>{const s=document.createElement('script');s.src=src;s.onload=res;s.onerror=()=>rej(new Error('load '+src));document.head.appendChild(s)})}
 async function pdfText(buf){
   if(!window.pdfjsLib){await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js');}
@@ -768,71 +750,185 @@ async function pdfText(buf){
     }
     if(cur)lines.push(cur); out.push(...lines);
   }
-  return out.join('\n');
+  return {text:out.join('\n'),pages:doc.numPages};
 }
 async function docxText(buf){
   if(!window.mammoth){await loadScript('https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js');}
-  return (await mammoth.extractRawText({arrayBuffer:buf})).value;
+  const text=(await mammoth.extractRawText({arrayBuffer:buf})).value;
+  let rich='';   // для ИИ: жирный шрифт (часто так отмечают правильный ответ) → **текст**
+  try{ const h=(await mammoth.convertToHtml({arrayBuffer:buf})).value;
+    rich=h.replace(/<(strong|b)>/g,'**').replace(/<\/(strong|b)>/g,'**').replace(/<u>/g,'__').replace(/<\/u>/g,'__').replace(/<\/(p|li|h\d|tr)>/g,'\n').replace(/<\/t[dh]>/g,' | ').replace(/<br\s*\/?>/g,'\n').replace(/<[^>]+>/g,'')
+      .replace(/&nbsp;/g,' ').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&amp;/g,'&').replace(/\*\*\s*\*\*/g,'') }catch(e){}
+  return {text,rich};
 }
 let pending=null;
+async function handleFiles(files){
+  files=[...files]; if(!files.length) return;
+  const imgs=files.filter(f=>/^image\//.test(f.type));
+  if(imgs.length&&imgs.length===files.length) return aiFromSource({images:imgs,fname:imgs.length>1?t('photos_n',imgs.length):imgs[0].name});
+  return handleFile(files.find(f=>!/^image\//.test(f.type))||files[0]);
+}
 async function handleFile(f){
   $('status').textContent=t('reading');
   try{
-    const buf=await f.arrayBuffer(); let text='';
-    if(/\.pdf$/i.test(f.name)) text=await pdfText(buf);
-    else if(/\.docx$/i.test(f.name)) text=await docxText(buf);
+    const buf=await f.arrayBuffer(); let text='', pages=0, rich='';
+    if(/\.pdf$/i.test(f.name)){ const r=await pdfText(buf); text=r.text; pages=r.pages }
+    else if(/\.docx$/i.test(f.name)){ const r=await docxText(buf); text=r.text; rich=r.rich }
+    else if(/^image\//.test(f.type)) return aiFromSource({images:[f],fname:f.name});
     else text=new TextDecoder().decode(buf);
-    handleText(text,f.name);
+    handleText(text,f.name,{file:f,pages,rich});
   }catch(e){$('status').textContent=t('read_fail')}
 }
 function guessLang(qs){const s=qs.slice(0,20).map(x=>x.q).join(' ');const cyr=(s.match(/[а-яё]/gi)||[]).length,az=(s.match(/[əğışçöü]/gi)||[]).length,lat=(s.match(/[a-z]/gi)||[]).length;return cyr>lat?'ru':(az>0?'az':'en')}
-function handleText(text,fname){
-  const mc=parseBank(text||''), list=parseQuestionList(text||'');
-  if(mc.length<1 && list.length<3){$('status').innerHTML=t('parse_fail');return}
-  const fenn=(text.match(/F[əә]nn\s*:\s*([^\n]+)/i)||[])[1] || (text.match(/[“"«]([^”"»]{3,60})[”"»]\s*f[əә]nnind[əә]n/i)||[])[1];
-  const nm=(fenn||fname.replace(/\.(pdf|docx|txt)$/i,'')).replace(/^\s*\d+[a-zA-Z]?\s*/,'').trim().slice(0,80);
-  let type=HOME.type; if(type==='mc'&&mc.length<1) type='open'; if(type==='open'&&list.length<1&&mc.length) type='mc';
-  pending={mc,list,type,fmt:HOME.fmt,name:nm};
+function bankName(text,fname){
+  const fenn=(String(text).match(/F[əә]nn\s*:\s*([^\n]+)/i)||[])[1] || (String(text).match(/[“"«]([^”"»]{3,60})[”"»]\s*f[əә]nnind[əә]n/i)||[])[1];
+  return (fenn||String(fname||'').replace(/\.(pdf|docx|txt|jpe?g|png|webp|heic)$/i,'')).replace(/^\s*\d+[a-zA-Z]?\s*/,'').trim().slice(0,80);
+}
+function handleText(text,fname,src){
+  text=text||''; const mc=parseBank(text), list=parseQuestionList(text);
+  const rich=src&&src.rich&&/\*\*/.test(src.rich)?src.rich:'';
+  const source={text:rich||text,fname,file:src&&src.file,pages:src&&src.pages};
+  const optLines=(text.match(/^\s*[A-Ea-eА-Да-д][\)\.]\s*\S/gm)||[]).length;
+  // обычный разбор не нашёл отмеченных ответов, но в файле явно есть варианты/структура — отдаём ИИ
+  if(mc.length<1 && (list.length<3 || optLines>=6)){ return aiFromSource(source,true) }
+  openPending({mc,list,name:bankName(text,fname),fname,source});
+}
+// ИИ распознаёт структуру (автоматически, если обычный разбор не справился)
+async function aiFromSource(source,auto){
+  const st=$('status');
+  if(aiLeft()<=0){ st.innerHTML=auto?t('parse_fail')+'<br>'+t('ai_limit'):t('ai_limit'); return }
+  st.innerHTML=`<b>🤖 ${t('ai_reading')}</b><div class="aibar"><i id="upBar" style="width:8%"></i></div>`;
+  try{
+    const r=await aiExtract(source,(d,n)=>{ const b=$('upBar'); if(b) b.style.width=Math.max(8,Math.round(d/n*100))+'%' });
+    st.textContent='';
+    openPending({mc:r.mc,list:r.list,name:bankName(source.text||'',source.fname),fname:source.fname,source,ai:true});
+    toast('🤖 '+t('ai_done_extract',r.mc.length+r.list.length));
+  }catch(e){ st.innerHTML=(auto?t('parse_fail')+'<br>':'')+aiErrText(e) }
+}
+function openPending({mc,list,name,fname,source,ai,manual,editId,type}){
+  let ty=type||HOME.type; if(ty==='mc'&&mc.length<1) ty='open'; if(ty==='open'&&list.length<1&&mc.length) ty='mc';
+  if(mc.length&&mc.length>=list.length*2) ty='mc';
+  pending={mc,list,type:ty,fmt:HOME.fmt,name,source:source||null,ai:!!ai,manual:!!manual,editId:editId||null,page:0,find:'',warn:false};
   $('status').textContent='';
-  $('pvFile').textContent=fname; $('pvName').value=nm; $('pvSubj').value=nm;
-  $('pvLang').value=guessLang(type==='mc'?mc:list); $('pvMsg').textContent='';
+  $('pvFile').textContent=fname||''; $('pvFile').classList.toggle('hide',!fname); $('pvName').value=name||''; $('pvSubj').value=name||'';
+  $('pvLang').value=guessLang(ty==='mc'?mc:list); $('pvMsg').textContent=''; $('aiMsg').textContent=''; $('pvFind').value='';
   const facs=[...new Set(Cat.metas.map(m=>m.fac).filter(Boolean))]; $('facList').innerHTML=facs.map(f=>`<option value="${esc(f)}">`).join('');
   pvSyncPublic();
   renderPreview(); show('preview');
 }
-function pvSyncPublic(){ const ok=!!Cat.db&&isReal(FB.user); $('pvPublic').disabled=!ok; if(!ok) $('pvPublic').checked=false }
+$('manualNew').onclick=()=>openPending({mc:[{q:'',o:['','','',''],a:-1}],list:[],name:'',manual:true,type:'mc'});
+function pvSyncPublic(){ const ok=!!Cat.db&&isReal(FB.user); $('pvPublic').disabled=!ok; if(!ok) $('pvPublic').checked=false; else if(pending&&pending.editId) $('pvPublic').checked=false }
+const PV_PER=15;
+function pvItems(){ return pending.type==='mc'?pending.mc:pending.list }
+function pvVisible(){ const all=pvItems().map((x,i)=>i), f=(pending.find||'').trim().toLowerCase();
+  if(!f) return all; if(f==='?') return all.filter(i=>pending.type==='mc'?!(pending.mc[i].a>=0):!pending.list[i].ans);
+  return all.filter(i=>{const x=pvItems()[i]; return (x.q+' '+(x.o||[]).join(' ')+' '+(x.ans||'')).toLowerCase().includes(f)}) }
 function renderPreview(){
   const P=pending; const isMc=P.type==='mc';
-  document.querySelectorAll('#pvType button').forEach(b=>{b.classList.toggle('on',b.dataset.v===P.type); b.disabled=(b.dataset.v==='mc'&&!P.mc.length)||(b.dataset.v==='open'&&P.list.length<1)});
+  document.querySelectorAll('#pvType button').forEach(b=>{b.classList.toggle('on',b.dataset.v===P.type); b.disabled=false});
   document.querySelectorAll('#pvFmt button').forEach(b=>b.classList.toggle('on',b.dataset.v===P.fmt));
   $('pvFmtBox').classList.toggle('hide',isMc);
   const withAns=P.list.filter(x=>x.ans).length;
-  $('pvFmtNote').textContent=isMc?'':(P.fmt==='written'?(withAns?t('fmt_written_has',withAns):t('fmt_written_note')):t('fmt_test_note'));
-  $('pvCount').textContent=isMc?t('found_q',P.mc.length):t('found_open',P.list.length);
-  $('pvList').innerHTML=isMc
-    ? P.mc.slice(0,3).map((x,i)=>`<div class="mistake"><b>${i+1}. ${esc(x.q)}</b><div class="note">${x.o.map((o,j)=>j===x.a?`<span class="c">✓ ${esc(o)}</span>`:esc(o)).join(' · ')}</div></div>`).join('')
-    : P.list.slice(0,4).map((x,i)=>`<div class="mistake"><b>${i+1}. ${esc(x.q)}</b>${x.ans?`<div class="note c">${esc(x.ans.slice(0,140))}${x.ans.length>140?'…':''}</div>`:''}</div>`).join('');
+  $('pvFmtNote').textContent=isMc?'':(P.fmt==='written'?(withAns?t('fmt_written_has',withAns):t('fmt_written_note_ai')):t('fmt_test_note_ai'));
+  const noAns=isMc?P.mc.filter(x=>!(x.a>=0)).length:P.list.length-withAns;
+  $('pvCount').textContent=(isMc?t('found_q',P.mc.length):t('found_open',P.list.length))+(noAns?' · '+t('pv_noans_n',noAns):'');
+  $('pvSave').textContent=P.editId?t('save_changes'):t('pv_save');
+  renderAIBox(); renderEditor();
 }
-document.querySelectorAll('#pvType button').forEach(b=>b.onclick=()=>{pending.type=b.dataset.v;renderPreview()});
+function renderEditor(){
+  const P=pending, isMc=P.type==='mc', items=pvItems(), vis=pvVisible(), pages=Math.max(1,Math.ceil(vis.length/PV_PER));
+  if(P.page>=pages) P.page=pages-1;
+  const ids=vis.slice(P.page*PV_PER,(P.page+1)*PV_PER);
+  $('pvList').innerHTML=ids.length?ids.map(i=>{ const x=items[i];
+    const head=`<div class="edh"><span>${t('q_n',i+1)}${x.ai?' <span class="aitag">AI</span>':''}</span><button class="ix" data-act="del" title="${esc(t('delete'))}">🗑</button></div>`;
+    if(isMc) return `<div class="ed${x.a>=0?'':' noans'}" data-i="${i}">${head}<textarea data-f="q" placeholder="${esc(t('q_ph'))}">${esc(x.q)}</textarea>`+
+      x.o.map((o,j)=>`<div class="edo${j===x.a?' ok':''}"><input type="radio" name="r${i}" data-act="ok" data-j="${j}"${j===x.a?' checked':''} title="${esc(t('mark_ok'))}"><input type="text" data-f="o" data-j="${j}" value="${esc(o)}" placeholder="${esc(t('opt_ph',String.fromCharCode(65+j)))}"><button class="ix" data-act="delo" data-j="${j}">×</button></div>`).join('')+
+      `<button class="btn ghost small" data-act="addo" style="margin-top:6px">${t('add_opt')}</button></div>`;
+    return `<div class="ed" data-i="${i}">${head}<textarea data-f="q" placeholder="${esc(t('q_ph'))}">${esc(x.q)}</textarea><textarea class="eda" data-f="ans" placeholder="${esc(t('ans_ph'))}">${esc(x.ans||'')}</textarea></div>`;
+  }).join(''):`<div class="note">${t('no_results')}</div>`;
+  $('pvPager').innerHTML=pages>1?`<button class="btn sec small" data-p="-1"${P.page?'':' disabled'}>‹</button><span class="note">${P.page+1} / ${pages}</span><button class="btn sec small" data-p="1"${P.page<pages-1?'':' disabled'}>›</button>`:'';
+}
+$('pvPager').onclick=e=>{ const b=e.target.closest('[data-p]'); if(!b) return; pending.page+=+b.dataset.p; renderEditor(); $('pvList').scrollIntoView({behavior:'smooth',block:'start'}) };
+$('pvFind').oninput=()=>{ pending.find=$('pvFind').value; pending.page=0; renderEditor() };
+$('pvList').addEventListener('input',e=>{
+  const el=e.target, box=el.closest('.ed'); if(!box||!el.dataset.f) return; const x=pvItems()[+box.dataset.i];
+  if(el.dataset.f==='q') x.q=el.value; else if(el.dataset.f==='ans') x.ans=el.value; else if(el.dataset.f==='o') x.o[+el.dataset.j]=el.value;
+  pending.warn=false;
+});
+$('pvList').addEventListener('click',e=>{
+  const b=e.target.closest('[data-act]'); if(!b) return; const box=b.closest('.ed'), i=+box.dataset.i, items=pvItems(), x=items[i], act=b.dataset.act;
+  if(act==='del'){ items.splice(i,1); renderPreview(); return }
+  if(act==='ok'){ x.a=+b.dataset.j; box.classList.remove('noans'); box.querySelectorAll('.edo').forEach((r,j)=>r.classList.toggle('ok',j===x.a)); pending.warn=false; renderAIBox(); 
+    const noAns=pending.mc.filter(y=>!(y.a>=0)).length; $('pvCount').textContent=t('found_q',pending.mc.length)+(noAns?' · '+t('pv_noans_n',noAns):''); return }
+  if(act==='delo'){ const j=+b.dataset.j; x.o.splice(j,1); if(x.a===j) x.a=-1; else if(x.a>j) x.a--; renderEditor(); return }
+  if(act==='addo'){ x.o.push(''); renderEditor(); const ins=$('pvList').querySelector(`.ed[data-i="${i}"] .edo:last-of-type input[type=text]`); if(ins) ins.focus(); return }
+});
+$('pvAdd').onclick=()=>{ const items=pvItems(); items.push(pending.type==='mc'?{q:'',o:['','','',''],a:-1}:{q:'',ans:''}); pending.find=''; $('pvFind').value=''; renderPreview();
+  pending.page=Math.ceil(items.length/PV_PER)-1; renderEditor(); const last=$('pvList').querySelector('.ed:last-child textarea'); if(last){ last.focus(); last.scrollIntoView({block:'center'}) } };
+// ---- ИИ-помощник в предпросмотре ----
+function renderAIBox(){
+  const P=pending, isMc=P.type==='mc', btns=[];
+  const noAns=isMc?P.mc.filter(x=>!(x.a>=0)&&x.o.filter(o=>String(o).trim()).length>=2).length:0, open=P.list.length, noOpenAns=P.list.filter(x=>!x.ans).length;
+  if(P.source&&(P.source.text||P.source.file||P.source.images)) btns.push(['reparse',t('ai_reparse')]);
+  if(isMc&&noAns) btns.push(['solve',t('ai_solve',noAns)]);
+  if(!isMc&&open&&noOpenAns) btns.push(['answers',t('ai_answers',noOpenAns)]);
+  if(!isMc&&open) btns.push(['options',t('ai_options',open)]);
+  if(isMc&&P.list.length&&!P.mc.length) btns.push(['options',t('ai_options',P.list.length)]);
+  $('aiBtns').innerHTML=btns.map(([k,l],n)=>`<button class="btn ${n?'sec':''} small" data-ai="${k}">${esc(l)}</button>`).join('');
+  $('aiHint').textContent=btns.length?(P.ai?t('ai_hint_done'):t('ai_hint')):t('ai_hint_ok');
+  $('aiLeft').textContent=t('ai_left',aiLeft());
+}
+async function aiRun(kind){
+  const P=pending; if(!P||P.busy) return; P.busy=true;
+  const bar=$('aiBar'), box=$('aiBarBox'), msg=$('aiMsg'); box.classList.remove('hide'); bar.style.width='6%';
+  $('aiBtns').querySelectorAll('button').forEach(b=>b.disabled=true); $('pvSave').disabled=true;
+  const prog=(d,n)=>bar.style.width=Math.max(6,Math.round(d/n*100))+'%', lang=$('pvLang').value;
+  try{
+    if(kind==='reparse'){ msg.textContent='🤖 '+t('ai_reading'); const r=await aiExtract(P.source,prog); P.mc=r.mc; P.list=r.list; P.ai=true; P.page=0;
+      P.type=r.mc.length>=r.list.length?'mc':'open'; msg.textContent=t('ai_done_extract',r.mc.length+r.list.length) }
+    if(kind==='solve'){ msg.textContent='🤖 '+t('ai_working'); const n=await aiSolve(P.mc,prog); msg.textContent=t('ai_done_solve',n) }
+    if(kind==='answers'){ msg.textContent='🤖 '+t('ai_working'); const n=await aiAnswers(P.list,lang,prog); msg.textContent=t('ai_done_answers',n) }
+    if(kind==='options'){ msg.textContent='🤖 '+t('ai_working'); const mc=await aiOptions(P.list,lang,prog); P.mc=mc; P.type='mc'; P.page=0; msg.textContent=t('ai_done_options',mc.filter(x=>x.a>=0).length) }
+    bar.style.width='100%';
+  }catch(e){ msg.textContent=aiErrText(e) }
+  P.busy=false; $('pvSave').disabled=false; setTimeout(()=>box.classList.add('hide'),800); renderPreview();
+}
+$('aiBtns').onclick=e=>{ const b=e.target.closest('[data-ai]'); if(b) aiRun(b.dataset.ai) };
+document.querySelectorAll('#pvType button').forEach(b=>b.onclick=()=>{ const v=b.dataset.v; if(v===pending.type) return;
+  if(v==='open'&&!pending.list.length) pending.list=pending.mc.filter(x=>String(x.q).trim()).map(x=>({q:x.q,ans:x.a>=0?x.o[x.a]:''}));
+  if(v==='mc'&&!pending.mc.length) pending.mc=pending.list.filter(x=>String(x.q).trim()).map(x=>({q:x.q,o:['','','',''],a:-1}));
+  if(v==='open'&&!pending.list.length) pending.list=[{q:'',ans:''}]; if(v==='mc'&&!pending.mc.length) pending.mc=[{q:'',o:['','','',''],a:-1}];
+  pending.type=v; pending.page=0; renderPreview() });
 document.querySelectorAll('#pvFmt button').forEach(b=>b.onclick=()=>{pending.fmt=b.dataset.v;renderPreview()});
 $('pvUni').onchange=()=>$('pvUniOther').classList.toggle('hide',$('pvUni').value!=='other');
-$('pvCancel').onclick=()=>go('upload');
-$('pvSave').onclick=async()=>{
-  const uniSel=$('pvUni').value, uniOther=$('pvUniOther').value.trim();
+$('pvCancel').onclick=()=>{ const id=pending&&pending.editId; pending=null; id?openBank(id):go('upload') };
+function pvClean(){
   const isMc=pending.type==='mc';
-  const b={id:'b'+Date.now(),name:$('pvName').value.trim()||pending.name,type:isMc?'mc':'written',format:isMc?'test':pending.fmt,
-    qs:isMc?pending.mc:pending.list.map(x=>({q:x.q,ans:x.ans||''})),
+  if(isMc){ const all=pending.mc.map(x=>{ const o=[],map={}; x.o.forEach((s,j)=>{ s=String(s).trim(); if(s){ map[j]=o.length; o.push(s) } }); return {q:String(x.q).trim(),o,a:x.a>=0&&map[x.a]!=null?map[x.a]:-1} }).filter(x=>x.q&&x.o.length>=2);
+    return {qs:all.filter(x=>x.a>=0),skipped:all.filter(x=>x.a<0).length} }
+  const qs=pending.list.map(x=>({q:String(x.q).trim(),ans:String(x.ans||'').trim()})).filter(x=>x.q); return {qs,skipped:0};
+}
+$('pvSave').onclick=async()=>{
+  if(!pending) return;
+  const uniSel=$('pvUni').value, uniOther=$('pvUniOther').value.trim();
+  const isMc=pending.type==='mc', {qs,skipped}=pvClean();
+  if(!qs.length){ $('pvMsg').textContent=isMc&&skipped?t('pv_need_ok'):t('pv_empty'); return }
+  if(skipped&&!pending.warn){ pending.warn=true; $('pvMsg').textContent=t('pv_skip_warn',skipped); return }
+  const old=pending.editId&&mem.banks.find(x=>x.id===pending.editId);
+  const b={id:old?old.id:'b'+Date.now(),name:$('pvName').value.trim()||pending.name||t('my_test'),type:isMc?'mc':'written',format:isMc?'test':pending.fmt,qs,
     uni:uniSel==='other'?slug(uniOther):uniSel, uniLabel:uniSel==='other'?uniOther:uniName(uniSel),
     fac:$('pvFac').value.trim(), subj:$('pvSubj').value.trim()||$('pvName').value.trim(), lang:$('pvLang').value};
-  mem.banks.unshift(b); saveBanks();
+  if(old){ if(old.sharedId) b.sharedId=old.sharedId; Object.keys(old).forEach(k=>delete old[k]); Object.assign(old,b); if(mem.stats[b.id]) delete mem.stats[b.id]; saveStats(); }
+  else mem.banks.unshift(b);
+  saveBanks(); if(!old) award(Math.min(30,5+Math.floor(qs.length/10)));
   if($('pvPublic').checked){
-    if(!b.uni||!b.subj){$('pvMsg').textContent=t('need_uni_subj');mem.banks.shift();saveBanks();return}
+    if(!b.uni||!b.subj){$('pvMsg').textContent=t('need_uni_subj'); if(!old){mem.banks.shift();saveBanks()} return}
     $('pvSave').disabled=true; $('pvMsg').textContent=t('publishing');
-    try{ const id=await Cat.publish(b); b.sharedId=id; saveBanks(); }
-    catch(e){ $('pvSave').disabled=false; openBank(b.id); $('bkMsg').textContent=e&&e.code==='quota_exceeded'?t('pub_quota'):t('pub_fail'); return }
+    try{ const id=await Cat.publish(b); b.sharedId=id; saveBanks(); toast('🌍 '+t('pub_ok')) }
+    catch(e){ $('pvSave').disabled=false; pending=null; openBank(b.id); $('bkMsg').textContent=e&&e.code==='quota_exceeded'?t('pub_quota'):t('pub_fail'); return }
     $('pvSave').disabled=false;
   }
-  openBank(b.id);
+  pending=null; openBank(b.id);
 };
 
 // ---------- bank ----------
@@ -851,6 +947,7 @@ function fillBankHeader(b,shared){
   $('bkCrumbs').innerHTML=crumbsFor(b);
   const langName={az:'Azərbaycan dili',ru:'Русский',en:'English'};
   $('bkTags').innerHTML=[b.lang?`<span class="pill">${langName[b.lang]||b.lang}</span>`:'',b.tag?`<span class="pill acc">${t('ready_tag')}</span>`:'',W?`<span class="pill">${b.format==='test'?t('test_noopts_tag'):t('written_tag')}</span>`:'',shared||b.sharedId?`<span class="pill acc">${t('in_catalog')}</span>`:''].join('');
+  const own=!shared&&!b.tag; $('bkEdit').classList.toggle('hide',!own); $('bkPub').classList.toggle('hide',!(own&&!b.sharedId));
   $('bkShare').classList.toggle('hide',!(shared?b.id:b.sharedId)); $('bkReport').classList.toggle('hide',!shared); $('bkDelete').classList.toggle('hide',!!b.tag||(shared&&!Cat.canRemove(b)));
   $('bkMsg').textContent='';
 }
@@ -875,6 +972,25 @@ $('bkDelete').onclick=async()=>{
   btn.dataset.c=''; btn.textContent=t('delete');
   if(curBank.shared){ try{await Cat.remove(curBank.id)}catch(e){$('bkMsg').textContent=t('pub_fail');return} return go('catalog') }
   mem.banks=mem.banks.filter(b=>b.id!==curBank.id); delete mem.stats[curBank.id]; saveBanks(); saveStats(); go('mybanks');
+};
+function editBank(b,pub){
+  const isMc=b.type==='mc', cp=JSON.parse(JSON.stringify(b.qs||[]));
+  openPending({mc:isMc?cp:[],list:isMc?[]:cp,name:b.name,editId:b.id,type:isMc?'mc':'open'});
+  pending.fmt=b.format==='test'&&!isMc?'test':'written';
+  $('pvSubj').value=b.subj||b.name; $('pvLang').value=b.lang||'az'; $('pvFac').value=b.fac||'';
+  const known=UNIS.some(u=>u[0]===b.uni); $('pvUni').value=b.uni?(known?b.uni:'other'):''; $('pvUniOther').value=known?'':(b.uniLabel||''); $('pvUniOther').classList.toggle('hide',$('pvUni').value!=='other');
+  if(pub&&!$('pvPublic').disabled){ $('pvPublic').checked=true; $('pvMsg').textContent=t('need_uni_subj') }
+  renderPreview();
+}
+$('bkEdit').onclick=()=>{ if(curBank&&!curBank.shared) editBank(curBank,false) };
+$('bkPub').onclick=async()=>{
+  const b=curBank; if(!b||b.shared) return;
+  if(!Cat.db||!isReal(FB.user)){ $('bkMsg').textContent=t('pub_need_acc'); return }
+  if(!b.uni||!b.subj) return editBank(b,true);
+  $('bkPub').disabled=true; $('bkMsg').textContent=t('publishing');
+  try{ b.sharedId=await Cat.publish(b); saveBanks(); $('bkMsg').textContent=''; toast('🌍 '+t('pub_ok')); fillBankHeader(b,false) }
+  catch(e){ $('bkMsg').textContent=e&&e.code==='quota_exceeded'?t('pub_quota'):t('pub_fail') }
+  $('bkPub').disabled=false;
 };
 $('bkReport').onclick=async()=>{ try{await Cat.report(curBank.id,'')}catch(e){} $('bkMsg').textContent=t('reported'); $('bkReport').disabled=true };
 $('bkPractice').onclick=()=>startQuiz('practice',curBank.qs.map((_,i)=>i));
@@ -1033,15 +1149,17 @@ $('bkTicket').onclick=startTicket; $('tkDone').onclick=checkTicket; $('tkAgain')
 /*TOOLSJS*/
 /*GAMEJS*/
 /*ARENAJS*/
+/*AIJS*/
 /*AUTHJS*/
-/*BOARDJS*/
-applyI18n(); renderHomeType(); initTools(); initBoard(); initArena(); route(); Cat.init(); Gate.init(); setTimeout(checkBadges,2500);
+applyI18n(); renderHomeType(); initTools(); initArena(); route(); Cat.init(); Gate.init(); setTimeout(checkBadges,2500);
 // ---------- Android app (APK) download ----------
 (function(){
   const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
   const android=/android/i.test(navigator.userAgent), help=$('instHelp');
-  $('instBox').classList.toggle('hide',standalone||!android); $('gateApk').classList.toggle('hide',standalone||!android);
-  $('apkBtn').classList.remove('hide');
+  const ios=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+  $('instBox').classList.toggle('hide',standalone||!(android||ios)); $('gateApk').classList.toggle('hide',standalone||!android);
+  $('apkBtn').classList.toggle('hide',!android); $('iosBtn').classList.toggle('hide',!ios);
+  $('iosBtn').onclick=()=>{ help.innerHTML=t('ios_help'); help.classList.remove('hide') };
   $('apkBtn').addEventListener('click',()=>{ help.textContent=t('apk_help'); help.classList.remove('hide') });
 })();
 if('serviceWorker' in navigator && location.protocol==='https:') addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));

@@ -30,7 +30,7 @@ d.text((260 + ImageFont.truetype(F, 72).getlength('Sessiya'), 170), '+', font=Im
 d.text((110, 300), 'Tələbə üçün hər şey — bir yerdə', font=ImageFont.truetype(F, 52), fill=INK, anchor='lm')
 fr = ImageFont.truetype(FR, 34)
 y = 390
-for t in ('📝  Testlər və imtahana hazırlıq', '🏠  Otaq yoldaşı və mənzil · Elanlar', '🧮  Bal kalkulyatoru · İmtahan təqvimi'):
-    d.text((110, y), t.replace('📝  ', '•  ').replace('🏠  ', '•  ').replace('🧮  ', '•  '), font=fr, fill=(75, 85, 99), anchor='lm'); y += 56
+for t in ('📝  Testlər və imtahana hazırlıq', '🤖  Süni intellektlə test yaratma · Duel', '🧮  Bal kalkulyatoru · İmtahan təqvimi'):
+    d.text((110, y), t.replace('📝  ', '•  ').replace('🤖  ', '•  ').replace('🧮  ', '•  '), font=fr, fill=(75, 85, 99), anchor='lm'); y += 56
 im.save(f'{root}/og.png', optimize=True)
 print('icons + og.png done')

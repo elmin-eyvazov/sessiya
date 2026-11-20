@@ -25,7 +25,7 @@ function fbStart(){
     await new Promise(r=>{const un=auth.onAuthStateChanged(()=>{un();r()})});
     if(!auth.currentUser){ try{ await auth.signInAnonymously() }catch(e){} }
     FB.user=auth.currentUser;
-    auth.onAuthStateChanged(u=>{ const was=FB.user&&FB.user.uid; FB.user=u; if(typeof Board!=='undefined') Board.uid=u&&u.uid;
+    auth.onAuthStateChanged(u=>{ const was=FB.user&&FB.user.uid; FB.user=u;
       if(u&&!u.isAnonymous&&u.uid!==was) syncPull(); FB.ls.forEach(f=>{try{f(u)}catch(e){}}) });
     if(isReal(FB.user)) syncPull();
     FB.loaded=true; return firebase;
@@ -73,18 +73,11 @@ async function acRun(fn){ if(AC.busy) return; AC.busy=true;
   const m=$('acMsg'); if(m){ m.style.color='var(--mute)'; m.textContent=t('acc_wait') } document.querySelectorAll('#acBox button').forEach(b=>b.disabled=true);
   try{ await fn(); AC.msg='' }catch(e){ AC.msg=acErr(e) } AC.busy=false; drawAccount() }
 
-function myAdsHtml(u){
-  if(typeof Board==='undefined'||!Board.ready) return `<div class="note">${t('loading')}</div>`;
-  const L=Board.ads.filter(a=>a.uid===u.uid);
-  if(!L.length) return `<div class="note">${t('acc_no_ads')} <a data-h="post" style="color:var(--acc);cursor:pointer;font-weight:600">${t('post_btn')}</a></div>`;
-  return L.map(a=>`<div class="row" style="justify-content:space-between;gap:8px;flex-wrap:nowrap;border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px"><div style="min-width:0"><b style="display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(a.title)}</b><span class="note">${catIcon(a.cat)} ${t('cat_'+a.cat)} · ${ago(a.createdAt)}</span></div><button class="btn ghost small" data-del="${esc(a.id)}">${t('delete')}</button></div>`).join('');
-}
 async function deleteAccount(){
   const u=firebase.auth().currentUser; if(!u) return;
   const last=Date.parse(u.metadata&&u.metadata.lastSignInTime||0)||0;
   if(Date.now()-last>4.5*60e3) throw {code:'auth/requires-recent-login'};
   const db=firebase.firestore();
-  for(const a of (Board.ads||[]).filter(a=>a.uid===u.uid)){ try{ await db.collection('ads').doc(a.id).delete() }catch(e){} }
   for(const m of (Cat.userMetas||[]).filter(m=>m.uid===u.uid)){ try{ await db.doc('banks/'+m.id).update({hidden:true}) }catch(e){} }
   try{ await db.doc('users/'+u.uid).delete() }catch(e){}
   await u.delete();
@@ -108,14 +101,12 @@ function drawAccount(){
       <div class="row" style="margin-top:12px;gap:8px"><button class="btn sec small" id="acName2">✏️ ${t('acc_edit_name')}</button><button class="btn sec small" id="acOut">${t('acc_logout')}</button></div>
       ${AC.editName?`<div class="row" style="margin-top:10px;gap:8px;flex-wrap:nowrap"><input type="text" id="acNameIn" maxlength="40" value="${esc(u.displayName||'')}" placeholder="${t('acc_name_ph2')}"><button class="btn small" id="acNameSave">${t('acc_save')}</button></div>`:''}
       <div class="note" id="acMsg" style="margin-top:8px;color:var(--bad)">${esc(AC.msg)}</div>
-      <h3 style="margin:18px 0 8px;font-size:16px">📌 ${t('acc_my_ads')}</h3><div id="acAds">${myAdsHtml(u)}</div>
       <details style="margin-top:18px"><summary class="note" style="cursor:pointer">${t('acc_danger')}</summary>
         <p class="note">${t('acc_delete_note')}</p><button class="btn small" style="background:var(--bad)" id="acDel">${t('acc_delete')}</button></details>`;
     $('acName2').onclick=()=>{ AC.editName=!AC.editName; AC.msg=''; drawAccount() };
     if(AC.editName){ $('acNameSave').onclick=()=>acRun(async()=>{ const v=$('acNameIn').value.trim().slice(0,40); await firebase.auth().currentUser.updateProfile({displayName:v}); AC.editName=false; FB.user=firebase.auth().currentUser; syncPush() }); }
-    $('acAds').querySelectorAll('[data-del]').forEach(b=>b.onclick=async()=>{ if(b.dataset.c!=='1'){ b.textContent=t('confirm_delete'); b.dataset.c='1'; return } b.disabled=true; try{ await Board.api.remove(b.dataset.del) }catch(e){ b.disabled=false } });
     $('acDel').onclick=()=>{ const b=$('acDel'); if(b.dataset.c!=='1'){ b.textContent=t('acc_delete_confirm'); b.dataset.c='1'; return } acRun(deleteAccount) };
-    if(typeof Board!=='undefined') Board.start();
+
     $('acOut').onclick=()=>acRun(async()=>{ try{ window.google&&google.accounts&&google.accounts.id.disableAutoSelect() }catch(e){} Gate.tapStarted=false; await firebase.auth().signOut(); try{ await firebase.auth().signInAnonymously() }catch(e){} });
     return }
   const m=AC.mode;
