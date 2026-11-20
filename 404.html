@@ -1919,7 +1919,7 @@ const AI_EXTRACT_RULES=`You convert a university exam question bank (Azerbaijan;
 The input may be messy: broken lines, page headers/footers, page numbers, titles, teacher names — ignore everything that is not a question.
 Return EVERY question in the original order. Do not invent, merge, translate or summarize questions.
 - q: the question text exactly as written; join broken line wraps; remove the leading number/label.
-- o: the answer options WITHOUT their labels (A) a) 1. • - etc.); [] if the question has no options.
+- o: the answer options WITHOUT their labels (A) a) 1. • - etc.) and WITHOUT correctness markers (√ * + » ** "(correct)" etc.); [] if the question has no options.
 - a: 0-based index of the correct option. It can be marked by √ ✓ + * • » «))» ●, bold (**text**), underline, highlighting, "(düzgün)"/"(верно)", or given in an answer key ("1-B", "1) C", "Cavab: A", "Ответ: б", a table at the end). If nothing marks it use -1 — never guess.
 - ans: for questions WITHOUT options — the answer/explanation if the document contains it, else "". For questions with options — "".`;
 const aiQSchema=S=>S.object({properties:{questions:S.array({items:S.object({properties:{q:S.string(),o:S.array({items:S.string()}),a:S.integer(),ans:S.string()}})})}});
