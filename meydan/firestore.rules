@@ -1,0 +1,198 @@
+rules_version = '2';
+// Firestore rules for Sessiya+ (notice board + user accounts) — paste into Firebase console → Firestore → Rules.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function real() { return request.auth != null && request.auth.token.firebase.sign_in_provider != 'anonymous'; }
+    // поле счётчика может только вырасти, и не больше чем на 50 за запись
+    function statInc(k) { return request.resource.data.get(k, 0) is int
+      && request.resource.data.get(k, 0) >= resource.data.get(k, 0)
+      && request.resource.data.get(k, 0) <= resource.data.get(k, 0) + 50; }
+    function admin() { return real() && request.auth.token.email_verified == true
+      && request.auth.token.email in ['reskiygor@gmail.com','elmineyvazov6@gmail.com']; }
+    match /ads/{id} {
+      allow read: if true;
+      allow create: if request.auth != null && request.auth.token.firebase.sign_in_provider != 'anonymous'
+        && request.resource.data.keys().hasOnly(['uid','cat','kind','title','text','price','place','uni','gender','contact','lang','createdAt'])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.cat in ['room','sell','service','job','lost','other']
+        && request.resource.data.kind is string && request.resource.data.kind.size() <= 20
+        && request.resource.data.title is string && request.resource.data.title.size() >= 3 && request.resource.data.title.size() <= 80
+        && request.resource.data.text is string && request.resource.data.text.size() <= 1000
+        && (request.resource.data.price == null || (request.resource.data.price is number && request.resource.data.price >= 0 && request.resource.data.price <= 100000))
+        && request.resource.data.place is string && request.resource.data.place.size() <= 60
+        && request.resource.data.uni is string && request.resource.data.uni.size() <= 60
+        && request.resource.data.gender in ['any','f','m']
+        && request.resource.data.contact is string && request.resource.data.contact.size() >= 5 && request.resource.data.contact.size() <= 60
+        && request.resource.data.lang in ['az','ru','en'];
+      allow delete: if (request.auth != null && resource.data.uid == request.auth.uid) || admin();
+      allow update: if false;
+    }
+    // Анонимные дневные счётчики: любой вошедший (в т.ч. гость) может только увеличить одно поле на 1–50; читают модераторы
+    match /stats/{day} {
+      allow read: if admin();
+      allow create: if request.auth != null && day.matches('^20[0-9]{2}-[0-9]{2}-[0-9]{2}$')
+        && request.resource.data.keys().hasOnly(['v','r','q','a','ai','up','pwa']) && request.resource.data.keys().size() == 1
+        && request.resource.data[request.resource.data.keys()[0]] is int
+        && request.resource.data[request.resource.data.keys()[0]] >= 1 && request.resource.data[request.resource.data.keys()[0]] <= 50;
+      allow update: if request.auth != null
+        && request.resource.data.keys().hasOnly(['v','r','q','a','ai','up','pwa'])
+        && request.resource.data.diff(resource.data).affectedKeys().size() == 1
+        && statInc('v') && statInc('r') && statInc('q') && statInc('a') && statInc('ai') && statInc('up') && statInc('pwa');
+    }
+    // ================= Meydan (tələbə futbolu, ayrıca sayt) — kolleksiyalar mz_* =================
+    function mzAdmin() { return real() && exists(/databases/$(database)/documents/mz_admins/$(request.auth.uid)); }
+    function mzStr(v, n) { return v is string && v.size() <= n; }
+    function mzScore(v) { return v == null || (v is int && v >= 0 && v < 100); }
+    match /mz_admins/{uid} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+      allow write: if false;
+    }
+    match /mz_users/{uid} {
+      allow read: if true;
+      allow write: if real() && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['name','uni','course','spec','pos','level','ready','readyAt','bio','upd'])
+        && mzStr(request.resource.data.name, 60) && request.resource.data.name.size() >= 2
+        && request.resource.data.uni is string && request.resource.data.uni.matches('^[a-z0-9_-]{1,20}$')
+        && request.resource.data.course in ['1','2','3','4','5','6','mag','grad']
+        && mzStr(request.resource.data.spec, 60) && request.resource.data.pos in ['gk','def','mid','fwd','any']
+        && request.resource.data.level in ['1','2','3'] && request.resource.data.ready is bool && request.resource.data.readyAt is int
+        && mzStr(request.resource.data.bio, 300) && request.resource.data.upd is int;
+    }
+    // телефон и Telegram видят только вошедшие пользователи
+    match /mz_contacts/{uid} {
+      allow read: if real();
+      allow write: if real() && request.auth.uid == uid && request.resource.data.keys().hasOnly(['phone','tg'])
+        && mzStr(request.resource.data.phone, 20) && mzStr(request.resource.data.tg, 32);
+    }
+    match /mz_pitches/{id} {
+      allow read: if true;
+      allow create: if real() && request.resource.data.by == request.auth.uid
+        && request.resource.data.keys().hasOnly(['name','district','addr','map','price','phone','note','by','createdAt','hidden'])
+        && mzStr(request.resource.data.name, 80) && request.resource.data.name.size() >= 3
+        && mzStr(request.resource.data.district, 40) && mzStr(request.resource.data.addr, 120)
+        && mzStr(request.resource.data.map, 300) && (request.resource.data.map == '' || request.resource.data.map.matches('^https://[^ "<>]+$'))
+        && (request.resource.data.price == null || (request.resource.data.price is number && request.resource.data.price >= 0 && request.resource.data.price <= 500))
+        && mzStr(request.resource.data.phone, 20) && mzStr(request.resource.data.note, 200)
+        && request.resource.data.createdAt is int && request.resource.data.hidden == false;
+      allow update: if mzAdmin() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['hidden']);
+    }
+    match /mz_games/{id} {
+      allow read: if true;
+      allow create: if real() && request.resource.data.host == request.auth.uid
+        && request.resource.data.keys().hasOnly(['type','pitch','pitchName','date','time','at','dur','fmt','need','team','price','level','uniOnly','note','host','hostName','hostUni','players','pn','req','opp','status','sA','sB','hidden','createdAt'])
+        && request.resource.data.type in ['p','o']
+        && request.resource.data.at is int && request.resource.data.at > request.time.toMillis() - 600000 && request.resource.data.at < request.time.toMillis() + 7862400000
+        && request.resource.data.dur in [60,90,120] && request.resource.data.fmt in [5,6,7,8,11]
+        && request.resource.data.need is int && request.resource.data.need >= 1 && request.resource.data.need <= 29
+        && mzStr(request.resource.data.pitch, 40) && mzStr(request.resource.data.pitchName, 120)
+        && mzStr(request.resource.data.date, 10) && mzStr(request.resource.data.time, 5)
+        && mzStr(request.resource.data.team, 40) && mzStr(request.resource.data.note, 500)
+        && (request.resource.data.price == null || (request.resource.data.price is number && request.resource.data.price >= 0 && request.resource.data.price <= 200))
+        && request.resource.data.level in ['any','1','2','3'] && mzStr(request.resource.data.uniOnly, 20)
+        && mzStr(request.resource.data.hostName, 60) && mzStr(request.resource.data.hostUni, 20)
+        && request.resource.data.players == (request.resource.data.type == 'p' ? [request.auth.uid] : [])
+        && request.resource.data.pn.keys().hasOnly([request.auth.uid])
+        && request.resource.data.req.size() == 0 && request.resource.data.opp == null && request.resource.data.status == 'open'
+        && request.resource.data.sA == null && request.resource.data.sB == null && request.resource.data.hidden == false
+        && request.resource.data.createdAt is int;
+      allow update: if real() && (
+          // təşkilatçı: status, hesab, rəqibi qəbul/rədd etmək
+          (resource.data.host == request.auth.uid
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status','sA','sB','opp','req'])
+            && request.resource.data.status in ['open','full','cancelled','done']
+            && mzScore(request.resource.data.sA) && mzScore(request.resource.data.sB)
+            && (request.resource.data.opp == null || request.resource.data.opp.uid in resource.data.req)
+            && request.resource.data.req.keys().hasOnly(resource.data.req.keys()))
+          // oyunçu: yalnız özünü əlavə edir və ya çıxarır
+          || (resource.data.type == 'p' && resource.data.host != request.auth.uid
+            && resource.data.status in ['open','full'] && resource.data.at > request.time.toMillis()
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['players','pn','status'])
+            && request.resource.data.players.toSet().difference(resource.data.players.toSet()).hasOnly([request.auth.uid])
+            && resource.data.players.toSet().difference(request.resource.data.players.toSet()).hasOnly([request.auth.uid])
+            && request.resource.data.players.size() <= resource.data.need + 1
+            && request.resource.data.pn.diff(resource.data.pn).affectedKeys().hasOnly([request.auth.uid])
+            && request.resource.data.status == (request.resource.data.players.size() >= resource.data.need + 1 ? 'full' : 'open'))
+          // rəqib komanda: yalnız öz çağırışını əlavə edir
+          || (resource.data.type == 'o' && resource.data.host != request.auth.uid && resource.data.status == 'open' && resource.data.opp == null
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['req'])
+            && request.resource.data.req.diff(resource.data.req).affectedKeys().hasOnly([request.auth.uid])
+            && request.resource.data.req[request.auth.uid].keys().hasOnly(['t','u','n','at'])
+            && mzStr(request.resource.data.req[request.auth.uid].t, 40) && mzStr(request.resource.data.req[request.auth.uid].u, 20)
+            && mzStr(request.resource.data.req[request.auth.uid].n, 60))
+          || (mzAdmin() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['hidden']))
+        );
+    }
+    match /users/{uid} {
+      allow read, write: if request.auth != null && request.auth.uid == uid
+        && request.auth.token.firebase.sign_in_provider != 'anonymous';
+    }
+    match /banks/{id} {
+      allow read: if true;
+      allow create: if real() && id.matches('^k[a-z0-9]{6,24}$')
+        && request.resource.data.uni is string && request.resource.data.uni.matches('^[a-z0-9_-]{1,60}$')
+        && request.resource.data.keys().hasOnly(['name','type','format','uni','uniLabel','fac','subj','lang','count','parts','uid','author','createdAt'])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.name is string && request.resource.data.name.size() >= 1 && request.resource.data.name.size() <= 120
+        && request.resource.data.type in ['mc','written'] && request.resource.data.format in ['test','written']
+        && request.resource.data.uni is string && request.resource.data.uni.size() >= 1 && request.resource.data.uni.size() <= 60
+        && request.resource.data.uniLabel is string && request.resource.data.uniLabel.size() <= 120
+        && request.resource.data.fac is string && request.resource.data.fac.size() <= 120
+        && request.resource.data.subj is string && request.resource.data.subj.size() >= 1 && request.resource.data.subj.size() <= 120
+        && request.resource.data.lang in ['az','ru','en']
+        && request.resource.data.count is int && request.resource.data.count > 0 && request.resource.data.count <= 3000
+        && request.resource.data.parts is int && request.resource.data.parts > 0 && request.resource.data.parts <= 20
+        && request.resource.data.author is string && request.resource.data.author.size() <= 60
+        && request.resource.data.createdAt is int;
+      allow update: if (real() && resource.data.uid == request.auth.uid || admin())
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['hidden'])
+        && request.resource.data.hidden == true;
+    }
+    match /bankdata/{id}/parts/{part} {
+      allow read: if true;
+      allow create: if real() && id.matches('^k[a-z0-9]{6,24}$') && part.matches('^p[0-9]{1,2}$')
+        && request.resource.data.keys().hasOnly(['qs','uid'])
+        && request.resource.data.uid == request.auth.uid && request.resource.data.qs is list && request.resource.data.qs.size() <= 150;
+    }
+    match /lb/{week}/users/{uid} {
+      allow read: if true;
+      // защита от накрутки: не больше +600 XP за запись и не чаще раза в 10 секунд
+      allow create, update: if real() && request.auth.uid == uid && week.matches('^20[0-9]{2}-W[0-9]{2}$')
+        && request.resource.data.keys().hasOnly(['name','wk','at'])
+        && request.resource.data.name is string && request.resource.data.name.size() <= 40
+        && request.resource.data.wk is int && request.resource.data.wk >= 0 && request.resource.data.wk <= 50000
+        && request.resource.data.at is int && request.resource.data.at <= request.time.toMillis() + 120000
+        && (resource == null
+              ? request.resource.data.wk <= 600
+              : (request.resource.data.wk <= resource.data.wk + 600
+                 && request.time.toMillis() >= resource.data.at + 10000
+                 && request.resource.data.at >= resource.data.at));
+    }
+    match /duels/{id} {
+      allow read: if real();
+      allow create: if real() && request.resource.data.host == request.auth.uid
+        && request.resource.data.keys().hasOnly(['code','bank','qs','host','hostName','guest','guestName','status','p','s','d','uids','createdAt'])
+        && request.resource.data.code == id && request.resource.data.guest == null && request.resource.data.status == 'waiting'
+        && request.resource.data.qs is list && request.resource.data.qs.size() <= 15
+        && request.resource.data.p.size() == 0 && request.resource.data.s.size() == 0 && request.resource.data.d.size() == 0
+        && request.resource.data.uids == [request.auth.uid];
+      allow update: if real() && (
+          (resource.data.guest == null && resource.data.host != request.auth.uid
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['guest','guestName','status','uids'])
+            && request.resource.data.guest == request.auth.uid && request.resource.data.status == 'playing'
+            && request.resource.data.uids == [resource.data.host, request.auth.uid]
+            && request.resource.data.guestName is string && request.resource.data.guestName.size() <= 40)
+        || ((resource.data.host == request.auth.uid || resource.data.guest == request.auth.uid)
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['p','s','d'])
+            && request.resource.data.p.diff(resource.data.p).affectedKeys().hasOnly([request.auth.uid])
+            && request.resource.data.s.diff(resource.data.s).affectedKeys().hasOnly([request.auth.uid])
+            && request.resource.data.d.diff(resource.data.d).affectedKeys().hasOnly([request.auth.uid])));
+    }
+    match /reports/{id} {
+      allow create: if request.auth != null
+        && request.resource.data.keys().hasOnly(['ad','bank','reason','uid','at'])
+        && request.resource.data.uid == request.auth.uid
+        && (!('reason' in request.resource.data) || (request.resource.data.reason is string && request.resource.data.reason.size() <= 500));
+    }
+  }
+}
