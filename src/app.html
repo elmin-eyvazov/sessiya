@@ -582,6 +582,7 @@ const PUB_PER_DAY=5;
 const Cat={db:null,staticMetas:[],userMetas:[],metas:[],ready:false,unsub:null,listeners:[],
   async init(){
     await this.loadStatic(); this.merge(); this.ready=true; this.emit();
+    setTimeout(()=>this.prefetch(),8000);
     const fb=await fbStart(); if(!fb) return;
     try{ this.db=fb.firestore(); this.subscribe() }catch(e){ this.db=null }
     if(typeof pvSyncPublic==='function') pvSyncPublic();
@@ -609,6 +610,10 @@ const Cat={db:null,staticMetas:[],userMetas:[],metas:[],ready:false,unsub:null,l
     store.set('sp_publim',{day:dayKey(),n:n+1});
     return id;
   },
+  // раз в день тихо скачиваем все встроенные банки, чтобы service worker положил их в кэш — тесты работают без интернета
+  async prefetch(){ try{ if(!navigator.onLine||!('serviceWorker' in navigator)||store.get('sp_pref','')===dayKey()) return;
+    for(const m of this.staticMetas){ try{ await fetch('data/banks/'+m.id+'.json') }catch(e){} await new Promise(r=>setTimeout(r,150)) }
+    store.set('sp_pref',dayKey()) }catch(e){} },
   async loadQs(meta){
     if(meta.src!=='user'){ const r=await fetch('data/banks/'+meta.id+'.json'); return r.ok?((await r.json()).qs||[]):[] }
     if(!this.db) throw 0;
