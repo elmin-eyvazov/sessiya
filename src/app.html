@@ -854,11 +854,14 @@ function renderEditor(){
     return `<div class="ed" data-i="${i}">${head}<textarea data-f="q" placeholder="${esc(t('q_ph'))}">${esc(x.q)}</textarea><textarea class="eda" data-f="ans" placeholder="${esc(t('ans_ph'))}">${esc(x.ans||'')}</textarea></div>`;
   }).join(''):`<div class="note">${t('no_results')}</div>`;
   $('pvPager').innerHTML=pages>1?`<button class="btn sec small" data-p="-1"${P.page?'':' disabled'}>‹</button><span class="note">${P.page+1} / ${pages}</span><button class="btn sec small" data-p="1"${P.page<pages-1?'':' disabled'}>›</button>`:'';
+  requestAnimationFrame(()=>$('pvList').querySelectorAll('textarea').forEach(autoGrow));
 }
+// поле вопроса растёт под текст (на телефоне длинный вопрос не обрезается)
+function autoGrow(el){ el.style.height='auto'; el.style.height=Math.min(400,el.scrollHeight+2)+'px' }
 $('pvPager').onclick=e=>{ const b=e.target.closest('[data-p]'); if(!b) return; pending.page+=+b.dataset.p; renderEditor(); $('pvList').scrollIntoView({behavior:'smooth',block:'start'}) };
 $('pvFind').oninput=()=>{ pending.find=$('pvFind').value; pending.page=0; renderEditor() };
 $('pvList').addEventListener('input',e=>{
-  const el=e.target, box=el.closest('.ed'); if(!box||!el.dataset.f) return; const x=pvItems()[+box.dataset.i];
+  const el=e.target, box=el.closest('.ed'); if(!box||!el.dataset.f) return; const x=pvItems()[+box.dataset.i]; if(el.tagName==='TEXTAREA') autoGrow(el);
   if(el.dataset.f==='q') x.q=el.value; else if(el.dataset.f==='ans') x.ans=el.value; else if(el.dataset.f==='o') x.o[+el.dataset.j]=el.value;
   pending.warn=false;
 });
