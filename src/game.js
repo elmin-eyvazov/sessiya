@@ -3,12 +3,12 @@ function weekKey(d){ d=d||new Date(); const t=new Date(Date.UTC(d.getFullYear(),
   t.setUTCDate(t.getUTCDate()+4-day); const y=t.getUTCFullYear(); const w=Math.ceil(((t-Date.UTC(y,0,1))/864e5+1)/7); return y+'-W'+String(w).padStart(2,'0') }
 function getXP(){ const x=store.get('sp_xp',null)||{total:0,week:weekKey(),wk:0}; if(x.week!==weekKey()){ x.week=weekKey(); x.wk=0 } return x }
 function levelOf(total){ const L=Math.floor(Math.sqrt((total||0)/50))+1; return {L,from:(L-1)*(L-1)*50,to:L*L*50} }
-let lbTimer=null;
+let lbTimer=null, lbRetry=0;
 function award(n){ if(!(n>0)) return; const x=getXP(); x.total+=n; x.wk+=n; store.set('sp_xp',x); clearTimeout(lbTimer); lbTimer=setTimeout(()=>{lbPush();checkBadges()},1500) }
 function lbName(u){ return String((u&&u.displayName)||t('student')+' '+String(u&&u.uid||'').slice(0,4)).slice(0,40) }
 async function lbPush(){
   const u=FB.user; if(!isReal(u)) return; await catDb(); if(!Cat.db) return; const x=getXP(); if(!x.wk) return;
-  try{ await Cat.db.collection('lb').doc(x.week).collection('users').doc(u.uid).set({name:lbName(u),wk:x.wk,at:Date.now()}) }catch(e){ console.warn('lb',e) }
+  try{ await Cat.db.collection('lb').doc(x.week).collection('users').doc(u.uid).set({name:lbName(u),wk:x.wk,at:Date.now()}); lbRetry=0 }catch(e){ console.warn('lb',e); if(lbRetry++<3){ clearTimeout(lbTimer); lbTimer=setTimeout(lbPush,12000) } }
 }
 async function catDb(){ await fbStart(); if(!Cat.db&&window.firebase&&firebase.apps&&firebase.apps.length){ try{ Cat.db=firebase.firestore() }catch(e){} } return Cat.db }
 function getGoal(){ return store.get('sp_goal',20) }
@@ -55,7 +55,7 @@ async function renderRating(){
     const s=await Cat.db.collection('lb').doc(weekKey()).collection('users').orderBy('wk','desc').limit(100).get();
     const L=s.docs.map(d=>({id:d.id,...d.data()})); const me=FB.user&&FB.user.uid; const pos=L.findIndex(r=>r.id===me);
     $('rtPos').textContent=pos>=0?t('rating_you',pos+1,L[pos].wk):(x.wk?t('rating_you',(L.length>=100?'100+':L.length+1),x.wk):'');
-    $('rtList').innerHTML=L.length?L.slice(0,50).map((r,i)=>`<div class="lbrow${r.id===me?' me':''}"><span class="lbn">${i<3?['🥇','🥈','🥉'][i]:i+1}</span><span class="lbname">${esc(r.name)}</span><b>${r.wk} XP</b></div>`).join('')
+    $('rtList').innerHTML=L.length?L.slice(0,50).map((r,i)=>`<div class="lbrow${r.id===me?' me':''}"><span class="lbn">${i<3?['🥇','🥈','🥉'][i]:i+1}</span><span class="lbname">${esc(r.name)}</span><b>${+r.wk||0} XP</b></div>`).join('')
       :`<div class="empty">${t('rating_empty')}</div>`;
   }catch(e){ $('rtList').innerHTML=`<div class="empty">${t('load_fail')}</div>` }
 }

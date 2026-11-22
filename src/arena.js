@@ -15,7 +15,7 @@ async function renderArena(){
     const L=s.docs.map(d=>d.data()).sort((a,b)=>b.createdAt-a.createdAt).slice(0,10);
     $('arMine').innerHTML=L.length?L.map(d=>{ const opp=d.host===me()?d.guestName:d.hostName; const my=(d.s||{})[me()]||0, op=(d.s||{})[d.host===me()?d.guest:d.host]||0;
       const st=d.status==='waiting'?t('du_wait_short'):(d.d&&Object.keys(d.d).length>=2?(my>op?'🏆 '+t('du_won'):my<op?t('du_lost'):t('du_draw')):t('du_playing'));
-      return `<a class="lbrow" data-h="duel-${d.code}" style="text-decoration:none;color:inherit;cursor:pointer"><span class="lbname">⚔️ ${esc(opp||'…')} · <span class="note">${esc(d.bank)}</span></span><b>${my}:${op}</b><span class="note">${st}</span></a>` }).join('')
+      return `<a class="lbrow" data-h="duel-${esc(d.code)}" style="text-decoration:none;color:inherit;cursor:pointer"><span class="lbname">⚔️ ${esc(opp||'…')} · <span class="note">${esc(d.bank)}</span></span><b>${my}:${op}</b><span class="note">${st}</span></a>` }).join('')
       :`<div class="note">${t('du_none')}</div>`;
   }catch(e){ $('arMine').innerHTML='' }
 }
