@@ -19,10 +19,11 @@ function parseBank(text){
   }
   const lines=pre.filter((_,k)=>!drop.has(k));
   let out=[];
-  out=parseMarked(lines); if(out.length>=3) return dedupe(out);
-  out=parseLetter(lines); if(out.length>=3) return dedupe(out);
-  out=parseTrailingBullet(lines);
-  return dedupe(out);
+  const a=parseMarked(lines); if(a.length>=3) return dedupe(a);
+  const b=parseLetter(lines); if(b.length>=3) return dedupe(b);
+  const c=parseTrailingBullet(lines);
+  // короткий тест (1–2 вопроса): берём формат, который нашёл больше всего вопросов
+  return dedupe([c,b,a].sort((x,y)=>y.length-x.length)[0]);
 }
 
 // Format 1: "12. Question" + option lines starting with • (wrong) or √ (correct)

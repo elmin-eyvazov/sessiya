@@ -39,6 +39,8 @@ function letter(total){ for(const [g,m] of GRADES) if(total>=m) return g; return
 function gb(g){ return `<span class="gb" style="background:${GCOL[g]}">${g}</span>` }
 function numVal(v,max){ const x=parseFloat(String(v).replace(',','.')); return isNaN(x)?null:Math.min(max,Math.max(0,x)) }
 function renderCalc(){
+  const bad=v=>{ const x=parseFloat(String(v).replace(',','.')); return String(v).trim()!==''&&(isNaN(x)||x<0||x>50) };
+  if(bad($('clSem').value)||bad($('clExam').value)){ $('clTable').innerHTML=`<div class="empty" style="color:var(--bad)">${t('calc_range')}</div>`; $('clFinal').innerHTML=''; return }
   const s=numVal($('clSem').value,50), e=numVal($('clExam').value,50);
   store.set('sp_calc',{s:$('clSem').value,e:$('clExam').value});
   $('clTable').innerHTML=s==null?`<div class="empty">${t('calc_empty')}</div>`:GRADES.map(([g,m])=>{

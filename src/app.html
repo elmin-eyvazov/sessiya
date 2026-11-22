@@ -1010,7 +1010,10 @@ async function openShared(id){
   if(!curBank.qs.length){$('bkLoading').textContent=t('load_fail');return}
   $('bkTotal').textContent=curBank.qs.length; $('bkLoading').classList.add('hide'); fillBankHeader(curBank,true); showModes();
 }
-function showModes(){ drawGameRec(); const W=curBank&&curBank.type==='written'; const fv=curBank?favs(curBank.id).length:0; $('bkFav').classList.toggle('hide',!fv); $('bkFav').textContent=t('fav_btn',fv); $('bkModes').classList.toggle('hide',W); $('bkWModes').classList.toggle('hide',!W); $('bkSearch').value=''; $('bkSearchRes').innerHTML=''; $('bkSearchBox').classList.remove('hide'); }
+function fillExCount(){ const n=curBank&&curBank.qs?curBank.qs.length:0, sel=$('exCount'), cur=+sel.value||50;
+  const opts=[25,50,100].filter(x=>x<n); sel.innerHTML=opts.map(x=>`<option value="${x}">${t('n_questions',x)}</option>`).join('')+`<option value="0">${t('all_q')}${n?' ('+n+')':''}</option>`;
+  sel.value=opts.includes(cur)?cur:(opts.length?opts[Math.min(1,opts.length-1)]:0) }
+function showModes(){ drawGameRec(); fillExCount(); const W=curBank&&curBank.type==='written'; const fv=curBank?favs(curBank.id).length:0; $('bkFav').classList.toggle('hide',!fv); $('bkFav').textContent=t('fav_btn',fv); $('bkModes').classList.toggle('hide',W); $('bkWModes').classList.toggle('hide',!W); $('bkSearch').value=''; $('bkSearchRes').innerHTML=''; $('bkSearchBox').classList.remove('hide'); }
 $('bkDelete').onclick=async()=>{
   const btn=$('bkDelete'); if(btn.dataset.c!=='1'){btn.textContent=t('confirm_delete');btn.dataset.c='1';setTimeout(()=>{btn.textContent=t('delete');btn.dataset.c=''},3000);return}
   btn.dataset.c=''; btn.textContent=t('delete');
@@ -1090,6 +1093,7 @@ document.addEventListener('keydown',e=>{
 });
 function finish(early){
   clearInterval(tick);
+  if(early&&!Q.answers.length){ show(curBank&&curBank.id&&!curBank.daily&&!curBank.review?'bank':'home'); if(!curBank||curBank.daily||curBank.review) renderHome(); return }
   const done=Q.answers.length; let ok=0; const wrongIdx=[];
   Q.ids.forEach((qi,k)=>{ if(k>=done)return; const x=curBank.qs[qi]; if(Q.answers[k]===x.a)ok++; else wrongIdx.push(k)}); if(done){ statInc('q').then(()=>statInc('a',done)) }
   const total=early?Math.max(done,1):Q.ids.length;
