@@ -1,0 +1,41 @@
+1) Azərbaycanın paytaxtı hansı şəhərdir?
+a. Gəncə
+b. Bakı
+c. Sumqayıt
+d. Şəki
+Düzgün cavab: B
+
+2) Suyun qaynama temperaturu normal təzyiqdə neçə dərəcədir?
+a. 90 °C
+b. 100 °C
+c. 80 °C
+d. 120 °C
+Düzgün cavab: B
+
+3) 2 + 2 · 2 ifadəsinin qiyməti neçədir?
+a. 8
+b. 6
+c. 4
+d. 10
+Düzgün cavab: B
+
+4) HTML nə üçün istifadə olunur?
+a. Veb-səhifələrin strukturu üçün
+b. Verilənlər bazası üçün
+c. Şəkil redaktəsi üçün
+d. Əməliyyat sistemi kimi
+Düzgün cavab: A
+
+5) İşığın vakuumda sürəti təxminən nə qədərdir?
+a. 300 000 km/s
+b. 3 000 km/s
+c. 30 000 km/s
+d. 3 000 000 km/s
+Düzgün cavab: A
+
+6) Fotosintez bitkinin hansı hissəsində əsasən baş verir?
+a. Kökdə
+b. Gövdədə
+c. Yarpaqda
+d. Çiçəkdə
+Düzgün cavab: C
