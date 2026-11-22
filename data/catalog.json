@@ -1,6 +1,71 @@
 {
  "banks": [
   {
+   "name": "Əməliyyat sistemləri — test",
+   "uni": "umumi",
+   "uniLabel": "Bütün universitetlər (ümumi fənlər)",
+   "fac": "İnformasiya texnologiyaları",
+   "subj": "Əməliyyat sistemləri",
+   "lang": "az",
+   "id": "emeliyyatsistemleri",
+   "type": "mc",
+   "format": "test",
+   "count": 25,
+   "createdAt": 1795348148124
+  },
+  {
+   "name": "Marketinqin əsasları — test",
+   "uni": "umumi",
+   "uniLabel": "Bütün universitetlər (ümumi fənlər)",
+   "fac": "İqtisadiyyat",
+   "subj": "Marketinq",
+   "lang": "az",
+   "id": "marketinq",
+   "type": "mc",
+   "format": "test",
+   "count": 25,
+   "createdAt": 1795348148096
+  },
+  {
+   "name": "Menecmentin əsasları — test",
+   "uni": "umumi",
+   "uniLabel": "Bütün universitetlər (ümumi fənlər)",
+   "fac": "İqtisadiyyat",
+   "subj": "Menecment",
+   "lang": "az",
+   "id": "menecment",
+   "type": "mc",
+   "format": "test",
+   "count": 25,
+   "createdAt": 1795348148057
+  },
+  {
+   "name": "Mikroiqtisadiyyat — test",
+   "uni": "umumi",
+   "uniLabel": "Bütün universitetlər (ümumi fənlər)",
+   "fac": "İqtisadiyyat",
+   "subj": "Mikroiqtisadiyyat",
+   "lang": "az",
+   "id": "mikroiqtisadiyyat",
+   "type": "mc",
+   "format": "test",
+   "count": 25,
+   "createdAt": 1795348148032
+  },
+  {
+   "name": "İnformatikanın əsasları — test",
+   "uni": "umumi",
+   "uniLabel": "Bütün universitetlər (ümumi fənlər)",
+   "fac": "İnformasiya texnologiyaları",
+   "subj": "İnformatika",
+   "lang": "az",
+   "id": "informatikaaz",
+   "type": "mc",
+   "format": "test",
+   "count": 28,
+   "createdAt": 1795348148007
+  },
+  {
    "name": "Высшая математика — пределы, производные, интегралы",
    "uni": "umumi",
    "uniLabel": "Bütün universitetlər (ümumi fənlər)",
