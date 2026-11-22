@@ -3,6 +3,10 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     function real() { return request.auth != null && request.auth.token.firebase.sign_in_provider != 'anonymous'; }
+    // поле счётчика может только вырасти, и не больше чем на 50 за запись
+    function statInc(k) { return request.resource.data.get(k, 0) is int
+      && request.resource.data.get(k, 0) >= resource.data.get(k, 0)
+      && request.resource.data.get(k, 0) <= resource.data.get(k, 0) + 50; }
     function admin() { return real() && request.auth.token.email_verified == true
       && request.auth.token.email in ['reskiygor@gmail.com','elmineyvazov6@gmail.com']; }
     match /ads/{id} {
@@ -34,11 +38,7 @@ service cloud.firestore {
       allow update: if request.auth != null
         && request.resource.data.keys().hasOnly(['v','r','q','a','ai','up','pwa'])
         && request.resource.data.diff(resource.data).affectedKeys().size() == 1
-        && request.resource.data[request.resource.data.diff(resource.data).affectedKeys().toList()[0]] is int
-        && request.resource.data[request.resource.data.diff(resource.data).affectedKeys().toList()[0]]
-             > resource.data.get(request.resource.data.diff(resource.data).affectedKeys().toList()[0], 0)
-        && request.resource.data[request.resource.data.diff(resource.data).affectedKeys().toList()[0]]
-             <= resource.data.get(request.resource.data.diff(resource.data).affectedKeys().toList()[0], 0) + 50;
+        && statInc('v') && statInc('r') && statInc('q') && statInc('a') && statInc('ai') && statInc('up') && statInc('pwa');
     }
     match /users/{uid} {
       allow read, write: if request.auth != null && request.auth.uid == uid
