@@ -33,7 +33,7 @@ function fbStart(){
 }
 
 // ---------- синхронизация (users/{uid}) ----------
-const SYNC_KEYS=['sp_stats','sp_act','sp_exams','sp_gpa','sp_calc','sp_banks','sp_xp','sp_fav','sp_goal','sp_daily','sp_dcount','sp_duels','sp_duelwins','sp_badges','sp_srs'];
+const SYNC_KEYS=['sp_stats','sp_act','sp_exams','sp_gpa','sp_calc','sp_banks','sp_xp','sp_fav','sp_goal','sp_daily','sp_dcount','sp_duels','sp_duelwins','sp_badges','sp_srs','sp_plan'];
 let syncTimer=null;
 const _storeSet=store.set.bind(store);
 store.set=function(k,v){ _storeSet(k,v); if(SYNC_KEYS.includes(k)&&isReal(FB.user)){ clearTimeout(syncTimer); syncTimer=setTimeout(syncPush,2500) } };

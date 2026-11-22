@@ -22,9 +22,10 @@ function renderToday(){
   box.innerHTML=`<div class="row" style="justify-content:space-between;align-items:center;margin-bottom:10px"><h2 style="margin:0">${t('today_title')}</h2><span class="pill acc">🔥 ${s} · ⭐ ${t('lvl',lv.L)}</span></div>
     <div class="note" style="margin-bottom:6px">${t('goal_lbl',n,g)}${n>=g?' ✅':''}</div><div class="bar"><i style="width:${pct}%"></i></div>
     <div class="note" style="margin:10px 0 6px">${t('xp_lbl',x.total,lv.to)}</div><div class="bar"><i style="width:${lpct}%;background:#f59e0b"></i></div>
+    ${planHtml(examPlan())}
     ${srsDue().length?`<button class="btn acbtn" id="hmReview" style="margin-top:14px;background:#7c3aed">🧠 ${t('srs_btn',Math.min(30,srsDue().length))}</button>`:''}
     <div class="row" style="margin-top:14px;gap:8px"><button class="btn" id="hmDaily">${d.day===dayKey()?t('daily_done',d.score):t('daily_btn')}</button><a class="btn sec" data-h="arena">⚔️ ${t('arena_title')}</a><a class="btn sec" data-h="rating">${t('rating_btn')}</a></div>`;
-  $('hmDaily').onclick=startDaily; if($('hmReview')) $('hmReview').onclick=()=>startReview($('hmReview'));
+  $('hmDaily').onclick=startDaily; if($('hmPlan')) $('hmPlan').onclick=()=>startPlan($('hmPlan')); if($('hmReview')) $('hmReview').onclick=()=>startReview($('hmReview'));
 }
 
 // ---------- «10 вопросов дня»: одинаковые для всех в этот день ----------
@@ -93,6 +94,7 @@ const dayNum=()=>Math.floor((Date.now()-new Date().getTimezoneOffset()*60000)/86
 function srsKey(qi){ if(!curBank||curBank.daily) return null; return curBank.review?curBank.refs[qi]:curBank.id+'|'+qi }
 function srsRecord(qi,ok){
   const k=srsKey(qi); if(!k) return; const S=store.get('sp_srs',{}); const e=S[k]||{iv:0,n:0};
+  if(ok&&!(e.n>0)) planBump(k.slice(0,k.lastIndexOf('|')));
   if(ok){ e.iv=e.iv?Math.min(120,Math.round(e.iv*2.5)):3; e.n=(e.n||0)+1 } else { e.iv=1; e.n=0 }
   e.due=dayNum()+e.iv; S[k]=e; store.set('sp_srs',S);
 }
@@ -106,6 +108,40 @@ async function startReview(btn){
       const q=arr&&arr[qi]; if(q&&q.o){ qs.push(q); refs.push(k) } else if(arr){ const S=store.get('sp_srs',{}); delete S[k]; store.set('sp_srs',S) } }catch(e){} }
   if(!qs.length){ if(btn){ btn.disabled=false; renderToday() } return }
   curBank={id:'review',name:t('srs_title'),type:'mc',qs,refs,review:true}; startQuiz('practice',qs.map((_,i)=>i));
+}
+
+// ---------- план подготовки к экзамену: сколько новых вопросов решать в день ----------
+function planBanks(){ const seen=new Set(), L=[];
+  mem.banks.filter(b=>b.type!=='written'&&b.qs&&b.qs.length).forEach(b=>{ if(!seen.has(b.id)){ seen.add(b.id); L.push({id:b.id,name:b.name,n:b.qs.length}) } });
+  Cat.metas.filter(m=>(m.type||'mc')==='mc'&&m.count).forEach(m=>{ if(!seen.has(m.id)){ seen.add(m.id); L.push({id:m.id,name:m.name,n:m.count}) } });
+  return L }
+function bankLearned(id){ const S=store.get('sp_srs',{}), p=id+'|'; let k=0; for(const x in S) if(x.startsWith(p)&&S[x].n>0) k++; return k }
+function planToday(id){ const P=store.get('sp_plan',{}); return P.day===dayKey()?(P[id]||0):0 }
+function planBump(id){ const d=dayKey(); let P=store.get('sp_plan',{}); if(P.day!==d) P={day:d}; P[id]=(P[id]||0)+1; store.set('sp_plan',P) }
+function examPlan(){
+  const e=exams().map(e=>({...e,n:daysTo(e.d)})).filter(e=>e.n>=0&&e.b).sort((a,b)=>a.n-b.n)[0]; if(!e) return null;
+  const bk=planBanks().find(x=>x.id===e.b), total=(bk&&bk.n)||e.bc||0; if(!total) return null;
+  const learned=Math.min(total,bankLearned(e.b)), done=planToday(e.b), left=total-learned;
+  const per=left?Math.max(5,Math.ceil((left+done)/Math.max(1,e.n))):0;
+  return {...e,total,learned,left,done,per} }
+function planHtml(p){
+  if(!p) return exams().some(e=>daysTo(e.d)>=0&&e.b)?'':`<a class="note" data-h="tools-cal" style="display:block;margin-top:12px;color:var(--acc);cursor:pointer">${t('plan_cta')}</a>`;
+  const pct=Math.round(p.learned/p.total*100), dp=p.per?Math.min(100,Math.round(p.done/p.per*100)):100, hot=p.n<=3;
+  return `<div style="margin-top:14px;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--soft)">
+    <div class="row" style="justify-content:space-between;align-items:center;gap:8px"><b>📅 ${esc(p.s)}</b><span class="pill" style="${hot?'background:var(--badbg);color:var(--bad)':'background:var(--acc2);color:var(--acc)'}">${esc(leftLabel(p.n))}</span></div>
+    <div class="note" style="margin:10px 0 6px">${t('plan_learned',p.learned,p.total)}</div><div class="bar"><i style="width:${pct}%;background:var(--ok)"></i></div>
+    <div class="note" style="margin:10px 0 6px">${p.left?t('plan_today',Math.min(p.done,p.per),p.per)+(p.done>=p.per?' ✅':''):t('plan_done_all')}</div>${p.left?`<div class="bar"><i style="width:${dp}%"></i></div>`:''}
+    <button class="btn" id="hmPlan" style="margin-top:12px">${p.left?(p.done>=p.per?t('plan_more'):t('plan_go')):t('plan_repeat')}</button></div>` }
+async function startPlan(btn){
+  const p=examPlan(); if(!p) return; if(btn){ btn.disabled=true; btn.textContent=t('loading') }
+  try{
+    let b=getLocal(p.b), qs=b&&b.qs, meta=null;
+    if(!qs){ meta=Cat.metas.find(x=>x.id===p.b); if(meta) qs=bankCache[p.b]||(bankCache[p.b]=await Cat.loadQs(meta)) }
+    if(!qs||!qs.length) throw 0;
+    const S=store.get('sp_srs',{}); const fresh=shuffle(qs.map((_,i)=>i).filter(i=>qs[i].o&&!(S[p.b+'|'+i]&&S[p.b+'|'+i].n>0)));
+    const n=Math.min(20,Math.max(5,p.per-p.done)); const ids=(fresh.length?fresh:shuffle(qs.map((_,i)=>i))).slice(0,fresh.length?n:20);
+    curBank=b?b:{...meta,shared:true,qs}; startQuiz('practice',ids);
+  }catch(e){ if(btn){ btn.disabled=false; renderToday() } }
 }
 
 // ---------- график активности за 14 дней ----------

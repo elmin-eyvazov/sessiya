@@ -68,10 +68,13 @@ function gpaOut(){
 }
 
 // exam calendar
+function fillCalBanks(){ const sel=$('caBank'); if(!sel) return; const cur=sel.value;
+  sel.innerHTML=`<option value="">${esc(t('cal_nobank'))}</option>`+planBanks().map(b=>`<option value="${esc(b.id)}">${esc(b.name)} (${b.n})</option>`).join(''); sel.value=cur }
 function renderCal(){
+  fillCalBanks();
   const L=exams().map((e,i)=>({...e,i,n:daysTo(e.d)})).sort((a,b)=>((a.n<0)-(b.n<0))||(a.n<0?b.n-a.n:a.n-b.n));
   $('caList').innerHTML=L.length?L.map(e=>{ const hot=e.n>=0&&e.n<=3;
-    return `<div class="tile" style="cursor:default;margin-bottom:8px;${e.n<0?'opacity:.5':''}"><span><b>${esc(e.s)}</b><span class="note" style="display:block">${esc(fmtDate(e.d))}</span></span><span class="row" style="gap:4px;flex-wrap:nowrap"><span class="pill" style="${hot?'background:var(--badbg);color:var(--bad)':e.n>=0?'background:var(--acc2);color:var(--acc)':''}">${esc(leftLabel(e.n))}</span><button class="btn ghost small" data-del="${e.i}" aria-label="x">✕</button></span></div>` }).join('')
+    return `<div class="tile" style="cursor:default;margin-bottom:8px;gap:10px;${e.n<0?'opacity:.5':''}"><span style="min-width:0"><b>${esc(e.s)}</b><span class="note" style="display:block">${esc(fmtDate(e.d))}</span>${e.b?(()=>{ const bk=planBanks().find(x=>x.id===e.b); const tot=(bk&&bk.n)||e.bc||0; return `<span class="note" style="display:block">📘 ${esc(bk?bk.name:(e.bn||''))}${tot?' · '+esc(t('plan_learned',Math.min(tot,bankLearned(e.b)),tot)):''}</span>` })():''}</span><span class="row" style="gap:4px;flex-wrap:nowrap"><span class="pill" style="white-space:nowrap;${hot?'background:var(--badbg);color:var(--bad)':e.n>=0?'background:var(--acc2);color:var(--acc)':''}">${esc(leftLabel(e.n))}</span><button class="btn ghost small" data-del="${e.i}" aria-label="x">✕</button></span></div>` }).join('')
     :`<div class="empty">${t('cal_empty')}</div>`;
   $('caList').querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{ const L=exams(); L.splice(+b.dataset.del,1); store.set('sp_exams',L); renderCal() });
 }
@@ -124,8 +127,10 @@ function initTools(){
   const cs=store.get('sp_calc',{}); $('clSem').value=cs.s||''; $('clExam').value=cs.e||'';
   $('clSem').oninput=renderCalc; $('clExam').oninput=renderCalc;
   $('gpAdd').onclick=()=>{ GP.push(blankRow()); store.set('sp_gpa',GP); renderGpa(); const ins=$('gpRows').querySelectorAll('input[data-k="n"]'); ins[ins.length-1].focus() };
-  $('caAdd').onclick=()=>{ const s=$('caSubj').value.trim(), d=$('caDate').value; if(!s){ $('caSubj').focus(); return } if(!d){ $('caDate').focus(); return }
-    const L=exams(); L.push({s,d}); store.set('sp_exams',L); $('caSubj').value=''; renderCal() };
+  $('caAdd').onclick=()=>{ const b=$('caBank').value, bk=b?planBanks().find(x=>x.id===b):null; let s=$('caSubj').value.trim(); const d=$('caDate').value;
+    if(!s&&bk) s=bk.name; if(!s){ $('caSubj').focus(); return } if(!d){ $('caDate').focus(); return }
+    const L=exams(); L.push(bk?{s,d,b,bn:bk.name,bc:bk.n}:{s,d}); store.set('sp_exams',L); $('caSubj').value=''; $('caBank').value=''; renderCal() };
+  if(typeof Cat!=='undefined') Cat.on(()=>{ if(TL==='cal'&&!$('tl-cal').classList.contains('hide')) fillCalBanks() });
   $('caSubj').onkeydown=e=>{ if(e.key==='Enter') $('caAdd').click() };
   $('pmStart').onclick=()=>{ if(PM.run){ PM.left=Math.max(0,Math.round((PM.end-Date.now())/1000)); pmStop(); return }
     PM.run=true; PM.end=Date.now()+PM.left*1000; clearInterval(PM.iv); PM.iv=setInterval(pmTick,500); renderPomo() };
