@@ -193,3 +193,75 @@ async function drawStats(){
       <tr style="border-top:2px solid var(--line)"><td style="padding:6px 8px;font-weight:700">${L[9]}</td>${K.map(k=>td(tot[k]||0,1)).join('')}</tr></table></div>`;
   }catch(e){ box.innerHTML=`<h2>${L[8]}</h2><div class="note">${esc(e.code||e.message||'error')}</div>` }
 }
+
+
+// ---------- игры по банку: «Uyğunlaşdır» (6 пар на время) и «Doğru / Yanlış» (блиц 60 секунд) ----------
+function gmPairs(b){ const W=b&&b.type==='written', out=[];
+  ((b&&b.qs)||[]).forEach((x,i)=>{ const a=W?getAns(b,i):(Array.isArray(x.o)&&x.a>=0?x.o[x.a]:''); if(x.q&&a&&String(a).trim()) out.push({i,q:String(x.q),a:String(a)}) });
+  // одинаковые ответы нельзя ставить в одну игру — пары станут неоднозначными
+  const seen=new Set(); return out.filter(p=>{ const k=p.a.trim().toLowerCase(); if(seen.has(k)) return false; seen.add(k); return true }) }
+function gmRec(){ return store.get('sp_games',{}) }
+function gmSetRec(k,v){ const R=gmRec(); R[k]=v; store.set('sp_games',R) }
+function fmtMs(ms){ const s=ms/1000; return s<60?s.toFixed(1)+' s':Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0') }
+function drawGameRec(){ const b=curBank, box=$('bkGames'); if(!box) return; if(!b||!b.qs){ box.classList.add('hide'); return }
+  const P=gmPairs(b), R=gmRec(), mc=b.type!=='written', tfN=mc?b.qs.filter(x=>Array.isArray(x.o)&&x.o.length>=2&&x.a>=0).length:0;
+  box.classList.toggle('hide',P.length<4&&tfN<4); $('bkMatch').classList.toggle('hide',P.length<4); $('bkTF').classList.toggle('hide',tfN<4);
+  const m=R['m|'+b.id], tf=R['t|'+b.id];
+  $('bkGameRec').textContent=[m?'🧩 '+t('gm_best',fmtMs(m)):'', tf?'⚡ '+t('gm_best',tf):''].filter(Boolean).join(' · ') }
+function gmStop(){ if(MG){ clearInterval(MG.iv); MG.over=true } if(TF){ clearInterval(TF.iv); TF.over=true } }
+function gmQuit(){ gmStop(); show('bank'); drawGameRec() }
+function gmResult(ic,big,sub,again){
+  $('gmBox').innerHTML=`<div style="text-align:center"><div style="font-size:40px">${ic}</div><div class="gmbig">${esc(big)}</div><div class="note">${esc(sub)}</div>
+    <div class="row" style="justify-content:center;margin-top:16px"><button class="btn" id="gmAgain">${t('gm_again')}</button><button class="btn sec" id="gmBack">${t('gm_back')}</button></div></div>`;
+  $('gmAgain').onclick=again; $('gmBack').onclick=gmQuit }
+
+let MG=null;
+function startMatch(){ gmStop(); const P=gmPairs(curBank); if(P.length<4) return toast(t('gm_few'));
+  let pool=P.filter(p=>p.q.length<=160&&p.a.length<=90); if(pool.length<6) pool=P;
+  const pick=shuffle(pool).slice(0,6), n=pick.length;
+  MG={pairs:pick,left:shuffle([...Array(n).keys()]),right:shuffle([...Array(n).keys()]),sel:null,done:0,miss:0,start:Date.now(),iv:null,over:false};
+  show('game'); renderMatch();
+  MG.iv=setInterval(()=>{ if(!MG||MG.over) return; if($('v-game').classList.contains('hide')) return gmStop(); const el=$('mgTime'); if(el) el.textContent=fmtMs(Date.now()-MG.start+MG.miss*1000) },100) }
+function renderMatch(){ const box=$('gmBox');
+  box.innerHTML=`<div class="gmtop"><b>🧩 ${t('match_name')}</b><span class="timer" id="mgTime">0.0 s</span><button class="btn ghost small" id="gmQuit" aria-label="✕">✕</button></div>
+    <div class="note" style="margin-top:6px">${t('match_hint')}</div>
+    <div class="mgrid"><div class="mcol">${MG.left.map(k=>`<button class="mt" data-s="q" data-k="${k}">${esc(MG.pairs[k].q)}</button>`).join('')}</div>
+    <div class="mcol">${MG.right.map(k=>`<button class="mt a" data-s="a" data-k="${k}">${esc(MG.pairs[k].a)}</button>`).join('')}</div></div>`;
+  $('gmQuit').onclick=gmQuit; box.querySelectorAll('.mt').forEach(b=>b.onclick=()=>matchTap(b)) }
+function matchTap(b){ if(!MG||MG.over||b.classList.contains('ok')) return; const s=MG.sel;
+  if(!s||s.dataset.s===b.dataset.s){ if(s) s.classList.remove('sel'); if(s===b){ MG.sel=null; return } b.classList.add('sel'); MG.sel=b; return }
+  s.classList.remove('sel'); MG.sel=null;
+  if(s.dataset.k===b.dataset.k){ s.classList.add('ok'); b.classList.add('ok'); if(++MG.done===MG.pairs.length){ MG.over=true; clearInterval(MG.iv); setTimeout(matchEnd,350) } }
+  else { MG.miss++; [s,b].forEach(x=>{ x.classList.remove('bad'); void x.offsetWidth; x.classList.add('bad'); setTimeout(()=>x.classList.remove('bad'),400) }) } }
+function matchEnd(){ const ms=Date.now()-MG.start+MG.miss*1000, k='m|'+curBank.id, best=gmRec()[k], rec=!best||ms<best; if(rec) gmSetRec(k,ms);
+  bump(MG.pairs.length); award(15);
+  gmResult('🧩',fmtMs(ms),(MG.miss?t('gm_miss',MG.miss)+' · ':'')+(rec?t('gm_new'):t('gm_best',fmtMs(best))),startMatch) }
+
+let TF=null;
+function startTF(){ gmStop(); const b=curBank; const P=(b.qs||[]).map((x,i)=>i).filter(i=>{ const x=b.qs[i]; return Array.isArray(x.o)&&x.o.length>=2&&x.a>=0 });
+  if(P.length<4) return toast(t('gm_few'));
+  TF={ids:shuffle(P),p:0,score:0,miss:0,streak:0,end:Date.now()+60000,cur:null,lock:false,iv:null,over:false};
+  show('game'); tfNext(); TF.iv=setInterval(tfTick,200) }
+function tfTick(){ if(!TF||TF.over) return; if($('v-game').classList.contains('hide')) return gmStop();
+  const left=Math.max(0,TF.end-Date.now()), el=$('tfTime'); if(el){ el.textContent=Math.ceil(left/1000)+' s'; el.style.color=left<10000?'var(--bad)':'' } if(!left) tfEnd() }
+function tfNext(){ if(TF.p>=TF.ids.length){ TF.ids=shuffle(TF.ids); TF.p=0 }
+  const x=curBank.qs[TF.ids[TF.p++]], wrong=x.o.map((_,j)=>j).filter(j=>j!==x.a&&String(x.o[j]).trim()!==String(x.o[x.a]).trim());
+  const shown=(!wrong.length||Math.random()<.5)?x.a:wrong[Math.floor(Math.random()*wrong.length)];
+  TF.cur={x,truth:shown===x.a}; TF.lock=false;
+  $('gmBox').innerHTML=`<div class="gmtop"><b>⚡ ${t('tf_name')}</b><span class="timer" id="tfTime"></span><button class="btn ghost small" id="gmQuit" aria-label="✕">✕</button></div>
+    <div class="note" style="margin-top:6px">${t('tf_score',TF.score)}${TF.streak>=3?' · 🔥 '+TF.streak:''}</div>
+    <div class="tfq">${esc(x.q)}</div><div class="tfa" id="tfA"><span class="note">${t('tf_answer')}:</span> ${esc(x.o[shown])}</div>
+    <div class="note c" id="tfFix" style="min-height:22px;margin-top:8px"></div>
+    <div class="tfb"><button class="btn" id="tfYes" style="background:var(--ok)">${t('tf_true')}</button><button class="btn" id="tfNo" style="background:var(--bad)">${t('tf_false')}</button></div>
+    <div class="note" style="margin-top:10px">${t('tf_keys')}</div>`;
+  $('gmQuit').onclick=gmQuit; $('tfYes').onclick=()=>tfAns(true); $('tfNo').onclick=()=>tfAns(false); tfTick() }
+function tfAns(v){ if(!TF||TF.lock||TF.over) return; TF.lock=true; const ok=v===TF.cur.truth; bump(1);
+  $('tfA').classList.add(ok?'ok':'bad');
+  if(ok){ TF.score++; TF.streak++; setTimeout(()=>{ if(!TF.over) tfNext() },350) }
+  else { TF.miss++; TF.streak=0; $('tfFix').textContent='✓ '+TF.cur.x.o[TF.cur.x.a]; setTimeout(()=>{ if(!TF.over) tfNext() },1400) } }
+function tfEnd(){ TF.over=true; clearInterval(TF.iv); const k='t|'+curBank.id, best=gmRec()[k]||0, rec=TF.score>best; if(rec) gmSetRec(k,TF.score);
+  if(TF.score) award(Math.min(100,TF.score*2));
+  gmResult('⚡',String(TF.score),t('tf_done',TF.score,TF.miss)+' · '+(rec?t('gm_new'):t('gm_best',best)),startTF) }
+document.addEventListener('keydown',e=>{ if($('v-game').classList.contains('hide')||!TF||TF.over||/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return;
+  if(e.key==='ArrowLeft'||e.key==='1'){ e.preventDefault(); tfAns(true) } else if(e.key==='ArrowRight'||e.key==='2'){ e.preventDefault(); tfAns(false) } });
+$('bkMatch').onclick=startMatch; $('bkTF').onclick=startTF;

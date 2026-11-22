@@ -63,6 +63,21 @@ label.f{display:block;font-size:13px;color:var(--mute);margin:12px 0 6px}
 .opt.ok{border-color:var(--ok);background:var(--okbg)}
 .opt.bad{border-color:var(--bad);background:var(--badbg)}
 .opt[disabled]{cursor:default}
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.mcol{display:flex;flex-direction:column;gap:8px}
+.mt{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:10px 11px;font:14px/1.35 Inter,sans-serif;color:var(--ink);text-align:left;cursor:pointer;word-break:break-word;transition:opacity .25s,transform .15s}
+.mt.a{background:var(--acc2)}
+.mt.sel{border-color:var(--acc);box-shadow:0 0 0 2px var(--acc) inset}
+.mt.ok{border-color:var(--ok);background:var(--okbg);opacity:0;pointer-events:none;transform:scale(.96)}
+.mt.bad{border-color:var(--bad);background:var(--badbg);animation:shk .3s}
+@keyframes shk{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.tfq{font-size:19px;font-weight:700;line-height:1.35;margin:14px 0 12px;word-break:break-word}
+.tfa{padding:14px;border-radius:14px;background:var(--soft);border:1px solid var(--line);font-size:17px;word-break:break-word}
+.tfa.ok{background:var(--okbg);border-color:var(--ok)} .tfa.bad{background:var(--badbg);border-color:var(--bad)}
+.tfb{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.tfb .btn{padding:16px;font-size:17px}
+.gmtop{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.gmbig{font-size:44px;font-weight:800;text-align:center;margin:10px 0 4px}
 .big{font-size:44px;font-weight:800;letter-spacing:-.03em}
 .mistake{border-top:1px solid var(--line);padding:12px 0}
 .mistake .y{color:var(--bad)} .mistake .c{color:var(--ok)}
@@ -371,6 +386,12 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
       </div>
       <div class="note" id="bkAnsNote" style="margin-top:10px"></div>
     </div>
+    <div class="card" id="bkGames" style="background:var(--soft);margin:14px 0 0">
+      <h2 data-i="game_title"></h2>
+      <p class="note" style="margin-top:-6px" data-i="game_sub"></p>
+      <div class="row"><button class="btn sec" id="bkMatch" data-i="match_btn"></button><button class="btn sec" id="bkTF" data-i="tf_btn"></button></div>
+      <div class="note" id="bkGameRec" style="margin-top:8px"></div>
+    </div>
     <div id="bkSearchBox" class="hide" style="margin-top:14px">
       <h2 data-i="search_title"></h2>
       <input type="text" id="bkSearch">
@@ -499,6 +520,8 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
 <section id="v-about" class="hide">
   <div class="card about"><h1 style="margin:0 0 10px" data-i="about_link"></h1><div id="abBody"></div></div>
 </section>
+
+<section id="v-game" class="hide"><div class="card" id="gmBox"></div></section>
 
 <section id="v-result" class="hide">
   <div class="card" style="text-align:center">
@@ -630,9 +653,9 @@ const Cat={db:null,staticMetas:[],userMetas:[],metas:[],ready:false,unsub:null,l
 };
 
 // ---------- router (#home, #catalog, #u-<uni>, #f-<uni>--<fac>, #s-<uni>--<fac>--<subj>, #b-<id>) ----------
-const VIEWS=['home','catalog','tools','about','profile','rating','arena','duel','preview','bank','quiz','result','cards','ticket'];
+const VIEWS=['home','catalog','tools','about','profile','rating','arena','duel','preview','bank','quiz','result','cards','ticket','game'];
 function show(v){ if(v!=='duel'&&typeof DU!=='undefined'&&DU.unsub){ DU.unsub(); DU.unsub=null; DU.code=null }for(const s of VIEWS) $('v-'+s).classList.toggle('hide',s!==v);
-  const nv={preview:'catalog',bank:'catalog',quiz:'catalog',result:'catalog',cards:'catalog',ticket:'catalog',about:'profile',rating:'home',duel:'arena'}[v]||v;
+  const nv={preview:'catalog',bank:'catalog',quiz:'catalog',result:'catalog',cards:'catalog',ticket:'catalog',game:'catalog',about:'profile',rating:'home',duel:'arena'}[v]||v;
   document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',a.dataset.go===nv));
   window.scrollTo(0,0)}
 function go(h){ if(location.hash==='#'+h) route(); else location.hash=h }
@@ -980,14 +1003,14 @@ function openBank(id){
 async function openShared(id){
   const m=Cat.metas.find(x=>x.id===id);
   if(!m){ curBank=null; show('bank'); $('bkName').textContent=''; $('bkCrumbs').innerHTML=''; $('bkTags').innerHTML='';
-    $('bkModes').classList.add('hide'); $('bkWModes').classList.add('hide'); $('bkSearchBox').classList.add('hide'); $('bkShare').classList.add('hide'); $('bkLoading').classList.remove('hide'); $('bkLoading').textContent=Cat.ready?t('not_found'):t('loading'); return }
+    $('bkModes').classList.add('hide'); $('bkWModes').classList.add('hide'); $('bkSearchBox').classList.add('hide'); $('bkShare').classList.add('hide'); $('bkGames').classList.add('hide'); $('bkLoading').classList.remove('hide'); $('bkLoading').textContent=Cat.ready?t('not_found'):t('loading'); return }
   curBank={...m,shared:true,qs:null}; fillBankHeader(curBank,true); show('bank'); $('bkSearchBox').classList.add('hide');
-  $('bkModes').classList.add('hide'); $('bkWModes').classList.add('hide'); $('bkLoading').classList.remove('hide'); $('bkLoading').textContent=t('loading');
+  $('bkModes').classList.add('hide'); $('bkWModes').classList.add('hide'); $('bkLoading').classList.remove('hide'); $('bkLoading').textContent=t('loading'); $('bkGames').classList.add('hide');
   try{ curBank.qs=await Cat.loadQs(m); }catch(e){ curBank.qs=[] }
   if(!curBank.qs.length){$('bkLoading').textContent=t('load_fail');return}
   $('bkTotal').textContent=curBank.qs.length; $('bkLoading').classList.add('hide'); fillBankHeader(curBank,true); showModes();
 }
-function showModes(){ const W=curBank&&curBank.type==='written'; const fv=curBank?favs(curBank.id).length:0; $('bkFav').classList.toggle('hide',!fv); $('bkFav').textContent=t('fav_btn',fv); $('bkModes').classList.toggle('hide',W); $('bkWModes').classList.toggle('hide',!W); $('bkSearch').value=''; $('bkSearchRes').innerHTML=''; $('bkSearchBox').classList.remove('hide'); }
+function showModes(){ drawGameRec(); const W=curBank&&curBank.type==='written'; const fv=curBank?favs(curBank.id).length:0; $('bkFav').classList.toggle('hide',!fv); $('bkFav').textContent=t('fav_btn',fv); $('bkModes').classList.toggle('hide',W); $('bkWModes').classList.toggle('hide',!W); $('bkSearch').value=''; $('bkSearchRes').innerHTML=''; $('bkSearchBox').classList.remove('hide'); }
 $('bkDelete').onclick=async()=>{
   const btn=$('bkDelete'); if(btn.dataset.c!=='1'){btn.textContent=t('confirm_delete');btn.dataset.c='1';setTimeout(()=>{btn.textContent=t('delete');btn.dataset.c=''},3000);return}
   btn.dataset.c=''; btn.textContent=t('delete');
