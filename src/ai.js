@@ -64,8 +64,11 @@ Return EVERY question in the original order. Do not invent, merge, translate or 
 - q: the question text exactly as written; join broken line wraps; remove the leading number/label.
 - o: the answer options WITHOUT their labels (A) a) 1. • - etc.) and WITHOUT correctness markers (√ * + » ** "(correct)" etc.); [] if the question has no options.
 - a: 0-based index of the correct option. It can be marked by √ ✓ + * • » «))» ●, bold (**text**), underline, highlighting, "(düzgün)"/"(верно)", or given in an answer key ("1-B", "1) C", "Cavab: A", "Ответ: б", a table at the end). If nothing marks it use -1 — never guess.
-- ans: for questions WITHOUT options — the answer/explanation if the document contains it, else "". For questions with options — "".`;
-const aiQSchema=S=>S.object({properties:{questions:S.array({items:S.object({properties:{q:S.string(),o:S.array({items:S.string()}),a:S.integer(),ans:S.string()}})})}});
+- ans: for questions WITHOUT options — the answer/explanation if the document contains it, else "". For questions with options — "".
+- m: how the document itself indicates the correct option of THIS question: "mark" (symbol, bold, underline, highlight), "key" (answer key / "Cavab:" line) or "none". If "none", a MUST be -1 even if you know the answer.`;
+const aiQSchema=S=>S.object({properties:{questions:S.array({items:S.object({properties:{q:S.string(),o:S.array({items:S.string()}),a:S.integer(),ans:S.string(),m:S.enumString?S.enumString({enum:['mark','key','none']}):S.string()}})})}});
+// в тексте нет ни одного признака правильного ответа → ИИ не должен «угадывать» (иначе догадки выглядят как ответы из файла)
+const MARK_RE=/[√✓✔•»●◉☑]|\*\*|\(\(|\)\)|^\s*\d+\s*[-–.)]\s*[A-Ea-eА-Да-д]\s*[,;.]?\s*$|\b\d+\s*[-–]\s*[A-Ea-eА-Да-д]\b|cavab|düzgün|doğru|ответ|верн|правильн|answer|correct|\+\s*$/im;
 
 // Распознать структуру: из текста (кусками) или из самого файла (PDF/фото — модель видит жирный шрифт и разметку)
 async function aiExtract(src,onProgress){
@@ -92,15 +95,15 @@ async function aiExtract(src,onProgress){
     const outs=await aiPool(parts.map(p=>()=>aiCall(AI_EXTRACT_RULES+'\n\nTEXT:\n'+p,aiQSchema).catch(e=>{ if(e.code==='ai_limit') throw e; return {questions:[]} })),3,onProgress);
     for(const j of outs) res.push(...((j&&j.questions)||[]));
   }
-  return aiSplit(res);
+  return aiSplit(res,!useFile&&!MARK_RE.test(src.text||''));
 }
-function aiSplit(res){
+function aiSplit(res,noMarks){
   const mc=[],list=[],seen=new Set();
   for(const x of res){
     const q=String(x.q||'').trim(); if(!q) continue;
     const o=(x.o||[]).map(s=>String(s).trim()).filter(Boolean);
     const key=q.toLowerCase()+'|'+o.join('|').toLowerCase(); if(seen.has(key)) continue; seen.add(key);
-    if(o.length>=2) mc.push({q,o,a:Number.isInteger(x.a)&&x.a>=0&&x.a<o.length?x.a:-1});
+    if(o.length>=2) mc.push({q,o,a:!noMarks&&x.m!=='none'&&Number.isInteger(x.a)&&x.a>=0&&x.a<o.length?x.a:-1});
     else list.push({q,ans:String(x.ans||'').trim()});
   }
   if(!mc.length&&!list.length) throw aiErr('ai_empty');
