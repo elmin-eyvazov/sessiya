@@ -185,7 +185,7 @@ function renderGame(id){
   const canScore=mine&&started&&g.status!=='cancelled'&&g.status!=='done'&&(g.type==='p'||g.opp);
   const hostCard=mine||isAdmin()?`<div class="card">${canScore?`<h2>${t('set_score')}</h2><div class="row" style="flex-wrap:nowrap"><input type="number" id="sA" min="0" max="99" placeholder="${esc(g.type==='o'?g.team:t('our'))}"><b>:</b><input type="number" id="sB" min="0" max="99" placeholder="${esc(g.opp?g.opp.t:t('their'))}"><button class="btn" id="gScore">${t('save')}</button></div>`:''}
       <div class="row" style="margin-top:${canScore?10:0}px">${mine&&g.status==='open'&&!started?`<button class="btn danger small" id="gCancel">${t('cancel_game')}</button>`:''}${isAdmin()?`<button class="btn sec small" id="gHide">${t('admin_hide')}</button>`:''}</div></div>`:'';
-  $('view').innerHTML=`<div class="card"><div class="gtop"><div>${statusTag(g)} <span class="tag">${g.fmt}×${g.fmt}</span> ${g.level&&g.level!=='any'?`<span class="tag">${t('lvl_'+g.level)}</span>`:''}</div><button class="btn ghost small" id="gShare">📤 ${t('share')}</button></div>
+  $('view').innerHTML=`<div class="card"><div class="gtop"><div>${statusTag(g)} <span class="tag">${g.fmt}×${g.fmt}</span> ${g.level&&g.level!=='any'?`<span class="tag">${t('lvl_'+g.level)}</span>`:''}</div><div class="row" style="gap:0;flex-wrap:nowrap">${g.status!=='cancelled'&&!isOver(g)?`<button class="btn ghost small" id="gIcs" title="${esc(t('add_cal'))}">📅</button>`:''}<button class="btn ghost small" id="gShare">📤 ${t('share')}</button></div></div>
       <h1 style="margin-top:10px">${g.type==='o'?'⚔️ '+t('type_opp'):'🙋 '+esc(g.team||t('type_players'))}</h1>${vs}
       <div class="kv" style="margin-top:8px"><b>${t('when')}</b><span>🕒 ${esc(whenLabel(g.at))} · ${t('dur_'+(g.dur||60))}</span>
         <b>${t('where')}</b><span>📍 ${esc(place)}${p&&safeUrl(p.map)?` · <a href="${esc(p.map)}" target="_blank" rel="noopener">${t('map')}</a>`:''}</span>
@@ -215,8 +215,17 @@ function renderGame(id){
     run(async()=>{ await ref.update({sA:a,sB:b,status:'done'}); toast(t('score_saved')) }) };
   if($('gHide')) $('gHide').onclick=()=>run(async()=>{ await ref.update({hidden:true}); toast(t('hidden')); location.hash='home' });
   $('gShare').onclick=()=>shareGame(g,place);
+  if($('gIcs')) $('gIcs').onclick=()=>downloadIcs(g,place);
   document.querySelectorAll('[data-contact]').forEach(b=>b.onclick=()=>showContact(b.dataset.contact));
 }
+// .ics — oyunu telefonun təqviminə əlavə etmək (xatırlatma 2 saat əvvəl)
+function downloadIcs(g,place){
+  const f=ms=>new Date(ms).toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,''), clean=s=>String(s||'').replace(/[\;,]/g,m=>'\\'+m).replace(/\n/g,'\\n');
+  const title=g.type==='o'?(g.opp?`${g.team} vs ${g.opp.t}`:g.team):`⚽ ${g.fmt}×${g.fmt} ${g.team||'Meydan'}`;
+  const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Meydan//AZ','BEGIN:VEVENT','UID:'+g.id+'@meydan','DTSTAMP:'+f(Date.now()),'DTSTART:'+f(g.at),'DTEND:'+f(g.at+(g.dur||60)*6e4),
+    'SUMMARY:'+clean(title),'LOCATION:'+clean(place),'DESCRIPTION:'+clean((g.note?g.note+'\n':'')+location.origin+location.pathname+'#g-'+g.id),
+    'BEGIN:VALARM','TRIGGER:-PT2H','ACTION:DISPLAY','DESCRIPTION:'+clean(title),'END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n');
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([ics],{type:'text/calendar'})); a.download='meydan-'+g.date+'.ics'; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove() },1000) }
 function confirmTwice(b){ if(b.dataset.c==='1') return true; b.dataset.c='1'; const old=b.textContent; b.textContent='❓ '+old; setTimeout(()=>{ b.dataset.c=''; b.textContent=old },3000); return false }
 async function shareGame(g,place){
   const url=location.origin+location.pathname+'#g-'+g.id, text=t('share_text',g.type==='o'?g.team+' — '+t('type_opp'):`${g.fmt}×${g.fmt} ${t('type_players')}`,whenLabel(g.at),place);

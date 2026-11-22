@@ -34,7 +34,7 @@ az:{
  install:"Telefona yüklə",install_ios:"Safari → Paylaş → «Ana ekrana»",me_games:"Mənim oyunlarım",guest:"Qonaq",admin_hide:"Gizlət (admin)",hidden:"Gizlədildi",
  dur_60:"1 saat",dur_90:"1,5 saat",dur_120:"2 saat",when:"Nə vaxt",where:"Harada",who:"Kimlər",vs:"vs",
  req_note:"Komanda adı və vuz göstər — təşkilatçı rəqibi seçəcək",your_team:"Komandanın adı",send:"Göndər",
- stat_games:"Oyun",stat_hosted:"Təşkil etdi",members:"oyunçu",open_profile:"Profil"
+ add_cal:"Təqvimə əlavə et",stat_games:"Oyun",stat_hosted:"Təşkil etdi",members:"oyunçu",open_profile:"Profil"
 },
 ru:{
  tagline:"Студенческий футбол: найди игру, собери команду, вызови соперника",
@@ -71,7 +71,7 @@ ru:{
  install:"Установить на телефон",install_ios:"Safari → Поделиться → «На экран Домой»",me_games:"Мои игры",guest:"Гость",admin_hide:"Скрыть (админ)",hidden:"Скрыто",
  dur_60:"1 час",dur_90:"1,5 часа",dur_120:"2 часа",when:"Когда",where:"Где",who:"Кто",vs:"vs",
  req_note:"Укажи название команды и вуз — организатор выберет соперника",your_team:"Название твоей команды",send:"Отправить",
- stat_games:"Игр",stat_hosted:"Организовал",members:"игроков",open_profile:"Профиль"
+ add_cal:"Добавить в календарь",stat_games:"Игр",stat_hosted:"Организовал",members:"игроков",open_profile:"Профиль"
 },
 en:{
  tagline:"Student football: find a game, build a team, challenge rivals",
@@ -108,5 +108,5 @@ en:{
  install:"Install on phone",install_ios:"Safari → Share → «Add to Home Screen»",me_games:"My games",guest:"Guest",admin_hide:"Hide (admin)",hidden:"Hidden",
  dur_60:"1 hour",dur_90:"1.5 hours",dur_120:"2 hours",when:"When",where:"Where",who:"Who",vs:"vs",
  req_note:"Give your team name and university — the organiser will pick an opponent",your_team:"Your team name",send:"Send",
- stat_games:"Games",stat_hosted:"Organised",members:"players",open_profile:"Profile"
+ add_cal:"Add to calendar",stat_games:"Games",stat_hosted:"Organised",members:"players",open_profile:"Profile"
 }};
