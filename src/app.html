@@ -430,6 +430,7 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
 <!-- RESULT -->
 <section id="v-profile" class="hide">
   <div class="card" id="acCard"><div id="acBox"></div><div id="acRecaptcha"></div></div>
+  <div class="card hide" id="stCard"></div>
   <div class="card">
     <div class="row" style="justify-content:space-between;margin-bottom:10px"><h2 style="margin:0" data-i="prog_title"></h2><button class="btn ghost small" data-go="tools" data-i="all_tools"></button></div>
     <div class="row">
@@ -921,7 +922,7 @@ $('pvSave').onclick=async()=>{
     fac:$('pvFac').value.trim(), subj:$('pvSubj').value.trim()||$('pvName').value.trim(), lang:$('pvLang').value};
   if(old){ if(old.sharedId) b.sharedId=old.sharedId; Object.keys(old).forEach(k=>delete old[k]); Object.assign(old,b); if(mem.stats[b.id]) delete mem.stats[b.id]; saveStats(); }
   else mem.banks.unshift(b);
-  saveBanks(); if(!old) award(Math.min(30,5+Math.floor(qs.length/10)));
+  saveBanks(); if(!old){ award(Math.min(30,5+Math.floor(qs.length/10))); statInc('up') }
   if($('pvPublic').checked){
     if(!b.uni||!b.subj){$('pvMsg').textContent=t('need_uni_subj'); if(!old){mem.banks.shift();saveBanks()} return}
     $('pvSave').disabled=true; $('pvMsg').textContent=t('publishing');
@@ -1048,7 +1049,7 @@ document.addEventListener('keydown',e=>{
 function finish(early){
   clearInterval(tick);
   const done=Q.answers.length; let ok=0; const wrongIdx=[];
-  Q.ids.forEach((qi,k)=>{ if(k>=done)return; const x=curBank.qs[qi]; if(Q.answers[k]===x.a)ok++; else wrongIdx.push(k)});
+  Q.ids.forEach((qi,k)=>{ if(k>=done)return; const x=curBank.qs[qi]; if(Q.answers[k]===x.a)ok++; else wrongIdx.push(k)}); if(done){ statInc('q').then(()=>statInc('a',done)) }
   const total=early?Math.max(done,1):Q.ids.length;
   const pct=Math.round(ok/total*100);
   const st=mem.stats[curBank.id]||{wrong:[]};

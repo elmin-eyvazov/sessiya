@@ -430,6 +430,7 @@ footer{font-size:12px;color:var(--mute);text-align:center;margin-top:30px;line-h
 <!-- RESULT -->
 <section id="v-profile" class="hide">
   <div class="card" id="acCard"><div id="acBox"></div><div id="acRecaptcha"></div></div>
+  <div class="card hide" id="stCard"></div>
   <div class="card">
     <div class="row" style="justify-content:space-between;margin-bottom:10px"><h2 style="margin:0" data-i="prog_title"></h2><button class="btn ghost small" data-go="tools" data-i="all_tools"></button></div>
     <div class="row">
@@ -1263,7 +1264,7 @@ $('pvSave').onclick=async()=>{
     fac:$('pvFac').value.trim(), subj:$('pvSubj').value.trim()||$('pvName').value.trim(), lang:$('pvLang').value};
   if(old){ if(old.sharedId) b.sharedId=old.sharedId; Object.keys(old).forEach(k=>delete old[k]); Object.assign(old,b); if(mem.stats[b.id]) delete mem.stats[b.id]; saveStats(); }
   else mem.banks.unshift(b);
-  saveBanks(); if(!old) award(Math.min(30,5+Math.floor(qs.length/10)));
+  saveBanks(); if(!old){ award(Math.min(30,5+Math.floor(qs.length/10))); statInc('up') }
   if($('pvPublic').checked){
     if(!b.uni||!b.subj){$('pvMsg').textContent=t('need_uni_subj'); if(!old){mem.banks.shift();saveBanks()} return}
     $('pvSave').disabled=true; $('pvMsg').textContent=t('publishing');
@@ -1390,7 +1391,7 @@ document.addEventListener('keydown',e=>{
 function finish(early){
   clearInterval(tick);
   const done=Q.answers.length; let ok=0; const wrongIdx=[];
-  Q.ids.forEach((qi,k)=>{ if(k>=done)return; const x=curBank.qs[qi]; if(Q.answers[k]===x.a)ok++; else wrongIdx.push(k)});
+  Q.ids.forEach((qi,k)=>{ if(k>=done)return; const x=curBank.qs[qi]; if(Q.answers[k]===x.a)ok++; else wrongIdx.push(k)}); if(done){ statInc('q').then(()=>statInc('a',done)) }
   const total=early?Math.max(done,1):Q.ids.length;
   const pct=Math.round(ok/total*100);
   const st=mem.stats[curBank.id]||{wrong:[]};
@@ -1798,6 +1799,36 @@ function speakQ(){
 function applyTheme(){ const th=store.get('sp_theme','auto'); document.documentElement.classList.toggle('dark',th==='dark'||(th==='auto'&&matchMedia('(prefers-color-scheme: dark)').matches));
   document.querySelectorAll('#pfTheme button').forEach(b=>b.classList.toggle('on',b.dataset.v===th)) }
 
+
+// ---------- анонимная статистика: дневные счётчики в Firestore (stats/<день>), видят только модераторы ----------
+const STAT_KEYS=['v','r','q','a','ai','up','pwa'];
+async function statInc(k,n){ n=Math.min(50,Math.max(1,Math.round(n||1))); if(!STAT_KEYS.includes(k)) return;
+  try{ await catDb(); if(!Cat.db||!FB.user) return; await Cat.db.doc('stats/'+dayKey()).set({[k]:firebase.firestore.FieldValue.increment(n)},{merge:true}) }catch(e){} }
+let statBusy=false;
+async function statDaily(){ if(statBusy) return; statBusy=true;
+  try{ const d=dayKey(); let T=store.get('sp_statd',{}); if(T.day!==d) T={day:d};
+    const mark=k=>{ T[k]=1; store.set('sp_statd',T); return statInc(k) };
+    if(!T.v) await mark('v');
+    if(!T.r&&isReal(FB.user)) await mark('r');
+    if(!T.pwa&&(matchMedia('(display-mode: standalone)').matches||navigator.standalone===true)) await mark('pwa');
+  }finally{ statBusy=false } }
+window.addEventListener('load',()=>{ setTimeout(()=>fbStart().then(()=>statDaily()),2500); FB.ls.push(()=>setTimeout(statDaily,1000)) });
+const ST_L={az:['Tarix','Ziyarət','Hesabla','Test','Cavab','AI','Yükləmə','Tətbiq','📊 Statistika (yalnız moderatorlar görür)','Cəmi'],
+  ru:['Дата','Визиты','С аккаунтом','Тесты','Ответы','ИИ','Загрузки','Прил.','📊 Статистика (видят только модераторы)','Всего'],
+  en:['Date','Visits','Signed in','Quizzes','Answers','AI','Uploads','App','📊 Stats (moderators only)','Total']};
+async function drawStats(){
+  const box=$('stCard'); if(!box) return; if(!isAdmin()){ box.classList.add('hide'); return }
+  box.classList.remove('hide'); const L=ST_L[LANG]||ST_L.az; box.innerHTML=`<h2>${L[8]}</h2><div class="note">${t('loading')}</div>`;
+  try{ await catDb(); const s=await Cat.db.collection('stats').orderBy(firebase.firestore.FieldPath.documentId(),'desc').limit(14).get();
+    const rows=s.docs.map(d=>[d.id,d.data()]); const K=['v','r','q','a','ai','up','pwa']; const tot={}; rows.forEach(([,x])=>K.forEach(k=>tot[k]=(tot[k]||0)+(x[k]||0)));
+    const td=(v,b)=>`<td style="padding:6px 8px;text-align:right;${b?'font-weight:700':''}">${v}</td>`;
+    box.innerHTML=`<h2>${L[8]}</h2><div style="overflow-x:auto"><table style="border-collapse:collapse;width:100%;font-size:14px">
+      <tr class="note">${L.slice(0,8).map((h,i)=>`<th style="padding:6px 8px;text-align:${i?'right':'left'};font-weight:600">${h}</th>`).join('')}</tr>
+      ${rows.map(([d,x])=>`<tr style="border-top:1px solid var(--line)"><td style="padding:6px 8px">${esc(d.slice(5))}</td>${K.map(k=>td(x[k]||0)).join('')}</tr>`).join('')}
+      <tr style="border-top:2px solid var(--line)"><td style="padding:6px 8px;font-weight:700">${L[9]}</td>${K.map(k=>td(tot[k]||0,1)).join('')}</tr></table></div>`;
+  }catch(e){ box.innerHTML=`<h2>${L[8]}</h2><div class="note">${esc(e.code||e.message||'error')}</div>` }
+}
+
 // ---------- Арена: дуэль 1 на 1 (Firestore duels/{CODE}) ----------
 const DUEL_Q=10;
 let DU={code:null,doc:null,unsub:null,i:0,picked:null,answered:0,ok:0,lock:false};
@@ -1917,7 +1948,7 @@ async function aiCore(){
 function aiUsage(){ const u=store.get('sp_ai',{}); return u.day===dayKey()?u.n:0 }
 function aiLimit(){ return (typeof isAdmin==='function'&&isAdmin())?9999:(isReal(FB.user)?AI_LIMIT.real:AI_LIMIT.guest) }
 function aiLeft(){ return Math.max(0,aiLimit()-aiUsage()) }
-function aiSpend(n){ store.set('sp_ai',{day:dayKey(),n:aiUsage()+(n||1)}) }
+function aiSpend(n){ store.set('sp_ai',{day:dayKey(),n:aiUsage()+(n||1)}); if(typeof statInc==='function') statInc('ai',n||1) }
 function aiErr(code){ const e=new Error(code); e.code=code; return e }
 function jsonSalvage(s){
   try{ return JSON.parse(s) }catch(e){}
@@ -2136,7 +2167,7 @@ async function deleteAccount(){
   location.reload();
 }
 function renderProfile(){ drawGoalSeg(); applyTheme(); checkBadges(); renderBadges(); show('profile'); document.title=t('nav_profile')+' | Sessiya+'; renderProgress(); drawActChart(); drawAccount();
-  fbStart().then(()=>drawAccount()) }
+  fbStart().then(()=>{ drawAccount(); drawStats() }) }
 FB.ls.push(()=>{ if(!$('v-profile').classList.contains('hide')) drawAccount() });
 
 function drawAccount(){

@@ -163,3 +163,33 @@ function speakQ(){
 // ---------- тема ----------
 function applyTheme(){ const th=store.get('sp_theme','auto'); document.documentElement.classList.toggle('dark',th==='dark'||(th==='auto'&&matchMedia('(prefers-color-scheme: dark)').matches));
   document.querySelectorAll('#pfTheme button').forEach(b=>b.classList.toggle('on',b.dataset.v===th)) }
+
+
+// ---------- анонимная статистика: дневные счётчики в Firestore (stats/<день>), видят только модераторы ----------
+const STAT_KEYS=['v','r','q','a','ai','up','pwa'];
+async function statInc(k,n){ n=Math.min(50,Math.max(1,Math.round(n||1))); if(!STAT_KEYS.includes(k)) return;
+  try{ await catDb(); if(!Cat.db||!FB.user) return; await Cat.db.doc('stats/'+dayKey()).set({[k]:firebase.firestore.FieldValue.increment(n)},{merge:true}) }catch(e){} }
+let statBusy=false;
+async function statDaily(){ if(statBusy) return; statBusy=true;
+  try{ const d=dayKey(); let T=store.get('sp_statd',{}); if(T.day!==d) T={day:d};
+    const mark=k=>{ T[k]=1; store.set('sp_statd',T); return statInc(k) };
+    if(!T.v) await mark('v');
+    if(!T.r&&isReal(FB.user)) await mark('r');
+    if(!T.pwa&&(matchMedia('(display-mode: standalone)').matches||navigator.standalone===true)) await mark('pwa');
+  }finally{ statBusy=false } }
+window.addEventListener('load',()=>{ setTimeout(()=>fbStart().then(()=>statDaily()),2500); FB.ls.push(()=>setTimeout(statDaily,1000)) });
+const ST_L={az:['Tarix','Ziyarət','Hesabla','Test','Cavab','AI','Yükləmə','Tətbiq','📊 Statistika (yalnız moderatorlar görür)','Cəmi'],
+  ru:['Дата','Визиты','С аккаунтом','Тесты','Ответы','ИИ','Загрузки','Прил.','📊 Статистика (видят только модераторы)','Всего'],
+  en:['Date','Visits','Signed in','Quizzes','Answers','AI','Uploads','App','📊 Stats (moderators only)','Total']};
+async function drawStats(){
+  const box=$('stCard'); if(!box) return; if(!isAdmin()){ box.classList.add('hide'); return }
+  box.classList.remove('hide'); const L=ST_L[LANG]||ST_L.az; box.innerHTML=`<h2>${L[8]}</h2><div class="note">${t('loading')}</div>`;
+  try{ await catDb(); const s=await Cat.db.collection('stats').orderBy(firebase.firestore.FieldPath.documentId(),'desc').limit(14).get();
+    const rows=s.docs.map(d=>[d.id,d.data()]); const K=['v','r','q','a','ai','up','pwa']; const tot={}; rows.forEach(([,x])=>K.forEach(k=>tot[k]=(tot[k]||0)+(x[k]||0)));
+    const td=(v,b)=>`<td style="padding:6px 8px;text-align:right;${b?'font-weight:700':''}">${v}</td>`;
+    box.innerHTML=`<h2>${L[8]}</h2><div style="overflow-x:auto"><table style="border-collapse:collapse;width:100%;font-size:14px">
+      <tr class="note">${L.slice(0,8).map((h,i)=>`<th style="padding:6px 8px;text-align:${i?'right':'left'};font-weight:600">${h}</th>`).join('')}</tr>
+      ${rows.map(([d,x])=>`<tr style="border-top:1px solid var(--line)"><td style="padding:6px 8px">${esc(d.slice(5))}</td>${K.map(k=>td(x[k]||0)).join('')}</tr>`).join('')}
+      <tr style="border-top:2px solid var(--line)"><td style="padding:6px 8px;font-weight:700">${L[9]}</td>${K.map(k=>td(tot[k]||0,1)).join('')}</tr></table></div>`;
+  }catch(e){ box.innerHTML=`<h2>${L[8]}</h2><div class="note">${esc(e.code||e.message||'error')}</div>` }
+}

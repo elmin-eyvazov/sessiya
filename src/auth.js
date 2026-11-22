@@ -85,7 +85,7 @@ async function deleteAccount(){
   location.reload();
 }
 function renderProfile(){ drawGoalSeg(); applyTheme(); checkBadges(); renderBadges(); show('profile'); document.title=t('nav_profile')+' | Sessiya+'; renderProgress(); drawActChart(); drawAccount();
-  fbStart().then(()=>drawAccount()) }
+  fbStart().then(()=>{ drawAccount(); drawStats() }) }
 FB.ls.push(()=>{ if(!$('v-profile').classList.contains('hide')) drawAccount() });
 
 function drawAccount(){

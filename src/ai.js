@@ -18,7 +18,7 @@ async function aiCore(){
 function aiUsage(){ const u=store.get('sp_ai',{}); return u.day===dayKey()?u.n:0 }
 function aiLimit(){ return (typeof isAdmin==='function'&&isAdmin())?9999:(isReal(FB.user)?AI_LIMIT.real:AI_LIMIT.guest) }
 function aiLeft(){ return Math.max(0,aiLimit()-aiUsage()) }
-function aiSpend(n){ store.set('sp_ai',{day:dayKey(),n:aiUsage()+(n||1)}) }
+function aiSpend(n){ store.set('sp_ai',{day:dayKey(),n:aiUsage()+(n||1)}); if(typeof statInc==='function') statInc('ai',n||1) }
 function aiErr(code){ const e=new Error(code); e.code=code; return e }
 function jsonSalvage(s){
   try{ return JSON.parse(s) }catch(e){}
