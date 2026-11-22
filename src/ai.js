@@ -56,6 +56,11 @@ function aiChunks(text,size){
   }
   if(cur.trim()) out.push(cur); return out;
 }
+// фото страниц уменьшаем до 2000 px (JPEG): быстрее отправка и меньше риск превысить лимит запроса
+async function shrinkImg(f){ try{ if(!/^image\/(jpeg|png|webp)$/.test(f.type)||f.size<1.2e6) return f;
+  const bm=await createImageBitmap(f), k=Math.min(1,2000/Math.max(bm.width,bm.height));
+  const c=document.createElement('canvas'); c.width=Math.round(bm.width*k); c.height=Math.round(bm.height*k); c.getContext('2d').drawImage(bm,0,0,c.width,c.height);
+  const b=await new Promise(r=>c.toBlob(r,'image/jpeg',.85)); return b&&b.size<f.size?new File([b],f.name.replace(/\.\w+$/,'')+'.jpg',{type:'image/jpeg'}):f }catch(e){ return f } }
 function b64(buf){ let s='',b=new Uint8Array(buf); for(let i=0;i<b.length;i+=0x8000) s+=String.fromCharCode.apply(null,b.subarray(i,i+0x8000)); return btoa(s) }
 
 const AI_EXTRACT_RULES=`You convert a university exam question bank (Azerbaijan; Azerbaijani, Russian or English) into structured JSON.
@@ -76,7 +81,7 @@ async function aiExtract(src,onProgress){
   if(src.images&&src.images.length){                 // несколько фото страниц: по 4 фото на запрос
     const groups=[]; for(let i=0;i<src.images.length;i+=4) groups.push(src.images.slice(i,i+4));
     if(groups.length>aiLeft()) throw aiErr('ai_limit');
-    const outs=await aiPool(groups.map(g=>async()=>aiCall([{text:AI_EXTRACT_RULES+'\n\nThe pages are attached as photos, in order.'},...await Promise.all(g.map(async im=>({inlineData:{mimeType:im.type||'image/jpeg',data:b64(await im.arrayBuffer())}})))],aiQSchema)),2,onProgress);
+    const outs=await aiPool(groups.map(g=>async()=>aiCall([{text:AI_EXTRACT_RULES+'\n\nThe pages are attached as photos, in order.'},...await Promise.all(g.map(async im0=>{ const im=await shrinkImg(im0); return {inlineData:{mimeType:im.type||'image/jpeg',data:b64(await im.arrayBuffer())}} }))],aiQSchema)),2,onProgress);
     for(const j of outs) res.push(...((j&&j.questions)||[]));
     return aiSplit(res);
   }
@@ -85,8 +90,8 @@ async function aiExtract(src,onProgress){
   const useFile=isImg||isPdf&&f.size<18e6&&(scanned||(src.pages||99)<=12);
   if(useFile){
     onProgress&&onProgress(0,1);
-    const mime=isPdf?'application/pdf':(f.type||'image/jpeg');
-    const j=await aiCall([{text:AI_EXTRACT_RULES+'\n\nThe document is attached.'},{inlineData:{mimeType:mime,data:b64(await src.file.arrayBuffer())}}],aiQSchema);
+    const ff=isImg?await shrinkImg(f):f, mime=isPdf?'application/pdf':(ff.type||'image/jpeg');
+    const j=await aiCall([{text:AI_EXTRACT_RULES+'\n\nThe document is attached.'},{inlineData:{mimeType:mime,data:b64(await ff.arrayBuffer())}}],aiQSchema);
     res=(j&&j.questions)||[]; onProgress&&onProgress(1,1);
   }else{
     const parts=aiChunks(src.text||'',AI_CHUNK).slice(0,40);

@@ -805,6 +805,8 @@ async function docxText(buf){
 let pending=null;
 async function handleFiles(files){
   files=[...files]; if(!files.length) return;
+  if(files.some(f=>f.size>30e6)){ $('status').textContent=t('file_big'); return }
+  if(files.length>20){ $('status').textContent=t('files_many'); return }
   const imgs=files.filter(f=>/^image\//.test(f.type));
   if(imgs.length&&imgs.length===files.length) return aiFromSource({images:imgs,fname:imgs.length>1?t('photos_n',imgs.length):imgs[0].name});
   return handleFile(files.find(f=>!/^image\//.test(f.type))||files[0]);
