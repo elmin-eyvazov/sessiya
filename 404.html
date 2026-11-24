@@ -910,7 +910,7 @@ const $=id=>document.getElementById(id);
 const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 let mem={banks:store.get('sp_banks',[]),stats:store.get('sp_stats',{})};
 function saveBanks(){store.set('sp_banks',mem.banks)} function saveStats(){store.set('sp_stats',mem.stats)}
-function esc(s){return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 // чужие банки из Firestore: id и вуз только из безопасных символов, поля — строки разумной длины (защита от подделанных документов)
 function safeMeta(m){ const str=(v,n)=>v==null||(typeof v==='string'&&v.length<=n);
