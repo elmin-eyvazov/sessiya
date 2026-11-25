@@ -161,7 +161,7 @@ function speakQ(){
 }
 
 // ---------- тема ----------
-function applyTheme(){ const th=store.get('sp_theme','auto'); document.documentElement.classList.toggle('dark',th==='dark'||(th==='auto'&&matchMedia('(prefers-color-scheme: dark)').matches));
+function applyTheme(){ let th=store.get('sp_theme','light'); if(th!=='dark')th='light'; document.documentElement.classList.toggle('dark',th==='dark');
   document.querySelectorAll('#pfTheme button').forEach(b=>b.classList.toggle('on',b.dataset.v===th)) }
 
 
