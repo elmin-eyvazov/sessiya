@@ -56,7 +56,30 @@ async function syncPull(){
 // ---------- профиль / вход ----------
 const AC={mode:null,msg:'',busy:false,conf:null};
 const GLOGO='<svg width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>';
+// --- фильтр недопустимых имён (мат на ru/az/en, с обходами типа leet) ---
+function nrmName(x){ x=String(x).toLowerCase();
+  const m={'@':'a','4':'a','3':'e','1':'i','!':'i','0':'o','5':'s','$':'s','7':'t','9':'g','ё':'е'};
+  x=x.replace(/[@43!1051$79ё]/g,c=>m[c]||c);
+  x=x.replace(/[^a-zа-яıəğışçöü]+/g,'');
+  x=x.replace(/(.)\1{2,}/g,'$1'); return x; }
+const BADWORDS=['хуй','хуе','пизд','ебат','ебан','ебал','ебуч','ебло','ебла','выеб','заеб','наеб','уеб','съеб','бляд','блят','сука','сучк','мудак','мудил','гандон','гондон','залуп','дроч','пидор','пидар','педик','ублюд','шлюх','курва','гнид','мраз',
+  'fuck','shit','bitch','cunt','pussy','asshole','nigger','nigga','faggot','fagot','whore','slut','motherf','bastard','dildo','blowjob','jerkoff',
+  'orospu','qehbe','qahba','pezeveng','yarraq','yarrag','siktir','sikim','sikik','sikdi','sikir','sikis','gotveren','gotver','amciq'];
+function badName(x){ const n=nrmName(x); return !!n && BADWORDS.some(w=>n.includes(w)); }
+
+// --- защита от перебора пароля: 3 попытки, затем блок на 15 минут (по e-mail, в этом браузере) ---
+const PW_MAX=3, PW_LOCK_MS=15*60*1000;
+function pwState(key){ try{ return (JSON.parse(localStorage.getItem('sp_pwlock')||'{}'))[key]||null }catch(e){ return null } }
+function pwSet(key,v){ try{ const m=JSON.parse(localStorage.getItem('sp_pwlock')||'{}'); if(v)m[key]=v; else delete m[key]; localStorage.setItem('sp_pwlock',JSON.stringify(m)) }catch(e){} }
+function pwLockMins(key){ const st=pwState(key); return st&&st.until>Date.now()?Math.ceil((st.until-Date.now())/60000):0; }
+function pwGuardBefore(key){ const mins=pwLockMins(key); if(mins) throw {code:'locked',mins}; }
+function pwOnFail(key){ const st=pwState(key); const fails=(st&&st.until>Date.now()?st.n:0)+1;
+  if(fails>=PW_MAX){ pwSet(key,{n:0,until:Date.now()+PW_LOCK_MS}); throw {code:'locked',mins:Math.ceil(PW_LOCK_MS/60000)} }
+  pwSet(key,{n:fails,until:0}); }
+function pwOnOk(key){ pwSet(key,null); }
 function acErr(e){ const c=(e&&e.code)||''; console.warn(c,e);
+  if(c==='bad-name') return t('acc_name_bad');
+  if(c==='locked') return t('acc_locked',(e&&e.mins)||15);
   if(/popup-closed|cancelled-popup/.test(c)) return '';
   if(/invalid-credential|wrong-password|user-not-found|invalid-login/.test(c)) return t('acc_err_cred');
   if(/email-already-in-use/.test(c)) return t('acc_err_exists');
@@ -104,7 +127,7 @@ function drawAccount(){
       <details style="margin-top:18px"><summary class="note" style="cursor:pointer">${t('acc_danger')}</summary>
         <p class="note">${t('acc_delete_note')}</p><button class="btn small" style="background:var(--bad)" id="acDel">${t('acc_delete')}</button></details>`;
     $('acName2').onclick=()=>{ AC.editName=!AC.editName; AC.msg=''; drawAccount() };
-    if(AC.editName){ $('acNameSave').onclick=()=>acRun(async()=>{ const v=$('acNameIn').value.trim().slice(0,40); await firebase.auth().currentUser.updateProfile({displayName:v}); AC.editName=false; FB.user=firebase.auth().currentUser; syncPush() }); }
+    if(AC.editName){ $('acNameSave').onclick=()=>acRun(async()=>{ const v=$('acNameIn').value.trim().slice(0,40); if(badName(v)) throw {code:'bad-name'}; await firebase.auth().currentUser.updateProfile({displayName:v}); AC.editName=false; FB.user=firebase.auth().currentUser; syncPush() }); }
     $('acDel').onclick=()=>{ const b=$('acDel'); if(b.dataset.c!=='1'){ b.textContent=t('acc_delete_confirm'); b.dataset.c='1'; return } acRun(deleteAccount) };
 
     $('acOut').onclick=()=>acRun(async()=>{ try{ window.google&&google.accounts&&google.accounts.id.disableAutoSelect() }catch(e){} Gate.tapStarted=false; await firebase.auth().signOut(); try{ await firebase.auth().signInAnonymously() }catch(e){} });
@@ -124,8 +147,10 @@ function drawAccount(){
   $('acE').onclick=()=>{ AC.mode=m==='email'?null:'email'; AC.msg=''; drawAccount() };
   if(m==='email'){
     const vals=()=>[$('acMail').value.trim(),$('acPass').value];
-    $('acIn').onclick=()=>acRun(()=>firebase.auth().signInWithEmailAndPassword(...vals()));
-    $('acUp').onclick=()=>acRun(async()=>{ const nm=$('acName').value.trim(); const c=await firebase.auth().createUserWithEmailAndPassword(...vals());
+    $('acIn').onclick=()=>acRun(async()=>{ const [em,pw]=vals(); const key=(em||'').toLowerCase(); pwGuardBefore(key);
+      try{ await firebase.auth().signInWithEmailAndPassword(em,pw); pwOnOk(key) }
+      catch(e){ if(/wrong-password|invalid-credential|invalid-login/.test(e.code||'')) pwOnFail(key); throw e } });
+    $('acUp').onclick=()=>acRun(async()=>{ const nm=$('acName').value.trim(); if(nm&&badName(nm)) throw {code:'bad-name'}; const c=await firebase.auth().createUserWithEmailAndPassword(...vals());
       if(nm){ try{ await c.user.updateProfile({displayName:nm.slice(0,40)}); FB.ls.forEach(f=>{try{f(firebase.auth().currentUser)}catch(e){}}) }catch(e){} } });
     $('acFg').onclick=()=>acRun(async()=>{ const [em]=vals(); if(!em) throw {code:'auth/missing-email'}; await firebase.auth().sendPasswordResetEmail(em); setTimeout(()=>{AC.msg='✓ '+t('acc_reset_sent');drawAccount()},0) });
     $('acPass').onkeydown=e=>{ if(e.key==='Enter') $('acIn').click() };

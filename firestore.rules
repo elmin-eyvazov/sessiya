@@ -171,7 +171,11 @@ service cloud.firestore {
             && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['p','s','d'])
             && request.resource.data.p.diff(resource.data.p).affectedKeys().hasOnly([request.auth.uid])
             && request.resource.data.s.diff(resource.data.s).affectedKeys().hasOnly([request.auth.uid])
-            && request.resource.data.d.diff(resource.data.d).affectedKeys().hasOnly([request.auth.uid])));
+            && request.resource.data.d.diff(resource.data.d).affectedKeys().hasOnly([request.auth.uid]))
+        || ((resource.data.host == request.auth.uid || resource.data.guest == request.auth.uid)
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['rematch'])
+            && request.resource.data.rematch is string && request.resource.data.rematch.size() <= 6
+            && !('rematch' in resource.data)));
     }
     match /reports/{id} {
       allow create: if request.auth != null

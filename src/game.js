@@ -153,11 +153,22 @@ function drawActChart(){
 }
 
 // ---------- озвучка вопроса ----------
+function ttsLang(){ return (window.curBank&&curBank.lang)||LANG }
+// подбираем голос: для азербайджанского нет браузерных голосов → пробуем турецкий (близкий и читается понятно)
+function ttsVoice(lang){
+  if(!('speechSynthesis' in window)) return null;
+  const vs=speechSynthesis.getVoices(); if(!vs.length) return null;
+  const pref={az:['az','tr'],ru:['ru'],en:['en']}[lang]||[lang];
+  for(const p of pref){ const v=vs.find(x=>x.lang&&x.lang.toLowerCase().startsWith(p)); if(v) return v }
+  return null;
+}
+// кнопку 🔊 показываем только если для языка банка реально есть подходящий голос
+function updTtsBtn(){ const b=document.getElementById('qzTts'); if(!b) return; b.classList.toggle('hide',!ttsVoice(ttsLang())) }
 function speakQ(){
-  if(!('speechSynthesis' in window)||!Q) return; const x=curBank.qs[Q.ids[Q.i]]; speechSynthesis.cancel();
-  const lang={az:'az-AZ',ru:'ru-RU',en:'en-US'}[curBank.lang||LANG]||'az-AZ';
-  const u=new SpeechSynthesisUtterance(x.q+'. '+Q.order.map((j,k)=>(k+1)+'. '+x.o[j]).join('. ')); u.lang=lang;
-  const v=speechSynthesis.getVoices().find(v=>v.lang&&v.lang.toLowerCase().startsWith(lang.slice(0,2))); if(v) u.voice=v; u.rate=.95; speechSynthesis.speak(u);
+  if(!Q) return; const v=ttsVoice(ttsLang()); if(!v) return;
+  const x=curBank.qs[Q.ids[Q.i]]; speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(x.q+'. '+Q.order.map((j,k)=>(k+1)+'. '+x.o[j]).join('. '));
+  u.voice=v; u.lang=v.lang; u.rate=.95; speechSynthesis.speak(u);
 }
 
 // ---------- тема ----------

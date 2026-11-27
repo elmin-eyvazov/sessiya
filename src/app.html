@@ -1071,7 +1071,7 @@ function renderQ(){ try{ window.speechSynthesis&&speechSynthesis.cancel() }catch
   $('qzQ').textContent=x.q;
   $('qzOpts').innerHTML=Q.order.map((j,k)=>`<button class="opt" data-j="${j}"><span class="k">${k+1}</span><span>${esc(x.o[j])}</span></button>`).join('');
   $('qzOpts').querySelectorAll('.opt').forEach(b=>b.onclick=()=>pick(+b.dataset.j));
-  $('qzNext').disabled=true; $('qzNext').textContent=Q.i===Q.ids.length-1?t('finish'):t('next'); drawFavBtn();
+  $('qzNext').disabled=true; $('qzNext').textContent=Q.i===Q.ids.length-1?t('finish'):t('next'); drawFavBtn(); updTtsBtn();
 }
 function pick(j){
   const x=curBank.qs[Q.ids[Q.i]];
@@ -1085,7 +1085,7 @@ function pick(j){
 function next(){ if(Q.picked===null)return; Q.answers[Q.i]=Q.picked; bump(1); const okA=Q.picked===curBank.qs[Q.ids[Q.i]].a; if(okA) award(10); srsRecord(Q.ids[Q.i],okA); if(Q.i<Q.ids.length-1){Q.i++;renderQ()}else finish(); }
 $('qzNext').onclick=next;
 $('qzStop').onclick=()=>{if(Q.picked!==null){Q.answers[Q.i]=Q.picked;bump(1);const okA=Q.picked===curBank.qs[Q.ids[Q.i]].a;if(okA)award(10);srsRecord(Q.ids[Q.i],okA)}finish(true)};
-if(!('speechSynthesis' in window)) $('qzTts').classList.add('hide'); $('qzTts').onclick=speakQ;
+$('qzTts').onclick=speakQ; try{ speechSynthesis.onvoiceschanged=()=>updTtsBtn() }catch(e){}
 $('qzFav').onclick=()=>{ if(!Q||curBank.daily) return; toggleFav(curBank.id,Q.ids[Q.i]); drawFavBtn(); syncBkFav() };
 document.addEventListener('keydown',e=>{
   if($('v-quiz').classList.contains('hide'))return;

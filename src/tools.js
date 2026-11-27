@@ -57,8 +57,10 @@ function blankRow(){ return {n:'',c:'',s:''} }
 function renderGpa(){
   if(!GP) GP=store.get('sp_gpa',null)||[blankRow(),blankRow(),blankRow()];
   $('gpRows').innerHTML=`<div class="gprow hd"><span>${t('gpa_subj')}</span><span>${t('gpa_cr')}</span><span>${t('gpa_score')}</span><span></span></div>`+
-    GP.map((r,i)=>`<div class="gprow"><input type="text" data-r="${i}" data-k="n" value="${esc(r.n)}" placeholder="${esc(t('gpa_subj'))} ${i+1}"><input type="number" inputmode="decimal" data-r="${i}" data-k="c" value="${esc(r.c)}" placeholder="5"><input type="number" inputmode="decimal" data-r="${i}" data-k="s" value="${esc(r.s)}" placeholder="85"><button class="btn ghost small" data-del="${i}" aria-label="x">✕</button></div>`).join('');
-  $('gpRows').querySelectorAll('input').forEach(inp=>inp.oninput=()=>{ GP[+inp.dataset.r][inp.dataset.k]=inp.value; store.set('sp_gpa',GP); gpaOut() });
+    GP.map((r,i)=>`<div class="gprow"><input type="text" data-r="${i}" data-k="n" value="${esc(r.n)}" placeholder="${esc(t('gpa_subj'))} ${i+1}"><input type="number" inputmode="decimal" data-r="${i}" data-k="c" value="${esc(r.c)}" min="0" max="30" placeholder="5"><input type="number" inputmode="decimal" data-r="${i}" data-k="s" value="${esc(r.s)}" min="0" max="100" placeholder="85"><button class="btn ghost small" data-del="${i}" aria-label="x">✕</button></div>`).join('');
+  $('gpRows').querySelectorAll('input').forEach(inp=>inp.oninput=()=>{ const k=inp.dataset.k; let v=inp.value;
+    if(k!=='n'&&v.trim()!==''){ let num=parseFloat(v.replace(',','.')); if(!isNaN(num)){ const mx=k==='s'?100:30; num=Math.min(mx,Math.max(0,num)); if(String(num)!==v){ v=String(num); inp.value=v } } }
+    GP[+inp.dataset.r][k]=v; store.set('sp_gpa',GP); gpaOut() });
   $('gpRows').querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{ GP.splice(+b.dataset.del,1); if(!GP.length) GP.push(blankRow()); store.set('sp_gpa',GP); renderGpa() });
   gpaOut();
 }

@@ -51,6 +51,7 @@ async function renderDuel(code){
 function duelLink(code){ return location.origin+location.pathname+'#duel-'+code }
 function drawDuel(){
   const d=DU.doc, box=$('duBox'); if(!d||!box) return;
+  if(d.rematch&&d.rematch!==DU.code){ if(DU.unsub){DU.unsub();DU.unsub=null} go('duel-'+d.rematch); return }
   const isHost=d.host===me(), isGuest=d.guest===me();
   if(!isHost&&!isGuest){ box.innerHTML=`<div class="empty">${t('du_full')}</div>`; return }
   const oppId=isHost?d.guest:d.host, oppName=isHost?d.guestName:d.hostName;
@@ -70,7 +71,12 @@ function drawDuel(){
     const done=store.get('sp_duels',{}), dk=d.code+'_'+me(); if(!done[dk]){ done[dk]=res; store.set('sp_duels',done); award(res==='win'?30:10); if(res==='win') store.set('sp_duelwins',(store.get('sp_duelwins',0)||0)+1); checkBadges() }
     box.innerHTML=head+score+`<div style="text-align:center;margin:14px 0"><div style="font-size:44px">${res==='win'?'🏆':res==='lose'?'😅':'🤝'}</div><h2 style="margin:6px 0">${t('du_'+res)}</h2><p class="note">${res==='win'?t('du_xp_win'):t('du_xp_play')}</p></div>
       <div class="row" style="justify-content:center;gap:8px"><button class="btn" id="duAgain">${t('du_rematch')}</button><a class="btn sec" data-h="arena">${t('arena_title')}</a></div>`;
-    $('duAgain').onclick=async()=>{ const m=Cat.metas.find(x=>(x.subj||x.name)===d.bank); if(!m) return go('arena'); $('duAgain').disabled=true; try{ go('duel-'+await createDuel(m)) }catch(e){ $('duAgain').disabled=false } };
+    $('duAgain').onclick=async()=>{ const m=Cat.metas.find(x=>(x.subj||x.name)===d.bank); if(!m) return go('arena'); $('duAgain').disabled=true;
+      try{ const code=await createDuel(m);
+        try{ await Cat.db.doc('duels/'+d.code).update({rematch:code}) }
+        catch(e){ try{ const old=(await Cat.db.doc('duels/'+d.code).get()).data(); if(old&&old.rematch){ return go('duel-'+old.rematch) } }catch(_){} }
+        go('duel-'+code);
+      }catch(e){ $('duAgain').disabled=false } };
     return }
   if(myDone||DU.i>=d.qs.length){ box.innerHTML=head+score+`<p class="note" style="text-align:center;margin-top:14px">⏳ ${t('du_wait_opp')}</p>`; return }
   const x=d.qs[DU.i];
