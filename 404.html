@@ -1840,7 +1840,7 @@ function drawActChart(){
 }
 
 // ---------- озвучка вопроса ----------
-function ttsLang(){ return (window.curBank&&curBank.lang)||LANG }
+function ttsLang(){ return (typeof curBank!=="undefined"&&curBank&&curBank.lang)||LANG }
 // подбираем голос: для азербайджанского нет браузерных голосов → пробуем турецкий (близкий и читается понятно)
 function ttsVoice(lang){
   if(!('speechSynthesis' in window)) return null;
